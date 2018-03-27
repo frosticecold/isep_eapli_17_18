@@ -6,8 +6,8 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.dishes.Dish;
-import eapli.ecafeteria.domain.dishes.reporting.DishesPerCaloricCategory;
-import eapli.ecafeteria.domain.dishes.reporting.DishesPerDishType;
+import eapli.ecafeteria.reporting.dishes.DishesPerCaloricCategory;
+import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
 import eapli.ecafeteria.persistence.DishReportingRepository;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository;
 import java.io.Serializable;
@@ -38,7 +38,7 @@ class InMemoryDishReportingRepository extends InMemoryRepository
     }
 
     @Override
-    public Iterable<Dish> reportHighCaloriesDishes() {
+    public Iterable<Dish> reportHighCaloriesDishes(Integer highCalories) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
