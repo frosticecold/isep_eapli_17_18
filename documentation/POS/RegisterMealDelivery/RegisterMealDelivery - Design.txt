@@ -1,3 +1,18 @@
+ ____________
+
+ DESIGN
+ ______________
+
+
+* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+	Classes do dominio : POS (main - root), DeliveryMealSession, Booking, Meal
+	Controlador : RegisterMealMealDeliveryController
+	Repositorio : DeliveryMealSessionsRepository, BookingsRepository, MealsRepository
+
+- Sequence Diagram - code (websequencediagrams.com)
+
+
 title SD Register Meal Delivery
 
 RegisterMealDeliveryUI->RegisterMealDeliveryController : create()
