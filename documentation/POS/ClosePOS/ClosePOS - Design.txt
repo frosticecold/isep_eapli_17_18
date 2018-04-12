@@ -1,0 +1,25 @@
+ ____________
+
+ DESIGN
+ ______________
+
+- Sequence Diagram - code (websequencediagrams.com)
+
+
+title SD Close POS
+
+":ClosePOSUI"-->*":ClosePOSController" : create()
+":ClosePOSUI" -> ":ClosePOSController" : closePOS()
+":ClosePOSController" -> ":POS" : closePOS()
+":POS" -> ":POSState" : checkState()
+alt if opened
+":POS" -> ":DeliverySessionMeal" : getActiveSession()
+":DeliverySessionMeal" -> ":DeliveryRegistry" : getDeliveryList()
+":ClosePOSController" -->- ":ClosePOSUI" : show list of deliveries
+":ClosePOSController" -> ":DeliverySessionMeal" : closeSession()
+":ClosePOSController" -> ":POS" : closePOSState()
+":POS" -> ":POSState" : close()
+":ClosePOSController" --> ":ClosePOSUI" : informs about success
+else if closed
+":ClosePOSController" --> ":ClosePOSUI" : informs about error
+end
