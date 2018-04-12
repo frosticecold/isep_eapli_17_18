@@ -1,0 +1,24 @@
+___________
+
+ANÀLISE
+__________
+
+
+
+__________________
+
+REGRAS DE NEGÒCIO
+__________________
+
+* Termina as operações para o turno actual (almoço ou jantar)
+* Apresentado um sumário dos pratos entregues
+* Faz logout do utilizador
+* Impede registo de mais operações associadas à refeição em causa
+
+
+_______________
+
+TESTE UNITÀRIOS
+_______________
+
+// TODO
