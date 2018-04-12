@@ -6,7 +6,7 @@
 
 * Utilizar a estrutura base standard da aplicação baseada em camadas
 
-	Classes do dominio : POS , DeliveryMealSession
+	Classes do dominio : POS
 	Controlador : RegisterMealMealDeliveryController
 	Repositorio : DeliveryMealSessionsRepository
 
