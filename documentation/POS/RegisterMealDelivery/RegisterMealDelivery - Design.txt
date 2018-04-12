@@ -10,14 +10,13 @@
 	Controlador : RegisterMealMealDeliveryController
 	Repositorio : DeliveryMealSessionsRepository
 
-- Sequence Diagram - code (websequencediagrams.com)
+- Sequence Diagram
 
 
 title SD Register Meal Delivery
 
-":MainMenuUI" -> ":RegisterMealDeliveryUI" : create(iDdeliveryMealSession)
-":RegisterMealDeliveryUI"-> ":RegisterMealDeliveryController" : create(idDeliveryMealSession)
-":RegisterMealDeliveryUI" -> ":RegisterMealDeliveryController" : registerNewMealDelivery(deliveryMealSession, idBooking)
-":RegisterMealDeliveryController" -> ":PersistenceContext" : repositories()
-":PersistenceContext" -> ":DeliveryMealSessionRepository" : deliveryRegistry = getDeliveryRegistry(deliverMealSession)
+":MainMenuUI" -> ":RegisterMealDeliveryUI" : create(pos)
+":RegisterMealDeliveryUI"-> ":RegisterMealDeliveryController" : create(pos)
+":RegisterMealDeliveryUI" -> ":RegisterMealDeliveryController" : registerNewMealDelivery(pos, idBooking)
+":RegisterMealDeliveryController" -> ":POS" : deliveryRegistry = getDeliveryRegistry(pos)
 ":RegisterMealDeliveryController" -> ":DeliveryRegistry" : recordNewMealDelivery(idBooking)
