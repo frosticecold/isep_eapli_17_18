@@ -33,12 +33,12 @@ public class Period {
      * Ending date of working Period Business Rules says it should be a sunday
      */
     private Calendar endingCalendar;
-    
+
     private static String DAY_FORMAT = "\\d\\d)";
     private static String MONTH_FORMAT = "\\d\\d";
     private static String YEAR_FORMAT = "\\d{4}";
     private static String VALID_DATE_FORMAT = DAY_FORMAT + '-' + MONTH_FORMAT + '-' + YEAR_FORMAT;
-    
+
     private Period() {
     }
 
@@ -49,14 +49,14 @@ public class Period {
      * @param startingDayOfWeek
      * @param endingDayOfWeek
      */
-    private Period(final String startingDayOfWeek, final String endingDayOfWeek) {
+    protected Period(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         try {
             setWorkingPeriod(startingDayOfWeek, endingDayOfWeek);
         } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getMessage());
+            throw new IllegalArgumentException(ex.getMessage());
         }
     }
-    
+
     private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         Pattern regex = Pattern.compile(VALID_DATE_FORMAT);
         Matcher match = regex.matcher(startingDayOfWeek);
@@ -64,7 +64,7 @@ public class Period {
             startingCalendar = DateTime.parseDate(match.group(0));
             startingCalendar.setFirstDayOfWeek(Calendar.MONDAY);
         }
-        
+
         match = regex.matcher(endingDayOfWeek);
         if (match.find()) {
             endingCalendar = DateTime.parseDate(match.group(0));
@@ -75,13 +75,25 @@ public class Period {
         }
         validateBusinessWorkingDays(startingCalendar, endingCalendar);
     }
-    
-    private void validateBusinessWorkingDays(Calendar startingCalendar, Calendar endingCalender) {
+
+    private void validateBusinessWorkingDays(Calendar startingCalendar, Calendar endingCalender) throws IllegalArgumentException {
         if (startingCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
             throw new IllegalArgumentException("Starting working day should be MONDAY.");
         }
         if (endingCalender.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             throw new IllegalArgumentException("Starting working day should be SUNDAY.");
+        }
+        if (DateTime.isAfterNow(startingCalendar)) {
+            throw new IllegalArgumentException("Can't put a working date before present. You can't time travel... ");
+        }
+        if (DateTime.isAfterNow(endingCalender)) {
+            throw new IllegalArgumentException("Can't put a working date before present. You can't time travel... ");
+        }
+        if (DateTime.isBefore(startingCalendar, endingCalender)) {
+            throw new IllegalArgumentException("Can't put a startingDate before the endingDate.");
+        }
+        if (!DateTime.differenceIsSevenWorkingDays(startingCalendar, endingCalender)) {
+            throw new IllegalArgumentException("Can only select 7 working days, not more.");
         }
     }
 }
