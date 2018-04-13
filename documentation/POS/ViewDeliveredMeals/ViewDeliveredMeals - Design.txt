@@ -1,0 +1,32 @@
+ ____________
+
+ DESIGN
+ ______________
+
+
+* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+	Classes do dominio : POS
+	Controlador : ViewDeliveredMealsController
+	Repositorio : DeliveryRegistryRepository && BookingRepository
+
+- Sequence Diagram
+
+
+title Visualizar Refeições Sequence Diagram
+
+POSUI->POSController:create()
+POSUI->POSController:findBookedMeals()
+POSController->PersistenceContext:repositories()
+PersistenceContext->RepositoryFactory:create()
+RepositoryFactory->BookingRepository:create()
+PersistenceContext-->POSController:BookingRepository
+POSController->BookingRepository:findBookedMeals()
+POSController-->POSUI:booked meals
+POSUI->POSController:findAvailableMeals()
+POSController->PersistenceContext:repositories()
+PersistenceContext->RepositoryFactory:create()
+RepositoryFactory->DeliveryRegistryRepository:create()
+PersistenceContext-->POSController:MealRepository
+POSController->DeliveryRegistryRepository:findAvailableMeals()
+POSController-->POSUI:available meals
