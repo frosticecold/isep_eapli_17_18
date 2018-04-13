@@ -149,10 +149,10 @@ public class DateTimeTest {
      * Test if Seven working days of class DateTime
      */
     @Test
-    public void testSevenWorkingDays() {
-        System.out.println("sevenWorkingDays");
+    public void testDifferenceInDays() {
+        System.out.println("differenceInDays");
         final Calendar start = DateTime.newCalendar(2018, 4, 9);
         final Calendar end = DateTime.newCalendar(2018, 4, 15);
-        assertEquals(DateTime.differenceIsSevenWorkingDays(start, end), true);
+        assertEquals(DateTime.differenceInDays(start, end, 6), true);
     }
 }

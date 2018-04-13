@@ -7,6 +7,7 @@ package eapli.framework.util;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -572,17 +573,17 @@ public final class DateTime {
     }
 
     /**
-     * checks if the difference between two calenders are 7 days
+     * checks if the difference between two calenders are n number of days
      *
      * @author Raúl Correia (2DC, EAPLI 2017/2018
      * @param start Calendar starting date
      * @param end Calendar ending date
-     * @return trues if 7 working days between dates else false
+     * @param n number of days to test
+     * @return trues if n working days between dates else false
      *
      */
-    public static boolean differenceIsSevenWorkingDays(final Calendar start, final Calendar end) {
-        final int SEVEN_WORKING_DAYS = 6;
-        int numDays = java.lang.Math.abs(start.get(Calendar.DAY_OF_YEAR) - end.get(Calendar.DAY_OF_YEAR));
-        return numDays == SEVEN_WORKING_DAYS;
+    public static boolean differenceInDays(final Calendar start, final Calendar end, final long n) {
+        long numDays = ChronoUnit.DAYS.between(start.toInstant(), end.toInstant());
+        return numDays == n;
     }
 }
