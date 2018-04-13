@@ -1,4 +1,4 @@
-package eapli.ecafeteria.domain.dishes;
+    package eapli.ecafeteria.domain.dishes;
 
 import eapli.framework.domain.Designation;
 import eapli.framework.domain.ddd.AggregateRoot;
