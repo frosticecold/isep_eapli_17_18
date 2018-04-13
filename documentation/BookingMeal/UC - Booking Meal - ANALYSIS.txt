@@ -1,0 +1,43 @@
+	___________
+
+	ANÁLISE 
+	____________
+
+
+	Reunião com o cliente  em 2018.02.23
+
+	* o "utilizador da cantina" utiliza a aplicação para reservar uma refeiçao na cantina num determinado dia e para a opção - almoço/jantar
+	* é apresentada a lista de refeições pra esse dia e conforme se escolheu almoço ou jantar
+	* No momento da reserva devem ser mostrados os alergénios existentes no prato dessa refeição
+	* Deve ser mostrada a informação nutricional dessa refeição e qual o consumo calórico semanal se o utente escolher essa refeição. 
+	* Ao efetuar a reserva deve actualizar-se o saldo do utente
+	* Adicionar a reserva à lista 
+
+
+	______________________
+
+	REGRAS DE NEGÓCIO
+	_____________________
+
+	* As reservas de refeições devem ser efetuadas até às 24h da véspera para um dia e refeição específico
+	* o utilizador tem que ter saldo suficiente para a refeição
+	* a ementa tem que estar no estado publicado para o utilizador poder visualizá-la
+	
+
+	______________________
+		
+	TESTES UNITÁRIOS
+	_____________________
+
+
+	RESERVATION
+	* testLessThan24Hours
+
+	MENU
+	* testMenuIsPublish
+
+
+	BALANCE
+	* testUserBalanceCanNotBeNegative
+	* testUserHasSuficientBalance
+

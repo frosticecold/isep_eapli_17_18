@@ -1,0 +1,27 @@
+ ____________
+
+ DESIGN
+ ______________
+
+
+* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+	Classes do dominio : POS, DeliveryMealSession
+	Controlador : RegisterMealMealDeliveryController
+	UserInterface : RegisterMealDeliveryUI
+	Lista : DeliveryRegistry
+
+- Sequence Diagram
+
+
+title SD Register Meal Delivery
+
+":MainMenuUI" -> ":RegisterMealDeliveryUI" : create(pos)
+":RegisterMealDeliveryUI"-> ":RegisterMealDeliveryController" : create(pos)
+":RegisterMealDeliveryUI" -> ":RegisterMealDeliveryController" : registerNewMealDelivery(pos, idBooking)
+":RegisterMealDeliveryController" -> ":POS" : deliveryRegistry = getDeliveryRegistry(pos)
+":RegisterMealDeliveryController" -> ":DeliveryRegistry" : recordNewMealDelivery(idBooking)
+":RegisterMealDeliveryController" -> ":PersistenceContext" : repositories()
+":PersistenceContext" -> "RepositoryFactory" : bookingsRepo = getBookingsRepository()
+":RegisterMealDeliveryController" -> ":BookingsRepository" : changeState(idBooking, bookingsRepo, state)
+":BookingsRepository" -> ":Booking" : changeState(state)
