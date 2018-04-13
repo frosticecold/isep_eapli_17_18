@@ -3,20 +3,23 @@ ___________
 ANÀLISE
 __________
 
+Renuião com o cliente 13/04/18
 
+Registar a entrega de uma refeição na cantina – registar o levantamento de uma reserva.
 
 __________________
 
 REGRAS DE NEGÒCIO
 __________________
 
-* Verificar estado de reserva
-* Alterar estado da reserva (por averiguar)
-
+* Reserva só pode ser entregue, se tiver o estado "Reserved". Ficando registado no "DeliveryRegistry"
+* Estado de reserva será alterado (estado - "Served") diretamente no repositorio depois do registo da entrega da refeição
 _______________
 
 TESTE UNITÀRIOS
 _______________
+
+1. Verificar estado de reserva
 
 * Validar estado da reserva
 
@@ -24,9 +27,25 @@ _______________
 
 	- Caso não esteja no estado (já entregue)
 
-	- Caso esteja no estado "a entregar"
+	- Caso esteja no estado "a entregar" (sucesso)
 
 
 * Registo de entrega da refeição
 
 	- Caso de sucesso
+
+
+2. Alterar estado de reserva para entregue
+
+	* Acesso ao repositorios das reservas
+
+		- Caso de sucesso
+
+	* Alteração do estado
+
+		- Caso reserva mude para entregue (sucesso)
+
+________________
+
+TESTE FUNCIONAIS
+________________

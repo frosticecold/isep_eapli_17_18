@@ -32,7 +32,7 @@ public class Booking implements Serializable {
      private Meal meal; 
      private BookingState bookingState;
      private CafeteriaUser cafeteriauser;
-
+     
      
     public Booking(int idBooking, Meal meal, BookingState bookingState, CafeteriaUser cafeteriauser) {
         this.idBooking = idBooking;
@@ -45,7 +45,34 @@ public class Booking implements Serializable {
     protected Booking() {
         // for ORM only
     }
-    
-    
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Booking)) {
+            return false;
+        }
+
+        final Booking other = (Booking) o;
+        return getIdBooking() == other.getIdBooking();
+    }
+
+    public int getIdBooking() {
+        return idBooking;
+    }
+
+    public Meal getMeal() {
+        return meal;
+    }
+
+    public BookingState getBookingState() {
+        return bookingState;
+    }
+
+    public CafeteriaUser getCafeteriauser() {
+        return cafeteriauser;
+    }
+    
 }
