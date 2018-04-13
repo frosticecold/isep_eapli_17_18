@@ -16,14 +16,29 @@ import java.util.regex.Pattern;
  */
 public class Period {
 
-    private Calendar start;
-    private Calendar end;
+    /**
+     * Generic implementation of a working Period between two dates Business
+     * rules dictates the starting date should be a Monday and ending date
+     * should be a sunday
+     * <p>
+     *
+     */
+    /**
+     * Starting date of a working Period Business Rules says it should be a
+     * monday
+     */
+    private Calendar startingCalendar;
 
+    /**
+     * Ending date of working Period Business Rules says it should be a sunday
+     */
+    private Calendar endingCalendar;
+    
     private static String DAY_FORMAT = "\\d\\d)";
     private static String MONTH_FORMAT = "\\d\\d";
     private static String YEAR_FORMAT = "\\d{4}";
     private static String VALID_DATE_FORMAT = DAY_FORMAT + '-' + MONTH_FORMAT + '-' + YEAR_FORMAT;
-
+    
     private Period() {
     }
 
@@ -35,22 +50,38 @@ public class Period {
      * @param endingDayOfWeek
      */
     private Period(final String startingDayOfWeek, final String endingDayOfWeek) {
-        start = DateTime.parseDate(startingDayOfWeek);
-        end = DateTime.parseDate(endingDayOfWeek);
+        try {
+            setWorkingPeriod(startingDayOfWeek, endingDayOfWeek);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-
-    private boolean setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
+    
+    private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         Pattern regex = Pattern.compile(VALID_DATE_FORMAT);
         Matcher match = regex.matcher(startingDayOfWeek);
         if (match.find()) {
-            start = DateTime.parseDate(match.group(0));
-        }
-
-        match = regex.matcher(endingDayOfWeek);
-        if (match.find()) {
-            end = DateTime.parseDate(match.group(0));
+            startingCalendar = DateTime.parseDate(match.group(0));
+            startingCalendar.setFirstDayOfWeek(Calendar.MONDAY);
         }
         
-       return true;
+        match = regex.matcher(endingDayOfWeek);
+        if (match.find()) {
+            endingCalendar = DateTime.parseDate(match.group(0));
+            endingCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        }
+        if (startingCalendar == null || endingCalendar == null) {
+            throw new IllegalArgumentException("Error, date format should be in dd-MM-yyyy");
+        }
+        validateBusinessWorkingDays(startingCalendar, endingCalendar);
+    }
+    
+    private void validateBusinessWorkingDays(Calendar startingCalendar, Calendar endingCalender) {
+        if (startingCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            throw new IllegalArgumentException("Starting working day should be MONDAY.");
+        }
+        if (endingCalender.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+            throw new IllegalArgumentException("Starting working day should be SUNDAY.");
+        }
     }
 }

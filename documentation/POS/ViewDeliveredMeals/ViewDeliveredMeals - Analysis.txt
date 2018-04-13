@@ -1,0 +1,21 @@
+	___________
+
+	ANÁLISE 
+	____________
+
+
+	Reunião com o cliente
+	
+	* Em todas as UI dentro da caixa, tirando OPENPOS e ChargeCard, vai aparecer informa��o relativa � quantidade de pratos dispon�veis e reservados ainda n�o entregues.
+	* O utilizador da caixa, tem dispon�vel a qualquer momento a informa��o referida acima.
+	______________________
+
+	REGRAS DE NEGÓCIO
+	_____________________
+	
+	* Tendo em conta que ao ser aberta a caixa, � logo importada a informa��o relativa aos pratos dispon�veis e ainda n�o entregues, n�o ser� necess�rio neste UC ir de novo � base de dados em busca dessa mesma informa��o.	
+	______________________
+		
+	TESTES UNITÁRIOS
+	_____________________
+	

@@ -20,5 +20,7 @@ public class ECafeteriaBootstrap {
         System.out.println("======================================");
         System.out.println("Bootstrap data done.");
         System.out.println("======================================");
+
+        System.exit(0);
     }
 }
