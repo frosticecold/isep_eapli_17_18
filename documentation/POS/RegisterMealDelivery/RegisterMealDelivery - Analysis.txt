@@ -10,16 +10,23 @@ __________________
 REGRAS DE NEGÒCIO
 __________________
 
-* Cada sessão tem só e só um registo de entregas de refeições
-* Alterar o estado da uma reserva sempre que é entregue (Evento)
-* Verifica se reserva tem multa para calcular o preço da mesma
-
+* Verificar estado de reserva
+* Alterar estado da reserva (por averiguar)
 
 _______________
 
 TESTE UNITÀRIOS
 _______________
 
-* Registo de nova refeição
-* Entrega de reserva
-* Cálculo do preço
+* Validar estado da reserva
+
+	- Caso não exista
+
+	- Caso não esteja no estado (já entregue)
+
+	- Caso esteja no estado "a entregar"
+
+
+* Registo de entrega da refeição
+
+	- Caso de sucesso
