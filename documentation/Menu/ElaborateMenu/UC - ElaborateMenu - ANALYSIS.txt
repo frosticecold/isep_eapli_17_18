@@ -1,0 +1,39 @@
+	___________
+
+	ANÁLISE 
+	____________
+
+
+	Reunião com o cliente
+	
+	* A elaboração de menu é a seleção de duas datas(7dias, uma semana completa)
+	e de pelo menos um  de cada tipo de prato para Almoço/Jantar
+	* O "gestor de ementas" utiliza a aplicação de backoffice para registar a ementa
+	e as refeições associadas
+	
+	* Foi considerado que se trata de ementas à semana, nunca com datas superior ou inferior a 7 dias
+	
+	
+
+	______________________
+
+	REGRAS DE NEGÓCIO
+	_____________________
+	
+	* Quem inicia o processo é o "Gestor de Ementas"
+	* Menu tem duas datas, Inicio e Fim
+	* Uma semana começa numa Segunda-Feira
+	* Uma semana tem 7 dias
+	* Um menu criado/editado encontra-se em estado InProgress
+	* Quem define as ementas é o "chefe de cozinha"
+	
+	
+	______________________
+		
+	TESTES UNITÁRIOS
+	_____________________
+	
+	Menu
+	*	testMenuValidDates
+	*	testMenuHasMeals
+	*	testMenuIsInProgress

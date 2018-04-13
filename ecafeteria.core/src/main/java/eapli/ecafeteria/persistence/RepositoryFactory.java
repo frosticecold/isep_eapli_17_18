@@ -66,6 +66,8 @@ public interface RepositoryFactory {
     DishRepository dishes();
 
     MaterialRepository materials();
+    
+    MenuRepository menus();
 
     /**
      * ************************
@@ -76,4 +78,6 @@ public interface RepositoryFactory {
      * @return
      */
     DishReportingRepository dishReporting();
+    
+    
 }

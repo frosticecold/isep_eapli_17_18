@@ -6,35 +6,22 @@
 
 * Utilizar a estrutura base standard da aplicação baseada em camadas
 
-	Classes do dominio : POS (main - root), DeliveryMealSession, Booking, Meal
+	Classes do dominio : POS, DeliveryMealSession
 	Controlador : RegisterMealMealDeliveryController
-	Repositorio : DeliveryMealSessionsRepository, BookingsRepository, MealsRepository
+	UserInterface : RegisterMealDeliveryUI
+	Lista : DeliveryRegistry
 
-- Sequence Diagram - code (websequencediagrams.com)
+- Sequence Diagram
 
 
 title SD Register Meal Delivery
 
-RegisterMealDeliveryUI->RegisterMealDeliveryController : create()
-RegisterMealDeliveryUI -> RegisterMealDeliveryController : registerNewMealDelivery()
-RegisterMealDeliveryController -> POS : createNewSession()
-POS -> PersistenceContext : repositories()
-PersistenceContext  -> RepositoryFactory : deliveryMealSessionsRepo = getDeliveryMealSessionsRepository()
-RepositoryFactory -> DeliveryMealSessionRepository : session = getSessionMeal()
-RegisterMealDeliveryController  -> POS  : registry = getDeliveryRegistry()
-POS -> DeliveryMealSession : registry = getDeliveryRegistry()
-RegisterMealDeliveryController -> POS : bookings = getBookings()
-POS -> PersistenceContext : repositories()
-PersistenceContext -> RepositoryFactory : bookingsRepo = getBookingsRepository()
-RegisterMealDeliveryController -> POS : booking = getBooking(id, name)
-POS -> BookingsRepository : booking = findBooking(id, name)
-BookingsRepository -> Booking : checkBookingState()
-RegisterMealDeliveryController -> POS : meal = getMeal(booking)
-POS -> PersistenceContext  : repositories()
-PersistenceContext  -> RepositoryFactory : mealsRepo = getMealsRepository()
-RepositoryFactory -> MealsRepository : meal = getMeal(booking)
-RegisterMealDeliveryController -> POS : price = calculatePriceWithPenalty(meal)
-POS -> POS : price = calculatePriceWithPenalty(meal, penalty)
-RegisterMealDeliveryController -> POS : changeBookingState(booking)
-POS -> Booking : changeState()
-RegisterMealDeliveryUI -> RegisterMealDeliveryUI : showFeedback()
+":MainMenuUI" -> ":RegisterMealDeliveryUI" : create(pos)
+":RegisterMealDeliveryUI"-> ":RegisterMealDeliveryController" : create(pos)
+":RegisterMealDeliveryUI" -> ":RegisterMealDeliveryController" : registerNewMealDelivery(pos, idBooking)
+":RegisterMealDeliveryController" -> ":POS" : deliveryRegistry = getDeliveryRegistry(pos)
+":RegisterMealDeliveryController" -> ":DeliveryRegistry" : recordNewMealDelivery(idBooking)
+":RegisterMealDeliveryController" -> ":PersistenceContext" : repositories()
+":PersistenceContext" -> "RepositoryFactory" : bookingsRepo = getBookingsRepository()
+":RegisterMealDeliveryController" -> ":BookingsRepository" : changeState(idBooking, bookingsRepo, state)
+":BookingsRepository" -> ":Booking" : changeState(state)

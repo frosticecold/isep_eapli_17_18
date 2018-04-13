@@ -1,0 +1,7 @@
+ANALYSIS - LIST MENU
+
+--------------------
+BUISINESS RULES
+--------------------
+ * User must be pre-registered
+ * The menu is for the current week
