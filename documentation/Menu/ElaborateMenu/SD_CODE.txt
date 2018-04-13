@@ -1,0 +1,96 @@
+title UC - Elaborate Menu
+
+#CreateUI
+User->ElaborateMenuUI:show()
+ElaborateMenuUI-->ElaborateMenuController:create
+
+#Create MenuRepo
+ElaborateMenuController->PersistanceContext:menuRepo=repositories().menu()
+PersistanceContext-->RepositoryFactory:create
+RepositoryFactory-->MenuRepository:create
+#MenuRepository-->ElaborateMenuController:
+
+#Create DishRepo
+ElaborateMenuController->PersistanceContext:dishRepo=repositories().dishes()
+PersistanceContext-->RepositoryFactory:create
+RepositoryFactory-->DishRepository:create
+#DishRepository-->ElaborateMenuController:
+
+#Create DishType Repository
+ElaborateMenuController->PersistanceContext:dishTypeRepo=repositories().dishtype()
+PersistanceContext-->RepositoryFactory:create
+RepositoryFactory-->DishTypeRepository:create
+#DishTypeRepository-->ElaborateMenuController:
+
+
+ElaborateMenuUI->ElaborateMenuUI: doShow()
+
+#Read working period
+ElaborateMenuUI-->User:Ask for working period
+User-->ElaborateMenuUI:inputs working period
+ElaborateMenuUI->ElaborateMenuController:createOrFindMenu(initialDate,endDate)
+ElaborateMenuController->MenuRepository:menuRepo=findMenuWithtinPeriod(initialDate,endDate)
+
+#If menu doesnt exist create
+alt !menu.isPresent() || menu == null
+    ElaborateMenuController-->Menu:menu=create
+end
+ElaborateMenuController->Menu:menu.changeStateToUnpublished()
+
+#List DishTypes
+ElaborateMenuController->DishTypeRepository:listOfDishTypes=dishTypeRepo.findAll()
+#ElaborateMenuController-->ElaborateMenuUI:listOfDishTypes
+
+loop while(editing)
+    #Select day
+    ElaborateMenuUI-->User:showDaysOfPeriod
+    User->ElaborateMenuUI:selectDay(option)
+    ElaborateMenuUI->ElaborateMenuController:selectDay(day)
+    
+    #Show Dish
+    ElaborateMenuController->Menu:listOfMeals=showMealsOnSpecificDay(day)
+    ElaborateMenuController-->ElaborateMenuUI:listOfMeals
+    ElaborateMenuUI-->User:showMeals
+    ElaborateMenuUI-->User:add or remove?
+    User-->ElaborateMenuUI:Add/Remove
+    alt add
+
+        loop while(addingMeals)
+            #Select MealType
+            ElaborateMenuUI-->User:showMealType
+            User->ElaborateMenuUI:selectMealType(option)
+            ElaborateMenuUI->ElaborateMenuController:selectMealType(mealType)
+            #Select Dish Type        
+            ElaborateMenuUI-->User:showDishTypes
+            User->ElaborateMenuUI:selectDishType(option)
+            ElaborateMenuUI->ElaborateMenuController:selectDishType(dishType)
+            ElaborateMenuController->DishRepository:dishRepo.findDishesByDishType(dishType)
+            DishRepository-->ElaborateMenuController:listOfDishes
+            ElaborateMenuController-->ElaborateMenuUI:listOfDishes
+            ElaborateMenuUI-->User:showDishes
+            #Select Dish
+            User-->ElaborateMenuUI:selectDish(option)
+            ElaborateMenuUI->ElaborateMenuController:selectDish(dish)
+            #Create Meal
+            ElaborateMenuController->Meal:meal=create(dish,day,mealType)
+            ElaborateMenuController->Menu:menu.addMeal(meal)
+            ElaborateMenuController-->ElaborateMenuUI:meal
+            ElaborateMenuUI-->User:show meal
+            ElaborateMenuUI-->User:add more?
+            User-->ElaborateMenuUI:Y/N
+        end
+    else remove
+        ElaborateMenuUI-->User:Ask for what meal to remove
+        User-->ElaborateMenuUI:removeMeal(option)
+        ElaborateMenuUI->ElaborateMenuController:removeMeal(meal)
+        ElaborateMenuController->Menu:menu.removeMeal(meal)
+    end
+    ElaborateMenuUI-->User:Continue editing?
+    User-->ElaborateMenuUI:Y/N
+end
+    ElaborateMenuController-->ElaborateMenuUI:menu
+    ElaborateMenuUI-->User:Show Menu
+    ElaborateMenuUI-->User:Confirm?
+    User-->ElaborateMenuUI:Yes
+    ElaborateMenuUI->ElaborateMenuController:saveMenu()
+    ElaborateMenuController->MenuRepository:save(menu)

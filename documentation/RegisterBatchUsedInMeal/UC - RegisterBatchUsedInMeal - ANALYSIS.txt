@@ -1,0 +1,26 @@
+	___________
+	ANÁLISE
+	___________
+
+	* Só pode associar lotes a refeições com pratos ativos e aprovados por uma entidade competente.
+	* Informação importante: data de validade, código, alimento, quantidade.
+	* Só utilizador do tipo "Gestor de Cozinha" ou "chef" é que pode efetuar alterações ou novos registos.
+	* Interessa saber o histórico de alterações a lotes utilizados
+
+
+	______________________
+
+	REGRAS DE NEGÓCIO
+	______________________
+
+	* Apenas o chef de serviço poderá efetuar novos registos ou alterações
+
+	______________________
+
+    	TESTES UNITÁRIOS
+    ______________________
+
+    * EnsureNewBatchIsAvailable
+    * EnsureThereAreActiveMeals
+    * EnsureNewLogIsCreated
+    * EnsureBatchUseRegistryIsCreated
