@@ -5,16 +5,14 @@
  */
 package eapli.ecafeteria.application.booking;
 
-import eapli.ecafeteria.persistence.*;
+import eapli.ecafeteria.persistence.MenuRepository;
+import eapli.ecafeteria.persistence.PersistenceContext;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class BookingMealController {
+public class listMenuService {
     
-      private final listMenuService svc = new listMenuService();
-    
-     private final BookingRepository repository = PersistenceContext.repositories().booking();
-
+    private final MenuRepository menuRepository = PersistenceContext.repositories().menus();
 }
