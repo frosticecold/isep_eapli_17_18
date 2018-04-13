@@ -38,6 +38,10 @@ public class Period {
     private static String MONTH_FORMAT = "\\d\\d";
     private static String YEAR_FORMAT = "\\d{4}";
     private static String VALID_DATE_FORMAT = DAY_FORMAT + '-' + MONTH_FORMAT + '-' + YEAR_FORMAT;
+    /**
+     * 7 Working days (6 is difference between two dates)
+     */
+    private static final long WORKING_DAYS = 6;
 
     private Period() {
     }
@@ -92,7 +96,7 @@ public class Period {
         if (DateTime.isBefore(startingCalendar, endingCalender)) {
             throw new IllegalArgumentException("Can't put a startingDate before the endingDate.");
         }
-        if (!DateTime.differenceIsSevenWorkingDays(startingCalendar, endingCalender)) {
+        if (!DateTime.validateDifferenceInDays(startingCalendar, endingCalender, WORKING_DAYS)) {
             throw new IllegalArgumentException("Can only select 7 working days, not more.");
         }
     }

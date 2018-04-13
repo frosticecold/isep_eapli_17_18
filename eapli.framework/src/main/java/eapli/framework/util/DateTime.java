@@ -582,7 +582,7 @@ public final class DateTime {
      * @return trues if n working days between dates else false
      *
      */
-    public static boolean differenceInDays(final Calendar start, final Calendar end, final long n) {
+    public static boolean validateDifferenceInDays(final Calendar start, final Calendar end, final long n) {
         long numDays = ChronoUnit.DAYS.between(start.toInstant(), end.toInstant());
         return numDays == n;
     }

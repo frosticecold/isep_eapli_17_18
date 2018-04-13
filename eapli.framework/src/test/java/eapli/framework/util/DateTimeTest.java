@@ -153,6 +153,6 @@ public class DateTimeTest {
         System.out.println("differenceInDays");
         final Calendar start = DateTime.newCalendar(2018, 4, 9);
         final Calendar end = DateTime.newCalendar(2018, 4, 15);
-        assertEquals(DateTime.differenceInDays(start, end, 6), true);
+        assertEquals(DateTime.validateDifferenceInDays(start, end, 6), true);
     }
 }
