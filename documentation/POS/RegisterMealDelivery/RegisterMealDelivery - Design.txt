@@ -23,5 +23,5 @@ title SD Register Meal Delivery
 ":RegisterMealDeliveryController" -> ":DeliveryRegistry" : recordNewMealDelivery(idBooking)
 ":RegisterMealDeliveryController" -> ":PersistenceContext" : repositories()
 ":PersistenceContext" -> "RepositoryFactory" : bookingsRepo = getBookingsRepository()
-":RegisterMealDeliveryController" -> ":BookingsRepository" : changeState(idBooking, bookingsRepo, state)
-":BookingsRepository" -> ":Booking" : changeState(state)
+":RegisterMealDeliveryController" -> ":BookingsRepository" : changeState(idBooking, bookingsRepo)
+":BookingsRepository" -> ":Booking" : changeState()
