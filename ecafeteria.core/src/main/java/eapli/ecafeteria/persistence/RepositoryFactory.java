@@ -66,6 +66,9 @@ public interface RepositoryFactory {
     DishRepository dishes();
 
     MaterialRepository materials();
+    
+    BookingRepository booking();
+    MenuRepository menus();
 
     /**
      * ************************
