@@ -1,0 +1,59 @@
+	_________
+
+	DESIGN
+	_________
+
+	* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+	Classes de Dominio: User
+	Controlador: UsedBatchRegisterController
+	Repository: MaterialRepo, MealRepo, MealMaterialRepo, HistoryRepo
+
+    Diagrama de Sequência - websequencediagrams.com source
+        title  Register Batch Used In Meal
+
+        participant ":User" as user
+        participant ":MenuRastreabilidade" as menu
+        participant ":Console" as ui
+        participant ":UsedBatchRegisterController" as controller
+        participant ":MaterialRepo" as matr
+        participant ":MealRepo" as mr
+        participant ":MealMaterialRepo" as mmr
+        participant ":HistoryRepo" as hr
+
+        user -> menu: registerUsedBatch()
+        menu -> controller: new RegistertUsedBatchController()
+        controller -> mr: getApprovedMeals()
+        controller -> ui: showApprovedMeals()
+        controller --> user: Asks what meal to refer
+        user -> controller: code = insert meal code (date + type)
+        controller --> controller: mealCode = getsMeal(code)
+
+        loop while (stat != 1)
+            loop while(op != -1)
+                controller -> matr: showMaterialList()
+
+                controller --> ui: request food code
+                user -> controller: foodCode = introduz codigo do alimento
+
+                controller --> ui: request quantity
+                user -> controller: quantity = inserts quantity
+
+                controller --> ui: requests batch code
+                user -> controller: batchCode = inserts batch code
+
+                controller -> mmr: addMaterial(mealCode, foodCode, quantity, batchCode)
+                controller -> ui: Procceed?(0) Terminate(-1)
+
+                user -> controller: op = option
+            end
+
+            controller -> ui: display meal information
+            controller -> ui: display in use batches
+            controller -> ui: request confirmation
+
+            controller -> ui: Terminate?(0) Continue adding?(1)
+            user -> controller: stat = option
+        end
+
+        controller -> ui: Confirmation Message
