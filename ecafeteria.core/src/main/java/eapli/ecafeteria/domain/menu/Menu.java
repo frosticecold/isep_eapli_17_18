@@ -26,22 +26,49 @@ public class Menu {
      * Planned period of a menu, starting day is on a Monday and ending day is
      * on a Sunday. Seven working days total planned
      */
-    private Period plannedPeriod;
+    private Period period;
 
     /**
      *
-     *
+     * @author Raúl Correia
      * @param startingDayOfWeek Starting working day of a week in format
      * dd-MM-yyyy
      * @param endingDayOfWeek Starting working day of a week in format
      * dd-MM-yyyy
      */
-    public Menu(final String startingDayOfWeek, final String endingDayOfWeek) {
+    public Menu(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         menuState = MenuState.UNPUBLISHED;
         setPeriod(startingDayOfWeek, endingDayOfWeek);
     }
 
-    private void setPeriod(final String startingDayOfWeek, final String endingDayOfWeek) {
-        plannedPeriod = new Period(startingDayOfWeek, endingDayOfWeek);
+    /**
+     * Method that creates a period and saves as a member variable Throws
+     * IllegalArgumentException in case something goes wrong
+     *
+     * @author Raúl Correia
+     * @param startingDayOfWeek
+     * @param endingDayOfWeek
+     */
+    private void setPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
+        period = new Period(startingDayOfWeek, endingDayOfWeek);
+    }
+
+    /**
+     * Method that returns if the menu is critical or not
+     *
+     * @author Raúl Correia
+     * @return true if critical by business logic , false ifnot
+     */
+    public boolean isCritical() {
+        return period.isCritical();
+    }
+
+    /**
+     * Method that changes the state of a menu to published
+     *
+     * @author Raúl Correia
+     */
+    public void publish() {
+        menuState = MenuState.PUBLISHED;
     }
 }

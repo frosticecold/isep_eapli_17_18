@@ -573,9 +573,33 @@ public final class DateTime {
     }
 
     /**
+     * Returns the difference in days between two dates
+     *
+     * @author Raúl Correia (2DC, EAPLI 2017/2018)
+     * @param start Starting Date
+     * @param end Ending Date
+     * @return Days in long
+     */
+    public static long getDifferenceInDays(final Calendar start, final Calendar end) {
+        return ChronoUnit.DAYS.between(start.toInstant(), end.toInstant());
+    }
+
+    /**
+     * Returns the difference in hours between two dates
+     *
+     * @author Raúl Correia (2DC, EAPLI 2017/2018)
+     * @param start Starting Date
+     * @param end Ending Date
+     * @return Days in long
+     */
+    public static long getDifferenceInHours(final Calendar start, final Calendar end) {
+        return ChronoUnit.HOURS.between(start.toInstant(), end.toInstant());
+    }
+
+    /**
      * checks if the difference between two calenders are n number of days
      *
-     * @author Raúl Correia (2DC, EAPLI 2017/2018
+     * @author Raúl Correia (2DC, EAPLI 2017/2018)
      * @param start Calendar starting date
      * @param end Calendar ending date
      * @param n number of days to test
@@ -583,7 +607,7 @@ public final class DateTime {
      *
      */
     public static boolean validateDifferenceInDays(final Calendar start, final Calendar end, final long n) {
-        long numDays = ChronoUnit.DAYS.between(start.toInstant(), end.toInstant());
-        return numDays == n;
+        return getDifferenceInDays(start, end) == n;
     }
+
 }

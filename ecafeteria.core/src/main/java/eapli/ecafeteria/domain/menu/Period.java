@@ -42,25 +42,37 @@ public class Period {
      * 7 Working days (6 is difference between two dates)
      */
     private static final long WORKING_DAYS = 6;
+    /**
+     * Business Rules of how many hours to consider a Menu Critical
+     */
+    private static final int HOURS_TO_BE_CRITICAL = 72;
 
     private Period() {
     }
 
     /**
-     * Constructs a Working week Period based on the dd-MM-yyy format for each
-     * string
+     * Constructs a Working week Period based in the dd-MM-yyy format for each
+     * date string
      *
-     * @param startingDayOfWeek
-     * @param endingDayOfWeek
+     * @author Raúl Correia
+     * @param startingDayOfWeek Starting day String in the dd-MM-yyy format
+     * @param endingDayOfWeek Ending day String in the dd-MM-yyyy format
      */
     protected Period(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
-        try {
-            setWorkingPeriod(startingDayOfWeek, endingDayOfWeek);
-        } catch (IllegalArgumentException ex) {
-            throw new IllegalArgumentException(ex.getMessage());
-        }
+        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek);
+
     }
 
+    /**
+     * Method that saves the dates strings the the class member variables
+     * Verifies if each string matches with the regex expressions Calls
+     * verification if the dates are also valid within business rules
+     *
+     * @author Raúl Correia
+     * @param startingDayOfWeek Starting day String in the dd-MM-yyy format
+     * @param endingDayOfWeek Ending day String in the dd-MM-yyy format
+     * @throws IllegalArgumentException if any date is invalid
+     */
     private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         Pattern regex = Pattern.compile(VALID_DATE_FORMAT);
         Matcher match = regex.matcher(startingDayOfWeek);
@@ -99,5 +111,17 @@ public class Period {
         if (!DateTime.validateDifferenceInDays(startingCalendar, endingCalender, WORKING_DAYS)) {
             throw new IllegalArgumentException("Can only select 7 working days, not more.");
         }
+    }
+
+    public boolean isCritical() {
+        Calendar now = DateTime.now();
+        long hours = DateTime.getDifferenceInHours(now, startingCalendar);
+        /*
+            ========================================
+            To be verified with client if hours >= 0
+            or accepts considering critical with negative hours (late publish)
+            ========================================
+         */
+        return hours <= HOURS_TO_BE_CRITICAL;
     }
 }
