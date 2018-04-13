@@ -11,7 +11,7 @@ REGRAS DE NEGÒCIO
 __________________
 
 * Verificar estado de reserva
-* Alterar estado da reserva (por averiguar)
+
 
 _______________
 
