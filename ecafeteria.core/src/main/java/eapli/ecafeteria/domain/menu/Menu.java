@@ -12,8 +12,8 @@ package eapli.ecafeteria.domain.menu;
 public class Menu {
 
     /**
-     * Menu state of this Menu It has two possible 
-     * By default when a menu is created, it is unpublished
+     * Menu state of this Menu It has two possible By default when a menu is
+     * created, it is unpublished
      * <p>
      * # Published
      * <p>
@@ -38,10 +38,10 @@ public class Menu {
      */
     public Menu(final String startingDayOfWeek, final String endingDayOfWeek) {
         menuState = MenuState.UNPUBLISHED;
+        setPeriod(startingDayOfWeek, endingDayOfWeek);
     }
 
     private void setPeriod(final String startingDayOfWeek, final String endingDayOfWeek) {
-        
-        
+        plannedPeriod = new Period(startingDayOfWeek, endingDayOfWeek);
     }
 }
