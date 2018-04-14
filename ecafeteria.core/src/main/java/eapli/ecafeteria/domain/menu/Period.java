@@ -39,10 +39,10 @@ public class Period {
      */
     private Calendar endingCalendar;
 
-    private static String DAY_FORMAT = "\\d\\d";
-    private static String MONTH_FORMAT = "\\d\\d";
-    private static String YEAR_FORMAT = "\\d{4}";
-    private static String VALID_DATE_FORMAT = DAY_FORMAT + '-' + MONTH_FORMAT + '-' + YEAR_FORMAT;
+    private static final String DAY_FORMAT = "\\d\\d";
+    private static final String MONTH_FORMAT = "\\d\\d";
+    private static final String YEAR_FORMAT = "\\d{4}";
+    public static final String PERIOD_VALID_DATE_FORMAT = DAY_FORMAT + '-' + MONTH_FORMAT + '-' + YEAR_FORMAT;
     /**
      * 7 Working days (6 is difference between two dates)
      */
@@ -69,7 +69,7 @@ public class Period {
      * @param endingDayOfWeek Ending day String in the dd-MM-yyyy format
      */
     protected Period(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
-        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, VALID_DATE_FORMAT);
+        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, PERIOD_VALID_DATE_FORMAT);
 
     }
 

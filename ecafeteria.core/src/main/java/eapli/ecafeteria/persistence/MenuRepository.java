@@ -18,5 +18,5 @@ public interface MenuRepository extends DataRepository<Menu, Long> {
     
     Iterable<Menu> listValidMenus();
     
-    Optional<Menu> findMenuWithinPeriod(Calendar initialDate, Calendar finalDate);
+    Optional<Menu> findMenuWithinPeriod(final String initialDate,final String endDate, final String dateFormat);
 }
