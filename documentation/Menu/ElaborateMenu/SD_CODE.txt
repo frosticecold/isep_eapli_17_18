@@ -1,4 +1,4 @@
-title UC - Elaborate Menu
+title UC - Elaborate Menu Application Settings
 
 #CreateUI
 User->ElaborateMenuUI:show()
@@ -6,7 +6,10 @@ ElaborateMenuUI-->ElaborateMenuController:create
 
 #Create MenuRepo
 ElaborateMenuController->PersistanceContext:menuRepo=repositories().menu()
-PersistanceContext-->RepositoryFactory:create
+PersistanceContext->Application:Application.settings().getRepositoryFactory()
+Application-->PersistanceContext:SETTINGS
+PersistanceContext->RepositoryFactory:(RepositoryFactory) Class.forName(factoryClassName).newInstance()
+RepositoryFactory-->PersistanceContext:Factory
 RepositoryFactory-->MenuRepository:create
 #MenuRepository-->ElaborateMenuController:
 
