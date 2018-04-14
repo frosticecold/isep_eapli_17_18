@@ -12,6 +12,8 @@ __________________
 REGRAS DE NEGÒCIO
 __________________
 
+
+* Fica registado o id da reserva, o id do utilizador que levantou na reserva dentro do registo de entregas de refeições da sessão
 * Reserva só pode ser entregue, se tiver o estado "Reserved". Ficando registado no "DeliveryRegistry"
 * Estado de reserva será alterado (estado - "Served") diretamente no repositorio depois do registo da entrega da refeição
 _______________
