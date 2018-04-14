@@ -35,5 +35,6 @@ public final class ECafeteriaBackoffice {
             final MainMenu menu = new MainMenu();
             menu.mainLoop();
         }
+        System.exit(0);
     }
 }
