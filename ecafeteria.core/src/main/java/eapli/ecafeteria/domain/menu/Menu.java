@@ -5,12 +5,26 @@
  */
 package eapli.ecafeteria.domain.menu;
 
+import com.sun.istack.internal.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
+@Entity
+@Table(name = "MENU")
 public class Menu {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idmenu")
+    private Long id;
     /**
      * Menu state of this Menu It has two possible By default when a menu is
      * created, it is unpublished
@@ -20,13 +34,23 @@ public class Menu {
      * # Unpublished
      *
      */
+    @NotNull
+    @Column(name = "menustate")
     private MenuState menuState;
 
     /**
      * Planned period of a menu, starting day is on a Monday and ending day is
      * on a Sunday. Seven working days total planned
      */
+    @NotNull
+    @Column(name = "period")
     private Period period;
+
+    /**
+     * Protected Empty constructor ORM
+     */
+    protected Menu() {
+    }
 
     /**
      *
