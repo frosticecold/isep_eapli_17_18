@@ -1,6 +1,6 @@
 package eapli.ecafeteria.app.pos.console.presentation;
 
-import eapli.cafeteria.app.pos.console.application.RegisterMealDeliveryController;
+import eapli.ecafetaria.application.pos.RegisterMealDeliveryController;
 
 /**
  *
