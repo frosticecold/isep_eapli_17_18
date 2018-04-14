@@ -5,6 +5,7 @@
  */
 package eapli.cafeteria.domain.pos;
 
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -21,11 +22,20 @@ public class POS implements AggregateRoot<Long>, Serializable{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="IDPOS")
     private long idPOS; 
+    
+    @OneToMany
+    @JoinColumn(name="IDUSER")
+    private CafeteriaUser posUser;
 
     protected POS () {
+        //for ORM only
+    }
+    
+    public POS (CafeteriaUser posUser) {
         
-        //for ORM
+        this.posUser = posUser;
     }
 
     /**
