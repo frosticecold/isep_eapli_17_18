@@ -9,6 +9,12 @@ package eapli.ecafeteria.domain.menu;
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
+/**
+ * Menu state has two possible states
+ * <p>
+ * * Unpublished, Published
+ *
+ */
 public enum MenuState {
-    UNPUBLISHED,PUBLISHED;
+    UNPUBLISHED, PUBLISHED;
 }
