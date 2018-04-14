@@ -5,12 +5,16 @@
  */
 package eapli.ecafeteria.domain.menu;
 
-import com.sun.istack.internal.NotNull;
+import eapli.ecafeteria.domain.meal.Meal;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,6 +25,11 @@ import javax.persistence.Table;
 @Table(name = "MENU")
 public class Menu {
 
+    /*
+    ============================================================================
+                                    Variables
+    ============================================================================
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idmenu")
@@ -34,7 +43,6 @@ public class Menu {
      * # Unpublished
      *
      */
-    @NotNull
     @Column(name = "menustate")
     private MenuState menuState;
 
@@ -42,10 +50,17 @@ public class Menu {
      * Planned period of a menu, starting day is on a Monday and ending day is
      * on a Sunday. Seven working days total planned
      */
-    @NotNull
     @Column(name = "period")
     private Period period;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Meal> listOfMeals;
+
+    /*
+    ============================================================================
+                                    Functions
+    ============================================================================
+     */
     /**
      * Protected Empty constructor ORM
      */
@@ -62,6 +77,7 @@ public class Menu {
      */
     public Menu(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         menuState = MenuState.UNPUBLISHED;
+        listOfMeals = new LinkedList<>();
         setPeriod(startingDayOfWeek, endingDayOfWeek);
     }
 

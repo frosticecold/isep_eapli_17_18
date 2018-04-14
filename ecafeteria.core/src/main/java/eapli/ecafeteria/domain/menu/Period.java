@@ -34,7 +34,7 @@ public class Period {
      */
     private Calendar endingCalendar;
 
-    private static String DAY_FORMAT = "\\d\\d)";
+    private static String DAY_FORMAT = "\\d\\d";
     private static String MONTH_FORMAT = "\\d\\d";
     private static String YEAR_FORMAT = "\\d{4}";
     private static String VALID_DATE_FORMAT = DAY_FORMAT + '-' + MONTH_FORMAT + '-' + YEAR_FORMAT;
@@ -92,6 +92,15 @@ public class Period {
         validateBusinessWorkingDays(startingCalendar, endingCalendar);
     }
 
+    /**
+     * Method that validates if a startingdate and endingdate is within business
+     * rules
+     *
+     * @author Raúl Correia
+     * @param startingCalendar
+     * @param endingCalender
+     * @throws IllegalArgumentException
+     */
     private void validateBusinessWorkingDays(Calendar startingCalendar, Calendar endingCalender) throws IllegalArgumentException {
         if (startingCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
             throw new IllegalArgumentException("Starting working day should be MONDAY.");
@@ -113,6 +122,12 @@ public class Period {
         }
     }
 
+    /**
+     * Method that checks if a Period is considered Critical within Business
+     * Rules
+     *
+     * @return true if critical (less than 72hours), false ifnot.
+     */
     public boolean isCritical() {
         Calendar now = DateTime.now();
         long hours = DateTime.getDifferenceInHours(now, startingCalendar);
