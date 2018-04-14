@@ -81,6 +81,11 @@ public class Menu {
         setPeriod(startingDayOfWeek, endingDayOfWeek);
     }
 
+    /*
+    ============================================================================
+                                    Private Functions
+    ============================================================================
+     */
     /**
      * Method that creates a period and saves as a member variable Throws
      * IllegalArgumentException in case something goes wrong
@@ -93,6 +98,11 @@ public class Menu {
         period = new Period(startingDayOfWeek, endingDayOfWeek);
     }
 
+    /*
+    ============================================================================
+                                    Public Functions
+    ============================================================================
+     */
     /**
      * Method that returns if the menu is critical or not
      *
@@ -110,5 +120,14 @@ public class Menu {
      */
     public void publish() {
         menuState = MenuState.PUBLISHED;
+    }
+
+    /**
+     * Method that adds a Meal to a Menu
+     *
+     * @author Raúl Correia
+     */
+    public boolean addMeal(Meal m) {
+        return listOfMeals.add(m);
     }
 }

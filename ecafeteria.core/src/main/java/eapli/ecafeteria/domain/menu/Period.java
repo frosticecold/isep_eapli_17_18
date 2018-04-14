@@ -16,6 +16,11 @@ import java.util.regex.Pattern;
  */
 public class Period {
 
+    /*
+    ============================================================================
+                                    Variables
+    ============================================================================
+     */
     /**
      * Generic implementation of a working Period between two dates Business
      * rules dictates the starting date should be a Monday and ending date
@@ -47,6 +52,11 @@ public class Period {
      */
     private static final int HOURS_TO_BE_CRITICAL = 72;
 
+    /*
+    ============================================================================
+                                    Functions
+    ============================================================================
+     */
     private Period() {
     }
 
@@ -63,6 +73,11 @@ public class Period {
 
     }
 
+    /*
+    ============================================================================
+                                    Private Functions
+    ============================================================================
+     */
     /**
      * Method that saves the dates strings the the class member variables
      * Verifies if each string matches with the regex expressions Calls
@@ -122,13 +137,18 @@ public class Period {
         }
     }
 
+    /*
+    ============================================================================
+                                    Protected Functions
+    ============================================================================
+     */
     /**
      * Method that checks if a Period is considered Critical within Business
      * Rules
      *
      * @return true if critical (less than 72hours), false ifnot.
      */
-    public boolean isCritical() {
+    protected boolean isCritical() {
         Calendar now = DateTime.now();
         long hours = DateTime.getDifferenceInHours(now, startingCalendar);
         /*
