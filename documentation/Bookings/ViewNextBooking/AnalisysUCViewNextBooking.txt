@@ -1,0 +1,31 @@
+____________________________________________
+
+		ANALISYS
+
+____________________________________________
+
+Client meeting:
+
+* The bookings must be always visible
+* Only the bookings at the state of "booked" should be displayed to the user
+* The date, state and meal of the booking. 
+
+____________________________________________
+
+		BUSINESS RULES
+
+____________________________________________
+
+
+- The booking must be in the stated of booked
+- The booking must always be visible
+
+____________________________________________
+
+		UNIT TESTS
+
+____________________________________________
+
+
+- testBookedState
+- testBookingDate
