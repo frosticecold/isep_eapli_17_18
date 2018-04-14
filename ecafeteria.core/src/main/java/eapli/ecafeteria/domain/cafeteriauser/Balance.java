@@ -1,5 +1,7 @@
 package eapli.ecafeteria.domain.cafeteriauser;
 
+import eapli.framework.domain.money.Money;
+import java.util.Currency;
 import javax.persistence.Embeddable;
 
 /**
@@ -11,13 +13,13 @@ public class Balance {
 
     private static final long serialVersionUID = 1L;
 
-    private float currentBalance;
+    private Money currentBalance;
 
     /**
      *
      */
     protected Balance() {
-        this.currentBalance = 0;
+        this.currentBalance = new Money(0, Currency.getInstance("EUR"));
     }
     
     /**
@@ -25,13 +27,13 @@ public class Balance {
      * @param credits is the new value to add to the currentBalance
      * @author Mario Dias
      */
-    public void addCredits(Credits credits) {
-        this.currentBalance += credits.getCreditsAmount();
+    public void addCredits(Money credits) {
+        this.currentBalance.add(credits);
     }
 
     @Override
     public String toString() {
-        return String.format("%.2f", currentBalance);
+        return currentBalance.toString();
     }
 
 }

@@ -6,20 +6,21 @@
 package eapli.ecafeteria.domain.Transaction;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.cafeteriauser.Credits;
+import eapli.framework.domain.money.Money;
+
 
 /**
  *
  * @author MarioDias
  */
-public class CreditRecharge extends Transaction<CafeteriaUser, Credits>{
+public class CreditRecharge extends Transaction<CafeteriaUser, Money>{
 
-    public CreditRecharge(CafeteriaUser user, Credits credits) {
+    public CreditRecharge(CafeteriaUser user, Money credits) {
         super(user, credits);
     }
 
     @Override
-    public boolean movement(CafeteriaUser user, Credits credits) {
+    public boolean movement(CafeteriaUser user, Money credits) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
