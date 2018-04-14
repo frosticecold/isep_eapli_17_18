@@ -16,9 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import eapli.framework.util.DateTime;
-import static org.junit.Assert.assertTrue;
-
 /**
  *
  * @author Paulo Gandra Sousa
