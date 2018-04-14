@@ -69,7 +69,20 @@ public class Period {
      * @param endingDayOfWeek Ending day String in the dd-MM-yyyy format
      */
     protected Period(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
-        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek);
+        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, VALID_DATE_FORMAT);
+
+    }
+
+    /**
+     * Constructs a Working week Period based in a custom format for each
+     * date string
+     *
+     * @author Raúl Correia
+     * @param startingDayOfWeek Starting day String in the dd-MM-yyy format
+     * @param endingDayOfWeek Ending day String in the dd-MM-yyyy format
+     */
+    protected Period(final String startingDayOfWeek, final String endingDayOfWeek, String formatData) throws IllegalArgumentException {
+        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, formatData);
 
     }
 
@@ -88,8 +101,8 @@ public class Period {
      * @param endingDayOfWeek Ending day String in the dd-MM-yyy format
      * @throws IllegalArgumentException if any date is invalid
      */
-    private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
-        Pattern regex = Pattern.compile(VALID_DATE_FORMAT);
+    private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek, final String dataFormat) throws IllegalArgumentException {
+        Pattern regex = Pattern.compile(dataFormat);
         Matcher match = regex.matcher(startingDayOfWeek);
         if (match.find()) {
             startingCalendar = DateTime.parseDate(match.group(0));
@@ -102,7 +115,7 @@ public class Period {
             endingCalendar.setFirstDayOfWeek(Calendar.MONDAY);
         }
         if (startingCalendar == null || endingCalendar == null) {
-            throw new IllegalArgumentException("Error, date format should be in dd-MM-yyyy");
+            throw new IllegalArgumentException("Error, date format.");
         }
         validateBusinessWorkingDays(startingCalendar, endingCalendar);
     }

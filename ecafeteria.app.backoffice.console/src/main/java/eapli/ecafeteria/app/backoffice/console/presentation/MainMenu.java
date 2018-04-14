@@ -88,9 +88,16 @@ public class MainMenu extends AbstractUI {
     private static final int REPORTING_HIGH_CALORIES_DISHES_OPTION = 2;
     private static final int REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION = 3;
 
+    // MENU
+    private static final int MENU_EDIT_CREATE_OPTION = 1;
+    private static final int MENU_COPY_OPTION = 2;
+    private static final int MENU_PUBLISH_OPTION = 3;
+    private static final int MENU_PREVIEW_OPTION = 4;
+
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
+    private static final int MENU_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
     private static final int DISH_TYPES_OPTION = 5;
     private static final int TRACEABILITY_OPTION = 6;
@@ -133,7 +140,7 @@ public class MainMenu extends AbstractUI {
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.add(VerticalSeparator.separator());
         }
-
+        //==========================ADMIN MENU==================
         if (AuthorizationService.session().authenticatedUser()
                 .isAuthorizedTo(ActionRight.ADMINISTER)) {
             final Menu usersMenu = buildUsersMenu();
@@ -143,14 +150,20 @@ public class MainMenu extends AbstractUI {
             mainMenu.add(new SubMenu(SETTINGS_OPTION, settingsMenu,
                     new ShowVerticalSubMenuAction(settingsMenu)));
         }
+        //==========================KITCHEN MENU==================
         if (AuthorizationService.session().authenticatedUser()
                 .isAuthorizedTo(ActionRight.MANAGE_KITCHEN)) {
             final Menu kitchenMenu = buildKitchenMenu();
             mainMenu.add(new SubMenu(TRACEABILITY_OPTION, kitchenMenu,
                     new ShowVerticalSubMenuAction(kitchenMenu)));
         }
+        //==========================MANAGE MENU==================
         if (AuthorizationService.session().authenticatedUser()
                 .isAuthorizedTo(ActionRight.MANAGE_MENUS)) {
+            final Menu menuOfMenus = buildMenuOfMenus();
+            mainMenu.add(new SubMenu(MENU_OPTION, menuOfMenus,
+                    new ShowVerticalSubMenuAction(menuOfMenus)));
+
             final Menu dishTypeMenu = buildDishMenu();
             mainMenu.add(new SubMenu(DISH_TYPES_OPTION, dishTypeMenu,
                     new ShowVerticalSubMenuAction(dishTypeMenu)));
@@ -266,6 +279,15 @@ public class MainMenu extends AbstractUI {
                 "Dishes per Caloric Category (as tuples)",
                 () -> new ReportDishesPerCaloricCategoryAsTuplesUI().show()));
 
+        menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
+
+        return menu;
+    }
+
+    private Menu buildMenuOfMenus() {
+        final Menu menu = new Menu("Menus >");
+
+        //menu.add(new MenuItem(MENU_EDIT_CREATE_OPTION, "Edit/Create Menu"));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
