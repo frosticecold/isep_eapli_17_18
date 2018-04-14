@@ -1,10 +1,12 @@
 package eapli.ecafetaria.application.pos;
 
+import eapli.framework.application.Controller;
+
 /**
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class RegisterMealDeliveryController {
+public class RegisterMealDeliveryController implements Controller {
         
     /** Construtor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
     
