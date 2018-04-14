@@ -21,9 +21,7 @@ public class RegisterMealDeliveryController {
      * @return 
      */    
     public boolean registerNewMealDelivery(long idUser, long idBooking) {
-        
-        //recordNewMealDelivery(pos, idBooking); //records the new delivery on the delivery registry of this session
-        
+          
         //code to fetch the BookingsRepository on the PersistenceContext
         
         //changeState(idBooking, bookingsRepo); //will change the state of the booking delivered

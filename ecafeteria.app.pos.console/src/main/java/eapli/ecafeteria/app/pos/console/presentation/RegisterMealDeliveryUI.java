@@ -16,4 +16,9 @@ public class RegisterMealDeliveryUI {
         //create controller
         this.ctrl = new RegisterMealDeliveryController();
     }
+    
+    public void recordNewMealDelivery() {
+
+        //recordNewMealDelivery(pos, idBooking); //records the new delivery on the delivery registry of this session 
+    }
 }
