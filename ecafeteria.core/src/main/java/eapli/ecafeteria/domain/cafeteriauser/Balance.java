@@ -21,7 +21,8 @@ public class Balance implements ValueObject, Serializable{
      *
      */
     protected Balance() {
-        this.currentBalance = new Money(0, Currency.getInstance("EUR"));
+//        this.currentBalance = new Money(0, Currency.getInstance("EUR"));
+        this.currentBalance = Money.euros(0);
     }
 
     /**

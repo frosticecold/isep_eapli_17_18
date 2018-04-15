@@ -31,5 +31,7 @@ public class ChargeCardController implements Controller {
         return user.addCredits(creditToCharge);
     }
     
-    
+    public CafeteriaUser save (CafeteriaUser user){
+        return service.save(user);
+    }
 }
