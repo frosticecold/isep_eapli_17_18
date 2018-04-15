@@ -122,7 +122,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      *
      * @param m
      */
-    private void askAddOrRemove(Menu m) {
+    private void menuAddOrRemove(Menu m) {
         /**
          * Ask for add or remove
          */
@@ -190,10 +190,48 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
     /**
      * Remove
      */
-    private void removeMeals(Menu m) {
+    private void menuRemoveMeal(Menu m) {
         showMeals(m);
         /**
-         * Ask to remove
+         * Ask what to remove
          */
+
+        int option = 0;
+        /**
+         * if valid
+         */
+        Meal meal = null;
+        m.removeMeal(meal);
+    }
+
+    private boolean continueEditing() {
+        /**
+         * Ask to continue editing?
+         */
+        int option = 0;
+        if (option == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void askForConfirmation(Menu m) {
+        /**
+         * Ask for confirmation
+         */
+
+        /**
+         * Y/N
+         */
+        boolean save = Console.readBoolean("Confirm changes?");
+        if (save) {
+            Menu othermenu = theController.saveMenu(m);
+            if (othermenu == null) {
+                System.out.println("Problems saving menu...");
+            }
+
+        }
+
     }
 }
