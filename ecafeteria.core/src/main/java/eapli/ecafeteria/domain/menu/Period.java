@@ -7,11 +7,12 @@ package eapli.ecafeteria.domain.menu;
 
 import eapli.framework.date.DateEAPLI;
 import eapli.framework.util.DateTime;
+import java.io.Serializable;
 import java.util.Calendar;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
@@ -19,7 +20,7 @@ import javax.persistence.Transient;
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
 @Embeddable
-public class Period {
+public class Period implements Serializable {
 
     /*
     ============================================================================
@@ -37,26 +38,16 @@ public class Period {
      * Starting date of a working Period Business Rules says it should be a
      * monday
      */
-    @AttributeOverrides({
-        @AttributeOverride(name = "dday", column = @Column(name = "start_day"))
-        ,
-    @AttributeOverride(name = "dmonth", column = @Column(name = "start_month"))
-        ,
-    @AttributeOverride(name = "dyear", column = @Column(name = "start_year"))
-    })
-    private DateEAPLI startingDate;
+    @Column(name = "startdate")
+    @Temporal(TemporalType.DATE)
+    private Calendar startingDate;
 
     /**
      * Ending date of working Period Business Rules says it should be a sunday
      */
-    @AttributeOverrides({
-        @AttributeOverride(name = "dday", column = @Column(name = "end_day"))
-        ,
-    @AttributeOverride(name = "dmonth", column = @Column(name = "end_month"))
-        ,
-    @AttributeOverride(name = "dyear", column = @Column(name = "end_year"))
-    })
-    private DateEAPLI endingDate;
+    @Column(name = "enddate")
+    @Temporal(TemporalType.DATE)
+    private Calendar endingDate;
 
     /**
      * 7 Working days (6 is difference between two dates)
@@ -74,7 +65,7 @@ public class Period {
                                     Functions
     ============================================================================
      */
-    private Period() {
+    protected Period() {
     }
 
     /**
@@ -92,13 +83,12 @@ public class Period {
 
     /**
      * Constructs a Working week Period based in a custom format for each date
-     * string
-     * Not yet implemented, use simpledataformat
+     * string Not yet implemented, use simpledataformat
      *
      * @author Raúl Correia
      * @param startingDayOfWeek Starting day String in the dd-MM-yyy format
      * @param endingDayOfWeek Ending day String in the dd-MM-yyyy format
-     * @param dataFormatRegex
+     * @param simpledataformat
      */
     protected Period(final String startingDayOfWeek, final String endingDayOfWeek, String simpledataformat) throws IllegalArgumentException {
         setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, simpledataformat);
@@ -122,8 +112,8 @@ public class Period {
      */
     private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek, final String simpledataformat) throws IllegalArgumentException {
 
-        startingDate = new DateEAPLI(startingDayOfWeek,simpledataformat);
-        endingDate = new DateEAPLI(endingDayOfWeek,simpledataformat);
+        startingDate = DateTime.parseDate(startingDayOfWeek, simpledataformat);
+        endingDate = DateTime.parseDate(endingDayOfWeek, simpledataformat);
         validateBusinessWorkingDays(startingDate, endingDate);
     }
 
@@ -132,18 +122,16 @@ public class Period {
      * rules
      *
      * @author Raúl Correia
-     * @param startingDate
-     * @param endingDate
+     * @param start
+     * @param end
      * @throws IllegalArgumentException
      */
-    private void validateBusinessWorkingDays(DateEAPLI startingDate, DateEAPLI endingDate) throws IllegalArgumentException {
-        final Calendar start = startingDate.toCalendar();
-        final Calendar end = endingDate.toCalendar();
+    private void validateBusinessWorkingDays(Calendar start, Calendar end) throws IllegalArgumentException {
 
-        if (!startingDate.isWhatTypeOfDay(Calendar.SUNDAY)) {
+        if (start.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             throw new IllegalArgumentException("Starting working day should be SUNDAY.");
         }
-        if (!endingDate.isWhatTypeOfDay(Calendar.SATURDAY)) {
+        if (end.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
             throw new IllegalArgumentException("Starting working day should be SATURDAY.");
         }
         if (DateTime.isAfterNow(start)) {
@@ -173,7 +161,7 @@ public class Period {
      */
     protected boolean isCritical() {
         Calendar now = DateTime.now();
-        long hours = DateTime.getDifferenceInHours(now, startingDate.toCalendar());
+        long hours = DateTime.getDifferenceInHours(now, startingDate);
         /*
             ========================================
             To be verified with client if hours >= 0

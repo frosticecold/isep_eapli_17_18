@@ -5,15 +5,11 @@
  */
 package eapli.framework.date;
 
-import eapli.framework.domain.ddd.ValueObject;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
 
 /**
  * Thin Date implementation for EAPLI Ecafeteria Project use
@@ -24,24 +20,18 @@ import javax.persistence.Transient;
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
-@Embeddable
-public class DateEAPLI implements ValueObject {
+public class DateEAPLI {
 
     /*
     ============================================================================
                                     Variables
     ============================================================================
      */
-    @Column(name = "dday")
     private int m_day;
-    @Column(name = "dmonth")
     private int m_month;
-    @Column(name = "dyear")
     private int m_year;
 
-    @Transient
     public static final String SIMPLE_DATA_FORMAT = "dd-MM-yyyy";
-    //@Transient
     public static final String DEFAULT_DATE_FORMAT_REGEX = "\\d{2}-\\d{2}-\\d{4}";
 
     /*
@@ -49,13 +39,6 @@ public class DateEAPLI implements ValueObject {
                                     Functions
     ============================================================================
      */
-    /**
-     * Constructor for ORM
-     */
-    protected DateEAPLI() {
-
-    }
-
     /**
      * Private constructor for inner functions that does no validation
      *
@@ -72,7 +55,7 @@ public class DateEAPLI implements ValueObject {
 
     }
 
-    private DateEAPLI(final Calendar calendar) {
+    public DateEAPLI(final Calendar calendar) {
         m_day = calendar.get(Calendar.DAY_OF_MONTH);
         m_month = calendar.get(Calendar.MONTH) + 1;
         m_year = calendar.get(Calendar.YEAR);
@@ -87,7 +70,7 @@ public class DateEAPLI implements ValueObject {
      * @param date String representing a date
      * @param simpledataformat Format that the date is represented in
      */
-    public DateEAPLI(final String date,final String simpledataformat) throws IllegalArgumentException {
+    public DateEAPLI(final String date, final String simpledataformat) throws IllegalArgumentException {
         parseDateAsString(date);
 
     }
@@ -118,7 +101,7 @@ public class DateEAPLI implements ValueObject {
      * @throws IllegalArgumentException
      */
     private void parseDateAsString(final String date) throws IllegalArgumentException {
-        String finalformat ="[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}";
+        String finalformat = "[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}";
         Pattern p = Pattern.compile(finalformat);
         Matcher m = p.matcher(date);
 
@@ -189,7 +172,7 @@ public class DateEAPLI implements ValueObject {
      * @return Calendar with current date
      */
     public final Calendar toCalendar() {
-        return new GregorianCalendar(m_year, m_month, m_day);
+        return new GregorianCalendar(m_year, m_month - 1, m_day);
     }
 
     /**
@@ -270,7 +253,7 @@ public class DateEAPLI implements ValueObject {
         return new DateEAPLI(start);
     }
 
-    public DateEAPLI getStartingOfWeek() {
+    public DateEAPLI getStartingDayOfWeek() {
         final Calendar cal = toCalendar();
         final int weeks = cal.getWeeksInWeekYear();
         cal.clear();
@@ -281,9 +264,9 @@ public class DateEAPLI implements ValueObject {
         return new DateEAPLI(cal);
     }
 
-    public DateEAPLI getEndingOfWeek() {
+    public DateEAPLI getEndingDayOfWeek() {
         final int DAYS_TILL_END_OF_WEEK = 6;
-        final Calendar cal = getStartingOfWeek().toCalendar();
+        final Calendar cal = getStartingDayOfWeek().toCalendar();
         cal.add(Calendar.DATE, DAYS_TILL_END_OF_WEEK);
         return new DateEAPLI(cal);
 

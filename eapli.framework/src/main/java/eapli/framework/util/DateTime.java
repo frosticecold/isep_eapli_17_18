@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  */
 public final class DateTime {
 
+    public static final String DEFAULT_SIMPLE_DATA_FORMAT = "dd-MM-yyyy";
     private static final int DAYS_TILL_END_OF_WEEK = 6;
 
     private DateTime() {
@@ -186,7 +187,7 @@ public final class DateTime {
             final Date date = df.parse(aDateString);
             return dateToCalendar(date);
         } catch (final ParseException ex) {
-            Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

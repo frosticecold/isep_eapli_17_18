@@ -51,6 +51,7 @@ public class Menu {
      * Planned period of a menu, starting day is on a Monday and ending day is
      * on a Sunday. Seven working days total planned
      */
+    @Column(name = "period")
     private Period period;
 
     @OneToMany(cascade = CascadeType.ALL)
