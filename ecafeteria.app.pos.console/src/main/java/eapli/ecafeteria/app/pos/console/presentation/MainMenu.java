@@ -110,7 +110,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildChargeMenu(){
         final Menu menu = new Menu("Chargings >");
         
-        //menu.add(new MenuItem(CHARGE_CARD_OPTION, "Charge Card", () -> new ChargeCardUI().show()));
+        menu.add(new MenuItem(CHARGE_CARD_OPTION, "Charge Card", () -> new ChargeCardUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
         
         return menu;
