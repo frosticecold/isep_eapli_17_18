@@ -5,10 +5,15 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.booking.Booking;
+import java.util.Optional;
+
 /**
  *
- * @author Beatriz Ferreira <1160701@isep.ipp.pt>
+ * @author João Rocha 1161838
  */
-public class BookingRepository {
+public interface BookingRepository {
+
+    public Optional<Booking> findNextBooking();
     
 }
