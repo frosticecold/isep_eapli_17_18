@@ -7,7 +7,7 @@ participant ":CafeteriaUserService" as srv
 participant ":PersistenceContext" as pcontext
 participant ":RepositoryFactory" as fact
 participant ":CafeteriaUserRepository" as userrep
-participant ":Credit" as credit
+participant ":Money" as credit
 participant ":Transaction" as tr
 participant ":CreditRecharge" as chrg
 
@@ -27,7 +27,7 @@ controller-->ccui:
 ccui-->user:Shows the cafeteria data and current balance
 user->ccui:Insert transaction value to charge card
 ccui->controller:chargeCafeteriaUserCard(user , creditToCharge)
-controller->credit:credit = create(valueToCharge)
+controller->credit:credit = create(valueToCharge, Currency.getInstance("EUR"))
 controller->chrg:transaction = create()
 controller->tr:transaction.movement(user , credit)
 tr->chrg:transaction.movement(user , credit)

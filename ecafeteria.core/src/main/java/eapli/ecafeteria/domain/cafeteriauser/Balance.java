@@ -21,14 +21,18 @@ public class Balance {
     protected Balance() {
         this.currentBalance = new Money(0, Currency.getInstance("EUR"));
     }
-    
+
     /**
      *
      * @param credits is the new value to add to the currentBalance
      * @author Mario Dias
      */
-    public void addCredits(Money credits) {
-        this.currentBalance.add(credits);
+    public boolean addCredits(Money credits) {
+        Money moneyAfterTransaction = this.currentBalance.add(credits);
+        if (moneyAfterTransaction.equals(currentBalance)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

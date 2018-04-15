@@ -2,8 +2,8 @@ package eapli.ecafeteria.domain.cafeteriauser;
 
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
+import eapli.framework.domain.money.Money;
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -39,10 +39,9 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
      */
     @OneToOne()
     private SystemUser systemUser;
-    
-    
+
     private Balance currentBalance;
-    
+
     public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber) {
         if (mecanographicNumber == null || user == null) {
             throw new IllegalArgumentException();
@@ -58,6 +57,10 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
 
     public SystemUser user() {
         return this.systemUser;
+    }
+
+    public boolean addCredits(Money credits) {
+        return currentBalance.addCredits(credits);
     }
 
     @Override
