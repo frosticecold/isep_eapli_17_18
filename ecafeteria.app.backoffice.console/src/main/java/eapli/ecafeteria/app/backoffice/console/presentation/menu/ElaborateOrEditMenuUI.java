@@ -16,7 +16,6 @@ import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -167,7 +166,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
         int option = Console.readInteger("What meal type:");
     }
 
-    private void showDishTypes() {
+    private DishType showDishTypes() {
         Iterable<DishType> listDishTyps = theController.getDishTypes();
         /**
          * Show dish types
@@ -185,6 +184,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             }
         }
         Iterable<Dish> dishesByDishType = theController.getDishesByDishType(dishtype);
+        return dishtype;
     }
 
     /**

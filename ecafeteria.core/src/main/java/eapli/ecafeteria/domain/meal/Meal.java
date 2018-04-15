@@ -6,14 +6,23 @@
 package eapli.ecafeteria.domain.meal;
 
 import eapli.framework.util.DateTime;
+import java.io.Serializable;
 import java.util.Calendar;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Version;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class Meal {
+@Entity
+public class Meal implements Serializable {
 
+    @Id
+    private Long id;
+    @Version
+    private Long version;
     /**
      * Date of a Meal
      *
