@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.application.menus;
 
+import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.menu.Menu;
@@ -18,6 +19,7 @@ import eapli.framework.date.DateEAPLI;
 import eapli.framework.util.DateTime;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -130,11 +132,15 @@ public class ElaborateOrEditMenuController implements Controller {
         return null;
     }
 
-    private Iterable<DishType> getDishTypes() {
+    public Iterable<DishType> getDishTypes() {
         if (listOfDishTypes == null) {
             listOfDishTypes = dishtyperepo.activeDishTypes();
         }
         return listOfDishTypes;
+    }
+    
+    public Iterable<Dish> getDishesByDishType(DishType dishtype){
+        return dishrepo.findByDishType(dishtype);
     }
 
 }

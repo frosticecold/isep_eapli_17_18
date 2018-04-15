@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import eapli.ecafeteria.domain.dishes.Dish;
+import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.persistence.DishRepository;
 import eapli.framework.domain.Designation;
 
@@ -20,4 +21,11 @@ class JpaDishRepository extends CafeteriaJpaRepositoryBase<Dish, Designation> im
 		params.put("name", name);
 		return matchOne("e.name=:name", params);
 	}
+
+    @Override
+    public Iterable<Dish> findByDishType(DishType dishtype) {
+        final Map<String,Object> params = new HashMap<>();
+        params.put("dishtype",dishtype);
+        return match("e.dishType=:dishtype",params);
+    }
 }

@@ -6,12 +6,17 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
 import eapli.ecafeteria.application.menus.ElaborateOrEditMenuController;
+import eapli.ecafeteria.domain.dishes.Dish;
+import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.util.Console;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,7 +86,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * <p>
      * Execution order : 3
      */
-    private Calendar askForWorkingDay(Menu m, Map<Integer, Calendar> workWeek) {
+    private Calendar askAndSelectWorkingDay(Menu m, Map<Integer, Calendar> workWeek) {
 
         /**
          * show working days
@@ -107,9 +112,88 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * @param m
      * @return
      */
-    private Meal addMeals(Meal m) {
+    private void showMeals(Menu m) {
+        /**
+         * Show meals
+         */
+    }
 
+    /**
+     * Ask to add or remove
+     *
+     * @param m
+     */
+    private void askAddOrRemove(Menu m) {
+        /**
+         * Ask for add or remove
+         */
+        int answer = 0;
+
+        /**
+         * if 1 = Add
+         */
+        addMeals(m);
+        /**
+         * if 2 = Remove
+         *
+         */
+        /**
+         * if 0 = Exit
+         */
+
+    }
+
+    /**
+     * Add
+     *
+     * @param menu
+     * @return
+     */
+    private Meal addMeals(Menu menu) {
+
+        showMealTypes();
         return null;
     }
 
+    private void showMealTypes() {
+        MealType[] mealtypes = MealType.values();
+        /**
+         * Show mealTypes
+         */
+
+        /**
+         * Ask for mealType
+         */
+        int option = Console.readInteger("What meal type:");
+    }
+
+    private void showDishTypes() {
+        Iterable<DishType> listDishTyps = theController.getDishTypes();
+        /**
+         * Show dish types
+         */
+
+        /**
+         * Select dishtype
+         */
+        int opcao = 0;
+        int index = 0;
+        DishType dishtype = null;
+        for (DishType dt : listDishTyps) {
+            if (opcao == index) {
+                dishtype = dt;
+            }
+        }
+        Iterable<Dish> dishesByDishType = theController.getDishesByDishType(dishtype);
+    }
+
+    /**
+     * Remove
+     */
+    private void removeMeals(Menu m) {
+        showMeals(m);
+        /**
+         * Ask to remove
+         */
+    }
 }
