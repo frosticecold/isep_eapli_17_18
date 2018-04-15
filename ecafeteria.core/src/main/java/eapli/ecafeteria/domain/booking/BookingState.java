@@ -7,8 +7,24 @@ package eapli.ecafeteria.domain.booking;
 
 /**
  *
- * @author Beatriz Ferreira <1160701@isep.ipp.pt>
+ * @author jpfr8
  */
-public class BookingState {
+public enum BookingState {
+    VALIDATED{
+        public String toString(){
+            return "booking is validated";
+        }
+    },
+    CANCELED{
+        public String toString(){
+            return "booking is canceled";
+        }
+    },
+    SERVED{
+        public String toString(){
+            return "booking was already served";
+        }
+    }
+    
     
 }
