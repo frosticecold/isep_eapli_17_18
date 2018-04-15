@@ -18,7 +18,7 @@ import eapli.framework.date.DateEAPLI;
 import eapli.framework.util.DateTime;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +35,8 @@ public class ElaborateOrEditMenuController implements Controller {
     private final MenuRepository menurepo;
     private final DishRepository dishrepo;
     private final DishTypeRepository dishtyperepo;
+    private Map<Integer, Calendar> mapOfWorkingDays;
+    private Calendar selectedDay;
 
     /**
      * Member variables
@@ -53,8 +55,18 @@ public class ElaborateOrEditMenuController implements Controller {
         menurepo = repositories.menus();
         dishrepo = repositories.dishes();
         dishtyperepo = repositories.dishTypes();
+        getDishTypes();
     }
 
+    /**
+     * First method to execute
+     *
+     * @author Raúl Correia
+     * @param initialDate String with initial Date
+     * @param finalDate String with final Date
+     * @param simpledataformat simple data format (dd-MM-yyyy)
+     * @return Menu if exists or create a new one
+     */
     public Menu createOrFindMenu(String initialDate, String finalDate, String simpledataformat) {
         Menu m = findMenu(initialDate, finalDate, simpledataformat);
         if (m == null) {
@@ -68,6 +80,30 @@ public class ElaborateOrEditMenuController implements Controller {
             m_menu = m;
         }
         return m_menu;
+    }
+
+    /**
+     * Returns the working days of a menu
+     *
+     * @param m
+     * @return
+     */
+    public Map<Integer, Calendar> getMenuWorkingDays(Menu m) {
+        if (m == null) {
+            return null;
+        }
+        mapOfWorkingDays = m.getWorkWeekDays();
+        return mapOfWorkingDays;
+    }
+
+    public Calendar selectDay(Integer dayIndex) {
+        selectedDay = mapOfWorkingDays.get(dayIndex);
+        return selectedDay;
+    }
+
+    public Calendar selectDay(Calendar cal) {
+        selectedDay = cal;
+        return selectedDay;
     }
 
     private Menu findMenu(String initialDate, String finalDate, String simpledataformat) {
@@ -95,7 +131,9 @@ public class ElaborateOrEditMenuController implements Controller {
     }
 
     private Iterable<DishType> getDishTypes() {
-        listOfDishTypes = dishtyperepo.activeDishTypes();
+        if (listOfDishTypes == null) {
+            listOfDishTypes = dishtyperepo.activeDishTypes();
+        }
         return listOfDishTypes;
     }
 

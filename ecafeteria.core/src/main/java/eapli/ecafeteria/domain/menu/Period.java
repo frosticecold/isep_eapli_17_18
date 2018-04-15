@@ -9,6 +9,9 @@ import eapli.framework.date.DateEAPLI;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
@@ -50,15 +53,16 @@ public class Period implements Serializable {
     private Calendar endingDate;
 
     /**
-     * 7 Working days (6 is difference between two dates)
-     */
-    @Transient
-    private static final long WORKING_DAYS = 6;
-    /**
      * Business Rules of how many hours to consider a Menu Critical
      */
     @Transient
     private static final int HOURS_TO_BE_CRITICAL = 72;
+
+    /**
+     * 7 Working days (6 is difference between two dates)
+     */
+    @Transient
+    public static final long WORKING_DAYS = 6;
 
     /*
     ============================================================================
@@ -170,4 +174,50 @@ public class Period implements Serializable {
          */
         return hours <= HOURS_TO_BE_CRITICAL;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.startingDate);
+        hash = 71 * hash + Objects.hashCode(this.endingDate);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Period other = (Period) obj;
+        if (!Objects.equals(this.startingDate, other.startingDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.endingDate, other.endingDate)) {
+            return false;
+        }
+        return true;
+    }
+
+    Map<Integer, Calendar> getWorkingDays() {
+        Map<Integer, Calendar> map = new LinkedHashMap<>();
+        Calendar cal = (Calendar) startingDate.clone();
+        int index = 0;
+        Calendar end = (Calendar) endingDate.clone();
+        end.add(Calendar.DATE, 1);
+        while (cal.get(Calendar.DAY_OF_YEAR) != end.get(Calendar.DAY_OF_YEAR)) {
+            map.put(index, cal);
+            index++;
+            cal = (Calendar) cal.clone();
+            cal.add(Calendar.DATE, 1);
+        }
+        return map;
+
+    }
+
 }
