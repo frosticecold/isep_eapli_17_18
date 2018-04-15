@@ -15,8 +15,16 @@ import java.util.Optional;
  * @author Rui Ribeiro <1150344@isep.ipp.pt>
  */
 public interface MenuRepository extends DataRepository<Menu, Long> {
-    
+
     Iterable<Menu> listValidMenus();
-    
-    Optional<Menu> findMenuWithinPeriod(final String initialDate,final String endDate, final String dateFormat);
+
+    /**
+     * Method that returns if exists a menu within a given period
+     *
+     *
+     * @param startDate Starting date
+     * @param endDate Ending date
+     * @return Menu if found, null ifnot
+     */
+    Optional<Menu> findMenuWithinPeriod(final Calendar startDate, final Calendar endDate);
 }

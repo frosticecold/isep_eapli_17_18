@@ -23,7 +23,7 @@ public class InMemoryMenuRepository extends InMemoryRepositoryWithLongPK<Menu> i
     }
 
     @Override
-    public Optional<Menu> findMenuWithinPeriod(final String initialDate,final String endDate, final String dateFormat) {
+    public Optional<Menu> findMenuWithinPeriod(final Calendar initialDate, final Calendar endDate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
             

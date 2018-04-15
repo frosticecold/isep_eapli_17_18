@@ -6,11 +6,17 @@
 package eapli.ecafeteria.domain.menu;
 
 import eapli.ecafeteria.domain.meal.Meal;
+import eapli.framework.domain.ddd.AggregateRoot;
+import java.io.Serializable;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +30,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "MENU")
-public class Menu {
+public class Menu implements AggregateRoot<Period>, Serializable {
 
     /*
     ============================================================================
@@ -44,6 +50,7 @@ public class Menu {
      * # Unpublished
      *
      */
+    @Embedded
     @Column(name = "menustate")
     private MenuState menuState;
 
@@ -51,6 +58,8 @@ public class Menu {
      * Planned period of a menu, starting day is on a Monday and ending day is
      * on a Sunday. Seven working days total planned
      */
+    @Embedded
+    @Column(name = "period")
     private Period period;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -104,6 +113,30 @@ public class Menu {
     ============================================================================
      */
     /**
+     * Get a map with all the calenders(dates) between the start and ending date
+     *
+     * @return
+     */
+    public Map<Integer, Calendar> getWorkWeekDays() {
+        return period.getWorkingDays();
+    }
+
+    /**
+     *
+     * @param day
+     * @return
+     */
+    public Iterable<Meal> getMealsByDay(Calendar day) {
+        List<Meal> listOfMealsByDate = new LinkedList<>();
+        for (Meal m : listOfMeals) {
+            if (m.isOnGivenDate(day)) {
+                listOfMealsByDate.add(m);
+            }
+        }
+        return listOfMealsByDate;
+    }
+
+    /**
      * Method that returns if the menu is critical or not
      *
      * @author Raúl Correia
@@ -126,8 +159,53 @@ public class Menu {
      * Method that adds a Meal to a Menu
      *
      * @author Raúl Correia
+     * @param m
+     * @return
      */
     public boolean addMeal(Meal m) {
         return listOfMeals.add(m);
     }
+
+    @Override
+    public boolean sameAs(Object other) {
+        if (!(other instanceof Menu)) {
+            return false;
+        }
+        final Menu othermenu = (Menu) other;
+        if (this == othermenu) {
+            return true;
+        }
+        return this.period.equals(othermenu.period);
+    }
+
+    @Override
+    public Period id() {
+        return period;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Menu other = (Menu) obj;
+        if (!Objects.equals(this.period, other.period)) {
+            return false;
+        }
+        return true;
+    }
+
 }
