@@ -6,6 +6,7 @@
 package eapli.ecafeteria.domain.menu;
 
 import eapli.ecafeteria.domain.meal.Meal;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -50,7 +51,6 @@ public class Menu {
      * Planned period of a menu, starting day is on a Monday and ending day is
      * on a Sunday. Seven working days total planned
      */
-    @Column(name = "period")
     private Period period;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -75,7 +75,7 @@ public class Menu {
      * @param endingDayOfWeek Starting working day of a week in format
      * dd-MM-yyyy
      */
-    public Menu(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
+    public Menu(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException, ParseException {
         menuState = MenuState.UNPUBLISHED;
         listOfMeals = new LinkedList<>();
         setPeriod(startingDayOfWeek, endingDayOfWeek);
@@ -94,7 +94,7 @@ public class Menu {
      * @param startingDayOfWeek
      * @param endingDayOfWeek
      */
-    private void setPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
+    private void setPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException, ParseException {
         period = new Period(startingDayOfWeek, endingDayOfWeek);
     }
 

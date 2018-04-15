@@ -5,15 +5,20 @@
  */
 package eapli.ecafeteria.domain.menu;
 
+import eapli.framework.date.DateEAPLI;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 /**
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
+@Embeddable
 public class Period {
 
     /*
@@ -32,24 +37,36 @@ public class Period {
      * Starting date of a working Period Business Rules says it should be a
      * monday
      */
-    private Calendar startingCalendar;
+    @AttributeOverrides({
+        @AttributeOverride(name = "dday", column = @Column(name = "start_day"))
+        ,
+    @AttributeOverride(name = "dmonth", column = @Column(name = "start_month"))
+        ,
+    @AttributeOverride(name = "dyear", column = @Column(name = "start_year"))
+    })
+    private DateEAPLI startingDate;
 
     /**
      * Ending date of working Period Business Rules says it should be a sunday
      */
-    private Calendar endingCalendar;
+    @AttributeOverrides({
+        @AttributeOverride(name = "dday", column = @Column(name = "end_day"))
+        ,
+    @AttributeOverride(name = "dmonth", column = @Column(name = "end_month"))
+        ,
+    @AttributeOverride(name = "dyear", column = @Column(name = "end_year"))
+    })
+    private DateEAPLI endingDate;
 
-    private static final String DAY_FORMAT = "\\d\\d";
-    private static final String MONTH_FORMAT = "\\d\\d";
-    private static final String YEAR_FORMAT = "\\d{4}";
-    public static final String PERIOD_VALID_DATE_FORMAT = DAY_FORMAT + '-' + MONTH_FORMAT + '-' + YEAR_FORMAT;
     /**
      * 7 Working days (6 is difference between two dates)
      */
+    @Transient
     private static final long WORKING_DAYS = 6;
     /**
      * Business Rules of how many hours to consider a Menu Critical
      */
+    @Transient
     private static final int HOURS_TO_BE_CRITICAL = 72;
 
     /*
@@ -61,28 +78,30 @@ public class Period {
     }
 
     /**
-     * Constructs a Working week Period based in the dd-MM-yyy format for each
-     * date string
+     * Constructs a Period for a Working week based in the dd-MM-yyy format for
+     * each date string
      *
      * @author Raúl Correia
      * @param startingDayOfWeek Starting day String in the dd-MM-yyy format
      * @param endingDayOfWeek Ending day String in the dd-MM-yyyy format
      */
     protected Period(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
-        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, PERIOD_VALID_DATE_FORMAT);
+        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, DateEAPLI.SIMPLE_DATA_FORMAT);
 
     }
 
     /**
-     * Constructs a Working week Period based in a custom format for each
-     * date string
+     * Constructs a Working week Period based in a custom format for each date
+     * string
+     * Not yet implemented, use simpledataformat
      *
      * @author Raúl Correia
      * @param startingDayOfWeek Starting day String in the dd-MM-yyy format
      * @param endingDayOfWeek Ending day String in the dd-MM-yyyy format
+     * @param dataFormatRegex
      */
-    protected Period(final String startingDayOfWeek, final String endingDayOfWeek, String formatData) throws IllegalArgumentException {
-        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, formatData);
+    protected Period(final String startingDayOfWeek, final String endingDayOfWeek, String simpledataformat) throws IllegalArgumentException {
+        setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, simpledataformat);
 
     }
 
@@ -97,27 +116,15 @@ public class Period {
      * verification if the dates are also valid within business rules
      *
      * @author Raúl Correia
-     * @param startingDayOfWeek Starting day String in the dd-MM-yyy format
-     * @param endingDayOfWeek Ending day String in the dd-MM-yyy format
+     * @param startingDayOfWeek Starting day String
+     * @param endingDayOfWeek Ending day String
      * @throws IllegalArgumentException if any date is invalid
      */
-    private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek, final String dataFormat) throws IllegalArgumentException {
-        Pattern regex = Pattern.compile(dataFormat);
-        Matcher match = regex.matcher(startingDayOfWeek);
-        if (match.find()) {
-            startingCalendar = DateTime.parseDate(match.group(0));
-            startingCalendar.setFirstDayOfWeek(Calendar.MONDAY);
-        }
+    private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek, final String simpledataformat) throws IllegalArgumentException {
 
-        match = regex.matcher(endingDayOfWeek);
-        if (match.find()) {
-            endingCalendar = DateTime.parseDate(match.group(0));
-            endingCalendar.setFirstDayOfWeek(Calendar.MONDAY);
-        }
-        if (startingCalendar == null || endingCalendar == null) {
-            throw new IllegalArgumentException("Error, date format.");
-        }
-        validateBusinessWorkingDays(startingCalendar, endingCalendar);
+        startingDate = new DateEAPLI(startingDayOfWeek,simpledataformat);
+        endingDate = new DateEAPLI(endingDayOfWeek,simpledataformat);
+        validateBusinessWorkingDays(startingDate, endingDate);
     }
 
     /**
@@ -125,27 +132,30 @@ public class Period {
      * rules
      *
      * @author Raúl Correia
-     * @param startingCalendar
-     * @param endingCalender
+     * @param startingDate
+     * @param endingDate
      * @throws IllegalArgumentException
      */
-    private void validateBusinessWorkingDays(Calendar startingCalendar, Calendar endingCalender) throws IllegalArgumentException {
-        if (startingCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-            throw new IllegalArgumentException("Starting working day should be MONDAY.");
-        }
-        if (endingCalender.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+    private void validateBusinessWorkingDays(DateEAPLI startingDate, DateEAPLI endingDate) throws IllegalArgumentException {
+        final Calendar start = startingDate.toCalendar();
+        final Calendar end = endingDate.toCalendar();
+
+        if (!startingDate.isWhatTypeOfDay(Calendar.SUNDAY)) {
             throw new IllegalArgumentException("Starting working day should be SUNDAY.");
         }
-        if (DateTime.isAfterNow(startingCalendar)) {
+        if (!endingDate.isWhatTypeOfDay(Calendar.SATURDAY)) {
+            throw new IllegalArgumentException("Starting working day should be SATURDAY.");
+        }
+        if (DateTime.isAfterNow(start)) {
             throw new IllegalArgumentException("Can't put a working date before present. You can't time travel... ");
         }
-        if (DateTime.isAfterNow(endingCalender)) {
+        if (DateTime.isAfterNow(end)) {
             throw new IllegalArgumentException("Can't put a working date before present. You can't time travel... ");
         }
-        if (DateTime.isBefore(startingCalendar, endingCalender)) {
-            throw new IllegalArgumentException("Can't put a startingDate before the endingDate.");
+        if (DateTime.isBefore(end, start)) {
+            throw new IllegalArgumentException("Can't put a endingDate before the startingDate.");
         }
-        if (!DateTime.validateDifferenceInDays(startingCalendar, endingCalender, WORKING_DAYS)) {
+        if (!DateTime.validateDifferenceInDays(start, end, WORKING_DAYS)) {
             throw new IllegalArgumentException("Can only select 7 working days, not more.");
         }
     }
@@ -163,7 +173,7 @@ public class Period {
      */
     protected boolean isCritical() {
         Calendar now = DateTime.now();
-        long hours = DateTime.getDifferenceInHours(now, startingCalendar);
+        long hours = DateTime.getDifferenceInHours(now, startingDate.toCalendar());
         /*
             ========================================
             To be verified with client if hours >= 0

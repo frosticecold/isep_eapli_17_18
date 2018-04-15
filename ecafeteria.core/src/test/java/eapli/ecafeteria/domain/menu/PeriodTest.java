@@ -6,6 +6,7 @@
 package eapli.ecafeteria.domain.menu;
 
 import eapli.framework.util.DateTime;
+import java.text.ParseException;
 import java.util.Calendar;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,13 +16,13 @@ import org.junit.Test;
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
 public class PeriodTest {
-    
+
     public PeriodTest() {
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testInvalidFormat() {
-        System.out.println("invalidPeriod");
+    public void testInvalidFormat() throws IllegalArgumentException, java.text.ParseException {
+        System.out.println("invalidPeriodFormat");
         Calendar start = DateTime.now();
         do {
             start.add(Calendar.DATE, 1);
@@ -30,17 +31,15 @@ public class PeriodTest {
         do {
             start.add(Calendar.DATE, 1);
         } while (start.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY);
-        
+
         String startString = start.get(Calendar.DAY_OF_MONTH) + "#" + (start.get(Calendar.MONTH) + 1) + "#" + start.get(Calendar.YEAR);
-        System.out.println(startString);
         String endString = start.get(Calendar.DAY_OF_MONTH) + "-" + (end.get(Calendar.MONTH) + 1) + "-" + end.get(Calendar.YEAR);
-        System.out.println(endString);
         Period instance = new Period(startString, endString);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testInvalidFormat2() {
-        System.out.println("invalidPeriod2");
+    public void testInvalidFormat2() throws IllegalArgumentException {
+        System.out.println("invalidPeriodFormat2");
         Calendar start = DateTime.now();
         do {
             start.add(Calendar.DATE, 1);
@@ -49,29 +48,56 @@ public class PeriodTest {
         do {
             start.add(Calendar.DATE, 1);
         } while (start.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY);
-        
+
         String startString = start.get(Calendar.DAY_OF_MONTH) + "-" + (start.get(Calendar.MONTH) + 1) + "-" + start.get(Calendar.YEAR);
-        System.out.println(startString);
         String endString = start.get(Calendar.DAY_OF_MONTH) + "#" + (end.get(Calendar.MONTH) + 1) + "#" + end.get(Calendar.YEAR);
-        System.out.println(endString);
         Period instance = new Period(startString, endString);
     }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testValidPeriod() {
+
+    @Test
+    public void testValidPeriod() throws IllegalArgumentException {
         System.out.println("validPeriod");
-        Calendar start = DateTime.now();
+        Calendar cal = DateTime.now();
         do {
-            start.add(Calendar.DATE, 1);
-        } while (start.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY);
-        Calendar end = (Calendar) start.clone();
+            cal.add(Calendar.DATE, 1);
+        } while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY);
+        Calendar end = (Calendar) cal.clone();
         do {
-            start.add(Calendar.DATE, 1);
-        } while (start.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY);
+            end.add(Calendar.DATE, 1);
+        } while (end.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY);
+        String startString, endString;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        //================STARTING STRING
+        if (day < 10) {
+            startString = "0" + day;
+        } else {
+            startString = "" + day;
+        }
+        int month = (cal.get(Calendar.MONTH) + 1);
+        if (month < 10) {
+            startString += "-0" + month;
+        } else {
+            startString += "-" + month;
+        }
+        int year = cal.get(Calendar.YEAR);
+        startString += "-" + year;
         
-        String startString = start.get(Calendar.DAY_OF_MONTH) + "-" + (start.get(Calendar.MONTH) + 1) + "-" + start.get(Calendar.YEAR);
-        System.out.println(startString);
-        String endString = start.get(Calendar.DAY_OF_MONTH) + "-" + (end.get(Calendar.MONTH) + 1) + "-" + end.get(Calendar.YEAR);
+        
+        //Ending String
+        day = end.get(Calendar.DAY_OF_MONTH);
+        month = (end.get(Calendar.MONTH) + 1);
+        year = end.get(Calendar.YEAR);
+        if (day < 10) {
+            endString = "0" + day;
+        } else {
+            endString = "" + day;
+        }
+        if (month < 10) {
+            endString += "-0" + month;
+        } else {
+            endString += "-" + month;
+        }
+        endString += "-" + year;
         System.out.println(endString);
         Period instance = new Period(startString, endString);
         Assert.assertNotNull(instance);

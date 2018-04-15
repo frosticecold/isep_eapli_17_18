@@ -7,13 +7,16 @@ package eapli.ecafeteria.application.menus;
 
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.menu.Menu;
-import eapli.ecafeteria.domain.menu.Period;
 import eapli.ecafeteria.persistence.DishRepository;
 import eapli.ecafeteria.persistence.DishTypeRepository;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.application.Controller;
+import eapli.framework.date.DateEAPLI;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,7 +40,7 @@ public class ElaborateOrEditMenuController implements Controller {
     /**
      * FORCE FORMAT
      */
-    public static final String PERIOD_VALID_FORMAT = Period.PERIOD_VALID_DATE_FORMAT;
+    public static final String PERIOD_VALID_FORMAT = DateEAPLI.SIMPLE_DATA_FORMAT;
 
     public ElaborateOrEditMenuController() {
         RepositoryFactory repositories = PersistenceContext.repositories();
@@ -49,7 +52,13 @@ public class ElaborateOrEditMenuController implements Controller {
     public void createOrFindMenu(String initialDate, String finalDate) {
         menurepo.findMenuWithinPeriod(initialDate, finalDate, PERIOD_VALID_FORMAT);
         if (false) {
-            m_menu = new Menu(initialDate, finalDate);
+            try {
+                m_menu = new Menu(initialDate, finalDate);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(ElaborateOrEditMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(ElaborateOrEditMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

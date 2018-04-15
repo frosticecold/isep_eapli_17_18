@@ -22,7 +22,8 @@
 	
 	* Quem inicia o processo é o "Gestor de Ementas"
 	* Menu tem duas datas, Inicio e Fim
-	* Uma semana começa numa Segunda-Feira
+	* Uma semana começa num Domingo
+	* Uma semana acaba numa Sábado
 	* Uma semana tem 7 dias
 	* Um menu criado/editado encontra-se em estado InProgress
 	* Quem define as ementas é o "chefe de cozinha"
@@ -34,6 +35,7 @@
 	_____________________
 	
 	Menu
-	*	testMenuValidDates
+	*	testPeriodInvalidFormat
+	*	testPeriodValidPeriod
 	*	testMenuHasMeals
 	*	testMenuIsInProgress
