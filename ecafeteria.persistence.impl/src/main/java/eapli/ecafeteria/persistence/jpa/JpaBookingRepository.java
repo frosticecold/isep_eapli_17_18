@@ -7,11 +7,17 @@ package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.persistence.BookingRepository;
+import java.util.Optional;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class JpaBookingRepository extends BookingRepository {
+public class JpaBookingRepository implements BookingRepository {
+
+    @Override
+    public Optional<Booking> findNextBooking() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
