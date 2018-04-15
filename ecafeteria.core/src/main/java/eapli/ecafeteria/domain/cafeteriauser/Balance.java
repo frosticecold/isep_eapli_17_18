@@ -1,6 +1,8 @@
 package eapli.ecafeteria.domain.cafeteriauser;
 
+import eapli.framework.domain.ddd.ValueObject;
 import eapli.framework.domain.money.Money;
+import java.io.Serializable;
 import java.util.Currency;
 import javax.persistence.Embeddable;
 
@@ -9,7 +11,7 @@ import javax.persistence.Embeddable;
  * @author MarioDias
  */
 @Embeddable
-public class Balance {
+public class Balance implements ValueObject, Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -28,10 +30,7 @@ public class Balance {
      * @author Mario Dias
      */
     public boolean addCredits(Money credits) {
-        Money moneyAfterTransaction = this.currentBalance.add(credits);
-        if (moneyAfterTransaction.equals(currentBalance)) {
-            return true;
-        }
+        this.currentBalance = this.currentBalance.add(credits);
         return false;
     }
 

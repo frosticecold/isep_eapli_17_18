@@ -4,6 +4,7 @@ import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.domain.money.Money;
 import java.io.Serializable;
+import java.util.HashMap;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -60,7 +61,11 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     }
 
     public boolean addCredits(Money credits) {
-        return currentBalance.addCredits(credits);
+        return this.currentBalance.addCredits(credits);
+    }
+
+    public String cafeteriaUserNameAndCurrentBalance() {
+        return "Username: "+systemUser.id().toString()+ " Current Balance: "+currentBalance.toString();
     }
 
     @Override
