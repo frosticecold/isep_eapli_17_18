@@ -9,6 +9,7 @@ import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.Application;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
+import eapli.framework.actions.ReturnAction;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.HorizontalMenuRenderer;
@@ -31,6 +32,12 @@ public class MainMenu extends AbstractUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
+    
+    //CHARGE
+    private static final int CHARGE_CARD_OPTION = 1;
+    
+    //DELIVERY
+    private static final int DELIVER_MEAL_OPTION = 1;
 
     @Override
     public boolean show() {
@@ -68,8 +75,18 @@ public class MainMenu extends AbstractUI {
             mainMenu.add(VerticalSeparator.separator());
         }
 
+        //==========================Deliveries MENU==================
         if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
-            // TODO
+            final Menu deliveryMenu = buildDeliveryMenu();
+            mainMenu.add(new SubMenu(DELIVER_MEAL_OPTION, deliveryMenu,
+                    new ShowVerticalSubMenuAction(deliveryMenu)));
+        }
+        
+        //==========================Card MENU==================
+        if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
+            final Menu cardMenu = buildChargeMenu();
+            mainMenu.add(new SubMenu(CHARGE_CARD_OPTION, cardMenu,
+                    new ShowVerticalSubMenuAction(cardMenu)));
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -79,5 +96,23 @@ public class MainMenu extends AbstractUI {
         mainMenu.add(new MenuItem(EXIT_OPTION, "Exit", new ExitWithMessageAction()));
 
         return mainMenu;
+    }
+    
+    private Menu buildDeliveryMenu() {
+        final Menu menu = new Menu("Deliveries >");
+
+        menu.add(new MenuItem(DELIVER_MEAL_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().show()));
+        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
+
+        return menu;
+    }
+    
+    private Menu buildChargeMenu(){
+        final Menu menu = new Menu("Chargings >");
+        
+        //menu.add(new MenuItem(CHARGE_CARD_OPTION, "Charge Card", () -> new ChargeCardUI().show()));
+        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
+        
+        return menu;
     }
 }
