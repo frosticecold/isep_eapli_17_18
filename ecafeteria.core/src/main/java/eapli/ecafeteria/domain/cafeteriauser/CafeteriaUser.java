@@ -64,8 +64,26 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
         return this.currentBalance.addCredits(credits);
     }
 
+    /**
+     * removes the credits of the user balance 
+     * @param credits
+     * @return sucess (true) or insucess (false)
+     */
+    public boolean removeCredits(Money credits) {
+        return this.currentBalance.removeCredits(credits);
+    }
+
+     /**
+     * check if there is enough money to make a transaction 
+     * @param credits is the new value to compare to the user balance
+     * @author Beatriz Ferreira
+     */
+    public boolean hasEnoughCredits(Money credits) {
+        return this.currentBalance.hasEnoughCredits(credits);
+    }
+    
     public String cafeteriaUserNameAndCurrentBalance() {
-        return "Username: "+systemUser.id().toString()+ " Current Balance: "+currentBalance.toString();
+        return "Username: " + systemUser.id().toString() + " Current Balance: " + currentBalance.toString();
     }
 
     @Override

@@ -34,6 +34,26 @@ public class Balance implements ValueObject, Serializable{
         this.currentBalance = this.currentBalance.add(credits);
         return false;
     }
+    
+     /**
+     * check if there is enough money to make a transaction 
+     * @param credits is the new value to compare to the user balance
+     * @author Beatriz Ferreira
+     */
+    public boolean hasEnoughCredits(Money credits) {
+       return this.currentBalance.lessThan(credits);
+  
+    }
+    
+     /**
+     *
+     * @param credits is the new value to remove to the currentBalance
+     * @author Beatriz Ferreira
+     */
+    public boolean removeCredits(Money credits) {
+        this.currentBalance = this.currentBalance.subtract(credits);
+        return false;
+    }
 
     @Override
     public String toString() {

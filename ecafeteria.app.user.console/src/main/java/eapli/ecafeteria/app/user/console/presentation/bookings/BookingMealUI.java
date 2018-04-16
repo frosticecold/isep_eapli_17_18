@@ -7,6 +7,7 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
+import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 
@@ -16,7 +17,13 @@ import eapli.framework.util.Console;
  */
 public class BookingMealUI extends AbstractUI {
 
-    final private BookingMealController controller = new BookingMealController();
+    private final  BookingMealController controller = new BookingMealController();
+    
+    
+    protected Controller controller() {
+        return this.controller;
+    }
+
     
     @Override
     protected boolean doShow() {
