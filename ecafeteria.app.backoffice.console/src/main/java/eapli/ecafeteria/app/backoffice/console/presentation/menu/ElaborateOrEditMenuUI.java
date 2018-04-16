@@ -12,11 +12,18 @@ import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.application.Controller;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.ListWidget;
+import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.util.Console;
 import eapli.framework.util.DateTime;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,17 +41,21 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Iterable<DishType> dishTypes = theController.getDishTypes();
+        Menu menu = askForWorkingPeriod();
+        boolean editing = true;
+        do {
+            Calendar calendar = askAndSelectWorkingDay(menu);
+            menuAddOrRemoveMeals(menu, calendar);
+            askForConfirmation(menu);
+            editing = Console.readBoolean("Keep editing?");
+        } while (editing);
+        return true;
     }
 
     @Override
     public String headline() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void run() {
-
-        Menu m = askForWorkingPeriod();
+        return "Elaborate Menu";
     }
 
     /**
@@ -56,28 +67,26 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * @return
      */
     private Menu askForWorkingPeriod() {
-        String initialDate = "", endDate = "";
         /**
          * Ask initial date and end date
          */
-        /**
-         * Read input data
-         */
-        Menu menu = theController.createOrFindMenu(initialDate, endDate, DATE_INPUT_FORMAT);
+        boolean runagain = true;
+        Menu menu;
+        Calendar initialDate, endDate;
+        do {
+            System.out.println("All dates are in dd-MM-yyy format.");
+            initialDate = Console.readCalendar("Please enter the initial date:");
+            endDate = Console.readCalendar("Please enter the end date:");
+            /**
+             * Read input data
+             */
+            menu = theController.createOrFindMenu(initialDate, endDate);
+            if (menu == null) {
+                System.out.println("Error creating menu.");
+            }
+            runagain = false;
+        } while (runagain);
         return menu;
-    }
-
-    /**
-     * Show workingDays of a Menu
-     * <p>
-     * Execution order : 2
-     *
-     */
-    private void showDaysOfPeriod(Menu m, Map<Integer, Calendar> workWeek) {
-        /**
-         * Show days
-         */
-
     }
 
     /**
@@ -85,61 +94,74 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * <p>
      * Execution order : 3
      */
-    private Calendar askAndSelectWorkingDay(Menu m, Map<Integer, Calendar> workWeek) {
+    private Calendar askAndSelectWorkingDay(Menu m) {
 
+        Calendar cal = null;
+        boolean runagain = true;
+        m.getWorkWeekDays();
+        SelectWidget<Calendar> widget = new SelectWidget<>("Showing Working days", m.getWorkWeekDaysIterable());
         /**
          * show working days
          */
-        /**
-         * ask for working day
-         */
-        int day = 0;
-        Calendar cal = workWeek.get(day);
-        /**
-         * Send working day
-         */
-        theController.selectDay(cal);
-
+        do {
+            widget.show();
+            int option = widget.selectedOption();
+            if (option == 0) {
+                break;
+            }
+            /**
+             * ask for working day
+             */
+            cal = widget.selectedElement();
+            runagain = false;
+            //Calendar cal = workWeek.get(day);
+            /**
+             * Send working day
+             */
+            theController.selectDay(cal);
+        } while (runagain);
         return cal;
     }
 
     /**
-     * Show Meals
-     * <p>
-     * Execution order : 4
+     * Ask to add or remove meals
      *
-     * @param m
-     * @return
+     * @param menu
      */
-    private void showMeals(Menu m) {
-        /**
-         * Show meals
-         */
-    }
+    private void menuAddOrRemoveMeals(Menu menu, Calendar day) {
+        boolean editing = true;
+        ListWidget<Meal> widget = new ListWidget<>("List Meal", menu.getMealsByDay(day));
+        do {
+            widget.show();
+            /**
+             * Ask for add or remove
+             */
+            System.out.println("1) Add\n2)Remove\n0)Exit");
+            int answer = Console.readInteger("Please input option");
 
-    /**
-     * Ask to add or remove
-     *
-     * @param m
-     */
-    private void menuAddOrRemove(Menu m) {
-        /**
-         * Ask for add or remove
-         */
-        int answer = 0;
+            switch (answer) {
+                case 1:
+                    /**
+                     * if 1 = Add
+                     */
+                    menuAddMeals(menu, day);
+                    break;
+                case 2:
+                    /**
+                     * if 2 = Remove
+                     *
+                     */
+                    menuRemoveMeal(menu, day);
+                    break;
+                default:
+                    /**
+                     * Else break
+                     */
+                    editing = false;
+                    break;
+            }
 
-        /**
-         * if 1 = Add
-         */
-        addMeals(m);
-        /**
-         * if 2 = Remove
-         *
-         */
-        /**
-         * if 0 = Exit
-         */
-
+        } while (editing);
     }
 
     /**
@@ -148,90 +170,85 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * @param menu
      * @return
      */
-    private Meal addMeals(Menu menu) {
-
-        showMealTypes();
-        return null;
-    }
-
-    private void showMealTypes() {
-        MealType[] mealtypes = MealType.values();
-        /**
-         * Show mealTypes
-         */
-
-        /**
-         * Ask for mealType
-         */
-        int option = Console.readInteger("What meal type:");
-    }
-
-    private DishType showDishTypes() {
-        Iterable<DishType> listDishTyps = theController.getDishTypes();
-        /**
-         * Show dish types
-         */
-
-        /**
-         * Select dishtype
-         */
-        int opcao = 0;
-        int index = 0;
-        DishType dishtype = null;
-        for (DishType dt : listDishTyps) {
-            if (opcao == index) {
-                dishtype = dt;
+    private void menuAddMeals(Menu menu, Calendar day) {
+        boolean adding = true;
+        ListWidget<Meal> widgetmeals = new ListWidget<>("List Meal", menu.getMealsByDay(day));
+        SelectWidget<DishType> widgetdishtype = new SelectWidget<>("Select DishType", theController.getDishTypes());
+        SelectWidget<Dish> widgetdish;
+        SelectWidget<MealType> widgetmealtype = new SelectWidget<>("Select MealType", Arrays.asList(MealType.values()));
+        do {
+            widgetdishtype.show();
+            DishType dt = widgetdishtype.selectedElement();
+            if (dt == null) {
+                break;
             }
-        }
-        Iterable<Dish> dishesByDishType = theController.getDishesByDishType(dishtype);
-        return dishtype;
+            widgetdish = new SelectWidget<>("Select Dish", theController.getDishesByDishType(dt));
+            widgetdish.show();
+            Dish dish = widgetdish.selectedElement();
+            if (dish == null) {
+                break;
+            }
+            widgetmealtype.show();
+            MealType mt = widgetmealtype.selectedElement();
+            if (mt == null) {
+                break;
+            }
+            Meal meal = new Meal(dish, mt, day);
+            boolean confirm = Console.readBoolean("Confirm meal?");
+            if (confirm) {
+                menu.addMeal(meal);
+            }
+            adding = Console.readBoolean("Add more?");
+            if (adding) {
+                widgetmeals.show();
+            }
+        } while (adding);
     }
 
     /**
      * Remove
      */
-    private void menuRemoveMeal(Menu m) {
-        showMeals(m);
-        /**
-         * Ask what to remove
-         */
-
-        int option = 0;
-        /**
-         * if valid
-         */
-        Meal meal = null;
-        m.removeMeal(meal);
-    }
-
-    private boolean continueEditing() {
-        /**
-         * Ask to continue editing?
-         */
-        int option = 0;
-        if (option == 1) {
-            return true;
-        } else {
-            return false;
-        }
+    private void menuRemoveMeal(Menu menu, Calendar day) {
+        SelectWidget<Meal> widgetmeal = new SelectWidget<>("Select Meal", menu.getMealsByDay(day));
+        boolean removing = true;
+        do {
+            /**
+             * Ask what to remove
+             */
+            widgetmeal.show();
+            Meal meal = widgetmeal.selectedElement();
+            if (meal == null) {
+                break;
+            }
+            boolean areyousure = Console.readBoolean("Are you sure?");
+            if (areyousure) {
+                menu.removeMeal(meal);
+            }
+            removing = Console.readBoolean("Remove more?");
+        } while (removing);
     }
 
     private void askForConfirmation(Menu m) {
         /**
-         * Ask for confirmation
+         * Ask for confirmation Y/N
          */
-
-        /**
-         * Y/N
-         */
-        boolean save = Console.readBoolean("Confirm changes?");
+        boolean save = Console.readBoolean("Persist all your actions?");
         if (save) {
-            Menu othermenu = theController.saveMenu(m);
-            if (othermenu == null) {
-                System.out.println("Problems saving menu...");
+            try {
+                Menu othermenu = theController.saveMenu(m);
+                if (othermenu == null) {
+                    System.out.println("Problems saving menu...");
+
+                }
+            } catch (DataIntegrityViolationException ex) {
+                Logger.getLogger(ElaborateOrEditMenuUI.class
+                        .getName()).log(Level.SEVERE, null, ex);
+
+            } catch (DataConcurrencyException ex) {
+                Logger.getLogger(ElaborateOrEditMenuUI.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
 
         }
-
     }
 }

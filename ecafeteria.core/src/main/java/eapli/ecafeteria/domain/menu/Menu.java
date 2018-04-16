@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.domain.menu;
 
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +18,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
 @Entity
-@Table(name = "MENU")
 public class Menu implements AggregateRoot<Period>, Serializable {
 
     /*
@@ -41,6 +36,9 @@ public class Menu implements AggregateRoot<Period>, Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idmenu")
     private Long id;
+    
+    @Version
+    private Long version;
     /**
      * Menu state of this Menu It has two possible By default when a menu is
      * created, it is unpublished
@@ -50,7 +48,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      * # Unpublished
      *
      */
-    @Embedded
     @Column(name = "menustate")
     private MenuState menuState;
 
@@ -59,7 +56,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      * on a Sunday. Seven working days total planned
      */
     @Embedded
-    @Column(name = "period")
     private Period period;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -84,10 +80,22 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      * @param endingDayOfWeek Starting working day of a week in format
      * dd-MM-yyyy
      */
-    public Menu(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException, ParseException {
+    public Menu(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         menuState = MenuState.UNPUBLISHED;
         listOfMeals = new LinkedList<>();
         setPeriod(startingDayOfWeek, endingDayOfWeek);
+    }
+
+    /**
+     * @author Raúl Correia
+     * @param startingOfWeek
+     * @param endOfWeek
+     *
+     */
+    public Menu(final Calendar startingOfWeek, final Calendar endOfWeek) throws IllegalArgumentException {
+        menuState = MenuState.UNPUBLISHED;
+        listOfMeals = new LinkedList<>();
+        period = new Period(startingOfWeek, endOfWeek);
     }
 
     /*
@@ -103,7 +111,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      * @param startingDayOfWeek
      * @param endingDayOfWeek
      */
-    private void setPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException, ParseException {
+    private void setPeriod(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         period = new Period(startingDayOfWeek, endingDayOfWeek);
     }
 
@@ -121,19 +129,23 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         return period.getWorkingDays();
     }
 
+    public Iterable<Calendar> getWorkWeekDaysIterable() {
+        return period.getWorkingDaysIterable();
+    }
+
     /**
      *
      * @param day
      * @return
      */
     public Iterable<Meal> getMealsByDay(Calendar day) {
-        List<Meal> listOfMealsByDate = new LinkedList<>();
+        List<Meal> list = new LinkedList<>();
         for (Meal m : listOfMeals) {
             if (m.isOnGivenDate(day)) {
-                listOfMealsByDate.add(m);
+                list.add(m);
             }
         }
-        return listOfMealsByDate;
+        return list;
     }
 
     /**
@@ -164,6 +176,15 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      */
     public boolean addMeal(Meal m) {
         return listOfMeals.add(m);
+    }
+
+    /**
+     *
+     * @param meal
+     * @return
+     */
+    public boolean removeMeal(Meal meal) {
+        return listOfMeals.remove(meal);
     }
 
     @Override
