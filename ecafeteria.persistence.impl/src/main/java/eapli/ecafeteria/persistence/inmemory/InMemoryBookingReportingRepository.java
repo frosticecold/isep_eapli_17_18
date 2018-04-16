@@ -7,11 +7,8 @@ package eapli.ecafeteria.persistence.inmemory;
 
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
-import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
-import java.io.Serializable;
 
 /**
  *

@@ -31,7 +31,7 @@ public class ViewRatingsController implements Controller {
     }
     
     /**
-     * Selects a meal from a list of bookings
+     * Selects a meal from a list of bookings given an ID
      * @param id
      * @param meal 
      */

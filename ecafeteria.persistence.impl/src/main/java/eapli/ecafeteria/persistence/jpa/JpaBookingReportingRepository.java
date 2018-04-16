@@ -6,7 +6,6 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 
 /**
