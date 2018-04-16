@@ -70,6 +70,8 @@ public interface RepositoryFactory {
     BookingRepository booking();
     
     MenuRepository menus();
+    
+    MenuPlanRepository menuPlan();
 
     /**
      * ************************

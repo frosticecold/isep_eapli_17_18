@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.application.booking;
 
+import eapli.ecafeteria.application.menus.ListMenuService;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.Controller;
 
@@ -14,7 +15,7 @@ import eapli.framework.application.Controller;
  */
 public class BookingMealController implements  Controller{
     
-     private final listMenuService svc = new listMenuService();
+     private final ListMenuService svc = new ListMenuService();
     
      private final BookingRepository repository = PersistenceContext.repositories().booking();
 
