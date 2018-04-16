@@ -1,5 +1,6 @@
 package eapli.cafeteria.domain.pos;
 
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
@@ -18,22 +19,25 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="IDDELIVERYEALSESSION")
     private Long idSession;
-    
-    @OneToOne
-    @JoinColumn(name="IDPOS")
-    private long idPos;
-    
+        
     @Temporal(TemporalType.DATE)
     private DeliverySessionDate sessionDate;
-
+    
+    @OneToMany
+    private DeliveryRegistry registry;
+    
+    @Transient
+    private POS pos; //it wont be persisted on database
+    
     protected DeliveryMealSession() {
        //for ORM only
     }
     
     //real constructor
+
     public DeliveryMealSession(POS pos) {
-        this.idPos = pos.id();
-        sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
+        this.pos = pos;
+        this.sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
     }
     
     @Override
@@ -57,7 +61,31 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public Long id() {
         return this.idSession;
     }
-
+   
+    /**
+     * Returns this delivery sessions date
+     * @return 
+     */
+    public DeliverySessionDate sessionDate() {
+        
+        return this.sessionDate;
+    }
     
+    /**
+     * Returns the pos associated with this delivery session
+     * @return 
+     */
+    public POS pos() {
+        return this.pos;
+    }
     
+    /**
+     * creates a new register of a delivery made
+     * @param idUser
+     * @param idBooking 
+     */
+    public void addNewDelivery(MecanographicNumber idUser, long idBooking) {
+        
+        this.registry = new DeliveryRegistry(this,this.pos(),idUser,idBooking);
+    }
 }
