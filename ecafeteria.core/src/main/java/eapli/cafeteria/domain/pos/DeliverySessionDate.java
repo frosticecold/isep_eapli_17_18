@@ -6,6 +6,7 @@
 package eapli.cafeteria.domain.pos;
 
 import eapli.framework.util.DateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -30,13 +31,14 @@ public class DeliverySessionDate {
     /** current year of the session **/
     private int year;
     
-    public DeliverySessionDate(int day, int month, int year, int h, int mins, int secs) {
-        this.validateMonth(month);
-        this.validateYear(year);
-        this.validateDay(day, month, year);
-        this.validateHour(hour);
-        this.validateMinute(minute);
-        this.validateSeconds(second);
+    public DeliverySessionDate(Calendar ca) {
+       this.validateHour(ca.HOUR_OF_DAY);
+       this.validateMinute(ca.MINUTE);
+       this.validateSeconds(ca.SECOND);
+       this.validateYear(ca.YEAR);
+       this.validateMonth(ca.MONTH);
+       this.validateDay(ca.DAY_OF_MONTH, ca.MONTH, ca.YEAR);
+       
     }
     
     /** VALIDATION PRIVATE METHODS OF THIS VALUE OBJECT **/
