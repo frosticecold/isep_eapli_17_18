@@ -5,14 +5,24 @@
  */
 package eapli.ecafeteria.domain.booking;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 /**
  *
  * @author jpfr8
  */
-public class BookingState {
+public class BookingState implements Serializable {
     /**
      * Actual booking state
      */
+    @Enumerated()
+    @Column(name = "Booking States")
     private BookingStates actualBookingState;
 
     /**
@@ -71,5 +81,13 @@ public class BookingState {
         }
         
         return false;
+    }
+
+    public BookingStates getActualBookingState() {
+        return actualBookingState;
+    }
+
+    public void setActualBookingState(BookingStates actualBookingState) {
+        this.actualBookingState = actualBookingState;
     }
 }

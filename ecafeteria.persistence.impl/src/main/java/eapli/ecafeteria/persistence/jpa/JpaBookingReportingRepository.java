@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.bootstrapers;
+package eapli.ecafeteria.persistence.jpa;
 
-import eapli.framework.actions.Action;
+import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.persistence.BookingReportingRepository;
 
 /**
  *
- * @author Rui Almeida <1160818>
+ * @author ruial
  */
-public class MealBootstrapper implements Action {
+public class JpaBookingReportingRepository implements BookingReportingRepository{
 
     @Override
-    //TODO
-    public boolean execute() {
+    public Iterable<Booking> listServedBookings() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

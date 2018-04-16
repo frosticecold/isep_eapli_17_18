@@ -5,14 +5,17 @@
  */
 package eapli.ecafeteria.domain.meal;
 
+import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -46,7 +49,12 @@ public class Meal implements Serializable {
      */
     @Temporal(TemporalType.DATE)
     private Calendar date;
-
+    /*
+    * Ratings of the meal
+    */
+    @OneToMany()
+    private List<Rating> ratings;
+       
     /**
      * For ORM
      */
@@ -76,5 +84,13 @@ public class Meal implements Serializable {
 
     public boolean isOnGivenDate(Calendar givenDate) {
         return DateTime.isSameDate(givenDate, date);
+    }
+    
+    /**
+     * Returns the ratings given on said meal
+     * @return 
+     */
+    public Iterable<Rating> ratings() {
+        return this.ratings;
     }
 }

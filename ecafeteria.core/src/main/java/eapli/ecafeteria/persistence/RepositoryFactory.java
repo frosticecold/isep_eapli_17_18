@@ -70,12 +70,6 @@ public interface RepositoryFactory {
     BookingRepository booking();
     
     MenuRepository menus();
-    
-    /**
-     * Returns the meal repository
-     * @return 
-     */
-    MealRepository meals();
 
     /**
      * ************************
@@ -88,10 +82,10 @@ public interface RepositoryFactory {
     DishReportingRepository dishReporting();
     
     /**
-     * Returns the Meal Reporting Repository
+     * Booking Reporting Repo
      * @return 
      */
-    MealReportingRepository mealReporting();
+    BookingReportingRepository bookingReporting();
     
     
 }

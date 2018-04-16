@@ -55,7 +55,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public MaterialRepository materials() {
         return new JpaMaterialRepository();
     }
-     
+
     @Override
     public MenuRepository menus() {
         return new JpaMenuRepository();
@@ -78,12 +78,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public MealRepository meals() {
-        return new JpaMealRepository();
-    }
-
-    @Override
-    public MealReportingRepository mealReporting() {
-        return new JpaMealReportingRepository();
+    public BookingReportingRepository bookingReporting() {
+        return new JpaBookingReportingRepository();
     }
 }

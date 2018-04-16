@@ -11,6 +11,8 @@ import javax.persistence.Version;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
 import javax.persistence.EmbeddedId;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 /**
@@ -24,24 +26,23 @@ public class Booking implements Serializable {
 
     @Version
     private Long version;
-    
-    
-    @EmbeddedId
+
+    @Id
     private int idBooking;
     @OneToOne
-     private Meal meal; 
-     private BookingState bookingState;
-     private CafeteriaUser cafeteriaUser;
-     
-     
+    private Meal meal;
+    @OneToOne
+    private BookingState bookingState;
+    @OneToOne
+    private CafeteriaUser cafeteriaUser;
+
     public Booking(int idBooking, Meal meal, CafeteriaUser cafeteriauser) {
         this.idBooking = idBooking;
         this.meal = meal;
         this.bookingState = new BookingState();
         this.cafeteriaUser = cafeteriauser;
     }
-     
-     
+
     protected Booking() {
         // for ORM only
     }
@@ -74,5 +75,5 @@ public class Booking implements Serializable {
     public CafeteriaUser getCafeteriauser() {
         return cafeteriaUser;
     }
-    
+
 }

@@ -5,15 +5,17 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.persistence.repositories.ReportingRepository;
 
 /**
  *
- * @author Rui Almeida <1160818>
+ * @author ruial
  */
-public interface MealReportingRepository extends ReportingRepository {
+public interface BookingReportingRepository extends ReportingRepository {
     
-    public Iterable<Meal> listServedMeals();
+    public Iterable<Booking> listServedBookings();
 
+    
 }
