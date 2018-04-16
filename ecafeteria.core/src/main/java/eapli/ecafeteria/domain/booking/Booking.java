@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Version;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -29,14 +30,18 @@ public class Booking implements Serializable {
     
     @Id
     @GeneratedValue
+    @Column(name="IDBOOKING")
     private Long idBooking;
     
     @OneToOne
-     private Meal meal; 
+    @Column(name="MEAL")
+    private Meal meal; 
     
-     private BookingState bookingState;
+    @Column(name="BOOKINGSTATE")
+    private BookingState bookingState;
      
     @OneToMany
+    @Column(name="CAFETERIAUSER")
      private CafeteriaUser cafeteriaUser;
      
 
