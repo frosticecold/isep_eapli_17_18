@@ -5,6 +5,7 @@
  */
 package eapli.cafeteria.domain.pos;
 
+import eapli.framework.domain.ddd.ValueObject;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;
 
@@ -15,7 +16,7 @@ import java.util.Calendar;
  */
 
 //Value Object 
-public class DeliverySessionDate {
+public class DeliverySessionDate implements ValueObject{
     
     /** current hour of the session **/
     private int hour;
