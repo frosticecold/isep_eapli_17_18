@@ -43,7 +43,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * @param currency
      */
     public Money(final double amount, final Currency currency) {
-        this.amount = BigInteger.valueOf(Math.round(amount * HUNDRED));
+        this.amount = BigInteger.valueOf(Math.round(amount ));
         this.currency = currency;
     }
 
@@ -93,7 +93,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * outside.
      */
     public double amount() {
-        return amount.doubleValue() / HUNDRED;
+        return amount.doubleValue();
     }
 
     public BigDecimal amountAsDecimal() {

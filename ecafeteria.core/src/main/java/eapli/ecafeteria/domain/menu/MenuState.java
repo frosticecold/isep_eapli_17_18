@@ -5,6 +5,8 @@
  */
 package eapli.ecafeteria.domain.menu;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
@@ -15,6 +17,10 @@ package eapli.ecafeteria.domain.menu;
  * * Unpublished, Published
  *
  */
-public enum MenuState {
+public enum MenuState implements Serializable{
     UNPUBLISHED, PUBLISHED;
+    
+    MenuState(){}
 }
+
+

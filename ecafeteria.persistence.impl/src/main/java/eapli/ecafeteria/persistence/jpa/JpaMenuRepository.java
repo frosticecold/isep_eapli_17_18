@@ -9,6 +9,8 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.MenuRepository;
 import java.util.Calendar;
 import java.util.Optional;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -22,8 +24,14 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
     }
 
     @Override
-    public Optional<Menu> findMenuWithinPeriod(final Calendar initialDate, final Calendar endDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Optional<Menu> findMenuWithinPeriod(final Calendar startDate, final Calendar endDate) {
+        String where = "e.period.startingDate=:sdate AND e.period.endingDate=:edate";
+        TypedQuery<Menu> query = entityManager().createQuery("SELECT e FROM Menu e WHERE " + where,
+                this.entityClass);
+        //final Map<String, Object> params = new HashMap<>();
+        query.setParameter("sdate", startDate, TemporalType.DATE);
+        query.setParameter("edate", endDate, TemporalType.DATE);
+        return query.getResultList().stream().findFirst();
     }
 
 }

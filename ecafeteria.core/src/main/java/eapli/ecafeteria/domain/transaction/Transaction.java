@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.domain.Transaction;
+package eapli.ecafeteria.domain.transaction;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 

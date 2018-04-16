@@ -611,4 +611,7 @@ public final class DateTime {
         return getDifferenceInDays(start, end) == n;
     }
 
+    public static int getYear(final Calendar cal) {
+        return cal.get(Calendar.YEAR);
+    }
 }

@@ -31,14 +31,14 @@ public class Booking implements Serializable {
     @OneToOne
      private Meal meal; 
      private BookingState bookingState;
-     private CafeteriaUser cafeteriauser;
+     private CafeteriaUser cafeteriaUser;
      
      
-    public Booking(int idBooking, Meal meal, BookingState bookingState, CafeteriaUser cafeteriauser) {
+    public Booking(int idBooking, Meal meal, CafeteriaUser cafeteriauser) {
         this.idBooking = idBooking;
         this.meal = meal;
-        this.bookingState = bookingState;
-        this.cafeteriauser = cafeteriauser;
+        this.bookingState = new BookingState();
+        this.cafeteriaUser = cafeteriauser;
     }
      
      
@@ -72,7 +72,7 @@ public class Booking implements Serializable {
     }
 
     public CafeteriaUser getCafeteriauser() {
-        return cafeteriauser;
+        return cafeteriaUser;
     }
     
 }

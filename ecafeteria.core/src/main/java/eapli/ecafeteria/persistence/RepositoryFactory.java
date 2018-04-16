@@ -68,6 +68,7 @@ public interface RepositoryFactory {
     MaterialRepository materials();
     
     BookingRepository booking();
+    
     MenuRepository menus();
     
     /**
