@@ -1,4 +1,4 @@
-package eapli.cafeteria.domain.pos;
+package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
@@ -61,6 +61,15 @@ public class POS implements AggregateRoot<Long>, Serializable{
     @Override
     public Long id() {
         return this.idPOS;
+    }
+    
+    /**
+     * Returns the MecanographicNumber of the current user on this pos session
+     * @return 
+     */
+    public MecanographicNumber posUser() {
+        
+        return this.posUser;
     }
     
     /**

@@ -1,4 +1,4 @@
-package eapli.cafeteria.domain.pos;
+package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.domain.ddd.DomainEntity;
@@ -43,15 +43,19 @@ public class DeliveryRegistry implements DomainEntity {
     @Column(name="CLIENT")
     private MecanographicNumber client;
     
+    @Temporal(TemporalType.DATE)
+    private DeliverySessionDate sessionDate;
+    
     protected DeliveryRegistry() {
         //for ORM only
     }
     
-    public DeliveryRegistry(MecanographicNumber Client, MecanographicNumber Employee, long Booking, long POS) {
+    public DeliveryRegistry(DeliveryMealSession session, POS pos, MecanographicNumber Client, long Booking) {
         this.client = Client;
-        this.employee = Employee;
         this.idBooking = Booking;
-        this.pos = POS;
+        this.sessionDate = session.sessionDate();
+        this.pos = pos.id();
+        this.employee = pos.posUser();
     }
     /**
      * compares this object with another
