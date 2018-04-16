@@ -26,15 +26,11 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     
     @OneToOne
     @JoinColumn(name="IDPOS")
-    private Long idPos;
+    private long idPos;
     
     @Temporal(TemporalType.DATE)
     private DeliverySessionDate sessionDate;
-    
-    @OneToOne
-    @JoinColumn(name="idUser")
-    private Long idUser;
-    
+
     protected DeliveryMealSession() {
        //for ORM only
     }
