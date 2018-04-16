@@ -64,6 +64,15 @@ public class POS implements AggregateRoot<Long>, Serializable{
     }
     
     /**
+     * Returns the MecanographicNumber of the current user on this pos session
+     * @return 
+     */
+    public MecanographicNumber posUser() {
+        
+        return this.posUser;
+    }
+    
+    /**
      * 
      * @return 
      */

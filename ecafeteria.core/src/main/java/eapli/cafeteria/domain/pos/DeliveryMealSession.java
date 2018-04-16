@@ -18,22 +18,25 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="IDDELIVERYEALSESSION")
     private Long idSession;
-    
-    @OneToOne
-    @JoinColumn(name="IDPOS")
-    private long idPos;
-    
+        
     @Temporal(TemporalType.DATE)
     private DeliverySessionDate sessionDate;
-
+    
+    @OneToMany
+    private DeliveryRegistry registry;
+    
+    @Transient
+    private POS pos; //it wont be persisted on database
+    
     protected DeliveryMealSession() {
        //for ORM only
     }
     
     //real constructor
+
     public DeliveryMealSession(POS pos) {
-        this.idPos = pos.id();
-        sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
+        this.pos = pos;
+        this.sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
     }
     
     @Override
@@ -57,7 +60,14 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public Long id() {
         return this.idSession;
     }
-
-    
+   
+    /**
+     * Returns this delivery sessions date
+     * @return 
+     */
+    public DeliverySessionDate sessionDate() {
+        
+        return this.sessionDate;
+    }
     
 }
