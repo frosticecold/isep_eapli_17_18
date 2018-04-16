@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.cafeteria.domain.pos;
+package eapli.ecafeteria.domain.pos;
 
 import eapli.framework.domain.ddd.ValueObject;
 import eapli.framework.util.DateTime;

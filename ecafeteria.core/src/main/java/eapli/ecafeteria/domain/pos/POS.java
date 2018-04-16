@@ -1,4 +1,4 @@
-package eapli.cafeteria.domain.pos;
+package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
