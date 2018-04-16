@@ -34,9 +34,16 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         //for ORM 
     }
 
+    /**
+     * Constructor
+     *
+     * @param booking
+     * @param rating
+     * @param comment
+     */
     public Rating(Booking booking, int rating, String comment) {
         if (booking == null || rating < 0 || rating > 5 || comment == null) {
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
         }
         this.booking = booking;
         this.rating = rating;

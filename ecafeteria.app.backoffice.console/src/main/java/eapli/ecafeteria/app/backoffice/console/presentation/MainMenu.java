@@ -28,6 +28,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.ListDis
 import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.RegisterDishViaDTOUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMaterialAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.framework.actions.ReturnAction;
@@ -287,7 +288,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildMenuOfMenus() {
         final Menu menu = new Menu("Menus >");
 
-        //menu.add(new MenuItem(MENU_EDIT_CREATE_OPTION, "Edit/Create Menu"));
+        menu.add(new MenuItem(MENU_EDIT_CREATE_OPTION, "Edit/Create Menu", () -> new ElaborateOrEditMenuUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;

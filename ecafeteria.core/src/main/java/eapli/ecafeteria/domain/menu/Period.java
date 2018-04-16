@@ -10,7 +10,10 @@ import eapli.framework.util.DateTime;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -73,6 +76,18 @@ public class Period implements Serializable {
     }
 
     /**
+     * Constructs a Period for a Working week with Calenders as arguments
+     *
+     * @author Raúl Correia
+     * @param startingOfWeek
+     * @param endOfWeek
+     *
+     */
+    protected Period(final Calendar startingOfWeek, final Calendar endOfWeek) throws IllegalArgumentException {
+        setWorkingPeriod(startingOfWeek, endOfWeek);
+    }
+
+    /**
      * Constructs a Period for a Working week based in the dd-MM-yyy format for
      * each date string
      *
@@ -82,7 +97,7 @@ public class Period implements Serializable {
      */
     protected Period(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, DateEAPLI.SIMPLE_DATA_FORMAT);
-
+        
     }
 
     /**
@@ -96,7 +111,7 @@ public class Period implements Serializable {
      */
     protected Period(final String startingDayOfWeek, final String endingDayOfWeek, String simpledataformat) throws IllegalArgumentException {
         setWorkingPeriod(startingDayOfWeek, endingDayOfWeek, simpledataformat);
-
+        
     }
 
     /*
@@ -104,6 +119,13 @@ public class Period implements Serializable {
                                     Private Functions
     ============================================================================
      */
+    private void setWorkingPeriod(final Calendar startCalendar, final Calendar endCalendar) {
+        this.startingDate = startCalendar;
+        this.endingDate = endCalendar;
+        validateBusinessWorkingDays(startingDate, endingDate);
+        
+    }
+
     /**
      * Method that saves the dates strings the the class member variables
      * Verifies if each string matches with the regex expressions Calls
@@ -115,7 +137,7 @@ public class Period implements Serializable {
      * @throws IllegalArgumentException if any date is invalid
      */
     private void setWorkingPeriod(final String startingDayOfWeek, final String endingDayOfWeek, final String simpledataformat) throws IllegalArgumentException {
-
+        
         startingDate = DateTime.parseDate(startingDayOfWeek, simpledataformat);
         endingDate = DateTime.parseDate(endingDayOfWeek, simpledataformat);
         validateBusinessWorkingDays(startingDate, endingDate);
@@ -124,6 +146,8 @@ public class Period implements Serializable {
     /**
      * Method that validates if a startingdate and endingdate is within business
      * rules
+     * <p>
+     *  * Must start on a Sunday * Must end on a Saturday * 6 Working Days *
      *
      * @author Raúl Correia
      * @param start
@@ -131,7 +155,7 @@ public class Period implements Serializable {
      * @throws IllegalArgumentException
      */
     private void validateBusinessWorkingDays(Calendar start, Calendar end) throws IllegalArgumentException {
-
+        
         if (start.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             throw new IllegalArgumentException("Starting working day should be SUNDAY.");
         }
@@ -174,7 +198,7 @@ public class Period implements Serializable {
          */
         return hours <= HOURS_TO_BE_CRITICAL;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -182,7 +206,7 @@ public class Period implements Serializable {
         hash = 71 * hash + Objects.hashCode(this.endingDate);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -203,8 +227,8 @@ public class Period implements Serializable {
         }
         return true;
     }
-
-    Map<Integer, Calendar> getWorkingDays() {
+    
+    public Map<Integer, Calendar> getWorkingDays() {
         Map<Integer, Calendar> map = new LinkedHashMap<>();
         Calendar cal = (Calendar) startingDate.clone();
         int index = 0;
@@ -217,7 +241,15 @@ public class Period implements Serializable {
             cal.add(Calendar.DATE, 1);
         }
         return map;
-
+        
     }
-
+    
+    public Iterable<Calendar> getWorkingDaysIterable() {
+        List<Calendar> list = new LinkedList<>();
+        for (Entry<Integer, Calendar> entry : getWorkingDays().entrySet()) {
+            list.add(entry.getValue());
+        }
+        return list;
+    }
+    
 }

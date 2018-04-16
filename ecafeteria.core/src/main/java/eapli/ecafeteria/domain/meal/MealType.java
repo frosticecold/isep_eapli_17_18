@@ -11,4 +11,7 @@ package eapli.ecafeteria.domain.meal;
  */
 public enum MealType {
     LUNCH, DINNER;
+
+    MealType() {
+    }
 }

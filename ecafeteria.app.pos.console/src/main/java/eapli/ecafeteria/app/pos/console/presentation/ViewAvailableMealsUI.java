@@ -15,7 +15,8 @@ public class ViewAvailableMealsUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Available Meals: \n");
+        return true;
     }
 
     @Override

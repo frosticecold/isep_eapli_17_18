@@ -5,6 +5,8 @@
  */
 package eapli.ecafeteria.application.menus;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Meal;
@@ -16,11 +18,12 @@ import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.application.Controller;
 import eapli.framework.date.DateEAPLI;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.DateTime;
-import java.text.ParseException;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,7 +60,6 @@ public class ElaborateOrEditMenuController implements Controller {
         menurepo = repositories.menus();
         dishrepo = repositories.dishes();
         dishtyperepo = repositories.dishTypes();
-        getDishTypes();
     }
 
     /**
@@ -66,15 +68,17 @@ public class ElaborateOrEditMenuController implements Controller {
      * @author Raúl Correia
      * @param initialDate String with initial Date
      * @param finalDate String with final Date
-     * @param simpledataformat simple data format (dd-MM-yyyy)
      * @return Menu if exists or create a new one
      */
-    public Menu createOrFindMenu(String initialDate, String finalDate, String simpledataformat) {
-        Menu m = findMenu(initialDate, finalDate, simpledataformat);
+    public Menu createOrFindMenu(final Calendar initialDate, final Calendar finalDate) {
+        if (initialDate == null || finalDate == null) {
+            throw new IllegalArgumentException("Dates must not be null.");
+        }
+        Menu m = findMenu(initialDate, finalDate);
         if (m == null) {
             try {
                 m_menu = new Menu(initialDate, finalDate);
-            } catch (IllegalArgumentException | ParseException ex) {
+            } catch (IllegalArgumentException ex) {
                 Logger.getLogger(ElaborateOrEditMenuController.class.getName()).log(Level.SEVERE, null, ex);
                 return null;
             }
@@ -82,6 +86,16 @@ public class ElaborateOrEditMenuController implements Controller {
             m_menu = m;
         }
         return m_menu;
+    }
+
+    private Menu findMenu(final Calendar initialDate, final Calendar finalDate) {
+        Optional<Menu> opt = menurepo.findMenuWithinPeriod(initialDate, finalDate);
+        try {
+            Menu menu = opt.get();
+            return menu;
+        } catch (NoSuchElementException ex) {
+            return null;
+        }
     }
 
     /**
@@ -98,6 +112,14 @@ public class ElaborateOrEditMenuController implements Controller {
         return mapOfWorkingDays;
     }
 
+    public Iterable<Calendar> getMenuWorkingDaysIterable(Menu m) {
+        if (m == null) {
+            return null;
+        }
+        Iterable<Calendar> iterable = m.getWorkWeekDaysIterable();
+        return iterable;
+    }
+
     public Calendar selectDay(Integer dayIndex) {
         selectedDay = mapOfWorkingDays.get(dayIndex);
         return selectedDay;
@@ -108,39 +130,31 @@ public class ElaborateOrEditMenuController implements Controller {
         return selectedDay;
     }
 
-    private Menu findMenu(String initialDate, String finalDate, String simpledataformat) {
-        String validformat;
-        if (simpledataformat == null || simpledataformat.isEmpty()) {
-            validformat = PERIOD_VALID_FORMAT;
-        } else {
-            validformat = simpledataformat;
-        }
-        DateEAPLI dstart, dend;
-        try {
-            dstart = new DateEAPLI(initialDate, validformat);
-            dend = new DateEAPLI(finalDate, validformat);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(ElaborateOrEditMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-        Calendar calendar_start = dstart.getStartingDayOfWeek().toCalendar();
-        Calendar calendar_end = dend.getEndingDayOfWeek().toCalendar();
-        Optional<Menu> opt = menurepo.findMenuWithinPeriod(calendar_start, calendar_end);
-        if (opt.isPresent()) {
-            return opt.get();
-        }
-        return null;
-    }
-
     public Iterable<DishType> getDishTypes() {
         if (listOfDishTypes == null) {
             listOfDishTypes = dishtyperepo.activeDishTypes();
         }
         return listOfDishTypes;
     }
-    
-    public Iterable<Dish> getDishesByDishType(DishType dishtype){
+
+    public Iterable<Dish> getDishesByDishType(DishType dishtype) {
         return dishrepo.findByDishType(dishtype);
+    }
+
+    public Iterable<Meal> getMealsByDay(Menu menu, Calendar day) {
+        return menu.getMealsByDay(day);
+    }
+
+    public boolean removeMealFromMenu(Menu menu, Meal meal) {
+        return menu.removeMeal(meal);
+    }
+
+    public Menu saveMenu(Menu menu) throws DataIntegrityViolationException, DataConcurrencyException {
+
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
+
+        Menu savedMenu = menurepo.save(menu);
+        return savedMenu;
     }
 
 }

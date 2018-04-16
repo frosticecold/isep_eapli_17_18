@@ -10,7 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.Version;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -25,20 +28,27 @@ public class Booking implements Serializable {
     @Version
     private Long version;
     
+    @Id
+    @GeneratedValue
+    @Column(name="IDBOOKING")
+    private Long idBooking;
     
-    @EmbeddedId
-    private int idBooking;
     @OneToOne
-     private Meal meal; 
-     private BookingState bookingState;
-     private CafeteriaUser cafeteriauser;
+    @Column(name="MEAL")
+    private Meal meal; 
+    
+    @Column(name="BOOKINGSTATE")
+    private BookingState bookingState;
      
+    @OneToMany
+    @Column(name="CAFETERIAUSER")
+     private CafeteriaUser cafeteriaUser;
      
-    public Booking(int idBooking, Meal meal, BookingState bookingState, CafeteriaUser cafeteriauser) {
-        this.idBooking = idBooking;
+
+    public Booking(Meal meal, CafeteriaUser cafeteriauser) {
         this.meal = meal;
-        this.bookingState = bookingState;
-        this.cafeteriauser = cafeteriauser;
+        this.bookingState = new BookingState();
+        this.cafeteriaUser = cafeteriauser;
     }
      
      
@@ -59,7 +69,7 @@ public class Booking implements Serializable {
         return getIdBooking() == other.getIdBooking();
     }
 
-    public int getIdBooking() {
+    public Long getIdBooking() {
         return idBooking;
     }
 
@@ -72,7 +82,7 @@ public class Booking implements Serializable {
     }
 
     public CafeteriaUser getCafeteriauser() {
-        return cafeteriauser;
+        return cafeteriaUser;
     }
     
 }
