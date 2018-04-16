@@ -7,6 +7,7 @@ package eapli.ecafeteria.app.user.console.presentation;
 
 import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.app.user.console.presentation.bookings.BookingMealUI;
+import eapli.ecafeteria.app.user.console.presentation.bookings.ViewRatingsUI;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.framework.actions.ReturnAction;
 import eapli.framework.presentation.console.ExitWithMessageAction;
@@ -35,6 +36,7 @@ class MainMenu extends CafeteriaUserBaseUI {
     // BOOKINGS MENU
     private static final int LIST_MENUS_OPTION = 1;
     private static final int BOOK_A_MEAL_OPTION = 2;
+    private static final int VIEW_RATINGS_OPTION = 3;
 
     // ACCOUNT MENU
     private static final int LIST_MOVEMENTS_OPTION = 1;
@@ -97,6 +99,7 @@ class MainMenu extends CafeteriaUserBaseUI {
         final Menu menu = new Menu("Bookings");
         menu.add(new MenuItem(LIST_MENUS_OPTION, "List menus", new ShowMessageAction("Not implemented yet")));
         menu.add(new MenuItem(BOOK_A_MEAL_OPTION, "Book a meal", () -> new BookingMealUI().show()));
+        menu.add(new MenuItem(VIEW_RATINGS_OPTION, "View Served Meal Ratings", () -> new ViewRatingsUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         return menu;
     }

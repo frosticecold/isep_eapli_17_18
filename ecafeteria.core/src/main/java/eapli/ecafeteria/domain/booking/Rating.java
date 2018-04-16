@@ -24,8 +24,6 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-
     private int rating;
     private String comment;
     private Booking booking;

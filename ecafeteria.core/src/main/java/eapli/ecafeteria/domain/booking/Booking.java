@@ -7,7 +7,6 @@ package eapli.ecafeteria.domain.booking;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.Version;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
 import javax.persistence.Column;
@@ -24,9 +23,6 @@ import javax.persistence.OneToOne;
 public class Booking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Version
-    private Long version;
     
     @Id
     @GeneratedValue
@@ -34,15 +30,13 @@ public class Booking implements Serializable {
     private Long idBooking;
     
     @OneToOne
-    @Column(name="MEAL")
     private Meal meal; 
     
     @Column(name="BOOKINGSTATE")
     private BookingState bookingState;
      
-    @OneToMany
-    @Column(name="CAFETERIAUSER")
-     private CafeteriaUser cafeteriaUser;
+    @OneToOne
+    private CafeteriaUser cafeteriaUser;
      
 
     public Booking(Meal meal, CafeteriaUser cafeteriauser) {
@@ -50,8 +44,7 @@ public class Booking implements Serializable {
         this.bookingState = new BookingState();
         this.cafeteriaUser = cafeteriauser;
     }
-     
-     
+
     protected Booking() {
         // for ORM only
     }
@@ -84,5 +77,5 @@ public class Booking implements Serializable {
     public CafeteriaUser getCafeteriauser() {
         return cafeteriaUser;
     }
-    
+
 }

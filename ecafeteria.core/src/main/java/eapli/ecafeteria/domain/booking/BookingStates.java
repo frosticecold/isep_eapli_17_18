@@ -5,6 +5,8 @@
  */
 package eapli.ecafeteria.domain.booking;
 
+import javax.persistence.EmbeddedId;
+
 /**
  *
  * @author David Camelo 1161294@isep.ipp.pt

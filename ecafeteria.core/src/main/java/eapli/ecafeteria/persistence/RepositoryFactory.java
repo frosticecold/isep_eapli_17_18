@@ -81,5 +81,11 @@ public interface RepositoryFactory {
      */
     DishReportingRepository dishReporting();
     
+    /**
+     * Booking Reporting Repo
+     * @return 
+     */
+    BookingReportingRepository bookingReporting();
+    
     
 }
