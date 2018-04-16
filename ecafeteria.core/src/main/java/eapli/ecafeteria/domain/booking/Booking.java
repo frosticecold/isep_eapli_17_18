@@ -7,12 +7,12 @@ package eapli.ecafeteria.domain.booking;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.Version;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -23,21 +23,23 @@ import javax.persistence.OneToOne;
 public class Booking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Version
-    private Long version;
-
+    
     @Id
-    private int idBooking;
+    @GeneratedValue
+    @Column(name="IDBOOKING")
+    private Long idBooking;
+    
     @OneToOne
-    private Meal meal;
-    @OneToOne
+    private Meal meal; 
+    
+    @Column(name="BOOKINGSTATE")
     private BookingState bookingState;
+     
     @OneToOne
     private CafeteriaUser cafeteriaUser;
+     
 
-    public Booking(int idBooking, Meal meal, CafeteriaUser cafeteriauser) {
-        this.idBooking = idBooking;
+    public Booking(Meal meal, CafeteriaUser cafeteriauser) {
         this.meal = meal;
         this.bookingState = new BookingState();
         this.cafeteriaUser = cafeteriauser;
@@ -60,7 +62,7 @@ public class Booking implements Serializable {
         return getIdBooking() == other.getIdBooking();
     }
 
-    public int getIdBooking() {
+    public Long getIdBooking() {
         return idBooking;
     }
 
