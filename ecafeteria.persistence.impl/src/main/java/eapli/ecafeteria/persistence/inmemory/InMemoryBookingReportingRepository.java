@@ -7,18 +7,18 @@ package eapli.ecafeteria.persistence.inmemory;
 
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
 
 /**
  *
  * @author ruial
  */
-public class InMemoryBookingReportingRepository implements BookingReportingRepository {
+public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLongPK<Booking> implements BookingReportingRepository {
 
     @Override
     public Iterable<Booking> listServedBookings() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return match(e -> e.isAvailableForRating());
     }
 
 }

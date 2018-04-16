@@ -27,6 +27,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     private int rating;
     private String comment;
     private Booking booking;
+    private String reply;
 
     protected Rating() {
         //for ORM 
@@ -99,4 +100,13 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         return this.id.equals(id);
     }
 
+    
+    public String toString() {
+        return  "Rating: " + this.rating
+                +"\n"
+                + "Comment: " + this.comment
+                + "\n"
+                + "Reply : " + this.reply
+                + "\n";
+    }
 }

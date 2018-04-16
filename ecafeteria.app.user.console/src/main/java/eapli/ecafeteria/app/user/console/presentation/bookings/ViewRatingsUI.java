@@ -8,7 +8,9 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.ViewRatingsController;
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.Rating;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.util.Console;
 
 /**
  *
@@ -25,6 +27,14 @@ public class ViewRatingsUI extends AbstractUI {
                               + "\n"
                               + "Meal: " + booking.getMeal().toString()
                               + "\n");
+        }
+        
+        final Long id = Console.readLong("Please enter the Booking ID: ");
+        
+        controller.setMeal(id);
+        
+        for (Rating rating : controller.ratingsFromMeal()) {
+            System.out.println(rating.toString());
         }
 
         return true;

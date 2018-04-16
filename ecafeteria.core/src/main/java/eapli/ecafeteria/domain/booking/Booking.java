@@ -23,21 +23,20 @@ import javax.persistence.OneToOne;
 public class Booking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue
-    @Column(name="IDBOOKING")
+    @Column(name = "IDBOOKING")
     private Long idBooking;
-    
+
     @OneToOne
-    private Meal meal; 
-    
-    @Column(name="BOOKINGSTATE")
+    private Meal meal;
+
+    @Column(name = "BOOKINGSTATE")
     private BookingState bookingState;
-     
+
     @OneToOne
     private CafeteriaUser cafeteriaUser;
-     
 
     public Booking(Meal meal, CafeteriaUser cafeteriauser) {
         this.meal = meal;
@@ -76,6 +75,15 @@ public class Booking implements Serializable {
 
     public CafeteriaUser getCafeteriauser() {
         return cafeteriaUser;
+    }
+
+    public boolean isAvailableForRating() {
+        if (bookingState.actualState().equals(BookingStates.SERVED)) {
+            return true;
+        } else if (bookingState.actualState().equals(BookingStates.NOT_SERVED)) {
+            return true;
+        }
+        return false;
     }
 
 }

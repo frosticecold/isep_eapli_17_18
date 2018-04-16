@@ -31,21 +31,26 @@ public class ViewRatingsController implements Controller {
     }
     
     /**
-     * Selects a meal from a list of bookings
+     * Selects a meal from a list of bookings given an ID
+     * @param id
      * @param meal 
      */
-    public void setMeal(Meal meal) {
-        this.meal = meal;
+    public void setMeal(Long id) {
+        for (Booking booking : listServedBookings()) {
+            if (booking.getIdBooking() == id) {
+                this.meal = booking.getMeal();
+            }
+        }
     }
     
-//    /**
-//     * After the selection of a meal, returns a list with all of its ratings.
-//     * @param meal
-//     * @return 
-//     */
-//    public Iterable<Rating> ratingsFromMeal() {
-//        return meal.ratings();
-//    }
+    /**
+     * After the selection of a meal, returns a list with all of its ratings.
+     * @param meal
+     * @return 
+     */
+    public Iterable<Rating> ratingsFromMeal() {
+        return meal.ratings();
+    }
     
     
     
