@@ -10,5 +10,4 @@ package eapli.ecafeteria.domain.meal;
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
 public class Meal {
-    
 }

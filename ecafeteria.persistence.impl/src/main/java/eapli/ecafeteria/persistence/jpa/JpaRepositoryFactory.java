@@ -76,4 +76,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public BookingRepository booking() {
         return new JpaBookingRepository();
     }
+
+    @Override
+    public MealRepository meals() {
+        return new JpaMealRepository();
+    }
+
+    @Override
+    public MealReportingRepository mealReporting() {
+        return new JpaMealReportingRepository();
+    }
 }
