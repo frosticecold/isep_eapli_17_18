@@ -87,5 +87,15 @@ public interface RepositoryFactory {
      */
     BookingReportingRepository bookingReporting();
     
+    /**
+     * POS Repo
+     * @return 
+     */
+    POSRepository posRepository();
     
+    /**
+     * DeliveryMealSession Repo
+     * @return
+     */
+    DeliveryMealSessionRepository deliveryMealRepository();
 }
