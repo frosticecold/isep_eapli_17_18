@@ -13,11 +13,12 @@ import eapli.ecafeteria.persistence.BookingReportingRepository;
  *
  * @author ruial
  */
-public class JpaBookingReportingRepository implements BookingReportingRepository{
+public class JpaBookingReportingRepository extends  CafeteriaJpaRepositoryBase implements BookingReportingRepository{
 
     @Override
     public Iterable<Booking> listServedBookings() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
 }
