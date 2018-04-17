@@ -7,22 +7,28 @@ package eapli.ecafeteria.domain.booking;
 
 import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
  * @author jpfr8
  */
+@Entity
 public class BookingState implements Serializable {
+    
+    @Id
+    @GeneratedValue
+    @Column(name = "IDBOOKINGSTATE")
+    private Long idBookingState;
+    
     /**
      * Actual booking state
      */
     @Enumerated()
-    @Column(name = "Booking States")
+    @Column(name = "bookingstate")
     private BookingStates actualBookingState;
 
     /**

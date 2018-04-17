@@ -9,6 +9,8 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingStates;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingRepository;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,28 +22,12 @@ import java.util.Optional;
  */
 public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Long>implements BookingRepository {
 
-    @Override
-    public Optional<Booking> findNextBooking() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    /**
-     * Find booking by cafeteria user that are in a booked state
-     * 
-     * @param user user of the cafeteria
-     * @return 
-     */
-    @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user) {
-        final Map<String, Object> params = new HashMap<>();
+    
+    
+    public Booking saveBooking(Booking entity) throws DataConcurrencyException, 
+            DataIntegrityViolationException{
         
-        params.put("cafeteriaUser", user);
-        params.put("bookingState", BookingStates.BOOKED);
-        
-        return match("e.cafeteriaUser =:cafeteriaUser "
-                + "AND e.bookingState =: bookingState", params);
+        return save(entity);
     }
-    
-    
-    
 }

@@ -6,9 +6,15 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.BookingStates;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.ecafeteria.persistence.RepositoryFactory;
+import eapli.framework.domain.money.Money;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.List;
 
 /**
@@ -18,7 +24,17 @@ import java.util.List;
 public class CancelBookingController {
 
     /**
+     * Factory
+     */
+    RepositoryFactory factory;
+    
+    /**
      * Bookings repository
+     */
+    private BookingReportingRepository bookingReportingRepository = null;
+    
+    /**
+     * Bookings reporting repository
      */
     private BookingRepository bookingRepository = null;
     
@@ -31,6 +47,16 @@ public class CancelBookingController {
      * Selected booking
      */
     private Booking selectedBooking = null;
+    
+    /**
+     * Cafeteria user
+     */
+    private CafeteriaUser user = null;
+    
+    /**
+     * Refund for the booking
+     */
+    private Money refund = null;
 
     /**
      * Constructor
@@ -39,8 +65,13 @@ public class CancelBookingController {
      */
     public CancelBookingController(CafeteriaUser user) {
         // Load Bookings from repository    
-        bookingRepository = PersistenceContext.repositories().booking();
-        bookings = bookingRepository.findBookingsByCafeteriaUser(user);
+        this.user = user;
+        
+        this.factory = PersistenceContext.repositories();
+        
+        bookingRepository = factory.booking();
+        bookingReportingRepository = factory.bookingReporting();
+        bookings = bookingReportingRepository.findBookingsByCafeteriaUser(user, BookingStates.BOOKED);
     }
     
     /**
@@ -71,16 +102,33 @@ public class CancelBookingController {
      * @return true if changed
      */
     public boolean informBookingState(){
-        return selectedBooking.getBookingState().changeToCanceled();
+        boolean isCancelable = selectedBooking.isBookingCancelable();
+        
+        if(isCancelable){
+            this.refund = selectedBooking.refundForCancelation();
+        }
+        
+        return isCancelable;
     }
     
     /**
+     * Confirms cancelation and persists changes
      * 
-     * @return 
+     * @return true after conclusion 
      */
-    public boolean confirmCancelation(){
-        // Persist changes in DB
-        // 
-        return false;
+    public boolean confirmCancelation() throws DataConcurrencyException, DataIntegrityViolationException{
+        //Change state
+        selectedBooking.getBookingState().changeToCanceled();
+        
+        // Update balance
+        user.addCredits(refund);
+        bookingRepository.saveBooking(selectedBooking);
+        
+        // Add cancelation movement
+        
+        
+        // Persist changes in DB (user, booking, transaction)
+         
+        return true;
     }
 }
