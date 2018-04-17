@@ -6,8 +6,14 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.application.menus.ListMenuService;
+import eapli.ecafeteria.domain.menu.*;
+import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.persistence.*;
-import eapli.framework.application.Controller;
+import eapli.framework.application.*;
+import eapli.framework.presentation.console.Menu;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -19,4 +25,14 @@ public class BookingMealController implements  Controller{
     
      private final BookingRepository repository = PersistenceContext.repositories().booking();
 
+     /**
+	 *
+	 * @param date
+	 * @param mealType
+	 * @return a list with all meals by date
+	 */
+	public Iterable<Meal> listMeals(Calendar date, MealType mealType) {
+           return  svc.getMealsPublishedByDay(date, mealType);
+	}
+     
 }

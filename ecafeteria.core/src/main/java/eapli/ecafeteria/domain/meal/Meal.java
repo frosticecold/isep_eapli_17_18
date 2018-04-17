@@ -93,4 +93,9 @@ public class Meal implements Serializable {
     public Iterable<Rating> ratings() {
         return this.ratings;
     }
+
+    public MealType mealtype() {
+        return mealtype;
+    }
+       
 }

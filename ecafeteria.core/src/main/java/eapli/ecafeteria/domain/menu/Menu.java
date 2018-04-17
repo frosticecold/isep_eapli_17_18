@@ -98,6 +98,12 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         period = new Period(startingOfWeek, endOfWeek);
     }
 
+    public Period period() {
+        return period;
+    }
+    
+    
+    
     /*
     ============================================================================
                                     Private Functions
