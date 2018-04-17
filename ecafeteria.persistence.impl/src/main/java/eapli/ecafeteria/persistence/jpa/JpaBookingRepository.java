@@ -20,11 +20,21 @@ import java.util.Optional;
  */
 public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Long>implements BookingRepository {
 
-    @Override
-    public Optional<Booking> findNextBooking() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Optional<Booking> findNextBooking(CafeteriaUser user) {
+        Map<String,Object> params = new HashMap<>();
+        Booking nextBooking = null;
+        BookingStates state = BookingStates.BOOKED;
+        
+        for(Booking booking : findBookingsByCafeteriaUser(user)){
+            //if(booking.getMeal().)
+        }
+        
+        
+        
+        
+        
+        return null;
     }
-
     /**
      * Find booking by cafeteria user that are in a booked state
      * 
@@ -46,7 +56,5 @@ public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Lo
     public List<Booking> findConsumedBookingWithoutRating() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+        
 }

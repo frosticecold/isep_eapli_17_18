@@ -18,7 +18,7 @@ import java.util.Optional;
 public class InMemoryBookingRepository implements BookingRepository {
 
     @Override
-    public Optional<Booking> findNextBooking() {
+    public Optional<Booking> findNextBooking(CafeteriaUser user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
