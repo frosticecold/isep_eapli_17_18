@@ -9,7 +9,9 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingStates;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.persistence.Query;
 
@@ -24,9 +26,22 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public Optional<Booking> findNextBooking() {
-        throw new UnsupportedOperationException("Not supported yet.");
+     public Booking findNextBooking(CafeteriaUser user) {
+        Map<String,Object> params = new HashMap<>();
+        Booking nextBooking = null;
+        BookingStates state = BookingStates.BOOKED;
+        
+        for(Booking booking : findBookingsByCafeteriaUser(user,state)){
+            
+            long bookingDate1 = booking.getMeal().getMealDate().getTimeInMillis();
+            long bookingDate2 = nextBooking.getMeal().getMealDate().getTimeInMillis();
+           
+            if(bookingDate1 < bookingDate2){
+                nextBooking = booking;
+            }
+        }
+  
+        return nextBooking;
     }
 
     /**
@@ -50,4 +65,5 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
         q.setParameter("bookingState", bookingState);
         return q.getResultList();
     }
+
 }

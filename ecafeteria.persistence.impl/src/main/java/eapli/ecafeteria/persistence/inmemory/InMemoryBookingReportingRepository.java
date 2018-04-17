@@ -27,7 +27,7 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
     
     
     @Override
-    public Optional<Booking> findNextBooking() {
+    public Booking findNextBooking(CafeteriaUser user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
