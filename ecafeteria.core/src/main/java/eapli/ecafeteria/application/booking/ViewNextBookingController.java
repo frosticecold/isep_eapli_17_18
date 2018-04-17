@@ -6,8 +6,10 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.persistence.BookingRepository;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.application.Controller;
 
 /**
@@ -16,9 +18,21 @@ import eapli.framework.application.Controller;
  */
 public class ViewNextBookingController implements Controller{
     
-    private final BookingRepository bookingRepo = PersistenceContext.repositories().booking();
+    private BookingReportingRepository bookingRepo; 
+    private RepositoryFactory repositories;
+    private CafeteriaUser user;
     
-//    public Booking getNextBooking(){
-//        return bookingRepo.findNextBooking();
-//    }
+    public ViewNextBookingController(){
+        repositories = PersistenceContext.repositories();
+        this.bookingRepo = repositories.bookingReporting();
+    }
+    
+    /**
+     * Gets user next booking
+     * @param user
+     * @return 
+     */
+    public Booking getNextBooking(CafeteriaUser user){
+        return bookingRepo.findNextBooking(user);
+    }
 }
