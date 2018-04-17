@@ -18,7 +18,11 @@ public class ViewAvailableMealsController implements Controller{
     
     private final DishReportingRepository repo = PersistenceContext.repositories().dishReporting();
     
-    public Iterable<DishesPerDishType> findDishesPerDishType(){
-        return repo.dishesPerDishType();
+    public void showDishesPerDishType(){
+        Iterable<DishesPerDishType> dishes = repo.dishesPerDishType();
+        for (DishesPerDishType dish : dishes) {
+            System.out.println(dish.dishType + ":");
+            System.out.println(dish.quantityOfDishes);
+        }
     }
 }

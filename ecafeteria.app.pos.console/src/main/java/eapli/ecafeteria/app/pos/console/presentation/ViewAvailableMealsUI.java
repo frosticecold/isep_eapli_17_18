@@ -17,16 +17,11 @@ import eapli.framework.presentation.console.AbstractUI;
 public class ViewAvailableMealsUI extends AbstractUI {
 
     private final ViewAvailableMealsController controller = new ViewAvailableMealsController();
-    
+
     @Override
     protected boolean doShow() {
-        System.out.println("Available Meals: \n");
-        Iterable<DishesPerDishType> dishes = controller.findDishesPerDishType();
-        
-        for (DishesPerDishType dish : dishes) {
-            System.out.println(dish.dishType);
-            System.out.println(dish.quantityOfDishes);
-        }
+        System.out.println("Available Dishes:");
+        controller.showDishesPerDishType();
         return true;
     }
 
@@ -34,5 +29,5 @@ public class ViewAvailableMealsUI extends AbstractUI {
     public String headline() {
         return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
-    
+
 }
