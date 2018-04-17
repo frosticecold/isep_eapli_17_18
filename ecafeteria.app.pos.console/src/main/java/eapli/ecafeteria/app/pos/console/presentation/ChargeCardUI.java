@@ -5,7 +5,7 @@
  */
 package eapli.ecafeteria.app.pos.console.presentation;
 
-import eapli.ecafetaria.application.pos.ChargeCardController;
+import eapli.ecafeteria.application.pos.ChargeCardController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.application.Controller;

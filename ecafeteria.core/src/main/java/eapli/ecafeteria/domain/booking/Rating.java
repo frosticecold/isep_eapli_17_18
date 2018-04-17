@@ -24,19 +24,25 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-
     private int rating;
     private String comment;
     private Booking booking;
+    private String reply;
 
     protected Rating() {
         //for ORM 
     }
 
+    /**
+     * Constructor
+     *
+     * @param booking
+     * @param rating
+     * @param comment
+     */
     public Rating(Booking booking, int rating, String comment) {
         if (booking == null || rating < 0 || rating > 5 || comment == null) {
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
         }
         this.booking = booking;
         this.rating = rating;
@@ -94,4 +100,13 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         return this.id.equals(id);
     }
 
+    
+    public String toString() {
+        return  "Rating: " + this.rating
+                +"\n"
+                + "Comment: " + this.comment
+                + "\n"
+                + "Reply : " + this.reply
+                + "\n";
+    }
 }

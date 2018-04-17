@@ -7,12 +7,13 @@ package eapli.ecafeteria.domain.booking;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.Version;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.framework.domain.money.Money;
 import java.util.HashMap;
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 /**
@@ -24,26 +25,26 @@ public class Booking implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Version
-    private Long version;
-    
-    
-    @EmbeddedId
-    private int idBooking;
+    @Id
+    @GeneratedValue
+    @Column(name = "IDBOOKING")
+    private Long idBooking;
+
     @OneToOne
-     private Meal meal; 
-     private BookingState bookingState;
-     private CafeteriaUser cafeteriaUser;
-     
-     
-    public Booking(int idBooking, Meal meal, CafeteriaUser cafeteriauser) {
-        this.idBooking = idBooking;
+    private Meal meal;
+
+    @Column(name = "BOOKINGSTATE")
+    private BookingState bookingState;
+
+    @OneToOne
+    private CafeteriaUser cafeteriaUser;
+
+    public Booking(Meal meal, CafeteriaUser cafeteriauser) {
         this.meal = meal;
         this.bookingState = new BookingState();
         this.cafeteriaUser = cafeteriauser;
     }
-     
-     
+
     protected Booking() {
         // for ORM only
     }
@@ -61,7 +62,7 @@ public class Booking implements Serializable {
         return getIdBooking() == other.getIdBooking();
     }
 
-    public int getIdBooking() {
+    public Long getIdBooking() {
         return idBooking;
     }
 
@@ -88,5 +89,14 @@ public class Booking implements Serializable {
             throw new UnsupportedOperationException();
         }
         return null;
+    }
+
+    public boolean isAvailableForRating() {
+        if (bookingState.actualState().equals(BookingStates.SERVED)) {
+            return true;
+        } else if (bookingState.actualState().equals(BookingStates.NOT_SERVED)) {
+            return true;
+        }
+        return false;
     }
 }

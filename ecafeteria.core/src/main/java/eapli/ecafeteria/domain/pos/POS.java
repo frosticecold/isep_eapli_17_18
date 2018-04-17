@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package eapli.cafeteria.domain.pos;
+package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -25,17 +21,16 @@ public class POS implements AggregateRoot<Long>, Serializable{
     @Column(name="IDPOS")
     private long idPOS; 
     
-    @OneToMany
-    @JoinColumn(name="IDUSER")
-    private CafeteriaUser posUser;
+    @OneToOne
+    @JoinColumn(name ="MecanographicNumber")
+    private MecanographicNumber posUser;
 
     protected POS () {
         //for ORM only
     }
     
     public POS (CafeteriaUser posUser) {
-        
-        this.posUser = posUser;
+        this.posUser = posUser.id();
     }
 
     /**
@@ -66,6 +61,15 @@ public class POS implements AggregateRoot<Long>, Serializable{
     @Override
     public Long id() {
         return this.idPOS;
+    }
+    
+    /**
+     * Returns the MecanographicNumber of the current user on this pos session
+     * @return 
+     */
+    public MecanographicNumber posUser() {
+        
+        return this.posUser;
     }
     
     /**

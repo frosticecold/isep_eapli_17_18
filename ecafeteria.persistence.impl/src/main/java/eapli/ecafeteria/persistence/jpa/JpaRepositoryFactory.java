@@ -55,7 +55,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public MaterialRepository materials() {
         return new JpaMaterialRepository();
     }
-     
+
     @Override
     public MenuRepository menus() {
         return new JpaMenuRepository();
@@ -75,5 +75,25 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public BookingRepository booking() {
         return new JpaBookingRepository();
+    }
+
+    @Override
+    public BookingReportingRepository bookingReporting() {
+        return new JpaBookingReportingRepository();
+    }
+
+    @Override
+    public MenuPlanRepository menuPlan() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public POSRepository posRepository() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DeliveryMealSessionRepository deliveryMealRepository() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
