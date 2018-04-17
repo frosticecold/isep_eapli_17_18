@@ -5,10 +5,14 @@
  */
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
+import eapli.ecafeteria.domain.menu.MenuState;
 import eapli.ecafeteria.persistence.MenuRepository;
 import java.util.Calendar;
 import java.util.Optional;
+import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
@@ -33,5 +37,20 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
         query.setParameter("edate", endDate, TemporalType.DATE);
         return query.getResultList().stream().findFirst();
     }
-
+    
+    public Iterable<Meal> listMealsPublishedMenu(Calendar date, MealType mealType){
+        
+        final Query q = entityManager().
+                createQuery("SELECT meal.* "
+                        + "FROM Menu menu, Meal meal"
+                        + "WHERE menu.menuState=:state"
+                        + "AND :date BETWEEN (menu.period.startingDatesdate AND menu.period.endingDate)"
+                        + "AND :mealtype = meal.mealtype", this.entityClass);
+        
+        q.setParameter("date", date, TemporalType.DATE);
+        q.setParameter("state", MenuState.PUBLISHED);
+        q.setParameter("mealtype", mealType);
+        
+        return q.getResultList();
+    }
 }

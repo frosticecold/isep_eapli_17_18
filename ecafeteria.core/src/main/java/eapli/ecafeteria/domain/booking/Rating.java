@@ -7,11 +7,9 @@ package eapli.ecafeteria.domain.booking;
 
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -31,6 +29,14 @@ public class Rating implements AggregateRoot<Long>, Serializable {
 
     protected Rating() {
         //for ORM 
+    }
+
+    public Rating(int rating, String comment) {
+        if (booking == null || rating < 0 || rating > 5 || comment == null) {
+            throw new IllegalArgumentException();
+        }
+        this.rating = rating;
+        this.comment = comment;
     }
 
     /**
@@ -61,7 +67,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
             return false;
         }
         final Rating other = (Rating) obj;
-        return this.id().equals(other.id());
+        return this.id.equals(other.id());
     }
 
     @Override

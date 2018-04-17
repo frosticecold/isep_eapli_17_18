@@ -6,19 +6,15 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.List;
-import java.util.Optional;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
 public class InMemoryBookingRepository implements BookingRepository {
-
 
     @Override
     public Booking saveBooking(Booking entity) throws DataConcurrencyException, DataIntegrityViolationException {

@@ -212,3 +212,4 @@ db
 classes
 .sonarlint
 /ecafeteria.core/nbproject/
+/ecafeteria.persistence.impl/nbproject/

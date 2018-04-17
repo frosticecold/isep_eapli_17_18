@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.framework.domain.money.Money;
+import java.util.Date;
+import java.util.HashMap;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -38,6 +40,9 @@ public class Booking implements Serializable {
 
     @OneToOne
     private CafeteriaUser cafeteriaUser;
+    
+    private Date date;
+    
 
     public Booking(Meal meal, CafeteriaUser cafeteriauser) {
         this.meal = meal;
@@ -77,9 +82,8 @@ public class Booking implements Serializable {
     public CafeteriaUser getCafeteriauser() {
         return cafeteriaUser;
     }
-    
+
     /**
-     * Informs if booking is cancelable
      * 
      * @return true if possible
      */
@@ -94,7 +98,8 @@ public class Booking implements Serializable {
      * @return Money - if refund possible | null if refund is not possible
      */
     public Money refundForCancelation(){
-        if(isBookingCancelable()){
+        if (isBookingCancelable()) {
+            HashMap<Boolean, Money> information = new HashMap<>();
             throw new UnsupportedOperationException();
         }else return null;
     }

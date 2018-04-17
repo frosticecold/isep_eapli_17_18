@@ -614,4 +614,45 @@ public final class DateTime {
     public static int getYear(final Calendar cal) {
         return cal.get(Calendar.YEAR);
     }
+
+    public static boolean isBetweenDates(Calendar start, Calendar end,Calendar date) {
+
+        return (DateTime.isSameDate(date, start) || DateTime.  isSameDate(date, end))
+                || (DateTime.isFutureDate(date, start) && DateTime.
+                isPreviousDate(date, end));
+    }
+
+    /**
+     * Checks if a date is previous to another. Time is not compared!
+     *
+     * @param a date to be checked
+     * @param b date to be checked against
+     * @return
+     */
+    public static boolean isPreviousDate(final Calendar a, final Calendar b) {
+        Calendar dateA = new GregorianCalendar(a.get(Calendar.YEAR), a.
+                get(Calendar.MONTH), a.
+                get(Calendar.DAY_OF_MONTH));
+        Calendar dateB = new GregorianCalendar(b.get(Calendar.YEAR), b.
+                get(Calendar.MONTH), b.
+                get(Calendar.DAY_OF_MONTH));
+        return (dateA.before(dateB));
+    }
+
+    /**
+     * Checks if a date is after another. Time is not compared!
+     *
+     * @param a date to be checked
+     * @param b date to be checked against
+     * @return
+     */
+    public static boolean isFutureDate(final Calendar a, final Calendar b) {
+        Calendar dateA = new GregorianCalendar(a.get(Calendar.YEAR), a.
+                get(Calendar.MONTH), a.
+                get(Calendar.DAY_OF_MONTH));
+        Calendar dateB = new GregorianCalendar(b.get(Calendar.YEAR), b.
+                get(Calendar.MONTH), b.
+                get(Calendar.DAY_OF_MONTH));
+        return (dateA.after(dateB));
+    }
 }

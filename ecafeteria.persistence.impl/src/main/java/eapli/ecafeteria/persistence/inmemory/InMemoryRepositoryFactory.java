@@ -12,6 +12,7 @@ import eapli.ecafeteria.persistence.MaterialRepository;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.POSRepository;
+import eapli.ecafeteria.persistence.RatingRepository;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.ecafeteria.persistence.SignupRequestRepository;
 import eapli.ecafeteria.persistence.UserRepository;
@@ -73,7 +74,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public MaterialRepository materials() {
         return new InMemoryMaterialRepository();
     }
-    
+
     @Override
     public MenuRepository menus() {
         return new InMemoryMenuRepository();
@@ -105,13 +106,26 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Returns a new POS repository when persistence is on memory
+     * @return 
+     */
     @Override
     public POSRepository posRepository() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new InMemoryPOSRepository();
+    }
+
+    /**
+     * Returns a deliveryMealSession repository in persistence is on memory
+     * @return 
+     */
+    @Override
+    public DeliveryMealSessionRepository deliveryMealRepository() {
+        return new InMemoryDeliveryMealSessionRepository();
     }
 
     @Override
-    public DeliveryMealSessionRepository deliveryMealRepository() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RatingRepository rating() {
+        return new InMemoryRatingRepository();
     }
 }

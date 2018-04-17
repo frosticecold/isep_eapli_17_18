@@ -85,6 +85,23 @@ public class Meal implements Serializable {
     public boolean isOnGivenDate(Calendar givenDate) {
         return DateTime.isSameDate(givenDate, date);
     }
+
+    public Long id() {
+        return id;
+    }
+
+    public Dish dish() {
+        return dish;
+    }
+    
+    
+    /**
+     * Returns Meal actual date
+     * @return 
+     */
+    public Calendar getMealDate(){
+        return this.date;
+    }
     
     /**
      * Returns the ratings given on said meal
@@ -93,4 +110,9 @@ public class Meal implements Serializable {
     public Iterable<Rating> ratings() {
         return this.ratings;
     }
+
+    public MealType mealtype() {
+        return mealtype;
+    }
+       
 }

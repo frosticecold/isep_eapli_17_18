@@ -44,6 +44,10 @@ public class MainMenu extends AbstractUI {
     private static final int CHARGE_CARD_OPTION = 3;
     private static final int CHARGE_CARD_SUBMENU_OPTION = 1;
     
+    //CLOSE POS
+    private static final int CLOSE_POS_OPTION = 4;
+    private static final int CLOSE_POS_SUBMENU_OPTION = 1;
+    
 
     @Override
     public boolean show() {
@@ -105,7 +109,19 @@ public class MainMenu extends AbstractUI {
         }else{
             System.out.println("Can't open charge menu. Try another time!");
         }
+        
+        //==========================Close MENU=================
 
+        if(date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == true){
+            if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
+                final Menu closeMenu = buildCloseMenu();
+                mainMenu.add(new SubMenu(CLOSE_POS_OPTION, closeMenu,
+                        new ShowVerticalSubMenuAction(closeMenu)));
+            }
+        }else{
+            System.out.println("Can't close POS. Try another time!");
+        }
+        
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.add(VerticalSeparator.separator());
         }
@@ -117,8 +133,9 @@ public class MainMenu extends AbstractUI {
     
     private Menu buildDeliveryMenu() {
         final Menu menu = new Menu("Deliveries >");
-
-        menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().show()));
+        
+        new ViewAvailableMealsUI().doShow();
+        menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().doShow()));
         menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
         
         return menu;
@@ -128,6 +145,15 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Chargings >");
 
         menu.add(new MenuItem(CHARGE_CARD_SUBMENU_OPTION, "Charge Card", () -> new ChargeCardUI().show()));
+        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
+        
+        return menu;
+    }
+    
+    private Menu buildCloseMenu(){
+        final Menu menu = new Menu("Close POS >");
+        
+        menu.add(new MenuItem(CLOSE_POS_SUBMENU_OPTION,"Close", () -> new ClosePOSUI().doShow()));
         menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
         
         return menu;

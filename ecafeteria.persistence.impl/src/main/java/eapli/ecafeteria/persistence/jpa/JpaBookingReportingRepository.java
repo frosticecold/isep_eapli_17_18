@@ -21,12 +21,12 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
 
     @Override
     public Iterable<Booking> listServedBookings() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public Optional<Booking> findNextBooking() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**

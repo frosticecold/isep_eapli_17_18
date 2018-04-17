@@ -15,9 +15,7 @@ import eapli.framework.persistence.DataIntegrityViolationException;
  */
 public interface BookingRepository {
 
-
     
     public Booking saveBooking(Booking entity) throws DataConcurrencyException, 
             DataIntegrityViolationException;
-    
 }
