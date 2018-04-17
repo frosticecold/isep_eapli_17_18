@@ -33,8 +33,8 @@ public class RatingMealController {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
-    public Rating addRating(Booking booking, int rating, String comment) throws DataConcurrencyException, DataIntegrityViolationException {
-        Rating rateMeal = new Rating(booking, rating, comment);
+    public Rating addRating(int rating, String comment) throws DataConcurrencyException, DataIntegrityViolationException {
+        Rating rateMeal = new Rating(rating, comment);
         rateMeal = ratingRepository.save(rateMeal);
         return rateMeal;
     }
@@ -45,6 +45,7 @@ public class RatingMealController {
      * @return all consumed booking without rating
      */
     public List<Booking> findBookings() {
-        return bookingRepository.findConsumedBookingWithoutRating();
+        //return bookingRepository.findConsumedBookingWithoutRating();
+        return null;
     }
 }

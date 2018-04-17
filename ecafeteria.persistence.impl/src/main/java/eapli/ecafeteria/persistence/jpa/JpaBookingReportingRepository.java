@@ -6,18 +6,48 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.BookingStates;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
+import java.util.List;
+import java.util.Optional;
+import javax.persistence.Query;
 
 /**
  *
  * @author ruial
  */
-public class JpaBookingReportingRepository extends  CafeteriaJpaRepositoryBase implements BookingReportingRepository{
+public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase implements BookingReportingRepository {
 
     @Override
     public Iterable<Booking> listServedBookings() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    
+    @Override
+    public Optional<Booking> findNextBooking() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Find booking by cafeteria user that are in a booked state
+     *
+     * @param user user of the cafeteria
+     * @param bookingState
+     * @return
+     */
+    @Override
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingStates bookingState) {
+        final Query q = entityManager().
+                createQuery("SELECT booking "
+                       + "FROM Booking booking"
+                       + "AND booking.user = :user"
+                       + "AND booking.BOOKINGSTATE = :bookingState");
+
+        
+
+        q.setParameter("user", user);
+        q.setParameter("bookingState", bookingState);
+        return q.getResultList();
+    }
 }

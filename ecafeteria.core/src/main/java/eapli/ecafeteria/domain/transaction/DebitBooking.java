@@ -23,6 +23,7 @@ public class DebitBooking extends Transaction<CafeteriaUser, Money> {
     public  DebitBooking(CafeteriaUser user, Money credits) {
         super(user, credits);
     }
+    
 
     @Override
     public boolean movement(CafeteriaUser user, Money credits) {

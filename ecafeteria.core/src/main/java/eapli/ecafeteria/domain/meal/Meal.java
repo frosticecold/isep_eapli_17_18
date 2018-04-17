@@ -85,6 +85,15 @@ public class Meal implements Serializable {
     public boolean isOnGivenDate(Calendar givenDate) {
         return DateTime.isSameDate(givenDate, date);
     }
+
+    public Long id() {
+        return id;
+    }
+
+    public Dish dish() {
+        return dish;
+    }
+    
     
     /**
      * Returns Meal actual date

@@ -6,9 +6,9 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingRepository;
-import java.util.List;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 
 /**
  *
@@ -17,17 +17,7 @@ import java.util.List;
 public class InMemoryBookingRepository implements BookingRepository {
 
     @Override
-    public Booking findNextBooking(CafeteriaUser user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-    @Override
-    public List<Booking> findConsumedBookingWithoutRating() {
+    public Booking saveBooking(Booking entity) throws DataConcurrencyException, DataIntegrityViolationException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

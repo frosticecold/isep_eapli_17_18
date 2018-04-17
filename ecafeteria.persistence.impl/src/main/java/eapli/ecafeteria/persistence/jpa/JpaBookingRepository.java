@@ -6,62 +6,21 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.BookingStates;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingRepository;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Long>implements BookingRepository {
+public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Long> implements BookingRepository {
 
-    /**
-     * EXPERIMENTAL
-     * Method that finds the User's next booking at the booked state
-     * @param user
-     * @return 
-     */
-    public Booking findNextBooking(CafeteriaUser user) {
-        Map<String,Object> params = new HashMap<>();
-        Booking nextBooking = null;
-        BookingStates state = BookingStates.BOOKED;
+    
+    
+    public Booking saveBooking(Booking entity) throws DataConcurrencyException, 
+            DataIntegrityViolationException{
         
-        for(Booking booking : findBookingsByCafeteriaUser(user)){
-            
-            long bookingDate1 = booking.getMeal().getMealDate().getTimeInMillis();
-            long bookingDate2 = nextBooking.getMeal().getMealDate().getTimeInMillis();
-           
-            if(bookingDate1 < bookingDate2){
-                nextBooking = booking;
-            }
-        }
-  
-        return nextBooking;
+        return save(entity);
     }
-    /**
-     * Find booking by cafeteria user that are in a booked state
-     * 
-     * @param user user of the cafeteria
-     * @return 
-     */
-    @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user) {
-        final Map<String, Object> params = new HashMap<>();
-        
-        params.put("cafeteriaUser", user);
-        params.put("bookingState", BookingStates.BOOKED);
-        
-        return match("e.cafeteriaUser =:cafeteriaUser "
-                + "AND e.bookingState =: bookingState", params);
-    }
-
-    @Override
-    public List<Booking> findConsumedBookingWithoutRating() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-        
 }

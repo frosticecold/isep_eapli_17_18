@@ -6,8 +6,8 @@
 package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import java.util.List;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 
 /**
  *
@@ -15,10 +15,7 @@ import java.util.List;
  */
 public interface BookingRepository {
 
-    public Booking findNextBooking(CafeteriaUser user);
-
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user);
-
-    public List<Booking> findConsumedBookingWithoutRating();
-
+    
+    public Booking saveBooking(Booking entity) throws DataConcurrencyException, 
+            DataIntegrityViolationException;
 }

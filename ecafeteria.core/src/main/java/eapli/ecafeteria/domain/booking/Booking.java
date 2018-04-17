@@ -33,7 +33,8 @@ public class Booking implements Serializable {
 
     @OneToOne
     private Meal meal;
-
+    
+    //@OneToOne
     @Column(name = "BOOKINGSTATE")
     private BookingState bookingState;
 
@@ -81,18 +82,26 @@ public class Booking implements Serializable {
     public CafeteriaUser getCafeteriauser() {
         return cafeteriaUser;
     }
-    
+
     /**
      * 
-     * @return 
+     * @return true if possible
      */
-    public HashMap<Boolean, Money> isBookingCancelable(){
-        if(bookingState.isBookingStateCancelable()){
+    public boolean isBookingCancelable(){
+        return bookingState.isBookingStateCancelable();
+    }
+    
+    /**
+     * Calculates the refund for an possible cancelation
+     * Return null if no cancelation is possible
+     * 
+     * @return Money - if refund possible | null if refund is not possible
+     */
+    public Money refundForCancelation(){
+        if (isBookingCancelable()) {
             HashMap<Boolean, Money> information = new HashMap<>();
-            
             throw new UnsupportedOperationException();
-        }
-        return null;
+        }else return null;
     }
 
     public boolean isAvailableForRating() {
