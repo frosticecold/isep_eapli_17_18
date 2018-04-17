@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 public interface BookingReportingRepository extends ReportingRepository {
 
-    public Iterable<Booking> listServedBookings();
+    public Iterable<Booking> findBookingByState(BookingStates bookingState);
 
     public Booking findNextBooking(CafeteriaUser user);
 
