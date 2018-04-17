@@ -12,7 +12,6 @@ import eapli.ecafeteria.persistence.BookingRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  *
@@ -20,20 +19,28 @@ import java.util.Optional;
  */
 public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Long>implements BookingRepository {
 
-    public Optional<Booking> findNextBooking(CafeteriaUser user) {
+    /**
+     * EXPERIMENTAL
+     * Method that finds the User's next booking at the booked state
+     * @param user
+     * @return 
+     */
+    public Booking findNextBooking(CafeteriaUser user) {
         Map<String,Object> params = new HashMap<>();
         Booking nextBooking = null;
         BookingStates state = BookingStates.BOOKED;
         
         for(Booking booking : findBookingsByCafeteriaUser(user)){
-            //if(booking.getMeal().)
+            
+            long bookingDate1 = booking.getMeal().getMealDate().getTimeInMillis();
+            long bookingDate2 = nextBooking.getMeal().getMealDate().getTimeInMillis();
+           
+            if(bookingDate1 < bookingDate2){
+                nextBooking = booking;
+            }
         }
-        
-        
-        
-        
-        
-        return null;
+  
+        return nextBooking;
     }
     /**
      * Find booking by cafeteria user that are in a booked state
