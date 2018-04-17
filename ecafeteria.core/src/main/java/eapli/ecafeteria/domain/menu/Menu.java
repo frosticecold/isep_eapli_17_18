@@ -168,9 +168,14 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      * Method that changes the state of a menu to published
      *
      * @author Raúl Correia
+     * @return true if the menu is published, false if is already published
      */
-    public void publish() {
+    public boolean publish() {
+        if(menuState == MenuState.PUBLISHED) {
+            return false;
+        }
         menuState = MenuState.PUBLISHED;
+        return true;
     }
 
     /**
