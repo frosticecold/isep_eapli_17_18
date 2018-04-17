@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.Version;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
+import eapli.framework.domain.money.Money;
+import java.util.HashMap;
 import javax.persistence.EmbeddedId;
 import javax.persistence.OneToOne;
 
@@ -75,4 +77,16 @@ public class Booking implements Serializable {
         return cafeteriaUser;
     }
     
+    /**
+     * 
+     * @return 
+     */
+    public HashMap<Boolean, Money> isBookingCancelable(){
+        if(bookingState.isBookingStateCancelable()){
+            HashMap<Boolean, Money> information = new HashMap<>();
+            
+            throw new UnsupportedOperationException();
+        }
+        return null;
+    }
 }

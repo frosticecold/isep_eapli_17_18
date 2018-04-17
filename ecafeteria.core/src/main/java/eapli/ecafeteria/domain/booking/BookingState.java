@@ -21,14 +21,23 @@ public class BookingState {
     public BookingState() {
         actualBookingState = BookingStates.BOOKED;
     }
-    
+        
     /**
-     * Gives teh actual state of the booking
+     * Gives the actual state of the booking
      * 
      * @return booking state
      */
     public BookingStates actualState(){
         return actualBookingState;
+    }
+    
+    /**
+     * Informs if booking is cancelable
+     * 
+     * @return true if possible
+     */
+    public boolean isBookingStateCancelable(){
+        return actualBookingState == BookingStates.BOOKED;
     }
     
     /**
