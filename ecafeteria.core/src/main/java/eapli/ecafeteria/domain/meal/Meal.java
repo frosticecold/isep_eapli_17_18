@@ -87,6 +87,14 @@ public class Meal implements Serializable {
     }
     
     /**
+     * Returns Meal actual date
+     * @return 
+     */
+    public Calendar getMealDate(){
+        return this.date;
+    }
+    
+    /**
      * Returns the ratings given on said meal
      * @return 
      */

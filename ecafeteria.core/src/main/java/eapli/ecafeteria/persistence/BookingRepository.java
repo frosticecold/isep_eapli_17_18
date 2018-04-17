@@ -8,7 +8,6 @@ package eapli.ecafeteria.persistence;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -16,8 +15,10 @@ import java.util.Optional;
  */
 public interface BookingRepository {
 
-    public Optional<Booking> findNextBooking();
-    
+    public Booking findNextBooking(CafeteriaUser user);
+
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user);
-    
+
+    public List<Booking> findConsumedBookingWithoutRating();
+
 }

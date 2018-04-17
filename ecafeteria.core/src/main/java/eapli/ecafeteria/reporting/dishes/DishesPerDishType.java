@@ -24,4 +24,10 @@ public class DishesPerDishType implements DTO {
         this.dishType = dishType;
         this.quantityOfDishes = quantityOfDishes;
     }
+
+    public long findQuantityOfDishes() {
+        return quantityOfDishes;
+    }
+
+    
 }

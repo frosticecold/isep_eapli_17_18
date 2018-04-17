@@ -12,7 +12,6 @@ import eapli.ecafeteria.persistence.BookingRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  *
@@ -20,11 +19,29 @@ import java.util.Optional;
  */
 public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Long>implements BookingRepository {
 
-    @Override
-    public Optional<Booking> findNextBooking() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * EXPERIMENTAL
+     * Method that finds the User's next booking at the booked state
+     * @param user
+     * @return 
+     */
+    public Booking findNextBooking(CafeteriaUser user) {
+        Map<String,Object> params = new HashMap<>();
+        Booking nextBooking = null;
+        BookingStates state = BookingStates.BOOKED;
+        
+        for(Booking booking : findBookingsByCafeteriaUser(user)){
+            
+            long bookingDate1 = booking.getMeal().getMealDate().getTimeInMillis();
+            long bookingDate2 = nextBooking.getMeal().getMealDate().getTimeInMillis();
+           
+            if(bookingDate1 < bookingDate2){
+                nextBooking = booking;
+            }
+        }
+  
+        return nextBooking;
     }
-
     /**
      * Find booking by cafeteria user that are in a booked state
      * 
@@ -41,7 +58,10 @@ public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Lo
         return match("e.cafeteriaUser =:cafeteriaUser "
                 + "AND e.bookingState =: bookingState", params);
     }
-    
-    
-    
+
+    @Override
+    public List<Booking> findConsumedBookingWithoutRating() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        
 }

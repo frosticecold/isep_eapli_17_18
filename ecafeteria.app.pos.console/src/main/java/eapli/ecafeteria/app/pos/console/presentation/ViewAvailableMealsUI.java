@@ -5,6 +5,9 @@
  */
 package eapli.ecafeteria.app.pos.console.presentation;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.application.pos.ViewAvailableMealsController;
+import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
 import eapli.framework.presentation.console.AbstractUI;
 
 /**
@@ -13,15 +16,18 @@ import eapli.framework.presentation.console.AbstractUI;
  */
 public class ViewAvailableMealsUI extends AbstractUI {
 
+    private final ViewAvailableMealsController controller = new ViewAvailableMealsController();
+
     @Override
     protected boolean doShow() {
-        System.out.println("Available Meals: \n");
+        System.out.println("Available Dishes:");
+        controller.showDishesPerDishType();
         return true;
     }
 
     @Override
     public String headline() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
-    
+
 }
