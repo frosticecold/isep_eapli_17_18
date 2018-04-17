@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.framework.domain.money.Money;
+import java.util.Date;
 import java.util.HashMap;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -38,6 +39,9 @@ public class Booking implements Serializable {
 
     @OneToOne
     private CafeteriaUser cafeteriaUser;
+    
+    private Date date;
+    
 
     public Booking(Meal meal, CafeteriaUser cafeteriauser) {
         this.meal = meal;

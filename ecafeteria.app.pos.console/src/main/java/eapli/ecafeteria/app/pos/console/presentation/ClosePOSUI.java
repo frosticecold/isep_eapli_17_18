@@ -6,23 +6,27 @@
 package eapli.ecafeteria.app.pos.console.presentation;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.application.pos.ViewAvailableMealsController;
-import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
+import eapli.ecafeteria.application.pos.ClosePOSController;
+import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
 
 /**
  *
- * @author Miguel Santos <1161386@isep.ipp.pt>
+ * @author Oliveira
  */
-public class ViewAvailableMealsUI extends AbstractUI {
+public class ClosePOSUI extends AbstractUI {
 
-    private final ViewAvailableMealsController controller = new ViewAvailableMealsController();
+    private final ClosePOSController controller = new ClosePOSController();
+
+    protected Controller controller() {
+        return this.controller;
+    }
 
     @Override
     protected boolean doShow() {
-        System.out.println("Available Dishes:");
-        controller.showDishesPerDishType();
-        return true;
+       controller.closeSession();
+       controller.listDeliveredMeals();
+       return true;
     }
 
     @Override

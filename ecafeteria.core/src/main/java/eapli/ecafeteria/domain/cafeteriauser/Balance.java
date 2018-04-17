@@ -55,6 +55,11 @@ public class Balance implements ValueObject, Serializable{
         return false;
     }
 
+    public Money currentBalance() {
+        return currentBalance;
+    }
+
+    
     @Override
     public String toString() {
         return currentBalance.toString();

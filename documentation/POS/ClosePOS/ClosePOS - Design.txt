@@ -10,15 +10,12 @@ title SD Close POS
 
 ":ClosePOSUI"-->*":ClosePOSController" : create()
 ":ClosePOSUI" -> ":ClosePOSController" : closePOS()
-":ClosePOSController" -> ":POS" : closePOS()
-":POS" -> ":POSState" : checkState()
+":ClosePOSController" -> ":DeliverySessionMeal" : checkState(pos)
 alt if opened
-":POS" -> ":DeliverySessionMeal" : getActiveSession()
-":DeliverySessionMeal" -> ":DeliveryRegistry" : getDeliveryList()
+":DeliverySessionMeal" -> ":DeliveryRegistry" : DeliveryRegistry = getDeliveryList()
 ":ClosePOSController" -->- ":ClosePOSUI" : show list of deliveries
 ":ClosePOSController" -> ":DeliverySessionMeal" : closeSession()
-":ClosePOSController" -> ":POS" : closePOSState()
-":POS" -> ":POSState" : close()
+":ClosePOSController" -> ":POS" : closePOS(pos)
 ":ClosePOSController" --> ":ClosePOSUI" : informs about success
 else if closed
 ":ClosePOSController" --> ":ClosePOSUI" : informs about error

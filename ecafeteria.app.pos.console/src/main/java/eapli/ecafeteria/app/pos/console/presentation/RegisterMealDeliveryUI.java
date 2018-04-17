@@ -1,5 +1,6 @@
 package eapli.ecafeteria.app.pos.console.presentation;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.RegisterMealDeliveryController;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -10,6 +11,7 @@ import eapli.framework.presentation.console.AbstractUI;
 public class RegisterMealDeliveryUI extends AbstractUI {
     
     private RegisterMealDeliveryController ctrl;
+    private ViewAvailableMealsUI availableMeals = new ViewAvailableMealsUI();
 
     /** Construtor that shall receive the entity of the open session of a certain POS **/
     public RegisterMealDeliveryUI() {
@@ -25,11 +27,12 @@ public class RegisterMealDeliveryUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        availableMeals.doShow();
+        return true;
     }
 
     @Override
     public String headline() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
 }
