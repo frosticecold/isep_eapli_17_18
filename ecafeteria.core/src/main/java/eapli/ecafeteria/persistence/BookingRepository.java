@@ -17,7 +17,9 @@ import java.util.Optional;
 public interface BookingRepository {
 
     public Optional<Booking> findNextBooking();
-    
+
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user);
-    
+
+    public List<Booking> findConsumedBookingWithoutRating();
+
 }

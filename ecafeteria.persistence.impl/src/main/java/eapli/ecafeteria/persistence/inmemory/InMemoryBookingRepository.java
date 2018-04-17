@@ -26,5 +26,10 @@ public class InMemoryBookingRepository implements BookingRepository {
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
+
+    @Override
+    public List<Booking> findConsumedBookingWithoutRating() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

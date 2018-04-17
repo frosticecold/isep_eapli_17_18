@@ -12,6 +12,7 @@ import eapli.ecafeteria.persistence.MaterialRepository;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.POSRepository;
+import eapli.ecafeteria.persistence.RatingRepository;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.ecafeteria.persistence.SignupRequestRepository;
 import eapli.ecafeteria.persistence.UserRepository;
@@ -73,7 +74,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public MaterialRepository materials() {
         return new InMemoryMaterialRepository();
     }
-    
+
     @Override
     public MenuRepository menus() {
         return new InMemoryMenuRepository();
@@ -113,5 +114,10 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public DeliveryMealSessionRepository deliveryMealRepository() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public RatingRepository rating() {
+        return new InMemoryRatingRepository();
     }
 }

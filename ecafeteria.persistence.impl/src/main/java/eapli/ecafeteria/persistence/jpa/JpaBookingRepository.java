@@ -41,6 +41,11 @@ public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Lo
         return match("e.cafeteriaUser =:cafeteriaUser "
                 + "AND e.bookingState =: bookingState", params);
     }
+
+    @Override
+    public List<Booking> findConsumedBookingWithoutRating() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     
