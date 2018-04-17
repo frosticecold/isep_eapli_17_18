@@ -87,14 +87,23 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Returns a new POS Repository when persistence is done on JPA
+     * @return 
+     */
     @Override
     public POSRepository posRepository() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new JpaPOSRepository();
     }
 
+    
+    /**
+     * Returns a new DeliveryMealSession Repository when persistence is done on JPA
+     * @return 
+     */
     @Override
     public DeliveryMealSessionRepository deliveryMealRepository() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new JpaDeliveryMealSessionRepository();
     }
 
     @Override

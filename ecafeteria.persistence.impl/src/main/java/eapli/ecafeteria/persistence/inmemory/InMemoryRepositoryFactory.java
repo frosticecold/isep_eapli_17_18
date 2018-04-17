@@ -106,14 +106,22 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Returns a new POS repository when persistence is on memory
+     * @return 
+     */
     @Override
     public POSRepository posRepository() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new InMemoryPOSRepository();
     }
 
+    /**
+     * Returns a deliveryMealSession repository in persistence is on memory
+     * @return 
+     */
     @Override
     public DeliveryMealSessionRepository deliveryMealRepository() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new InMemoryDeliveryMealSessionRepository();
     }
 
     @Override
