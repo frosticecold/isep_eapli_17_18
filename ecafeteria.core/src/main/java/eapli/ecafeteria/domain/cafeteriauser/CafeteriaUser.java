@@ -81,6 +81,12 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     public boolean hasEnoughCredits(Money credits) {
         return this.currentBalance.hasEnoughCredits(credits);
     }
+
+    public Balance currentBalance() {
+        return currentBalance;
+    }
+    
+    
     
     public String cafeteriaUserNameAndCurrentBalance() {
         return "Username: " + systemUser.id().toString() + " Current Balance: " + currentBalance.toString();
