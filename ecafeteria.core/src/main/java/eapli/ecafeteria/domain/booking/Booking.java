@@ -77,15 +77,15 @@ public class Booking implements Serializable {
     public CafeteriaUser getCafeteriauser() {
         return cafeteriaUser;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public HashMap<Boolean, Money> isBookingCancelable(){
-        if(bookingState.isBookingStateCancelable()){
+    public HashMap<Boolean, Money> isBookingCancelable() {
+        if (bookingState.isBookingStateCancelable()) {
             HashMap<Boolean, Money> information = new HashMap<>();
-            
+
             throw new UnsupportedOperationException();
         }
         return null;
