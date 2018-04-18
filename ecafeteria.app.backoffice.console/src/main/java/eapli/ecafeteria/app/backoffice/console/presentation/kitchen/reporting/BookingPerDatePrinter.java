@@ -13,8 +13,7 @@ public class BookingPerDatePrinter implements Visitor<BookingPerOption> {
 
     @Override
     public void visit(BookingPerOption visitee) {
-         System.out.printf("Booking DTO");
-        
+         System.out.println(visitee.toString()); 
     }
     
 }
