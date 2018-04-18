@@ -59,17 +59,22 @@ public class BookingMealUI extends AbstractUI {
        
         System.out.println("Choose one meal");
         final Long id = Console.readLong("Insert the meal id:\n");
+       
         
         Meal choosedMeal = null;
         
         for(Meal meal : mealList){
             if(meal.id()==id){
-               controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), meal);
                 choosedMeal = meal;
             }else{
                 System.out.println("Id inválido");
             }
         }
+        
+        System.out.println("Nutricional Info:");
+        controller.showNutricionalInfo(choosedMeal);
+        
+         controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal);
         
          BookingState bookingState = new BookingState();
          

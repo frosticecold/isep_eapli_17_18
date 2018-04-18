@@ -14,6 +14,7 @@ import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.dishes.NutricionalInfo;
 import eapli.ecafeteria.domain.menu.*;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.domain.transaction.DebitBooking;
@@ -71,5 +72,9 @@ public class BookingMealController implements Controller {
         return this.repository.saveBooking(newBooking);
     }
 
+    public void showNutricionalInfo(Meal meal){
+          meal.dish().nutricionalInfo().toString();
+
+    }
 
 }
