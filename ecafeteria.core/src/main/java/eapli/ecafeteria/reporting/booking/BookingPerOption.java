@@ -17,6 +17,13 @@ public class BookingPerOption implements DTO{
         this.mealDishName = mealDishName;
         this.userName = userName;
     }
+
+    @Override
+    public String toString() {
+        return "BookingPerOption{" + "mealType=" + mealType + ", mealDate=" + mealDate + ", mealDishName=" + mealDishName + ", userName=" + userName + '}';
+    }
+    
+    
     
 
     

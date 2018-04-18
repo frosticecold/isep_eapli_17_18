@@ -80,32 +80,28 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
     }
 
     @Override
-    public List<BookingPerOption> showReportByDay(Date date) {
+    public Iterable<BookingPerOption> showReportByDay(Date date) {
              
-        final Query q = entityManager().
-        createQuery("SELECT booking "
-                        + "FROM Booking booking"
-                        + "AND booking.date = :date");
-        
-        q.setParameter("date", date);
+//        final Query q = entityManager().
+//        createQuery("SELECT booking "
+//                        + "FROM Booking booking"
+//                        + "AND booking.date = :date");
+//        
+//        q.setParameter("date", date);
+//
+//        return q.getResultList();
 
-        List<Booking> b = q.getResultList();
-        
-        List<BookingPerOption> dtoList = new ArrayList<>();
-        
-        for( Booking booking : b){
-            
-            
-            
-            dtoList.add(new BookingPerOption("mealType", date, "mealDishName", "userName"));
-        }
-        
-        
-        
-        
-        
-        return dtoList;
-        
+          /* ^QUERY */
+          
+          
+          List<BookingPerOption> l = new ArrayList<>();
+          l.add(new BookingPerOption("mealType", new Date(), "mealDishName", "userName"));
+          l.add(new BookingPerOption("mealType2", new Date(), "mealDishName4", "userName12"));
+          l.add(new BookingPerOption("mealType3", new Date(), "mealDishName33", "userName4"));
+          
+          
+          
+          return l;
     }
 
 }

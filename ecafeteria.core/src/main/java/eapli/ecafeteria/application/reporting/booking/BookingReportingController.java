@@ -25,11 +25,10 @@ public class BookingReportingController implements Controller {
 
         List<BookingPerOption> l = new ArrayList<>();
         l.add(new BookingPerOption("1", new Date(), "mealDishName", "userName"));
-        Iterable<BookingPerOption> it = l;
+        Iterable<BookingPerOption> it = repo.showReportByDay(wantedDay);
         
         
         return it;
-       // return repo.showReportByDay(wantedDay);
     }
 
 

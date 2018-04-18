@@ -42,7 +42,7 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
     }
 
     @Override
-    public List<BookingPerOption> showReportByDay(Date date) {
+    public Iterable<BookingPerOption> showReportByDay(Date date) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
