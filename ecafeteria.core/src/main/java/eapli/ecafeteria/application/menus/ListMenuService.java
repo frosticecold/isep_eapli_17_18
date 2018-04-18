@@ -10,20 +10,18 @@ import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
-import eapli.ecafeteria.domain.menu.MenuState;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Optional;
 
 public class ListMenuService {
 
     private final MenuRepository menuRepository = PersistenceContext.repositories().menus();
 
-    public Iterable<Menu> findMenuWithinPeriod(Calendar startDate, Calendar endDate) {
+    public Optional<Menu> findMenuWithinPeriod(Calendar startDate, Calendar endDate) {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
-        return this.menuRepository.findAll();
+        return this.menuRepository.findMenuWithinPeriod(startDate, endDate);
     }
 
     public Iterable<Meal> getMealsPublishedByDay(Calendar date, MealType mealType) {
