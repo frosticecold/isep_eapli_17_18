@@ -8,6 +8,7 @@ package eapli.ecafeteria.persistence.inmemory;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.MealRepository;
+import eapli.framework.domain.Designation;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
@@ -56,7 +57,7 @@ public class InMemoryMealRepository implements MealRepository{
     }
 
     @Override
-    public Optional<Meal> findMealByDishID(String id) {
+    public Optional<Meal> findMealByDishID(Designation id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -8,35 +8,30 @@ package eapli.ecafeteria.application.kitchen;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.dishes.Dish;
-import eapli.ecafeteria.domain.meal.*;
-import eapli.ecafeteria.persistence.ExecutionRepository;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.MealRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  *
- * @author MFerreira
+ * @author Miguel Santos <1161386@isep.ipp.pt>
  */
-public class RegisterMadeMealsController implements Controller {
-
+public class RegisterMealController implements Controller {
+    
     private final MealRepository mealRepo = PersistenceContext.repositories().meals();
-    private final ExecutionRepository execRepo = PersistenceContext.repositories().executions();
+    
+    public Meal registerMeal(final Dish dish, final MealType mealType, final Calendar cal) throws DataIntegrityViolationException, DataConcurrencyException {
 
-    public List<Meal> getMealsList(Calendar date, MealType mealType) {
-        return mealRepo.listOfMealsByDateAndMealType(date, mealType);
-    }
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
 
-    public Execution createExecution(Meal meal, MadeMeals madeMeals) {
-        return new Execution(meal, madeMeals);
-    }
+        final Meal newMeal = new Meal(dish, mealType, cal);
 
-    public boolean addExecution(Execution e) throws DataConcurrencyException, DataIntegrityViolationException {
-        execRepo.save(e);
-        return true;
+        return this.mealRepo.save(newMeal);
     }
+    
 }

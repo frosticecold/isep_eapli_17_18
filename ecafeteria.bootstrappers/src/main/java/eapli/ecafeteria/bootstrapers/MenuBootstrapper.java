@@ -34,11 +34,15 @@ public class MenuBootstrapper implements Action {
         final DishType vegie = dishTypeRepo.findByAcronym(TestDataConstants.DISH_TYPE_VEGIE).get();
         final MealRepository mealRepo = PersistenceContext.repositories().meals();
         
-        final Meal meal = mealRepo.findMealByDishID(Designation.valueOf("tofu grelhado")).get();
+        final Meal meal1 = mealRepo.findMealByDishID(Designation.valueOf("tofu grelhado")).get();
+        final Meal meal2 = mealRepo.findMealByDishID(Designation.valueOf("lentilhas salteadas")).get();
+        final Meal meal3 = mealRepo.findMealByDishID(Designation.valueOf("bacalhau à braz")).get();
+        final Meal meal4 = mealRepo.findMealByDishID(Designation.valueOf("lagosta suada")).get();
+        final Meal meal5 = mealRepo.findMealByDishID(Designation.valueOf("picanha")).get();
+        final Meal meal6 = mealRepo.findMealByDishID(Designation.valueOf("costeleta à salsicheiro")).get();
         
         Calendar start = DateTime.parseDate("01-07-2018");
         Calendar end = DateTime.parseDate("07-07-2018");
-        Calendar mealDay = DateTime.parseDate("01-07-2018");
         Menu menu = new Menu(start, end);
         register(menu);
         start = DateTime.parseDate("06-05-2018");
@@ -50,7 +54,12 @@ public class MenuBootstrapper implements Action {
 //        Alergen alergen = new Alergen("peanuts");
 //        Dish dish = new Dish(vegie, name, price, alergen);
 //        Meal meal = new Meal(dish, MealType.LUNCH, mealDay);
-        menu.addMeal(meal);
+        menu.addMeal(meal1);
+        menu.addMeal(meal2);
+        menu.addMeal(meal3);
+        menu.addMeal(meal4);
+        menu.addMeal(meal5);
+        menu.addMeal(meal6);
         register(menu);
         return true;
     }
