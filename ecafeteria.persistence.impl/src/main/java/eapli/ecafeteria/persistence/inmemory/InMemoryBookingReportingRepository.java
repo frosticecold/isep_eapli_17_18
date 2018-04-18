@@ -22,11 +22,12 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
     /**
      * Finds a list of bookings given a state
      * @param bookingState
+     * @author Rui Almeida <1160818>
      * @return 
      */
     @Override
-    public Iterable<Booking> findBookingByState(BookingState.BookingStates bookingState) {
-       return match(e -> e.getBookingState().actualState().equals(bookingState));
+    public Iterable<Booking> findBookingByState(BookingState bookingState) {
+       return match(e -> e.getBookingState().actualState().equals(bookingState.actualState()));
     }
     
     @Override

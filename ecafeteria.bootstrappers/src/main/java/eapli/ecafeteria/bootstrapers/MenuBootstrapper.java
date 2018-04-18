@@ -6,10 +6,16 @@
 package eapli.ecafeteria.bootstrapers;
 
 import eapli.ecafeteria.application.menus.ElaborateOrEditMenuController;
+import eapli.ecafeteria.domain.dishes.Dish;
+import eapli.ecafeteria.domain.dishes.DishType;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
+import eapli.framework.domain.Designation;
+import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.DateTime;
@@ -27,7 +33,18 @@ public class MenuBootstrapper implements Action {
         final MenuRepository menurepo = PersistenceContext.repositories().menus();
         Calendar start = DateTime.parseDate("01-07-2018");
         Calendar end = DateTime.parseDate("07-07-2018");
+        Calendar mealDay = DateTime.parseDate("01-07-2018");
         Menu menu = new Menu(start, end);
+        register(menu);
+        start = DateTime.parseDate("06-05-2018");
+        end = DateTime.parseDate("12-05-2018");
+        menu = new Menu(start, end);
+        DishType dishType = new DishType("Italian", "Awesome!");
+        Designation name = Designation.valueOf("Lasanha");
+        Money price = Money.euros(10);
+        Dish dish = new Dish(dishType, name, price);
+        Meal meal = new Meal(dish, MealType.LUNCH, mealDay);
+        menu.addMeal(meal);
         register(menu);
         return true;
     }
