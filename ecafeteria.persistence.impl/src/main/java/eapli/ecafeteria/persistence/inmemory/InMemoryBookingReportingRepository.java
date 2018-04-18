@@ -25,7 +25,7 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
      * @return 
      */
     @Override
-    public Iterable<Booking> findBookingByState(BookingStates bookingState) {
+    public Iterable<Booking> findBookingByState(BookingState bookingState) {
        return match(e -> e.getBookingState().actualState().equals(bookingState));
     }
     

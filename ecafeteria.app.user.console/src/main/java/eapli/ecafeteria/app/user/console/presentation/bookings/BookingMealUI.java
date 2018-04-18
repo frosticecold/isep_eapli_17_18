@@ -68,7 +68,7 @@ public class BookingMealUI extends AbstractUI {
         }
         
         BookingStates bookingState =  BookingStates.BOOKED;
-       controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal.getTime(), BookingState.BookingStates.BOOKED, choosedMeal);
+       controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal.getTime(),  BookingState.BookingStates.BOOKED, choosedMeal);
        
        
        return true;

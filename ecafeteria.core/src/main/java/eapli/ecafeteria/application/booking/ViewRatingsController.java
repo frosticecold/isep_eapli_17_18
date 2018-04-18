@@ -6,7 +6,6 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.BookingStates;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
