@@ -5,6 +5,9 @@ import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.application.Controller;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 public class BookingReportingController implements Controller {
@@ -18,9 +21,15 @@ public class BookingReportingController implements Controller {
      *
      * @return
      */
-    public Iterable<BookingPerOption> reportDishesPerDishType() {
+    public Iterable<BookingPerOption> reportDishesPerDishType(Date wantedDay) {
+
+        List<BookingPerOption> l = new ArrayList<>();
+        l.add(new BookingPerOption("1", new Date(), "mealDishName", "userName"));
+        Iterable<BookingPerOption> it = l;
         
-        return null;
+        
+        return it;
+       // return repo.showReportByDay(wantedDay);
     }
 
 

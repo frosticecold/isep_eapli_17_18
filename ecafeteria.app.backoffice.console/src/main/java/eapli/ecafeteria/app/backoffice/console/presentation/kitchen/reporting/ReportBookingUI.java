@@ -1,12 +1,14 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting;
 
+import eapli.ecafeteria.application.reporting.booking.BookingReportingController;
 import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.visitor.Visitor;
+import java.util.Date;
 
 public class ReportBookingUI extends AbstractListUI<BookingPerOption>{
-
-   
+    
+    private final BookingReportingController thisController = new BookingReportingController();
 
     @Override
     protected String elementName() {
@@ -46,12 +48,12 @@ public class ReportBookingUI extends AbstractListUI<BookingPerOption>{
 
     @Override
     protected Iterable<BookingPerOption> elements() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return thisController.reportDishesPerDishType(new Date());
     }
 
     @Override
     protected Visitor<BookingPerOption> elementPrinter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new BookingPerDatePrinter();
     }
     
 }
