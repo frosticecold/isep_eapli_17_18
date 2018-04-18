@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.framework.domain.money.Money;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import javax.persistence.CascadeType;
@@ -109,7 +110,37 @@ public class Booking implements Serializable {
     public Money refundForCancelation(){
         if (isBookingCancelable()) {
             HashMap<Boolean, Money> information = new HashMap<>();
-            throw new UnsupportedOperationException();
+            final int limit_hour_day_before_no_cost = 10;
+            final int dinner_limit_hour_day_before_no_cost = 16;
+        
+            Calendar actual = Calendar.getInstance();
+            // * * * TOFIX * * *
+            Calendar shouldBeChanged = Calendar.getInstance();
+            // * * *   * * * 
+            
+            if(actual.compareTo(shouldBeChanged) > 0){
+                double hours_diff = (actual.getTimeInMillis() - shouldBeChanged.getTimeInMillis()) 
+                        / (60.0 * 1000.0);
+                if(MealType.DINNER == meal.mealtype()){
+                    if(hours_diff >= dinner_limit_hour_day_before_no_cost){
+                        return meal.dish().currentPrice();
+                    }else{
+                        Money price = meal.dish().currentPrice();
+                        return new Money(price.amount()/2.0, price.currency());
+                    }
+                    
+                }else{
+                    // Lunch
+                    if(hours_diff >= limit_hour_day_before_no_cost){
+                        return meal.dish().currentPrice();
+                    }else{
+                        Money price = meal.dish().currentPrice();
+                        return new Money(price.amount()/2.0, price.currency());
+                    }
+                }
+            }else{
+                return null;
+            }
         }else return null;
     }
 
