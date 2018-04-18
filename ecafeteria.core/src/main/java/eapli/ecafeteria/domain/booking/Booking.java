@@ -12,7 +12,9 @@ import eapli.ecafeteria.domain.meal.*;
 import eapli.framework.domain.money.Money;
 import java.util.Date;
 import java.util.HashMap;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -34,11 +36,10 @@ public class Booking implements Serializable {
     @OneToOne
     private Meal meal;
     
-    //@OneToOne
-    @Column(name = "BOOKINGSTATE")
+    @Embedded
     private BookingState bookingState;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private CafeteriaUser cafeteriaUser;
     
     private Date date;
@@ -105,9 +106,9 @@ public class Booking implements Serializable {
     }
 
     public boolean isAvailableForRating() {
-        if (bookingState.actualState().equals(BookingStates.SERVED)) {
+        if (bookingState.actualState().equals(BookingState.BookingStates.SERVED)) {
             return true;
-        } else if (bookingState.actualState().equals(BookingStates.NOT_SERVED)) {
+        } else if (bookingState.actualState().equals(BookingState.BookingStates.NOT_SERVED)) {
             return true;
         }
         return false;

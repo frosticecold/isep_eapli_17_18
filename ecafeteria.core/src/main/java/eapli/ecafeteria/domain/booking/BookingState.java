@@ -5,29 +5,53 @@
  */
 package eapli.ecafeteria.domain.booking;
 
+import eapli.framework.domain.ddd.ValueObject;
 import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  *
  * @author jpfr8
  */
-@Entity
-public class BookingState implements Serializable {
+@Embeddable
+public class BookingState implements ValueObject, Serializable {
     
-    @Id
-    @GeneratedValue
-    @Column(name = "IDBOOKINGSTATE")
-    private Long idBookingState;
+    private static final long serialVersionUID =10L;
+    
+    public enum BookingStates {
+        @Column(name = "BOOKED") BOOKED{
+            @Override
+            public String toString(){
+                return "BOOKED";
+            }
+        },
+        @Column(name = "SERVED") SERVED{
+            @Override
+            public String toString(){
+                return "SERVED";
+            }
+        },
+        @Column(name = "NOT_SERVED") NOT_SERVED{
+            @Override
+            public String toString(){
+                return "NOT_SERVED";
+            }
+        },
+        @Column(name = "CANCELED") CANCELED{
+            @Override
+            public String toString(){
+                return "CANCELED";
+            }
+        }
+    }
     
     /**
      * Actual booking state
      */
-    @Enumerated()
+    @Enumerated(EnumType.STRING)
     @Column(name = "bookingstate")
     private BookingStates actualBookingState;
 
