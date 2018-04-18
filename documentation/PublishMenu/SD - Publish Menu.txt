@@ -47,7 +47,7 @@ title SD - Publish Menu
         pui->pui:doShowNotCriticalMenus()
         user->pui:Publish not critical menus
         loop while[publish]
-            pui->ctrl:publishCriticalMenus()
+            pui->ctrl:publishNotCriticalMenus()
             ctrl->m:publish()
             ctrl->repo:save(menu)
         end

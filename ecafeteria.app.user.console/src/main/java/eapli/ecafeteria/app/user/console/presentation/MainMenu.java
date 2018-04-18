@@ -103,7 +103,7 @@ class MainMenu extends CafeteriaUserBaseUI {
         final Menu menu = new Menu("Bookings");
         menu.add(new MenuItem(LIST_MENUS_OPTION, "List menus", new ShowMessageAction("Not implemented yet")));
         menu.add(new MenuItem(BOOK_A_MEAL_OPTION, "Book a meal", () -> new BookingMealUI().show()));
-        menu.add(new MenuItem(VIEW_RATINGS_OPTION, "View Served Meal Ratings", () -> new ViewRatingsUI().show()));
+        menu.add(new MenuItem(VIEW_RATINGS_OPTION, "View Ratings", () -> new ViewRatingsUI().show()));
         menu.add(new MenuItem(RATE_MEAL_OPTION, "Rate meal", () -> new RatingMealUI().show()));
         menu.add(new MenuItem(CANCEL_BOOKING, "Cancel booking", () -> new CancelBookingUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
