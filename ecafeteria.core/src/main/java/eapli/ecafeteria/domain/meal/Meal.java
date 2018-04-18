@@ -54,7 +54,7 @@ public class Meal implements Serializable {
     */
     @OneToMany()
     private List<Rating> ratings;
-       
+    
     /**
      * For ORM
      */
