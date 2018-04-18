@@ -44,7 +44,7 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
                 createQuery("SELECT meal.* "
                         + "FROM Menu menu, Meal meal"
                         + "WHERE menu.menuState=:state"
-                        + "AND :date BETWEEN (menu.period.startingDatesdate AND menu.period.endingDate)"
+                        + "AND :date BETWEEN (menu.period.startingDate AND menu.period.endingDate)"
                         + "AND :mealtype = meal.mealtype", this.entityClass);
         
         q.setParameter("date", date, TemporalType.DATE);
