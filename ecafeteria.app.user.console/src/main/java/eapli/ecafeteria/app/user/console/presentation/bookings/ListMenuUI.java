@@ -7,9 +7,12 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.ListMenuController;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.util.DateTime;
+import static eapli.framework.util.DateTime.currentWeekNumber;
+import java.util.Calendar;
 
-import java.util.Optional;
 
 /**
  *
@@ -21,7 +24,17 @@ public class ListMenuUI extends AbstractUI{
     
     @Override
     protected boolean doShow() {
-        Optional<eapli.ecafeteria.domain.menu.Menu> menuOfCurrentWeek = controller.listMenuCurrentWeek();
+        eapli.ecafeteria.domain.menu.Menu menuOfCurrentWeek = controller.listMenuCurrentWeek().get();
+        Calendar bDay = DateTime.beginningOfWeek(Calendar.YEAR, currentWeekNumber());
+        for(int i=0; i<7;i++){
+            Iterable<Meal> meals = menuOfCurrentWeek.getMealsByDay(bDay);
+            for(Meal m : meals){
+                m.toString();
+            }
+            
+            bDay.add(Calendar.DAY_OF_MONTH, 1);
+            
+        }
         return true;
     }
 
