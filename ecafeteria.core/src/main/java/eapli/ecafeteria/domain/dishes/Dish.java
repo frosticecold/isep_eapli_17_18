@@ -41,6 +41,7 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     private DishType dishType;
     private NutricionalInfo nutricionalInfo;
     private Money price;
+    private Alergen alergen;
     private boolean active;
 
     public Dish(final DishType dishType, final Designation name,
@@ -56,8 +57,8 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         this.active = true;
     }
 
-    public Dish(final DishType dishType, final Designation name, Money price) {
-        if (dishType == null || name == null || price == null) {
+    public Dish(final DishType dishType, final Designation name, Money price, Alergen alergen) {
+        if (dishType == null || name == null || price == null || alergen == null) {
             throw new IllegalArgumentException();
         }
 
@@ -66,6 +67,7 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         this.nutricionalInfo = null;
         this.price = price;
         this.active = true;
+        this.alergen = alergen;
     }
 
     protected Dish() {
@@ -132,6 +134,15 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         return this.price;
     }
 
+    public Alergen alergen() {
+        return alergen;
+    }
+
+    public void setAlergen(Alergen alergen) {
+        this.alergen = alergen;
+    }
+
+    
     /**
      *
      * @return true or false whether is or not active
