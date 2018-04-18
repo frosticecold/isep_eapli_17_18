@@ -23,25 +23,29 @@ import java.util.List;
  * @author MFerreira
  */
 public class RegisterMadeMealsController implements Controller {
-    
+
     private final MealRepository mealRepo = PersistenceContext.repositories().meals();
     private final ExecutionRepository execRepo = PersistenceContext.repositories().executions();
-    
-    public List<Meal> getMealsList(Calendar date, MealType mealType){
+
+    public List<Meal> getMealsList(Calendar date, MealType mealType) {
         return mealRepo.listOfMealsByDateAndMealType(date, mealType);
     }
-    
+
     public Meal registerMeal(final Dish dish, final MealType mealType, final Calendar cal) throws DataIntegrityViolationException, DataConcurrencyException {
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
-        
+
         final Meal newMeal = new Meal(dish, mealType, cal);
 
-        return this.repository.save(newMeal);
+        return this.mealRepo.save(newMeal);
     }
-    
-    public boolean createExecution(Meal meal, Integer MadeMeals){
-        
+
+    public Execution createExecution(Meal meal, MadeMeals madeMeals) {
+        return new Execution(meal, madeMeals);
+    }
+
+    public boolean addExecution(Execution e) throws DataConcurrencyException, DataIntegrityViolationException {
+        execRepo.save(e);
         return true;
     }
 }
