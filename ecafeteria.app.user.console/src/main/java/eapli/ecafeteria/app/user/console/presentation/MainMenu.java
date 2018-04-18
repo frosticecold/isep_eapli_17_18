@@ -7,6 +7,7 @@ package eapli.ecafeteria.app.user.console.presentation;
 
 import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.app.user.console.presentation.bookings.BookingMealUI;
+import eapli.ecafeteria.app.user.console.presentation.bookings.CancelBookingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.RatingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ViewRatingsUI;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
@@ -39,6 +40,7 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int BOOK_A_MEAL_OPTION = 2;
     private static final int VIEW_RATINGS_OPTION = 3;
     private static final int RATE_MEAL_OPTION = 4;
+    private static final int CANCEL_BOOKING = 5;
 
     // ACCOUNT MENU
     private static final int LIST_MOVEMENTS_OPTION = 1;
@@ -101,8 +103,9 @@ class MainMenu extends CafeteriaUserBaseUI {
         final Menu menu = new Menu("Bookings");
         menu.add(new MenuItem(LIST_MENUS_OPTION, "List menus", new ShowMessageAction("Not implemented yet")));
         menu.add(new MenuItem(BOOK_A_MEAL_OPTION, "Book a meal", () -> new BookingMealUI().show()));
-        menu.add(new MenuItem(VIEW_RATINGS_OPTION, "View Served Meal Ratings", () -> new ViewRatingsUI().show()));
+        menu.add(new MenuItem(VIEW_RATINGS_OPTION, "View Ratings", () -> new ViewRatingsUI().show()));
         menu.add(new MenuItem(RATE_MEAL_OPTION, "Rate meal", () -> new RatingMealUI().show()));
+        menu.add(new MenuItem(CANCEL_BOOKING, "Cancel booking", () -> new CancelBookingUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         return menu;
     }

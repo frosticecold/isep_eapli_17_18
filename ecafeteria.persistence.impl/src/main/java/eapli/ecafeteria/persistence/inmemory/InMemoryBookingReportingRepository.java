@@ -7,32 +7,35 @@ package eapli.ecafeteria.persistence.inmemory;
 
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.BookingStates;
+import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
- * @author ruial
+ * @author Rui Almeida <1160818>
  */
 public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLongPK<Booking> implements BookingReportingRepository {
 
+    /**
+     * Finds a list of bookings given a state
+     * @param bookingState
+     * @return 
+     */
     @Override
-    public Iterable<Booking> listServedBookings() {
-       return match(e -> e.isAvailableForRating());
+    public Iterable<Booking> findBookingByState(BookingState.BookingStates bookingState) {
+       return match(e -> e.getBookingState().actualState().equals(bookingState));
     }
     
-    
     @Override
-    public Optional<Booking> findNextBooking() {
+    public Booking findNextBooking(CafeteriaUser user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingStates bookingState) {
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 

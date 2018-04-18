@@ -37,6 +37,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         }
         this.rating = rating;
         this.comment = comment;
+        this.reply = "No reply yet.";
     }
 
     /**
@@ -95,6 +96,10 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         }
         return true;
     }
+    
+    public void addReply(String reply) {
+        this.reply = reply;
+    }
 
     @Override
     public Long id() {
@@ -107,6 +112,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     }
 
     
+    @Override
     public String toString() {
         return  "Rating: " + this.rating
                 +"\n"

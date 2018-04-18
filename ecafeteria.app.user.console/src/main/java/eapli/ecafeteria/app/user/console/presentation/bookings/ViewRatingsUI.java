@@ -22,7 +22,7 @@ public class ViewRatingsUI extends AbstractUI {
     
     @Override
     protected boolean doShow() {
-        for (Booking booking : controller.listServedBookings()) {
+        for (Booking booking : controller.bookings()) {
             System.out.println("Booking ID: " + booking.getIdBooking() 
                               + "\n"
                               + "Meal: " + booking.getMeal().toString()
