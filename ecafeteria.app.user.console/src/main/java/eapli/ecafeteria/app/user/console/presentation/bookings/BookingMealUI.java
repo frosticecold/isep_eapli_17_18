@@ -8,7 +8,6 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
 import eapli.ecafeteria.domain.booking.BookingState;
-import eapli.ecafeteria.domain.booking.BookingState.BookingStates;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.application.Controller;
@@ -19,7 +18,6 @@ import eapli.framework.util.Console;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jdk.nashorn.internal.ir.BreakNode;
 
 /**
  *
@@ -51,10 +49,20 @@ public class BookingMealUI extends AbstractUI {
                    
             switch (option) {
                 case 1:
-                    mealList = controller.listMeals(cal, MealType.LUNCH);
+                    try {
+                       mealList = controller.listMeals(cal, MealType.LUNCH);
+                    } catch (Exception e) {
+                        System.out.println("There are no meals published");
+                    }
+                   
                     break;
                 case 2:
-                    mealList = controller.listMeals(cal, MealType.DINNER);
+                      try {
+                           mealList = controller.listMeals(cal, MealType.DINNER);
+                    } catch (Exception e) {
+                        System.out.println("There are no meals published");
+                    }
+                  
                     break;
 
                 case 0:
@@ -88,9 +96,7 @@ public class BookingMealUI extends AbstractUI {
 
             controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal.getTime(), bookingState, choosedMeal);
 
-        } catch (DataIntegrityViolationException ex) {
-            Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DataConcurrencyException ex) {
+        } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
             Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
