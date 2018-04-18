@@ -28,6 +28,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.ListDis
 import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.RegisterDishViaDTOUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMaterialAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
@@ -88,6 +89,7 @@ public class MainMenu extends AbstractUI {
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
     private static final int REPORTING_HIGH_CALORIES_DISHES_OPTION = 2;
     private static final int REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION = 3;
+    private static final int REPORTING_BOOKING_PER_DATE = 4;
 
     // MENU
     private static final int MENU_EDIT_CREATE_OPTION = 1;
@@ -103,6 +105,7 @@ public class MainMenu extends AbstractUI {
     private static final int DISH_TYPES_OPTION = 5;
     private static final int TRACEABILITY_OPTION = 6;
     private static final int REPORTING_DISHES_OPTION = 7;
+    private static final int REPORTING_BOOKING_OPTION = 8;
 
     @Override
     public boolean show() {
@@ -173,6 +176,12 @@ public class MainMenu extends AbstractUI {
             final Menu reportingDishesMenu = buildReportingDishesMenu();
             mainMenu.add(new SubMenu(REPORTING_DISHES_OPTION, reportingDishesMenu,
                     new ShowVerticalSubMenuAction(reportingDishesMenu)));
+            
+            
+            final Menu reportingBookingMenu = buildReportingBookingMenu();
+            mainMenu.add(new SubMenu(REPORTING_BOOKING_OPTION, reportingBookingMenu,
+                    new ShowVerticalSubMenuAction(reportingBookingMenu)));
+            
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -283,6 +292,31 @@ public class MainMenu extends AbstractUI {
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
+    }
+    
+    private Menu buildReportingBookingMenu() {
+        
+         final Menu menu = new Menu("Reporting Booking >");
+
+        menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
+                () -> new ReportBookingUI().show()));
+//        menu.add(new MenuItem(REPORTING_HIGH_CALORIES_DISHES_OPTION, "High Calories Dishes",
+//                () -> new ReportHighCaloriesDishesUI().show()));
+//        menu.add(new MenuItem(REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION,
+//                "Dishes per Caloric Category",
+//                () -> new ReportDishesPerCaloricCategoryUI().show()));
+//        menu.add(new MenuItem(REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION + 1,
+//                "Dishes per Caloric Category (as tuples)",
+//                () -> new ReportDishesPerCaloricCategoryAsTuplesUI().show()));
+//
+//        menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
+
+        return menu;
+        
+        
+        
+        
+        
     }
 
     private Menu buildMenuOfMenus() {

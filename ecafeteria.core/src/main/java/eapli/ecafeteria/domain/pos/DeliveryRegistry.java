@@ -1,5 +1,7 @@
 package eapli.ecafeteria.domain.pos;
 
+import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.domain.ddd.DomainEntity;
 import javax.persistence.*;
@@ -14,48 +16,53 @@ public class DeliveryRegistry implements DomainEntity {
     /**
      * identifier of the delivery
      */
-    @Id
+    @EmbeddedId
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="DELIVERY")
     private Long id;
     
     /**
-     * identifier of the pos was registered the delivery
+     * POS
      */
-    @Column (name="POS")
-    private long pos;
+    @OneToOne
+    @JoinColumn (name="POS")
+    private POS pos;
     
     /**
-     * identifier of the booking
+     * booking
      */
+    @OneToOne
     @Column(name="BOOKING")
-    private long idBooking;
+    private Booking Booking;
     
     /**
-     * identifier of the employee
+     * POS User
      */
-    @Column(name="EMPLOYEE")
-    private MecanographicNumber employee;
+    @OneToOne
+    @JoinColumn(name="POSUSER")
+    private CafeteriaUser employee;
     
     /**
-     * identifier of the client
+     * CLIENT
      */
-    @Column(name="CLIENT")
-    private MecanographicNumber client;
+    @OneToOne
+    @JoinColumn(name="CLIENT")
+    private CafeteriaUser client;
     
-    @Temporal(TemporalType.DATE)
-    private DeliverySessionDate sessionDate;
+    @OneToOne
+    @JoinColumn(name="SESSION")
+    private DeliveryMealSession session;
     
     protected DeliveryRegistry() {
         //for ORM only
     }
     
-    public DeliveryRegistry(DeliveryMealSession session, POS pos, MecanographicNumber Client, long Booking) {
+    public DeliveryRegistry(DeliveryMealSession session, POS pos, CafeteriaUser Client, Booking Booking) {
         this.client = Client;
-        this.idBooking = Booking;
-        this.sessionDate = session.sessionDate();
-        this.pos = pos.id();
-        this.employee = pos.posUser();
+        this.Booking = Booking;
+        this.session = session;
+        this.pos = pos;
+        //this.employee = ;
     }
     /**
      * compares this object with another
@@ -89,39 +96,4 @@ public class DeliveryRegistry implements DomainEntity {
         return this.id;
     }
    
-    /**
-     * Returns the id of the employee that did this delivery
-     * @return 
-     */
-    public MecanographicNumber idEmployee() {
-        
-        return this.employee;
-    }
-    
-    /**
-     * Returns the id of the client who paid for this delivery
-     * @return 
-     */
-    public MecanographicNumber idClient() {
-        
-        return this.client;
-    }
-    
-    /**
-     * Returns the id of the booking for this delivery
-     * @return 
-     */
-    public long idBooking() {
-        
-        return this.idBooking;
-    }
-    
-    /**
-     * Returns the id of the pos which was done this delivery
-     * @return 
-     */
-    public long idPos() {
-        
-        return this.pos;
-    }
 }

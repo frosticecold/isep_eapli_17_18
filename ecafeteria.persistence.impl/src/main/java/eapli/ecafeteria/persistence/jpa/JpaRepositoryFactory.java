@@ -115,4 +115,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public MealRepository meals() {
         return new JpaMealRepository();
     }
+
+    @Override
+    public ExecutionRepository executions() {
+        return new JpaExecutionRepository();
+    }
 }

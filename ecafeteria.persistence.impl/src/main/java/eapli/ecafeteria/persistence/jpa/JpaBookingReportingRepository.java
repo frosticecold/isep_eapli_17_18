@@ -9,6 +9,9 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.ecafeteria.reporting.booking.BookingPerOption;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +77,31 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
         q.setParameter("user", user);
         q.setParameter("bookingState", bookingState);
         return q.getResultList();
+    }
+
+    @Override
+    public Iterable<BookingPerOption> showReportByDay(Date date) {
+             
+//        final Query q = entityManager().
+//        createQuery("SELECT booking "
+//                        + "FROM Booking booking"
+//                        + "AND booking.date = :date");
+//        
+//        q.setParameter("date", date);
+//
+//        return q.getResultList();
+
+          /* ^QUERY */
+          
+          
+          List<BookingPerOption> l = new ArrayList<>();
+          l.add(new BookingPerOption("mealType", new Date(), "mealDishName", "userName"));
+          l.add(new BookingPerOption("mealType2", new Date(), "mealDishName4", "userName12"));
+          l.add(new BookingPerOption("mealType3", new Date(), "mealDishName33", "userName4"));
+          
+          
+          
+          return l;
     }
 
 }

@@ -45,30 +45,19 @@ public class BookingMealUI extends AbstractUI {
 
         do {
             option = Console.readInteger("");
+            if(option > 0 && option <= MealType.values().length)
+                option--;
+            
+            mealList = controller.listMeals(cal, MealType.values()[option]);
 
-            switch (option) {
-                case 1:
-                    try {
-                        mealList = controller.listMeals(cal, MealType.LUNCH);
-                    } catch (Exception e) {
-                        System.out.println("There are no meals published");
-                    }
-
-                    break;
-                case 2:
-                    try {
-                        mealList = controller.listMeals(cal, MealType.DINNER);
-                    } catch (Exception e) {
-                        System.out.println("There are no meals published");
-                    }
-
-                    break;
-
-                case 0:
-                    break;
-            }
         } while (option != 0);
 
+       
+        if(!mealList.iterator().hasNext()){
+            System.out.println("\nThere is no meal with that conditions\n");
+            return false;
+        }
+        
         //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
         System.out.println("Choose one meal");
         final Long id = Console.readLong("Insert the meal id:\n");
@@ -112,7 +101,7 @@ public class BookingMealUI extends AbstractUI {
                 case 0:
                     break;
             }
-        } while (option != 0);
+        } while (option2 != 0);
 
         //====================================SAVE IN DATABASE==================================
         BookingState bookingState = new BookingState();

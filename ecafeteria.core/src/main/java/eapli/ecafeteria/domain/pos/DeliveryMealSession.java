@@ -61,24 +61,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public Long id() {
         return this.idSession;
     }
-   
-    /**
-     * Returns this delivery sessions date
-     * @return 
-     */
-    public DeliverySessionDate sessionDate() {
-        
-        return this.sessionDate;
-    }
-    
-    /**
-     * Returns the pos associated with this delivery session
-     * @return 
-     */
-    public POS pos() {
-        return this.pos;
-    }
-    
+
     /**
      * creates a new register of a delivery made
      * @param idUser
@@ -86,6 +69,6 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
      */
     public void addNewDelivery(MecanographicNumber idUser, long idBooking) {
         
-        this.registry = new DeliveryRegistry(this,this.pos(),idUser,idBooking);
+        
     }
 }

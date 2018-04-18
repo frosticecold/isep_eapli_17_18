@@ -8,6 +8,7 @@ import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.ecafeteria.persistence.DishReportingRepository;
 import eapli.ecafeteria.persistence.DishRepository;
 import eapli.ecafeteria.persistence.DishTypeRepository;
+import eapli.ecafeteria.persistence.ExecutionRepository;
 import eapli.ecafeteria.persistence.MaterialRepository;
 import eapli.ecafeteria.persistence.MealRepository;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
@@ -132,6 +133,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public MealRepository meals() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new InMemoryMealRepository();
+    }
+
+    @Override
+    public ExecutionRepository executions() {
+        return new InMemoryExecutionRepository();
     }
 }
