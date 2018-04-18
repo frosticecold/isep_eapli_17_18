@@ -6,11 +6,13 @@
 package eapli.ecafeteria.bootstrapers;
 
 import eapli.ecafeteria.application.menus.ElaborateOrEditMenuController;
+import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
+import eapli.ecafeteria.persistence.DishTypeRepository;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
@@ -31,6 +33,8 @@ public class MenuBootstrapper implements Action {
     @Override
     public boolean execute() {
         final MenuRepository menurepo = PersistenceContext.repositories().menus();
+        final DishTypeRepository dishTypeRepo = PersistenceContext.repositories().dishTypes();
+        final DishType vegie = dishTypeRepo.findByAcronym(TestDataConstants.DISH_TYPE_VEGIE).get();
         Calendar start = DateTime.parseDate("01-07-2018");
         Calendar end = DateTime.parseDate("07-07-2018");
         Calendar mealDay = DateTime.parseDate("01-07-2018");
@@ -42,7 +46,8 @@ public class MenuBootstrapper implements Action {
         DishType dishType = new DishType("Italian", "Awesome!");
         Designation name = Designation.valueOf("Lasanha");
         Money price = Money.euros(10);
-        Dish dish = new Dish(dishType, name, price);
+        Alergen alergen = new Alergen("peanuts");
+        Dish dish = new Dish(vegie, name, price, alergen);
         Meal meal = new Meal(dish, MealType.LUNCH, mealDay);
         menu.addMeal(meal);
         register(menu);
