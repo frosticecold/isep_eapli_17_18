@@ -6,8 +6,11 @@
 package eapli.ecafeteria.application.kitchen;
 
 import eapli.ecafeteria.domain.meal.*;
+import eapli.ecafeteria.persistence.ExecutionRepository;
 import eapli.ecafeteria.persistence.MealRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,13 +20,19 @@ import java.util.List;
  */
 public class RegisterMadeMealsController {
     
-    private final MealRepository repository = PersistenceContext.repositories().meals();
+    private final MealRepository mealRepo = PersistenceContext.repositories().meals();
+    private final ExecutionRepository execRepo = PersistenceContext.repositories().executions();
     
     public List<Meal> getMealsList(Calendar date, MealType mealType){
-        return repository.listOfMealsByDateAndMealType(date, mealType);
+        return mealRepo.listOfMealsByDateAndMealType(date, mealType);
     }
     
-    public boolean createExecution(Meal meal, Integer MadeMeals){
+    public Execution createExecution(Meal meal, MadeMeals madeMeals){ 
+        return new Execution(meal, madeMeals);
+    }
+    
+    public boolean addExecution(Execution e) throws DataConcurrencyException, DataIntegrityViolationException{
+        execRepo.save(e);
         
         return true;
     }
