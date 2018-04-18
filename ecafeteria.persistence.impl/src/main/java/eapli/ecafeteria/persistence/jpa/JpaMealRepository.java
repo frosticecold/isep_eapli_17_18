@@ -8,6 +8,7 @@ package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.persistence.MealRepository;
+import eapli.framework.domain.Designation;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -37,10 +38,10 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
     }
 
     @Override
-    public Optional<Meal> findMealByDishID(String id) {
+    public Optional<Meal> findMealByDishID(Designation dishid) {
         final Map<String, Object> params = new HashMap<>();
-        params.put("DISHID", id);
-        return matchOne("e.DISHID=:id", params);
+        params.put("dishid", dishid);
+        return matchOne("e.dish.id=:dishid", params);
     }
 
 

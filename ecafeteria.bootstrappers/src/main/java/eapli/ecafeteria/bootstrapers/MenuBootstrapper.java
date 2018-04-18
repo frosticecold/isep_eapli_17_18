@@ -14,6 +14,7 @@ import eapli.ecafeteria.persistence.MealRepository;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
+import eapli.framework.domain.Designation;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.DateTime;
@@ -32,7 +33,8 @@ public class MenuBootstrapper implements Action {
         final DishTypeRepository dishTypeRepo = PersistenceContext.repositories().dishTypes();
         final DishType vegie = dishTypeRepo.findByAcronym(TestDataConstants.DISH_TYPE_VEGIE).get();
         final MealRepository mealRepo = PersistenceContext.repositories().meals();
-        final Meal meal = mealRepo.findMealByDishID("tofu grelhado").get();
+        
+        final Meal meal = mealRepo.findMealByDishID(Designation.valueOf("tofu grelhado")).get();
         
         Calendar start = DateTime.parseDate("01-07-2018");
         Calendar end = DateTime.parseDate("07-07-2018");
