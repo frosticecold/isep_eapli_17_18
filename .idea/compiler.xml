@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="app.backoffice.console" />
+        <module name="app.bootstrap" />
+        <module name="app.common.console" />
+        <module name="app.pos.console" />
+        <module name="app.user.console" />
+        <module name="bootstrappers" />
+        <module name="core" />
+        <module name="framework" />
+        <module name="maven-archiver (1)" />
+        <module name="maven-archiver (2)" />
+        <module name="maven-archiver (3)" />
+        <module name="maven-archiver (4)" />
+        <module name="maven-archiver (5)" />
+        <module name="maven-archiver (6)" />
+        <module name="maven-archiver (7)" />
+        <module name="maven-archiver (8)" />
+        <module name="maven-archiver (9)" />
+        <module name="persistence.impl" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="app.backoffice.console" target="1.8" />
+      <module name="app.bootstrap" target="1.8" />
+      <module name="app.common.console" target="1.8" />
+      <module name="app.pos.console" target="1.8" />
+      <module name="app.user.console" target="1.8" />
+      <module name="bootstrappers" target="1.8" />
+      <module name="core" target="1.8" />
+      <module name="ecafeteria" target="1.8" />
+      <module name="framework" target="1.8" />
+      <module name="maven-archiver (1)" target="1.5" />
+      <module name="maven-archiver (2)" target="1.5" />
+      <module name="maven-archiver (3)" target="1.5" />
+      <module name="maven-archiver (4)" target="1.5" />
+      <module name="maven-archiver (5)" target="1.5" />
+      <module name="maven-archiver (6)" target="1.5" />
+      <module name="maven-archiver (7)" target="1.5" />
+      <module name="maven-archiver (8)" target="1.5" />
+      <module name="maven-archiver (9)" target="1.5" />
+      <module name="persistence.impl" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

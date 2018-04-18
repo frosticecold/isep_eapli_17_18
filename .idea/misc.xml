@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/eapli.framework/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/ecafeteria.core/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/ecafeteria.app.bootstrap/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/ecafeteria.bootstrappers/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/ecafeteria.app.pos.console/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/ecafeteria.app.user.console/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/ecafeteria.persistence.impl/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/ecafeteria.app.common.console/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/ecafeteria.app.backoffice.console/target/maven-archiver/pom.properties" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_9" project-jdk-name="9.0" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
