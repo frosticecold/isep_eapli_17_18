@@ -104,4 +104,6 @@ public interface RepositoryFactory {
      * @return
      */
     DeliveryMealSessionRepository deliveryMealRepository();
+    
+    MealRepository meals();
 }

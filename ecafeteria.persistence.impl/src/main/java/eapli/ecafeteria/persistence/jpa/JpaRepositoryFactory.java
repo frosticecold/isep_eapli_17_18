@@ -110,4 +110,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public RatingRepository rating() {
         return new JpaRatingRepository();
     }
+
+    @Override
+    public MealRepository meals() {
+        return new JpaMealRepository();
+    }
 }
