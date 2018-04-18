@@ -5,6 +5,8 @@
  */
 package eapli.ecafeteria.application.pos;
 
+import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.DishReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
@@ -14,15 +16,16 @@ import eapli.framework.application.Controller;
  *
  * @author Miguel Santos <1161386@isep.ipp.pt>
  */
-public class ViewAvailableMealsController implements Controller{
-    
+public class ViewAvailableMealsController implements Controller {
+
     private final DishReportingRepository repo = PersistenceContext.repositories().dishReporting();
-    
-    public void showDishesPerDishType(){
-        Iterable<DishesPerDishType> dishes = repo.dishesPerDishType();
-        for (DishesPerDishType dish : dishes) {
-            System.out.println(dish.dishType + ":");
-            System.out.println(dish.quantityOfDishes);
-        }
+    private final BookingRepository repo2 = PersistenceContext.repositories().booking();
+
+    public Iterable<DishesPerDishType> showDishesPerDishType() {
+        return repo.dishesPerDishType();
+    }
+
+    public void showNotDeliveredBookedMeals() {
+        
     }
 }

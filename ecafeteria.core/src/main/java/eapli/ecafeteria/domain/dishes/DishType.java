@@ -49,10 +49,8 @@ public class DishType implements AggregateRoot<String>, Serializable {
     /**
      * DishType constructor.
      *
-     * @param name
-     *            Mandatory
-     * @param description
-     *            Mandatory
+     * @param name Mandatory
+     * @param description Mandatory
      */
     public DishType(String name, String description) {
         setName(name);
@@ -91,7 +89,7 @@ public class DishType implements AggregateRoot<String>, Serializable {
      *
      * @param name
      * @return True if name meets minimum requirements. False if name does not
-     *         meet minimum requirements.
+     * meet minimum requirements.
      */
     private boolean nameMeetsMinimumRequirements(String name) {
         return !Strings.isNullOrEmpty(name);
@@ -102,7 +100,7 @@ public class DishType implements AggregateRoot<String>, Serializable {
      *
      * @param description
      * @return True if description meets minimum requirements. False if
-     *         description does not meet minimum requirements.
+     * description does not meet minimum requirements.
      */
     private boolean descriptionMeetsMinimumRequirements(String description) {
         return !Strings.isNullOrEmpty(description);
@@ -131,8 +129,7 @@ public class DishType implements AggregateRoot<String>, Serializable {
     /**
      * Change DishType description
      *
-     * @param newDescription
-     *            New description.
+     * @param newDescription New description.
      */
     public void changeDescriptionTo(String newDescription) {
         if (!descriptionMeetsMinimumRequirements(newDescription)) {
@@ -179,4 +176,10 @@ public class DishType implements AggregateRoot<String>, Serializable {
     public DishTypeDTO toDTO() {
         return new DishTypeDTO(acronym, description, active);
     }
+
+    @Override
+    public String toString() {
+        return "DishType{" + "description=" + description + '}';
+    }
+
 }

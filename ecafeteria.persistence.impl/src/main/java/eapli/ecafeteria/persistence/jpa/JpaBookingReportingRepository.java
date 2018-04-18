@@ -10,6 +10,9 @@ import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.ecafeteria.reporting.booking.BookingPerOption;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,19 +29,19 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
      * Finds a list of bookings given a state
      *
      * @param bookingState
+     * @author Rui Almeida <1160818>
      * @return
      */
     @Override
-    public Iterable<Booking> findBookingByState(BookingState.BookingStates bookingState) {
-        final Query q = entityManager().
-                createQuery("SELECT booking "
-                        + "FROM Booking booking"
-                        + "WHERE booking.BOOKINGSTATE = :bookingState");
-
-        q.setParameter("bookingState", bookingState);
-        return q.getResultList();
+    public Iterable<Booking> findBookingByState(BookingState bookingState) {
+        return entityManager().createQuery("SELECT booking "
+                        + "FROM Booking booking "
+                        + "WHERE booking.bookingState = :bookingState")
+                .setParameter("bookingState", bookingState)
+                .getResultList();
     }
 
+    @Override
     public Booking findNextBooking(CafeteriaUser user) {
         Map<String, Object> params = new HashMap<>();
         Booking nextBooking = null;
@@ -74,6 +77,31 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
 
         params.put("bookingState", bookingState);
         return match("e.bookingState=:bookingState", params);
+    }
+
+    @Override
+    public Iterable<BookingPerOption> showReportByDay(Date date) {
+             
+//        final Query q = entityManager().
+//        createQuery("SELECT booking "
+//                        + "FROM Booking booking"
+//                        + "AND booking.date = :date");
+//        
+//        q.setParameter("date", date);
+//
+//        return q.getResultList();
+
+          /* ^QUERY */
+          
+          
+          List<BookingPerOption> l = new ArrayList<>();
+          l.add(new BookingPerOption("mealType", new Date(), "mealDishName", "userName"));
+          l.add(new BookingPerOption("mealType2", new Date(), "mealDishName4", "userName12"));
+          l.add(new BookingPerOption("mealType3", new Date(), "mealDishName33", "userName4"));
+          
+          
+          
+          return l;
     }
 
 }

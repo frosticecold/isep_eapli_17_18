@@ -5,17 +5,13 @@
  */
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
-import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.RatingMealController;
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.Rating;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

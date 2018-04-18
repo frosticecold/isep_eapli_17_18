@@ -12,6 +12,7 @@ import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,16 +42,22 @@ public final class ViewRatingsController implements Controller {
      *
      */
     public void readBookings() {
+        bookings = new ArrayList<>();
+        BookingState served = new BookingState();
+        served.changeToServed();
+        BookingState notServed = new BookingState();
+        notServed.changeToNotServed();
+
         /*
         Adds bookings that have been served
          */
-        for (Booking booking : bookingRepo.findBookingByState(BookingState.BookingStates.SERVED)) {
+        for (Booking booking : bookingRepo.findBookingByState(served)) {
             bookings.add(booking);
         }
         /*
         Adds bookings that were not served but reserved and not cancelled
          */
-        for (Booking booking : bookingRepo.findBookingByState(BookingState.BookingStates.NOT_SERVED)) {
+        for (Booking booking : bookingRepo.findBookingByState(notServed)) {
             bookings.add(booking);
         }
     }
@@ -75,15 +82,27 @@ public final class ViewRatingsController implements Controller {
      * @return
      */
     public Iterable<Rating> ratingsFromMeal() {
-        return meal.ratings();
+        if (meal == null) {
+            return null;
+        } else {
+            return meal.ratings();
+        }
     }
-    
+
     /**
      * Returns the read bookings
-     * @return 
+     *
+     * @return
      */
     public Iterable<Booking> bookings() {
         return this.bookings;
+    }
+    
+    /**
+     * Clears selected meal
+     */
+    public void clearSelection() {
+        this.meal = null;
     }
 
 }

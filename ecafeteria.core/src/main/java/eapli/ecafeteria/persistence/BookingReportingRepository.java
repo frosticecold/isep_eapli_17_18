@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.persistence.repositories.ReportingRepository;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 /**
  *
@@ -18,10 +15,13 @@ import java.util.Optional;
  */
 public interface BookingReportingRepository extends ReportingRepository {
 
-    public Iterable<Booking> findBookingByState(BookingState.BookingStates bookingState);
+    public Iterable<Booking> findBookingByState(BookingState bookingState);
 
     public Booking findNextBooking(CafeteriaUser user);
 
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState);
-
+    
+     public Iterable<BookingPerOption> showReportByDay(Date date);
+   
+    
 }

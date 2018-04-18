@@ -40,10 +40,10 @@ public class BookingState implements ValueObject, Serializable {
                 return "NOT_SERVED";
             }
         },
-        @Column(name = "CANCELED") CANCELED{
+        @Column(name = "CANCELLED") CANCELLED{
             @Override
             public String toString(){
-                return "CANCELED";
+                return "CANCELLED";
             }
         }
     }
@@ -115,7 +115,7 @@ public class BookingState implements ValueObject, Serializable {
      */
     public boolean changeToCanceled(){
         if(actualBookingState == BookingStates.BOOKED){
-            actualBookingState = BookingStates.CANCELED;
+            actualBookingState = BookingStates.CANCELLED;
             return true;
         }
         
