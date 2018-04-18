@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.domain.booking;
 
+import eapli.ecafeteria.domain.booking.BookingState.BookingStates;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import eapli.ecafeteria.domain.cafeteriauser.*;

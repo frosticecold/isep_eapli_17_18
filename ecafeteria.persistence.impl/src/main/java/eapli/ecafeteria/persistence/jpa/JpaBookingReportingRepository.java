@@ -28,7 +28,7 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
      * @return
      */
     @Override
-    public Iterable<Booking> findBookingByState(BookingStates bookingState) {
+    public Iterable<Booking> findBookingByState(BookingState.BookingStates bookingState) {
         final Query q = entityManager().
                 createQuery("SELECT booking "
                         + "FROM Booking booking"
@@ -41,7 +41,7 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
     public Booking findNextBooking(CafeteriaUser user) {
         Map<String, Object> params = new HashMap<>();
         Booking nextBooking = null;
-        BookingStates state = BookingStates.BOOKED;
+        BookingState.BookingStates state = BookingState.BookingStates.BOOKED;
 
         for (Booking booking : findBookingsByCafeteriaUser(user, state)) {
 

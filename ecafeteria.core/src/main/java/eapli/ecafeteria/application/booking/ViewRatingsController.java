@@ -6,6 +6,7 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
@@ -43,13 +44,13 @@ public final class ViewRatingsController implements Controller {
         /*
         Adds bookings that have been served
          */
-        for (Booking booking : bookingRepo.findBookingByState(BookingStates.SERVED)) {
+        for (Booking booking : bookingRepo.findBookingByState(BookingState.BookingStates.SERVED)) {
             bookings.add(booking);
         }
         /*
         Adds bookings that were not served but reserved and not cancelled
          */
-        for (Booking booking : bookingRepo.findBookingByState(BookingStates.NOT_SERVED)) {
+        for (Booking booking : bookingRepo.findBookingByState(BookingState.BookingStates.NOT_SERVED)) {
             bookings.add(booking);
         }
     }
