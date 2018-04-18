@@ -6,7 +6,7 @@
 package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.BookingStates;
+import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.persistence.repositories.ReportingRepository;
 import java.util.List;
@@ -22,6 +22,6 @@ public interface BookingReportingRepository extends ReportingRepository {
 
     public Booking findNextBooking(CafeteriaUser user);
 
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingStates bookingState);
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState);
 
 }
