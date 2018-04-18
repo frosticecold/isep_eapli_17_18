@@ -33,7 +33,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
 
     public Rating(int rating, String comment) {
         if (booking == null || rating < 0 || rating > 5 || comment == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid. Please check.");
         }
         this.rating = rating;
         this.comment = comment;
@@ -48,16 +48,19 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param comment
      */
     public Rating(Booking booking, int rating, String comment) {
+
         if (booking == null || rating < 0 || rating > 5 || comment == null) {
-            throw new IllegalArgumentException();
+            System.out.println("Invalid. Please check.");
         }
+
         this.booking = booking;
         this.rating = rating;
         this.comment = comment;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj
+    ) {
         if (this == obj) {
             return true;
         }
@@ -77,7 +80,8 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     }
 
     @Override
-    public boolean sameAs(Object other) {
+    public boolean sameAs(Object other
+    ) {
         if (!(other instanceof Rating)) {
             return false;
         }
@@ -96,7 +100,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         }
         return true;
     }
-    
+
     public void addReply(String reply) {
         this.reply = reply;
     }
@@ -111,11 +115,10 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         return this.id.equals(id);
     }
 
-    
     @Override
     public String toString() {
-        return  "Rating: " + this.rating
-                +"\n"
+        return "Rating: " + this.rating
+                + "\n"
                 + "Comment: " + this.comment
                 + "\n"
                 + "Reply : " + this.reply

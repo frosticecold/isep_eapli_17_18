@@ -75,20 +75,15 @@ public class RatingTest {
     @After
     public void tearDown() {
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void sureRatingHasValidBooking() {
-        new Rating(null, 4, "Good meal");
-    }
-
+    
     @Test(expected = IllegalArgumentException.class)
     public void sureRatingHasValidRating() {
-        new Rating(new Booking(meal, user), 10, "Good meal");
+        new Rating(10, "Good meal");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void sureRatingHasValidComment() {
-        new Rating(new Booking(meal, user), 3, null);
+        new Rating(3, null);
     }
 
 //    /**
