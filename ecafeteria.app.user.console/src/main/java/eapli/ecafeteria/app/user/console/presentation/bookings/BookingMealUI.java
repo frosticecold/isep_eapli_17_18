@@ -27,74 +27,79 @@ import jdk.nashorn.internal.ir.BreakNode;
  */
 public class BookingMealUI extends AbstractUI {
 
-    private final  BookingMealController controller = new BookingMealController();
-    
-    
+    private final BookingMealController controller = new BookingMealController();
+
     protected Controller controller() {
         return this.controller;
     }
 
-    
     @Override
     protected boolean doShow() {
-       final String day = Console.readLine("Insert desired day (DD/MM/YYYY):\n");  
-       Calendar cal = Console.readCalendar(day);
-       
-       
-      System.out.println("Choose Meal Type:\n"
-                + "1-Lunch\n"
-                + "2-Dinner");
-      
-      Iterable<Meal> mealList ;
-      
-       final String mealType = Console.readLine("Insert 1 or 2:\n");
-       if(mealType.equals(1)){
-         mealList = controller.listMeals(cal,MealType.LUNCH);
-       }else if (mealType.equals(2)){
-         mealList =  controller.listMeals(cal,MealType.DINNER);
-       }else{
-           System.out.println("Inválido!");
-          return false;
-       }
-       
+        Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
+
+
+        Iterable<Meal> mealList = null;
+
+        //final String mealType = Console.readLine("Insert 1 or 2:\n");
+        int option = 0;
+
+        System.out.println("Choose Meal Type:\n1-Lunch\n2-Dinner");
+                
+        
+        do {
+            option = Console.readInteger("");
+                   
+            switch (option) {
+                case 1:
+                    mealList = controller.listMeals(cal, MealType.LUNCH);
+                    break;
+                case 2:
+                    mealList = controller.listMeals(cal, MealType.DINNER);
+                    break;
+
+                case 0:
+                    break;
+            }
+        } while (option != 0);
+
+        
         System.out.println("Choose one meal");
         final Long id = Console.readLong("Insert the meal id:\n");
-       
-        
+
         Meal choosedMeal = null;
-        
-        for(Meal meal : mealList){
-            if(meal.id()==id){
+
+        for (Meal meal : mealList) {
+            if (meal.id() == id) {
                 choosedMeal = meal;
-            }else{
+            } else {
                 System.out.println("Id inválido");
+                return false;
             }
         }
-        
+
         System.out.println("Nutricional Info:");
         controller.showNutricionalInfo(choosedMeal);
-        
-         controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal);
-        
-         BookingState bookingState = new BookingState();
-         
+
+        controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal);
+
+        BookingState bookingState = new BookingState();
+
         try {
-        
+
             controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal.getTime(), bookingState, choosedMeal);
-       
+
         } catch (DataIntegrityViolationException ex) {
             Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DataConcurrencyException ex) {
             Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-       
-       return true;
+
+        return true;
     }
 
     @Override
     public String headline() {
         return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
-    
+
 }
