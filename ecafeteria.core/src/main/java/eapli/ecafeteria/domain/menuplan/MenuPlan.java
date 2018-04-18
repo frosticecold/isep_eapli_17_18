@@ -25,7 +25,7 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id_menu_plan")
-    private long id;
+    private Long id;
     
     @Version
     private Long version;
@@ -60,10 +60,15 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
         
         return this.id==m.id();
     }
-    
+   
     @Override
     public Long id() {
         return id;
+    }
+    
+    @Override
+    public String toString() {
+        return "MenuPlan{" + "menuPlanItemList=" + menuPlanItemList + ", selectedMenu=" + selectedMenu + ", closed=" + closed + '}';
     }
    
 }
