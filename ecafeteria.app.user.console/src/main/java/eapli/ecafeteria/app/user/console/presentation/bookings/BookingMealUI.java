@@ -8,7 +8,6 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
 import eapli.ecafeteria.domain.booking.BookingState;
-import eapli.ecafeteria.domain.booking.BookingState.BookingStates;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.application.Controller;
@@ -19,7 +18,6 @@ import eapli.framework.util.Console;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jdk.nashorn.internal.ir.BreakNode;
 
 /**
  *
@@ -35,26 +33,35 @@ public class BookingMealUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+
+        //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
 
-
+        //====================================lIST MEAL============================================
         Iterable<Meal> mealList = null;
-
-        //final String mealType = Console.readLine("Insert 1 or 2:\n");
         int option = 0;
 
         System.out.println("Choose Meal Type:\n1-Lunch\n2-Dinner");
-                
-        
+
         do {
             option = Console.readInteger("");
-                   
+
             switch (option) {
                 case 1:
-                    mealList = controller.listMeals(cal, MealType.LUNCH);
+                    try {
+                        mealList = controller.listMeals(cal, MealType.LUNCH);
+                    } catch (Exception e) {
+                        System.out.println("There are no meals published");
+                    }
+
                     break;
                 case 2:
-                    mealList = controller.listMeals(cal, MealType.DINNER);
+                    try {
+                        mealList = controller.listMeals(cal, MealType.DINNER);
+                    } catch (Exception e) {
+                        System.out.println("There are no meals published");
+                    }
+
                     break;
 
                 case 0:
@@ -62,14 +69,13 @@ public class BookingMealUI extends AbstractUI {
             }
         } while (option != 0);
 
-        
+        //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
         System.out.println("Choose one meal");
         final Long id = Console.readLong("Insert the meal id:\n");
-
         Meal choosedMeal = null;
 
         for (Meal meal : mealList) {
-            if (meal.id() == id) {
+            if (meal.id().equals(id)) {
                 choosedMeal = meal;
             } else {
                 System.out.println("Id inválido");
@@ -77,20 +83,20 @@ public class BookingMealUI extends AbstractUI {
             }
         }
 
+        //===================================SHOW NUTRICIONAL INFO AND CALORICS==================================
         System.out.println("Nutricional Info:");
         controller.showNutricionalInfo(choosedMeal);
 
         controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal);
 
+        //====================================SAVE IN DATABASE==================================
         BookingState bookingState = new BookingState();
 
         try {
 
             controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal.getTime(), bookingState, choosedMeal);
 
-        } catch (DataIntegrityViolationException ex) {
-            Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DataConcurrencyException ex) {
+        } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
             Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 

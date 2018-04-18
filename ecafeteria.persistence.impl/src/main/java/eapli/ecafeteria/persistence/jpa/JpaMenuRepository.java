@@ -24,7 +24,10 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
 
     @Override
     public Iterable<Menu> listValidMenus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final Query q;
+        q = entityManager().createQuery("SELECT e FROM Menu e", this.entityClass);
+        
+        return q.getResultList();
     }
 
     @Override
@@ -44,7 +47,7 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
                 createQuery("SELECT meal.* "
                         + "FROM Menu menu, Meal meal"
                         + "WHERE menu.menuState=:state"
-                        + "AND :date BETWEEN (menu.period.startingDatesdate AND menu.period.endingDate)"
+                        + "AND :date BETWEEN (menu.period.startingDate AND menu.period.endingDate)"
                         + "AND :mealtype = meal.mealtype", this.entityClass);
         
         q.setParameter("date", date, TemporalType.DATE);
