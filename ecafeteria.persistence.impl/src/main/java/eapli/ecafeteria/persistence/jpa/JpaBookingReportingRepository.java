@@ -25,6 +25,7 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
      * Finds a list of bookings given a state
      *
      * @param bookingState
+     * @author Rui Almeida <1160818>
      * @return
      */
     @Override

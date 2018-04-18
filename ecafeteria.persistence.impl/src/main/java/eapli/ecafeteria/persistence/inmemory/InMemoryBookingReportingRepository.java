@@ -22,6 +22,7 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
     /**
      * Finds a list of bookings given a state
      * @param bookingState
+     * @author Rui Almeida <1160818>
      * @return 
      */
     @Override

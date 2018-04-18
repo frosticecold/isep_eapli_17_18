@@ -1,9 +1,12 @@
 package eapli.ecafeteria.domain.menu;
 
+import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +20,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
@@ -36,7 +38,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idmenu")
     private Long id;
-    
+
     @Version
     private Long version;
     /**
@@ -101,9 +103,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
     public Period period() {
         return period;
     }
-    
-    
-    
+
     /*
     ============================================================================
                                     Private Functions
@@ -171,11 +171,35 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      * @return true if the menu is published, false if is already published
      */
     public boolean publish() {
-        if(menuState == MenuState.PUBLISHED) {
+        if (menuState == MenuState.PUBLISHED) {
             return false;
         }
         menuState = MenuState.PUBLISHED;
         return true;
+    }
+
+    public boolean isReadyToPublish(Iterable<DishType> dishTypes) {
+        Map<Calendar, Map<MealType, DishType>> mealsPerDay = new LinkedHashMap<>();
+        //Set<DishType> dishesSet = new HashSet<>();
+
+        if (menuState == MenuState.PUBLISHED) {
+            return false;
+        }
+
+//        for (DishType dishType : dishTypes) {
+//            dishesSet.add(dishType);
+//        }
+        for (Calendar day : getWorkWeekDaysIterable()) {
+            Map<MealType, DishType> map = new HashMap<>();
+            for (Meal meal : getMealsByDay(day)) {
+                map.put(meal.mealtype(), meal.dish().dishType());
+            }
+            // falta validar se existem as condições necessárias no mapa
+            mealsPerDay.put(day, map);
+        }
+
+        return true;
+
     }
 
     /**

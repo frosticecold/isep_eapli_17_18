@@ -102,6 +102,11 @@ public class Meal implements Serializable {
     public Calendar getMealDate(){
         return this.date;
     }
+
+    @Override
+    public String toString() {
+        return "Meal{" + "dish=" + dish + ", mealtype=" + mealtype + ", date=" + date + '}';
+    }
     
     /**
      * Returns the ratings given on said meal
