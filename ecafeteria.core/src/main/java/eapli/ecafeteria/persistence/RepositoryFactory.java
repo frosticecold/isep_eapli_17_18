@@ -106,4 +106,6 @@ public interface RepositoryFactory {
     DeliveryMealSessionRepository deliveryMealRepository();
     
     MealRepository meals();
+    
+    ExecutionRepository executions();
 }

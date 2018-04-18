@@ -10,6 +10,8 @@ import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.persistence.MealRepository;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -19,7 +21,15 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
 
     @Override
     public List<Meal> listOfMealsByDateAndMealType(Calendar date, MealType mealType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Query query = entityManager().
+                createQuery("SELECT meal.* " + "FROM Meal meal"
+                        + "WHERE :mealtype = meal.mealtype" + "AND :date = meal.date", this.entityClass);
+        
+        query.setParameter("date", date, TemporalType.DATE);
+        query.setParameter("mealtype", mealType);
+        
+        return query.getResultList();
     }
 
 
