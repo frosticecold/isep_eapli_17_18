@@ -9,6 +9,7 @@ import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Entity;
@@ -109,7 +110,8 @@ public class Meal implements Serializable {
 
     @Override
     public String toString() {
-        return "Meal{" + "dish=" + dish + ", mealtype=" + mealtype + ", date=" + date + '}';
+        String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
+        return "Meal{" + "dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
     }
     
     /**
@@ -123,4 +125,5 @@ public class Meal implements Serializable {
     public MealType mealtype() {
         return mealtype;
     }
+    
 }

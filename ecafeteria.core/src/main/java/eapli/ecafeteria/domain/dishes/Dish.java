@@ -201,4 +201,11 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
                 nutricionalInfo.calories(), nutricionalInfo.salt(), price.amount(),
                 price.currency().getCurrencyCode(), active);
     }
+
+    @Override
+    public String toString() {
+        return "Dish{" + "name=" + name + ", dishType=" + dishType + ", nutricionalInfo=" + nutricionalInfo + ", price=" + price + '}';
+    }
+    
+    
 }
