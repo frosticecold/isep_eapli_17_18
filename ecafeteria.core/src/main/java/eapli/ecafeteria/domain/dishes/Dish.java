@@ -1,4 +1,4 @@
-    package eapli.ecafeteria.domain.dishes;
+package eapli.ecafeteria.domain.dishes;
 
 import java.io.Serializable;
 
@@ -24,7 +24,8 @@ import eapli.framework.domain.money.Money;
  */
 @Entity
 @SqlResultSetMapping(name = "DishesPerCaloricCategoryMapping", classes = @ConstructorResult(targetClass = DishesPerCaloricCategory.class, columns = {
-        @ColumnResult(name = "caloricCategory"), @ColumnResult(name = "n") }))
+    @ColumnResult(name = "caloricCategory")
+    , @ColumnResult(name = "n")}))
 public class Dish implements AggregateRoot<Designation>, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -75,9 +76,13 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     }
 
     public Dish(DishType dishType, Designation name, Money price) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (dishType == null || name == null || price == null) {
+            throw new IllegalArgumentException();
+        }
+        this.dishType = dishType;
+        this.name = name;
+        this.price = price;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -147,7 +152,6 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         this.alergen = alergen;
     }
 
-    
     /**
      *
      * @return true or false whether is or not active
