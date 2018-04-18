@@ -74,6 +74,11 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         // for ORM only
     }
 
+    public Dish(DishType dishType, Designation name, Money price) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

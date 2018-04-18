@@ -20,4 +20,8 @@ public interface BookingReportingRepository extends ReportingRepository {
     public Booking findNextBooking(CafeteriaUser user);
 
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState);
+    
+     public Iterable<BookingPerOption> showReportByDay(Date date);
+   
+    
 }
