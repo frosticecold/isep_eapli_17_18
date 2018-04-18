@@ -7,7 +7,7 @@ package eapli.ecafeteria.persistence.inmemory;
 
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.BookingStates;
+import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
@@ -25,7 +25,7 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
      * @return 
      */
     @Override
-    public Iterable<Booking> findBookingByState(BookingStates bookingState) {
+    public Iterable<Booking> findBookingByState(BookingState bookingState) {
        return match(e -> e.getBookingState().actualState().equals(bookingState));
     }
     
@@ -35,7 +35,7 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
     }
 
     @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingStates bookingState) {
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
