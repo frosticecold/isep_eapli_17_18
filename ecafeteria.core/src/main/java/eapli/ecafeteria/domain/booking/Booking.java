@@ -42,6 +42,13 @@ public class Booking implements Serializable {
     private CafeteriaUser cafeteriaUser;
     
     private Date date;
+
+    public Booking(Meal meal, BookingState bookingState, CafeteriaUser cafeteriaUser, Date date) {
+        this.meal = meal;
+        this.bookingState = bookingState;
+        this.cafeteriaUser = cafeteriaUser;
+        this.date = date;
+    }
     
 
     public Booking(Meal meal, CafeteriaUser cafeteriauser) {

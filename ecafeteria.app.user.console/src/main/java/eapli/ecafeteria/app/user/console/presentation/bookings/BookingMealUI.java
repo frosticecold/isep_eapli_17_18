@@ -7,6 +7,8 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
+import eapli.ecafeteria.domain.booking.BookingState;
+import eapli.ecafeteria.domain.booking.BookingStates;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.application.Controller;
@@ -54,13 +56,19 @@ public class BookingMealUI extends AbstractUI {
         System.out.println("Choose one meal");
         final Long id = Console.readLong("Insert the meal id:\n");
         
+        Meal choosedMeal = null;
+        
         for(Meal meal : mealList){
             if(meal.id()==id){
                controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), meal);
+                choosedMeal = meal;
             }else{
                 System.out.println("Id inválido");
             }
         }
+        
+        BookingStates bookingState =  BookingStates.BOOKED;
+       controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal.getTime(), BookingState.BookingStates.BOOKED, choosedMeal);
        
        
        return true;
