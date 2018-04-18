@@ -75,8 +75,10 @@ public class CancelBookingController {
         
         bookingRepository = factory.booking();
         bookingReportingRepository = factory.bookingReporting();
-        bookings = bookingReportingRepository.
+        
+            bookings = bookingReportingRepository.
                 findBookingsByCafeteriaUser(user, BookingState.BookingStates.BOOKED);
+               
     }
     
     /**

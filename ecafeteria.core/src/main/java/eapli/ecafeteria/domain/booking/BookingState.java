@@ -14,7 +14,7 @@ import javax.persistence.Enumerated;
 
 /**
  *
- * @author jpfr8
+ * @author David Camelo <1161294@isep.ipp.pt>
  */
 @Embeddable
 public class BookingState implements ValueObject, Serializable {

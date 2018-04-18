@@ -8,12 +8,13 @@ package eapli.ecafeteria.persistence.jpa;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -64,16 +65,15 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
      * @return
      */
     @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState) {
-        final Query q = entityManager().
-                createQuery("SELECT booking "
-                        + "FROM Booking booking"
-                        + "AND booking.user = :user"
-                        + "AND booking.BOOKINGSTATE = :bookingState");
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, 
+            BookingState.BookingStates bookingState) {
+        final Map<String, Object> params = new HashMap<>();
+        
+//        params.put("user", user);
+//        return match("e.cafeteriaUser=:user", params);
 
-        q.setParameter("user", user);
-        q.setParameter("bookingState", bookingState);
-        return q.getResultList();
+        params.put("bookingState", bookingState);
+        return match("e.bookingState=:bookingState", params);
     }
 
 }
