@@ -24,7 +24,10 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
 
     @Override
     public Iterable<Menu> listValidMenus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final Query q;
+        q = entityManager().createQuery("SELECT e FROM Menu e", this.entityClass);
+        
+        return q.getResultList();
     }
 
     @Override
