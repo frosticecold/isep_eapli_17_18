@@ -12,6 +12,8 @@ import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.DateTime;
 import static eapli.framework.util.DateTime.currentWeekNumber;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -24,17 +26,25 @@ public class ListMenuUI extends AbstractUI{
     
     @Override
     protected boolean doShow() {
-        eapli.ecafeteria.domain.menu.Menu menuOfCurrentWeek = controller.listMenuCurrentWeek().get();
-        Calendar bDay = DateTime.beginningOfWeek(Calendar.YEAR, currentWeekNumber());
-        for(int i=0; i<7;i++){
-            Iterable<Meal> meals = menuOfCurrentWeek.getMealsByDay(bDay);
-            for(Meal m : meals){
-                m.toString();
+        try{
+            eapli.ecafeteria.domain.menu.Menu menuOfCurrentWeek = controller.listMenuCurrentWeek().get();
+            Calendar bDay = DateTime.beginningOfWeek(Calendar.YEAR, currentWeekNumber());
+            for(int i=0; i<7;i++){
+                Iterable<Meal> meals = menuOfCurrentWeek.getMealsByDay(bDay);
+                for(Meal m : meals){
+                    m.toString();
+                }
+            
+                bDay.add(Calendar.DAY_OF_MONTH, 1);
             }
-            
-            bDay.add(Calendar.DAY_OF_MONTH, 1);
-            
+        }catch(Exception e){
+            try {
+                throw new Exception("Não tem ementa para esta semana!");
+            } catch (Exception ex) {
+                Logger.getLogger(ListMenuUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
         return true;
     }
 
