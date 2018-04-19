@@ -153,7 +153,8 @@ public class MainMenu extends AbstractUI {
     private Menu buildCloseMenu(){
         final Menu menu = new Menu("Close POS >");
         
-        menu.add(new MenuItem(CLOSE_POS_SUBMENU_OPTION,"Close", () -> new ClosePOSUI().doShow()));
+        
+        menu.add(new MenuItem(CLOSE_POS_SUBMENU_OPTION,"Close", () -> new ClosePOSUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
         
         return menu;
