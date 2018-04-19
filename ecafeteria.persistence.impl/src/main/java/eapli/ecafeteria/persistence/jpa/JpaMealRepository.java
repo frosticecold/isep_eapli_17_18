@@ -30,10 +30,10 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
                         + "FROM Meal meal"
                         + "WHERE mealtype=:mealType"
                         + "AND date=:date", this.entityClass);
-        
+
         q.setParameter("date", date, TemporalType.DATE);
         q.setParameter("mealtype", mealType);
-        
+
         return q.getResultList();
     }
 

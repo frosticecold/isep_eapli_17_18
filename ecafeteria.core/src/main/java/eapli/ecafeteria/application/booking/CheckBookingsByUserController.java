@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Rafael Teixeira, 1160911
  */
-public class CheckReservationsByUserController implements Controller
+public class CheckBookingsByUserController implements Controller
 {
 
     private BookingReportingRepository bookingRepository;
@@ -26,7 +26,7 @@ public class CheckReservationsByUserController implements Controller
     private RepositoryFactory repository;
     private BookingState.BookingStates state = BookingState.BookingStates.BOOKED;
 
-    public CheckReservationsByUserController()
+    public CheckBookingsByUserController()
     {
         this.bookingRepository = repository.bookingReporting();
         repository = PersistenceContext.repositories();
