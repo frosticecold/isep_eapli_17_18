@@ -67,13 +67,45 @@ public interface RepositoryFactory {
 
     MaterialRepository materials();
 
+    BookingRepository booking();
+
+    MenuRepository menus();
+
+    MenuPlanRepository menuPlan();
+
+    RatingRepository rating();
+
     /**
      * ************************
-     * reporting
-     *************************
+     * reporting ************************
      */
     /**
      * @return
      */
     DishReportingRepository dishReporting();
+
+    /**
+     * Booking Reporting Repo
+     *
+     * @return
+     */
+    BookingReportingRepository bookingReporting();
+
+    /**
+     * POS Repo
+     *
+     * @return
+     */
+    POSRepository posRepository();
+
+    /**
+     * DeliveryMealSession Repo
+     *
+     * @return
+     */
+    DeliveryMealSessionRepository deliveryMealRepository();
+    
+    MealRepository meals();
+    
+    ExecutionRepository executions();
 }

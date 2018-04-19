@@ -1,0 +1,53 @@
+_________
+
+DESIGN
+_________
+
+* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+
+Classes do domínio:  Menu
+Controlador: PublishMenuController
+Repository: MenuRepository
+
+
+Diagrama de Sequência - websequencediagrams.com source
+
+title SD - Publish Menu
+
+        participant "User" as user
+        participant ":PublishMenuUi" as pui
+        participant ":PublishMenuController" as ctrl
+        participant ":PersistenceContext" as pc
+        participant ":RepositoryFactory" as rf
+        participant ":MenuRepository" as repo
+        participant ":ListUnpublishedMenus" as list
+        participant ":Menu" as m
+
+        user->pui:Publish a menu
+        pui->ctrl:create()
+        ctrl->pc:repositories().menus()
+        pc->rf:create()
+        rf->repo:create()
+        repo-->ctrl:menuRepository
+
+        ctrl->repo:listValidMenus()
+        repo->repo:findUnpublished()
+
+        repo->list:create()
+        list-->ctrl:ListUnpublishedMenus
+        pui->pui:doShowCriticalMenus()
+        user->pui:Publish critical menus
+        loop while[publish]
+            pui->ctrl:publishCriticalMenus()
+            ctrl->m:publish()
+            ctrl->repo:save(menu)
+        end
+
+        pui->pui:doShowNotCriticalMenus()
+        user->pui:Publish not critical menus
+        loop while[publish]
+            pui->ctrl:publishNotCriticalMenus()
+            ctrl->m:publish()
+            ctrl->repo:save(menu)
+        end

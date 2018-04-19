@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.domain.dishes.reporting;
+package eapli.ecafeteria.reporting.dishes;
 
 import eapli.framework.dto.DTO;
 
@@ -24,4 +24,10 @@ public class DishesPerDishType implements DTO {
         this.dishType = dishType;
         this.quantityOfDishes = quantityOfDishes;
     }
+
+    public long findQuantityOfDishes() {
+        return quantityOfDishes;
+    }
+
+    
 }

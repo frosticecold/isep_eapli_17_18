@@ -1,13 +1,7 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.Application;
-import eapli.ecafeteria.persistence.DishReportingRepository;
-import eapli.ecafeteria.persistence.DishRepository;
-import eapli.ecafeteria.persistence.DishTypeRepository;
-import eapli.ecafeteria.persistence.MaterialRepository;
-import eapli.ecafeteria.persistence.RepositoryFactory;
-import eapli.ecafeteria.persistence.SignupRequestRepository;
-import eapli.ecafeteria.persistence.UserRepository;
+import eapli.ecafeteria.persistence.*;
 import eapli.framework.persistence.repositories.TransactionalContext;
 import eapli.framework.persistence.repositories.impl.jpa.JpaAutoTxRepository;
 
@@ -63,6 +57,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public MenuRepository menus() {
+        return new JpaMenuRepository();
+    }
+
+    @Override
     public TransactionalContext buildTransactionalContext() {
         return JpaAutoTxRepository
                 .buildTransactionalContext(Application.settings().getPersistenceUnitName(), Application.settings().getExtendedPersistenceProperties());
@@ -71,5 +70,54 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public DishReportingRepository dishReporting() {
         return new JpaDishReportingRepository();
+    }
+
+    @Override
+    public BookingRepository booking() {
+        return new JpaBookingRepository();
+    }
+
+    @Override
+    public BookingReportingRepository bookingReporting() {
+        return new JpaBookingReportingRepository();
+    }
+
+    @Override
+    public MenuPlanRepository menuPlan() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * Returns a new POS Repository when persistence is done on JPA
+     * @return 
+     */
+    @Override
+    public POSRepository posRepository() {
+        return new JpaPOSRepository();
+    }
+
+    
+    /**
+     * Returns a new DeliveryMealSession Repository when persistence is done on JPA
+     * @return 
+     */
+    @Override
+    public DeliveryMealSessionRepository deliveryMealRepository() {
+        return new JpaDeliveryMealSessionRepository();
+    }
+
+    @Override
+    public RatingRepository rating() {
+        return new JpaRatingRepository();
+    }
+
+    @Override
+    public MealRepository meals() {
+        return new JpaMealRepository();
+    }
+
+    @Override
+    public ExecutionRepository executions() {
+        return new JpaExecutionRepository();
     }
 }

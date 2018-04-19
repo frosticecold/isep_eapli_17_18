@@ -1,0 +1,11 @@
+	_________
+
+	DESIGN
+	_________
+
+	* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+   	Classes do domínio:  Menu,Meal,Period,MealType
+	UI: ElaborateMenuUI
+   	Controlador: ElaborateMenuController
+   	Repository: MenuRepository,MealRepository

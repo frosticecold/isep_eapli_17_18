@@ -2,7 +2,9 @@ package eapli.ecafeteria.domain.cafeteriauser;
 
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
+import eapli.framework.domain.money.Money;
 import java.io.Serializable;
+import java.util.HashMap;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -39,12 +41,15 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     @OneToOne()
     private SystemUser systemUser;
 
+    private Balance currentBalance;
+
     public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber) {
         if (mecanographicNumber == null || user == null) {
             throw new IllegalArgumentException();
         }
         this.systemUser = user;
         this.mecanographicNumber = mecanographicNumber;
+        this.currentBalance = new Balance();
     }
 
     protected CafeteriaUser() {
@@ -53,6 +58,38 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
 
     public SystemUser user() {
         return this.systemUser;
+    }
+
+    public boolean addCredits(Money credits) {
+        return this.currentBalance.addCredits(credits);
+    }
+
+    /**
+     * removes the credits of the user balance 
+     * @param credits
+     * @return sucess (true) or insucess (false)
+     */
+    public boolean removeCredits(Money credits) {
+        return this.currentBalance.removeCredits(credits);
+    }
+
+     /**
+     * check if there is enough money to make a transaction 
+     * @param credits is the new value to compare to the user balance
+     * @author Beatriz Ferreira
+     */
+    public boolean hasEnoughCredits(Money credits) {
+        return this.currentBalance.hasEnoughCredits(credits);
+    }
+
+    public Balance currentBalance() {
+        return currentBalance;
+    }
+    
+    
+    
+    public String cafeteriaUserNameAndCurrentBalance() {
+        return "Username: " + systemUser.id().toString() + " Current Balance: " + currentBalance.toString();
     }
 
     @Override

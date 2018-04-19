@@ -1,0 +1,37 @@
+title Caixa: UC3 - Charge card
+
+participant ":User" as user
+participant ":ChargeCardUI" as ccui
+participant ":ChargeCardController" as controller
+participant ":CafeteriaUserService" as srv
+participant ":PersistenceContext" as pcontext
+participant ":RepositoryFactory" as fact
+participant ":CafeteriaUserRepository" as userrep
+participant ":Money" as credit
+participant ":Transaction" as tr
+participant ":CreditRecharge" as chrg
+
+user->ccui: Inserts mechanographicNumber number
+ccui->*controller : create()
+ccui -> controller : getCafeteriaUser(mechanographicNumber)
+controller -> srv: create()
+controller -> srv: user = findCafeteriaUserByMecNumber(mechanographicNumber)
+srv->pcontext:repositories()
+pcontext->fact:create()
+pcontext->fact:cafeteriaUsers()
+fact -> userrep : create()
+srv->userrep:user = findByMecanographicNumber(mechanographicNumber)
+userrep-->srv :user = findByMecanographicNumber(mechanographicNumber)
+srv-->controller:
+controller-->ccui:
+ccui-->user:Shows the cafeteria data and current balance
+user->ccui:Insert transaction value to charge card
+ccui->controller:chargeCafeteriaUserCard(user , creditToCharge)
+controller->credit:credit = create(valueToCharge, Currency.getInstance("EUR"))
+controller->chrg:transaction = create()
+controller->tr:transaction.movement(user , credit)
+tr->chrg:transaction.movement(user , credit)
+chrg-->tr:
+tr-->controller:
+controller-->ccui:
+ccui-->user:Confirms the success of the operation and shows new balance

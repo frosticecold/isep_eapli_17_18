@@ -12,6 +12,10 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,5 +31,17 @@ public class CafeteriaUserService {
 
     public Optional<CafeteriaUser> findCafeteriaUserByUsername(Username user) {
         return this.repo.findByUsername(user);
+    }
+
+    public CafeteriaUser save(CafeteriaUser user) {
+        CafeteriaUser updateUser = null;
+        try {
+            updateUser = this.repo.save(user);
+        } catch (DataConcurrencyException ex) {
+            Logger.getLogger(CafeteriaUserService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DataIntegrityViolationException ex) {
+            Logger.getLogger(CafeteriaUserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateUser;
     }
 }
