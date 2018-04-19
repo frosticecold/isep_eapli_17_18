@@ -6,12 +6,14 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.Rating;
-import eapli.ecafeteria.persistence.BookingRepository;
+import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RatingRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +22,13 @@ import java.util.List;
  */
 public class RatingMealController {
 
-    private BookingRepository bookingRepository = PersistenceContext.repositories().booking();
+    BookingReportingRepository bookingRepository = PersistenceContext.repositories().bookingReporting();
     private RatingRepository ratingRepository = PersistenceContext.repositories().rating();
+
+    /**
+     * List with all bookings of the user
+     */
+    private List<Booking> bookings = null;
 
     /**
      * Method to add a rating on a booking of the meal
@@ -33,8 +40,8 @@ public class RatingMealController {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
-    public Rating addRating(int rating, String comment) throws DataConcurrencyException, DataIntegrityViolationException {
-        Rating rateMeal = new Rating(rating, comment);
+    public Rating addRating(Booking booking, int rating, String comment) throws DataConcurrencyException, DataIntegrityViolationException {
+        Rating rateMeal = new Rating(booking, rating, comment);
         rateMeal = ratingRepository.save(rateMeal);
         return rateMeal;
     }
@@ -45,7 +52,23 @@ public class RatingMealController {
      * @return all consumed booking without rating
      */
     public List<Booking> findBookings() {
-        //return bookingRepository.findConsumedBookingWithoutRating();
-        return null;
+        bookings = new ArrayList<>();
+        BookingState served = new BookingState();
+        served.changeToServed();
+
+        for (Booking booking : bookingRepository.findBookingByState(served)) {
+            bookings.add(booking);
+        }
+        return bookings;
+
+    }
+
+    /**
+     * Shows booking that are in the booked state
+     *
+     * @return list of bookings
+     */
+    public List<Booking> showBookings() {
+        return bookings;
     }
 }

@@ -56,6 +56,7 @@ public class BookingMealController implements Controller {
         if (user.get().hasEnoughCredits(mealPrice)) {
             DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());
             db.movement(user.get(), mealPrice);
+            return true;
         }
         return false;
     }
@@ -77,4 +78,7 @@ public class BookingMealController implements Controller {
 
     }
 
+    public void showAlergen(Meal meal){
+        meal.dish().alergen().getName().toString();
+    }
 }

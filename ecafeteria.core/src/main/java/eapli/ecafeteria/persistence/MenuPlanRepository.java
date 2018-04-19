@@ -9,7 +9,7 @@ import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.framework.persistence.repositories.DataRepository;
 import java.io.Serializable;
 
-
 public interface MenuPlanRepository extends DataRepository<MenuPlan,Long> {
     
+    public MenuPlan saveMenuPlan(MenuPlan menuplan);
 }

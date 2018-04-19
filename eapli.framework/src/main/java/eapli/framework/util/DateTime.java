@@ -615,9 +615,9 @@ public final class DateTime {
         return cal.get(Calendar.YEAR);
     }
 
-    public static boolean isBetweenDates(Calendar start, Calendar end,Calendar date) {
+    public static boolean isBetweenDates(Calendar start, Calendar end, Calendar date) {
 
-        return (DateTime.isSameDate(date, start) || DateTime.  isSameDate(date, end))
+        return (DateTime.isSameDate(date, start) || DateTime.isSameDate(date, end))
                 || (DateTime.isFutureDate(date, start) && DateTime.
                 isPreviousDate(date, end));
     }
@@ -654,5 +654,11 @@ public final class DateTime {
                 get(Calendar.MONTH), b.
                 get(Calendar.DAY_OF_MONTH));
         return (dateA.after(dateB));
+    }
+
+    public static String convertCalendarToDayMonthYearAndDayName(final Calendar cal) {
+        SimpleDateFormat dfmt = new SimpleDateFormat(DateTime.DEFAULT_SIMPLE_DATA_FORMAT + " EEEE");
+        return dfmt.format(cal.getTime());
+
     }
 }

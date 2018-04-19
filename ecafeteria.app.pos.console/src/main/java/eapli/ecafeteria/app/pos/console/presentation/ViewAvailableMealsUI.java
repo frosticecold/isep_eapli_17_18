@@ -21,7 +21,11 @@ public class ViewAvailableMealsUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         System.out.println("Available Dishes:");
-        controller.showDishesPerDishType();
+        Iterable<DishesPerDishType> dishes = controller.showDishesPerDishType();
+        for (DishesPerDishType dish : dishes) {
+            System.out.println(dish.dishType + ":");
+            System.out.println(dish.quantityOfDishes);
+        }
         return true;
     }
 

@@ -7,26 +7,41 @@ package eapli.ecafeteria.persistence.jpa;
 
 
 import eapli.ecafeteria.domain.meal.*;
-import eapli.ecafeteria.persistence.*;
-import java.util.*;
+import eapli.ecafeteria.persistence.MealRepository;
+import eapli.framework.domain.Designation;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
- * @author MFerreira
+ *
+ * @author Miguel Santos <1161386@isep.ipp.pt>
  */
-public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> implements MealRepository {
+public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> implements MealRepository{
 
     @Override
     public List<Meal> listOfMealsByDateAndMealType(Calendar date, MealType mealType) {
-        Iterable<Meal> meals = findAll();
-        List<Meal> thisOne = new ArrayList<>();
+        final Query q = entityManager().
+                createQuery("SELECT meal.* "
+                        + "FROM Meal meal"
+                        + "WHERE mealtype=:mealType"
+                        + "AND date=:date", this.entityClass);
 
-        for (Meal m : meals) {
-            if (m.isOnGivenDate(date) && m.mealtype() == mealType) {
-                thisOne.add(m);
-            }
-        }
+        q.setParameter("date", date, TemporalType.DATE);
+        q.setParameter("mealtype", mealType);
 
-        return thisOne;
+        return q.getResultList();
+    }
+
+    @Override
+    public Optional<Meal> findMealByDishID(Designation dishid) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("dishid", dishid);
+        return matchOne("e.dish.id=:dishid", params);
     }
 
 

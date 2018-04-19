@@ -109,5 +109,5 @@ public interface RepositoryFactory {
 
     MealRepository meals();
 
-
+    ExecutionRepository executions();
 }

@@ -19,8 +19,10 @@ import eapli.framework.presentation.console.ListWidget;
 import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.util.Console;
 import eapli.framework.util.DateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,15 +43,21 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        Iterable<DishType> dishTypes = theController.getDishTypes();
-        Menu menu = askForWorkingPeriod();
-        boolean editing = true;
-        do {
-            Calendar calendar = askAndSelectWorkingDay(menu);
-            menuAddOrRemoveMeals(menu, calendar);
-            askForConfirmation(menu);
-            editing = Console.readBoolean("Keep editing?");
-        } while (editing);
+
+        try {
+            Menu menu = askForWorkingPeriod();
+            boolean editing = true;
+            do {
+                Calendar calendar = askAndSelectWorkingDay(menu);
+                if (calendar != null) {
+                    menuAddOrRemoveMeals(menu, calendar);
+                    askForConfirmation(menu);
+                    editing = Console.readBoolean("Keep editing? Y/N");
+                }
+            } while (editing);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return true;
     }
 
@@ -98,21 +106,26 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
 
         Calendar cal = null;
         boolean runagain = true;
-        m.getWorkWeekDays();
-        SelectWidget<Calendar> widget = new SelectWidget<>("Showing Working days", m.getWorkWeekDaysIterable());
+        Map<Integer, Calendar> workWeekDays = m.getWorkWeekDays();
+        List<String> list = new ArrayList<>();
+        for (Calendar c : workWeekDays.values()) {
+            list.add(DateTime.convertCalendarToDayMonthYearAndDayName(c));
+        }
+        SelectWidget<String> widget = new SelectWidget<>("Showing Working days", list);
         /**
          * show working days
          */
         do {
             widget.show();
             int option = widget.selectedOption();
-            if (option == 0) {
+            if (option <= 0) {
                 break;
             }
+            option--;
             /**
              * ask for working day
              */
-            cal = widget.selectedElement();
+            cal = workWeekDays.get(option);
             runagain = false;
             //Calendar cal = workWeek.get(day);
             /**
@@ -136,7 +149,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             /**
              * Ask for add or remove
              */
-            System.out.println("1) Add\n2)Remove\n0)Exit");
+            System.out.println("1)Add\n2)Remove\n0)Exit");
             int answer = Console.readInteger("Please input option");
 
             switch (answer) {
@@ -194,11 +207,12 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
                 break;
             }
             Meal meal = new Meal(dish, mt, day);
-            boolean confirm = Console.readBoolean("Confirm meal?");
+            System.out.println(meal);
+            boolean confirm = Console.readBoolean("Confirm meal? Y/N");
             if (confirm) {
-                menu.addMeal(meal);
+                theController.addMealOnMenu(menu, meal);
             }
-            adding = Console.readBoolean("Add more?");
+            adding = Console.readBoolean("Add more? Y/N");
             if (adding) {
                 widgetmeals.show();
             }
@@ -209,9 +223,10 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * Remove
      */
     private void menuRemoveMeal(Menu menu, Calendar day) {
-        SelectWidget<Meal> widgetmeal = new SelectWidget<>("Select Meal", menu.getMealsByDay(day));
+        SelectWidget<Meal> widgetmeal;
         boolean removing = true;
         do {
+            widgetmeal = new SelectWidget<>("Select Meal", menu.getMealsByDay(day));
             /**
              * Ask what to remove
              */
@@ -220,11 +235,11 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             if (meal == null) {
                 break;
             }
-            boolean areyousure = Console.readBoolean("Are you sure?");
+            boolean areyousure = Console.readBoolean("Are you sure? Y/N");
             if (areyousure) {
                 menu.removeMeal(meal);
             }
-            removing = Console.readBoolean("Remove more?");
+            removing = Console.readBoolean("Remove more? Y/N");
         } while (removing);
     }
 
@@ -232,7 +247,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
         /**
          * Ask for confirmation Y/N
          */
-        boolean save = Console.readBoolean("Persist all your actions?");
+        boolean save = Console.readBoolean("Persist all your actions? Y/N");
         if (save) {
             try {
                 Menu othermenu = theController.saveMenu(m);

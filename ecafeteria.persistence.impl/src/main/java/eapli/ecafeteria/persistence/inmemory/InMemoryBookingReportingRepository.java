@@ -10,7 +10,9 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,4 +42,10 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    @Override
+    public Iterable<BookingPerOption> showReportByDay(Date date) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+  
 }

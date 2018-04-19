@@ -5,17 +5,14 @@
  */
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
-import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.RatingMealController;
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.Rating;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.util.Console;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -33,11 +30,23 @@ public class RatingMealUI extends AbstractUI {
             System.out.println("There are no registered consumed bookings");
             return false;
         }
+
+        // Show list with bookings
+        SelectWidget<Booking> bookingWidget = new SelectWidget<>("Select a booking for the rating", controller.showBookings());
+        bookingWidget.show();
+
+        Booking selectedBooking = bookingWidget.selectedElement();
+
+        if (selectedBooking == null) {
+            //Exit option
+            return false;
+        }
+
         int rating = Console.readInteger("Rate the meal from 1 to 5 :");
         String comment = Console.readLine("Leave a reply (optional) :");
 
         try {
-            controller.addRating(rating, comment);
+            controller.addRating(selectedBooking ,rating, comment);
             System.out.println("Booking successfully rated \n");
         } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
             System.out.println("Unable to register rating. Try again later");
@@ -47,7 +56,7 @@ public class RatingMealUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Rating of the meal";
+        return "*** Rating of the meal ***";
     }
 
 }
