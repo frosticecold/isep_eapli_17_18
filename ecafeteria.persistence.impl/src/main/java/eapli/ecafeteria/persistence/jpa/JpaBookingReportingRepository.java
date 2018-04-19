@@ -45,7 +45,7 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
     public Booking findNextBooking(CafeteriaUser user) {
         Map<String, Object> params = new HashMap<>();
         Booking nextBooking = null;
-        BookingState.BookingStates state = BookingState.BookingStates.BOOKED;
+        BookingState state = new BookingState();
 
         for (Booking booking : findBookingsByCafeteriaUser(user, state)) {
 
@@ -61,22 +61,26 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
     }
 
     /**
-     * Find booking by cafeteria user that are in a booked state
+     * Find booking by cafeteria user that are in a specific state
      *
      * @param user user of the cafeteria
-     * @param bookingState
-     * @return
+     * @param bookingState booking state
+     * @author David Camelo <1161294@isep.ipp.pt>
+     * 
+     * @return list with bookings
      */
     @Override
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, 
-            BookingState.BookingStates bookingState) {
-        final Map<String, Object> params = new HashMap<>();
+            BookingState bookingState) {
+        Query query = entityManager().createQuery("SELECT booking "
+                        + "FROM Booking booking "
+                        + "WHERE booking.bookingState = :bookingState "
+                        + "AND booking.cafeteriaUser = :cafeteriaUser");
         
-//        params.put("user", user);
-//        return match("e.cafeteriaUser=:user", params);
-
-        params.put("bookingState", bookingState);
-        return match("e.bookingState=:bookingState", params);
+        query.setParameter("bookingState", bookingState);
+        query.setParameter("cafeteriaUser", user);
+        
+        return query.getResultList();
     }
 
     @Override

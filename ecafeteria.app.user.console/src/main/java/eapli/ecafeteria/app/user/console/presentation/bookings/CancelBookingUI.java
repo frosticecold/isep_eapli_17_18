@@ -27,15 +27,20 @@ public class CancelBookingUI extends AbstractUI{
     @Override
     protected boolean doShow() {
         // Show list with bookings
-        if(controller.showBookings() == null){
+        if(controller.showBookings() == null || controller.showBookings().isEmpty()){
             System.out.println("No data found!");
             return false;
         }else{
             SelectWidget<List<Booking>> selectWidget = 
                 new SelectWidget("Select a booking to cancel", controller.showBookings());
-
+            selectWidget.show();
             // Select booking
-            controller.selectBooking(selectWidget.selectedOption());
+            try {
+                controller.selectBooking(selectWidget.selectedOption());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Index not valid!");
+            }
+            
 
             if(controller.informBookingState()){
                 // Show information
