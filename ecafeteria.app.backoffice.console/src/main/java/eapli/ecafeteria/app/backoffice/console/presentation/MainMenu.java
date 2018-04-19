@@ -28,7 +28,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.ListDis
 import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.RegisterDishViaDTOUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMaterialAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDateUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
@@ -299,7 +299,7 @@ public class MainMenu extends AbstractUI {
          final Menu menu = new Menu("Reporting Booking >");
 
         menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
-                () -> new ReportBookingUI().show()));
+                () -> new ReportBookingPerDateUI().show()));
 //        menu.add(new MenuItem(REPORTING_HIGH_CALORIES_DISHES_OPTION, "High Calories Dishes",
 //                () -> new ReportHighCaloriesDishesUI().show()));
 //        menu.add(new MenuItem(REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION,
