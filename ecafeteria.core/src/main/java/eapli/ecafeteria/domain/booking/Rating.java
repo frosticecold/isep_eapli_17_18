@@ -7,9 +7,13 @@ package eapli.ecafeteria.domain.booking;
 
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import org.hibernate.engine.internal.Cascade;
 
 /**
  *
@@ -24,6 +28,8 @@ public class Rating implements AggregateRoot<Long>, Serializable {
 
     private int rating;
     private String comment;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
     private String reply;
 

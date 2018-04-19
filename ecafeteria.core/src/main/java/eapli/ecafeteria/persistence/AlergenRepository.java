@@ -6,16 +6,19 @@
 package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
+import eapli.framework.domain.Designation;
+import eapli.framework.persistence.repositories.DataRepository;
 import java.util.List;
 
 /**
  *
  * @author Car
  */
-public interface AlergenRepository {
+public interface AlergenRepository extends DataRepository<Alergen, Designation>{
     public Alergen add(Alergen entity);
     
-    public List<Alergen> findAll();
+    @Override
+    Iterable<Alergen> findAll();
     
     
 }
