@@ -29,7 +29,7 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
                 this.theController.showMaterial();
                 String matAcro = Console.readLine("Input material acronym:");
 
-                this.theController.showAvailableBatch(matAcro);
+                this.theController.showAvailableBatches(matAcro);
                 Long batchId = Console.readLong("Input batch id:");
             }
 

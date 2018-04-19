@@ -52,12 +52,13 @@ public class RegisterBatchUsedInMealController implements Controller {
 
     public void showMaterial() {
         List<Material> list = (List<Material>) materialRepository.findAll();
+
         for (Material m : list) {
             System.out.printf("Material: %s, Acronym: %s\n", m.description(), m.id());
         }
     }
 
-    public void showAvailableBatch(String materialId) {
+    public void showAvailableBatches(String materialId) {
         List<Batch> list = batchRepository.findAllBatches(materialId);
 
         for (Batch b : list) {

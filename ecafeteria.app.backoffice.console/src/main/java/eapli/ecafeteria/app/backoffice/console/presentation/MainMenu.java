@@ -5,45 +5,20 @@
  */
 package eapli.ecafeteria.app.backoffice.console.presentation;
 
-import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
-import eapli.ecafeteria.Application;
-import eapli.ecafeteria.app.backoffice.console.presentation.authz.AddUserUI;
-import eapli.ecafeteria.app.backoffice.console.presentation.authz.DeactivateUserAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.authz.ListUsersAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.cafeteriauser.AcceptRefuseSignupRequestAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.ActivateDeactivateDishAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.ActivateDeactivateDishTypeAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.ChangeDishNutricionalInfoAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.ChangeDishPriceAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.ChangeDishTypeAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.ListDishAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.ListDishTypeAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.RegisterDishAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.RegisterDishTypeAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.reporting.ReportDishesPerCaloricCategoryAsTuplesUI;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.reporting.ReportDishesPerCaloricCategoryUI;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.reporting.ReportDishesPerDishTypeUI;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishes.reporting.ReportHighCaloriesDishesUI;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.ListDishViaDTOUI;
-import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.RegisterDishViaDTOUI;
-import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMaterialAction;
-import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingUI;
-import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
-import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.domain.authz.ActionRight;
-import eapli.framework.actions.ReturnAction;
-import eapli.framework.presentation.console.AbstractUI;
-import eapli.framework.presentation.console.ExitWithMessageAction;
-import eapli.framework.presentation.console.HorizontalMenuRenderer;
-import eapli.framework.presentation.console.Menu;
-import eapli.framework.presentation.console.MenuItem;
-import eapli.framework.presentation.console.MenuRenderer;
-import eapli.framework.presentation.console.ShowMessageAction;
-import eapli.framework.presentation.console.ShowVerticalSubMenuAction;
-import eapli.framework.presentation.console.SubMenu;
-import eapli.framework.presentation.console.VerticalMenuRenderer;
-import eapli.framework.presentation.console.VerticalSeparator;
+import eapli.cafeteria.app.common.console.presentation.*;
+import eapli.ecafeteria.*;
+import eapli.ecafeteria.app.backoffice.console.presentation.authz.*;
+import eapli.ecafeteria.app.backoffice.console.presentation.cafeteriauser.*;
+import eapli.ecafeteria.app.backoffice.console.presentation.dishes.*;
+import eapli.ecafeteria.app.backoffice.console.presentation.dishes.reporting.*;
+import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.*;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.*;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.*;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.*;
+import eapli.ecafeteria.application.authz.*;
+import eapli.ecafeteria.domain.authz.*;
+import eapli.framework.actions.*;
+import eapli.framework.presentation.console.*;
 
 /**
  * TODO split this class in more specialized classes for each menu
@@ -84,6 +59,9 @@ public class MainMenu extends AbstractUI {
     // MATERIALS
     private static final int MATERIAL_REGISTER_OPTION = 1;
     private static final int MATERIAL_LIST_OPTION = 2;
+
+    // TRACEABILITY
+    private static final int REGISTER_BATCH_USED_IN_MEAL = 1;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
@@ -176,12 +154,12 @@ public class MainMenu extends AbstractUI {
             final Menu reportingDishesMenu = buildReportingDishesMenu();
             mainMenu.add(new SubMenu(REPORTING_DISHES_OPTION, reportingDishesMenu,
                     new ShowVerticalSubMenuAction(reportingDishesMenu)));
-            
-            
+
+
             final Menu reportingBookingMenu = buildReportingBookingMenu();
             mainMenu.add(new SubMenu(REPORTING_BOOKING_OPTION, reportingBookingMenu,
                     new ShowVerticalSubMenuAction(reportingBookingMenu)));
-            
+
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -258,6 +236,8 @@ public class MainMenu extends AbstractUI {
         menu.add(
                 new MenuItem(MATERIAL_LIST_OPTION, "List all materials", new ListMaterialAction()));
 
+        menu.add(new MenuItem(REGISTER_BATCH_USED_IN_MEAL, "Register batch used in meal", new RegisterBatchUsedInMealAction()));
+
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
@@ -293,10 +273,10 @@ public class MainMenu extends AbstractUI {
 
         return menu;
     }
-    
+
     private Menu buildReportingBookingMenu() {
-        
-         final Menu menu = new Menu("Reporting Booking >");
+
+        final Menu menu = new Menu("Reporting Booking >");
 
         menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
                 () -> new ReportBookingUI().show()));
@@ -312,11 +292,8 @@ public class MainMenu extends AbstractUI {
 //        menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
-        
-        
-        
-        
-        
+
+
     }
 
     private Menu buildMenuOfMenus() {

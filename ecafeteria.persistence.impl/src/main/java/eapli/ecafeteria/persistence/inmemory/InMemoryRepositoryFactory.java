@@ -5,7 +5,6 @@ import eapli.ecafeteria.persistence.*;
 import eapli.framework.persistence.repositories.*;
 
 /**
- *
  * Created by nuno on 20/03/16.
  */
 public class InMemoryRepositoryFactory implements RepositoryFactory {
