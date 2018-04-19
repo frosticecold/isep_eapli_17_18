@@ -7,6 +7,7 @@ package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
+import static eapli.ecafeteria.domain.booking.BookingState.BookingStates.BOOKED;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
@@ -24,7 +25,7 @@ public class CheckBookingsByUserController implements Controller
     private BookingReportingRepository bookingRepository;
     private CafeteriaUser user;
     private RepositoryFactory repository;
-    private BookingState.BookingStates state = BookingState.BookingStates.BOOKED;
+    private BookingState state;
 
     public CheckBookingsByUserController()
     {
@@ -34,8 +35,8 @@ public class CheckBookingsByUserController implements Controller
 
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState)
     {
-      //  return bookingRepository.findBookingsByCafeteriaUser(user, state);
-        return null;
+        return bookingRepository.findBookingsByCafeteriaUser(user, state);
+
     }
 
 }
