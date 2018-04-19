@@ -12,7 +12,7 @@ import eapli.framework.domain.money.Money;
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class DebitBooking extends Transaction<CafeteriaUser, Money> {
+public class DebitBooking extends Transaction {
     
     /**
      * This class is inherited from the generic class Transaction, eith the method
