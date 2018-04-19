@@ -5,41 +5,64 @@ import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Optional;
+import javax.persistence.Query;
 
 /**
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class JpaDeliveryMealSessionRepository implements DeliveryMealSessionRepository {
+public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase<DeliveryMealSession, Long> implements DeliveryMealSessionRepository {
+    
+    public JpaDeliveryMealSessionRepository() {
+        
+    }
 
     @Override
     public void delete(DeliveryMealSession entity) throws DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        entityManager().remove(entity); 
     }
 
     @Override
     public void delete(Long entityId) throws DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String query = "SELECT DeliveryMealSession.*"
+                    + "FROM DeliverMealSession"
+                    + "WHERE e.id = id";
+                
+        final Query q = entityManager().createQuery(query, this.entityClass);
+        
+        DeliveryMealSession entity = (DeliveryMealSession) q.getSingleResult();
+        
+        entityManager().remove(entity);
     }
 
     @Override
     public DeliveryMealSession save(DeliveryMealSession entity) throws DataConcurrencyException, DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        entityManager().persist(entity);
+        
+        return entity;
     }
 
     @Override
     public Iterable<DeliveryMealSession> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = "SELECT DeliveryMealSession.*"
+                        + "FROM DeliveryMealSession delivery";
+        
+        final Query q = entityManager().createQuery(query, this.entityClass);
+        
+        return q.getResultList();
     }
 
     @Override
     public Optional<DeliveryMealSession> findOne(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return matchOne("e.id=id","id",id);
     }
 
     @Override
     public long count() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0;
     }
     
 }

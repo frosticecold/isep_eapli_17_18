@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.domain.transaction;
+package eapli.ecafeteria.domain.CreditTransaction;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.money.Money;
@@ -12,7 +12,7 @@ import eapli.framework.domain.money.Money;
  *
  * @author David Camelo 1161294@isep.ipp.pt
  */
-public class CancelationBooking extends Transaction<CafeteriaUser, Money>{
+public class CancelationBooking extends Transaction{
 
     public CancelationBooking(CafeteriaUser user, Money k) {
         super(user, k);
@@ -22,7 +22,5 @@ public class CancelationBooking extends Transaction<CafeteriaUser, Money>{
     public boolean movement(CafeteriaUser user, Money credits) {
         return user.addCredits(credits);
     }
-    
-    
     
 }

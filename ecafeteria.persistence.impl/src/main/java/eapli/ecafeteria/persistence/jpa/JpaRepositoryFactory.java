@@ -128,8 +128,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public AlergenRepository alergens()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public AlergenRepository alergens() {
+       return new JpaAlergensRepository();
     }
 }

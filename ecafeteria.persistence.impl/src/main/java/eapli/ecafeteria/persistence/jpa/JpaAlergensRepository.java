@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.persistence;
+package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
+import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.framework.domain.Designation;
-import eapli.framework.persistence.repositories.DataRepository;
-import java.util.List;
 
 /**
  *
  * @author Car
  */
-public interface AlergenRepository extends DataRepository<Alergen, Designation>{
-  
-  
+public class JpaAlergensRepository extends CafeteriaJpaRepositoryBase<Alergen, Designation> implements AlergenRepository{
     
 }
