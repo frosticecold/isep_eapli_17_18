@@ -1,12 +1,11 @@
 package eapli.ecafeteria.persistence.jpa;
 
-import eapli.ecafeteria.Application;
+import eapli.ecafeteria.*;
 import eapli.ecafeteria.persistence.*;
-import eapli.framework.persistence.repositories.TransactionalContext;
-import eapli.framework.persistence.repositories.impl.jpa.JpaAutoTxRepository;
+import eapli.framework.persistence.repositories.*;
+import eapli.framework.persistence.repositories.impl.jpa.*;
 
 /**
- *
  * Created by nuno on 21/03/16.
  */
 public class JpaRepositoryFactory implements RepositoryFactory {
@@ -57,6 +56,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public BatchRepository batch() {
+        return new JpaBatchRepository();
+    }
+
+    @Override
     public MenuRepository menus() {
         return new JpaMenuRepository();
     }
@@ -89,17 +93,19 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     /**
      * Returns a new POS Repository when persistence is done on JPA
-     * @return 
+     *
+     * @return
      */
     @Override
     public POSRepository posRepository() {
         return new JpaPOSRepository();
     }
 
-    
+
     /**
      * Returns a new DeliveryMealSession Repository when persistence is done on JPA
-     * @return 
+     *
+     * @return
      */
     @Override
     public DeliveryMealSessionRepository deliveryMealRepository() {
