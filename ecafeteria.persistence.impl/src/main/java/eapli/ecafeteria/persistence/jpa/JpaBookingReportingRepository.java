@@ -58,9 +58,17 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
 
         for (Booking booking : findBookingsByCafeteriaUser(user, state)) {
 
-            long bookingDate1 = booking.getMeal().getMealDate().getTimeInMillis();
-            long bookingDate2 = nextBooking.getMeal().getMealDate().getTimeInMillis();
-
+            long bookingDate1 = booking.getMeal().getMealDate().getTimeInMillis(); 
+            long bookingDate2;
+            
+            if(nextBooking == null){
+                bookingDate2 = Long.MAX_VALUE;
+            }
+            
+            else{
+                bookingDate2 = nextBooking.getMeal().getMealDate().getTimeInMillis();
+            }
+            
             if (bookingDate1 < bookingDate2) {
                 nextBooking = booking;
             }
