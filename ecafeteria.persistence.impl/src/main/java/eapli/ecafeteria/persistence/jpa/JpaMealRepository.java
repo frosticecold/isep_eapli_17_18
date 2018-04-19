@@ -44,5 +44,9 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         return matchOne("e.dish.id=:dishid", params);
     }
 
-
+    public Optional<Meal> findOne(Long id){
+        final Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        return matchOne("e.id=:id", params);
+    }
 }

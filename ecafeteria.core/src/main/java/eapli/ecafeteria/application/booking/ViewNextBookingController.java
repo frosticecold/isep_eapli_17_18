@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.application.booking;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
@@ -21,8 +22,12 @@ public class ViewNextBookingController implements Controller{
     private BookingReportingRepository bookingRepo; 
     private RepositoryFactory repositories;
     private CafeteriaUser user;
+   
     
     public ViewNextBookingController(){
+        this.user = repositories.cafeteriaUsers().findByUsername(
+                AuthorizationService.session().authenticatedUser().username())
+                .get();
         repositories = PersistenceContext.repositories();
         this.bookingRepo = repositories.bookingReporting();
     }
@@ -32,7 +37,7 @@ public class ViewNextBookingController implements Controller{
      * @param user
      * @return 
      */
-    public Booking getNextBooking(CafeteriaUser user){
+    public Booking getNextBooking(){
         return bookingRepo.findNextBooking(user);
     }
 }

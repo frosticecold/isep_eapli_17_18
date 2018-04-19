@@ -1,18 +1,13 @@
 package eapli.framework.persistence.repositories.impl.inmemory;
 
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import eapli.framework.persistence.repositories.IterableRepository;
+import eapli.framework.persistence.*;
+import eapli.framework.persistence.repositories.*;
+import java.io.*;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.Map.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 /**
  * Created by nuno on 20/03/16.
@@ -57,7 +52,7 @@ public abstract class InMemoryRepository<T, K extends Serializable> implements I
     }
 
     @Override
-    public void delete(T entity) {
+    public void delete(T entity) throws DataIntegrityViolationException {
 	//
 	// this could be made more efficient if we had a direct way to get the
 	// ID of the entity, e.g.,
@@ -72,7 +67,7 @@ public abstract class InMemoryRepository<T, K extends Serializable> implements I
     }
 
     @Override
-    public void delete(K entityId) {
+    public void delete(K entityId) throws DataIntegrityViolationException {
 	data().remove(entityId);
     }
 
@@ -82,7 +77,7 @@ public abstract class InMemoryRepository<T, K extends Serializable> implements I
     }
 
     @Override
-    public T save(T entity) {
+    public T save(T entity) throws DataConcurrencyException, DataIntegrityViolationException {
 	data().put(newKeyFor(entity), entity);
 	return entity;
     }

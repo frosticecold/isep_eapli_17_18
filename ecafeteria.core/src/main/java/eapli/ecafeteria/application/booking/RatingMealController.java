@@ -26,6 +26,11 @@ public class RatingMealController {
     private RatingRepository ratingRepository = PersistenceContext.repositories().rating();
 
     /**
+     * List with all bookings of the user
+     */
+    private List<Booking> bookings = null;
+
+    /**
      * Method to add a rating on a booking of the meal
      *
      * @param booking
@@ -35,8 +40,8 @@ public class RatingMealController {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
-    public Rating addRating(int rating, String comment) throws DataConcurrencyException, DataIntegrityViolationException {
-        Rating rateMeal = new Rating(rating, comment);
+    public Rating addRating(Booking booking, int rating, String comment) throws DataConcurrencyException, DataIntegrityViolationException {
+        Rating rateMeal = new Rating(booking, rating, comment);
         rateMeal = ratingRepository.save(rateMeal);
         return rateMeal;
     }
@@ -47,7 +52,7 @@ public class RatingMealController {
      * @return all consumed booking without rating
      */
     public List<Booking> findBookings() {
-        List<Booking> bookings = new ArrayList<>();
+        bookings = new ArrayList<>();
         BookingState served = new BookingState();
         served.changeToServed();
 
@@ -56,5 +61,14 @@ public class RatingMealController {
         }
         return bookings;
 
+    }
+
+    /**
+     * Shows booking that are in the booked state
+     *
+     * @return list of bookings
+     */
+    public List<Booking> showBookings() {
+        return bookings;
     }
 }
