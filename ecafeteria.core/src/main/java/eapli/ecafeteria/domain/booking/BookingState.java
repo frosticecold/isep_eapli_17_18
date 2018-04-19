@@ -14,7 +14,7 @@ import javax.persistence.Enumerated;
 
 /**
  *
- * @author jpfr8
+ * @author David Camelo <1161294@isep.ipp.pt>
  */
 @Embeddable
 public class BookingState implements ValueObject, Serializable {
@@ -129,4 +129,19 @@ public class BookingState implements ValueObject, Serializable {
     public void setActualBookingState(BookingStates actualBookingState) {
         this.actualBookingState = actualBookingState;
     }
+
+    public final boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        BookingState bookingState = (BookingState) other;
+        return actualBookingState.equals(bookingState.getActualBookingState());
+    }
+
+    
+    
+    
 }

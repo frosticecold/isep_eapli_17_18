@@ -15,27 +15,30 @@ import eapli.framework.presentation.console.AbstractUI;
  *
  * @author Joao Rocha 1161838
  */
-public class ViewNextBookingUI extends AbstractUI{
-    
+public class ViewNextBookingUI extends AbstractUI {
+
     private final ViewNextBookingController controller = new ViewNextBookingController();
     private Booking nextBooking;
-    
-    protected Controller controller(){
-        return this.controller;
+
+    public ViewNextBookingUI() {
+        this.nextBooking = controller.getNextBooking();
     }
-    
+
     @Override
     protected boolean doShow() {
-        if(nextBooking != null){
+        if (nextBooking != null) {
             System.out.println("Next Booking: " + nextBooking);
             return true;
+        } else {
+            System.out.println("No next bookings where found");
+            return false;
+
         }
-        return false;
     }
 
     @Override
     public String headline() {
         return "User's Next Booking";
     }
-    
+
 }
