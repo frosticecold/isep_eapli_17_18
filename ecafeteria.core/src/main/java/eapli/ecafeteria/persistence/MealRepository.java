@@ -22,4 +22,6 @@ public interface MealRepository extends DataRepository<Meal, Long>{
     
     Optional<Meal> findMealByDishID(Designation id);
     
+    Optional<Meal> findOne(Long id);
+    
 }

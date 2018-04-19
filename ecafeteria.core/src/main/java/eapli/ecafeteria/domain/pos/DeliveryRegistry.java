@@ -2,7 +2,6 @@ package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.domain.ddd.DomainEntity;
 import javax.persistence.*;
 
@@ -16,7 +15,7 @@ public class DeliveryRegistry implements DomainEntity {
     /**
      * identifier of the delivery
      */
-    @EmbeddedId
+    @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="DELIVERY")
     private Long id;
@@ -62,7 +61,6 @@ public class DeliveryRegistry implements DomainEntity {
         this.Booking = Booking;
         this.session = session;
         this.pos = pos;
-        //this.employee = ;
     }
     /**
      * compares this object with another
@@ -76,7 +74,7 @@ public class DeliveryRegistry implements DomainEntity {
        boolean flag = false;
         
        if(other instanceof DeliveryRegistry) {
-           if(((DeliveryRegistry) other).id == this.id) flag = true;
+            flag = true;
        }
        
        return flag;

@@ -40,6 +40,5 @@ public class MenuPlanItem implements Serializable {
         this.currentMeal = currentMeal;
         this.quantityNumber = quantity;
     }
-    
-    
+  
 }
