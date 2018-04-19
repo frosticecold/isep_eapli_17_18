@@ -30,10 +30,10 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
                         + "FROM Meal meal"
                         + "WHERE mealtype=:mealType"
                         + "AND date=:date", this.entityClass);
-
+        
         q.setParameter("date", date, TemporalType.DATE);
         q.setParameter("mealtype", mealType);
-
+        
         return q.getResultList();
     }
 
@@ -44,5 +44,9 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         return matchOne("e.dish.id=:dishid", params);
     }
 
-
+    public Optional<Meal> findOne(Long id){
+        final Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        return matchOne("e.id=:id", params);
+    }
 }
