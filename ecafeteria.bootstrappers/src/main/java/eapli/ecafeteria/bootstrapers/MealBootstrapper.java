@@ -33,14 +33,55 @@ public class MealBootstrapper implements Action {
         final Dish dish4 = dishRepo.findByName(Designation.valueOf("bacalhau à braz")).get();
         final Dish dish5 = dishRepo.findByName(Designation.valueOf("lentilhas salteadas")).get();
         final Dish dish6 = dishRepo.findByName(Designation.valueOf("lagosta suada")).get();
-        
+        //06-05-2018
         register(dish1, MealType.LUNCH, DateTime.parseDate("06-05-2018"));
-        register(dish2, MealType.DINNER, DateTime.parseDate("06-05-2018"));
+        register(dish3, MealType.LUNCH, DateTime.parseDate("06-05-2018"));
+        register(dish6, MealType.LUNCH, DateTime.parseDate("06-05-2018"));
+        register(dish1, MealType.DINNER, DateTime.parseDate("06-05-2018"));
+        register(dish3, MealType.DINNER, DateTime.parseDate("06-05-2018"));
+        register(dish6, MealType.DINNER, DateTime.parseDate("06-05-2018"));
+        //07-05-2018
+        register(dish1, MealType.LUNCH, DateTime.parseDate("07-05-2018"));
         register(dish3, MealType.LUNCH, DateTime.parseDate("07-05-2018"));
-        register(dish4, MealType.DINNER, DateTime.parseDate("07-05-2018"));
+        register(dish6, MealType.LUNCH, DateTime.parseDate("07-05-2018"));
+        register(dish1, MealType.DINNER, DateTime.parseDate("07-05-2018"));
+        register(dish3, MealType.DINNER, DateTime.parseDate("07-05-2018"));
+        register(dish6, MealType.DINNER, DateTime.parseDate("07-05-2018"));
+        //08-05-2018
+        register(dish2, MealType.LUNCH, DateTime.parseDate("08-05-2018"));
+        register(dish4, MealType.LUNCH, DateTime.parseDate("08-05-2018"));
         register(dish5, MealType.LUNCH, DateTime.parseDate("08-05-2018"));
-        register(dish6, MealType.DINNER, DateTime.parseDate("08-05-2018"));
-        
+        register(dish2, MealType.DINNER, DateTime.parseDate("08-05-2018"));
+        register(dish4, MealType.DINNER, DateTime.parseDate("08-05-2018"));
+        register(dish5, MealType.DINNER, DateTime.parseDate("08-05-2018"));
+        //09-05-2018
+        register(dish2, MealType.LUNCH, DateTime.parseDate("09-05-2018"));
+        register(dish4, MealType.LUNCH, DateTime.parseDate("09-05-2018"));
+        register(dish5, MealType.LUNCH, DateTime.parseDate("09-05-2018"));
+        register(dish2, MealType.DINNER, DateTime.parseDate("09-05-2018"));
+        register(dish4, MealType.DINNER, DateTime.parseDate("09-05-2018"));
+        register(dish5, MealType.DINNER, DateTime.parseDate("09-05-2018"));
+        //10-05-2018
+        register(dish1, MealType.LUNCH, DateTime.parseDate("10-05-2018"));
+        register(dish3, MealType.LUNCH, DateTime.parseDate("10-05-2018"));
+        register(dish6, MealType.LUNCH, DateTime.parseDate("10-05-2018"));
+        register(dish1, MealType.DINNER, DateTime.parseDate("10-05-2018"));
+        register(dish3, MealType.DINNER, DateTime.parseDate("10-05-2018"));
+        register(dish6, MealType.DINNER, DateTime.parseDate("10-05-2018"));
+        //11-05-2018
+        register(dish1, MealType.LUNCH, DateTime.parseDate("11-05-2018"));
+        register(dish3, MealType.LUNCH, DateTime.parseDate("11-05-2018"));
+        register(dish6, MealType.LUNCH, DateTime.parseDate("11-05-2018"));
+        register(dish1, MealType.DINNER, DateTime.parseDate("11-05-2018"));
+        register(dish3, MealType.DINNER, DateTime.parseDate("11-05-2018"));
+        register(dish6, MealType.DINNER, DateTime.parseDate("11-05-2018"));
+        //12-05-2018
+        register(dish2, MealType.LUNCH, DateTime.parseDate("12-05-2018"));
+        register(dish4, MealType.LUNCH, DateTime.parseDate("12-05-2018"));
+        register(dish5, MealType.LUNCH, DateTime.parseDate("12-05-2018"));
+        register(dish2, MealType.DINNER, DateTime.parseDate("12-05-2018"));
+        register(dish4, MealType.DINNER, DateTime.parseDate("12-05-2018"));
+        register(dish5, MealType.DINNER, DateTime.parseDate("12-05-2018"));
         return true;
     }
     

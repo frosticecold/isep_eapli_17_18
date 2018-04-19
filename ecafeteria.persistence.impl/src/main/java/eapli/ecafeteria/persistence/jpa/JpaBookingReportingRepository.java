@@ -40,9 +40,14 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
                 .getResultList();
     }
 
+    /**
+     * Finds the users next booking in the booked state
+     * @param user
+     * @author Joao Rocha 1161838
+     * @return 
+     */
     @Override
     public Booking findNextBooking(CafeteriaUser user) {
-        Map<String, Object> params = new HashMap<>();
         Booking nextBooking = null;
         BookingState.BookingStates state = BookingState.BookingStates.BOOKED;
 
