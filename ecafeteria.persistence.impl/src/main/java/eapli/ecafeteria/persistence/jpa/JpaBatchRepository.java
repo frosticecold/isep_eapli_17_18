@@ -17,18 +17,14 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, Long> 
         return matchOne(String.valueOf(id));
     }
 
-    @Override
-    public List<Batch> findAllBatches(String id) {
-        return match(id);
-    }
-
     /**
      * Searches for all batches with id
      *
      * @param id : Material ID
      * @return
      */
-    public List<Batch> findAllBatches(long id) {
-        return match(String.valueOf(id));
+    @Override
+    public List<Batch> findAllBatches(String id) {
+        return match(id);
     }
 }

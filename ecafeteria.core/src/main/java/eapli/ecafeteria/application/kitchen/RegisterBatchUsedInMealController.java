@@ -8,6 +8,7 @@ import eapli.framework.util.*;
 import java.util.*;
 
 public class RegisterBatchUsedInMealController implements Controller {
+
     MealRepository mealRepository = Objects.requireNonNull(PersistenceContext.repositories()).meals();
     MaterialRepository materialRepository = Objects.requireNonNull(PersistenceContext.repositories()).materials();
     BatchRepository batchRepository = Objects.requireNonNull(PersistenceContext.repositories()).batch();
