@@ -15,6 +15,8 @@ import eapli.ecafeteria.dto.DishDTO;
 import eapli.framework.domain.Designation;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.domain.money.Money;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Dish
@@ -42,9 +44,9 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     private DishType dishType;
     private NutricionalInfo nutricionalInfo;
     private Money price;
-    private Alergen alergen;
+    
     private boolean active;
-
+    private List<Alergen> alergens=new ArrayList<>();
     public Dish(final DishType dishType, final Designation name,
             final NutricionalInfo nutricionalInfo, Money price) {
         if (dishType == null || name == null || nutricionalInfo == null) {
@@ -68,7 +70,7 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         this.nutricionalInfo = null;
         this.price = price;
         this.active = true;
-        this.alergen = alergen;
+        alergens.add(alergen);
     }
 
     protected Dish() {
@@ -144,13 +146,8 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         return this.price;
     }
 
-    public Alergen alergen() {
-        return alergen;
-    }
-
-    public void setAlergen(Alergen alergen) {
-        this.alergen = alergen;
-    }
+    
+    
 
     /**
      *
@@ -210,4 +207,11 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     }
     
     
+    public void addAlergen(Alergen a){
+        alergens.add(a);
+    }
+    
+    public List<Alergen> alergenInDish(){
+        return alergens;
+    }
 }

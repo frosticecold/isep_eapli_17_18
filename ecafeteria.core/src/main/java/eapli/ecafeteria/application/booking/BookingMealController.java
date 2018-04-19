@@ -17,7 +17,7 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.dishes.NutricionalInfo;
 import eapli.ecafeteria.domain.menu.*;
 import eapli.ecafeteria.domain.meal.*;
-import eapli.ecafeteria.domain.transaction.DebitBooking;
+import eapli.ecafeteria.domain.CreditTransaction.DebitBooking;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.*;
 import eapli.framework.domain.money.Money;
@@ -79,6 +79,6 @@ public class BookingMealController implements Controller {
     }
 
     public void showAlergen(Meal meal){
-        meal.dish().alergen().getName().toString();
+       // meal.dish().alergenInDish();
     }
 }

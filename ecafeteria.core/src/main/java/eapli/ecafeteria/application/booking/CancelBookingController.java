@@ -6,12 +6,10 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
-import eapli.ecafeteria.domain.booking.BookingState.BookingStates;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.transaction.CancelationBooking;
+import eapli.ecafeteria.domain.CreditTransaction.CancelationBooking;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
@@ -75,8 +73,10 @@ public class CancelBookingController {
         
         bookingRepository = factory.booking();
         bookingReportingRepository = factory.bookingReporting();
+        
+        BookingState booked = new BookingState();
         bookings = bookingReportingRepository.
-                findBookingsByCafeteriaUser(user, BookingState.BookingStates.BOOKED);
+            findBookingsByCafeteriaUser(user, booked);
     }
     
     /**

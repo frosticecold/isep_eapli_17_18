@@ -1,0 +1,14 @@
+Análise
+==================
+Reunião com o cliente em 06/04/2018
+Definição  de  pratos – ex., “bacalhau à Brás” ou “Polvo à lagareiro”. Um prato é caracterizado pelo seu tipo, nome, preço e informação nutricional (calorias, quantidade 
+de  sal  e  gorduras).  Para  cada  prato  deve  ser  indicado  quais  os  alergénios  que  o compõem.
+O preço de venda de todos os pratos é, à partida, o mesmo mas pode haver preços diferenciados para certos pratos, ex., picanha. Os preços são tipicamente 
+revistos anualmente.
+Para adicionar os alergenios ao prato vai ser criado um novo caso de uso.
+Quando se for proceder à alteração de um prato, vai ser mostrada uma lista de pratos e de seguida a lista dos alergenios.
+
+Regras de negócio
+==================
+Só serão considerados Alergénios validados
+Só serão publicados pratos cujos alergenios estejam corretos

@@ -38,19 +38,19 @@ public class CreateMenuPlanController implements Controller {
      
      private MenuPlan menuplan;
      
-     private MenuPlanItem mpil;
+     private MenuPlanItem mpi;
      
-     private Quantity quantity;
+     private Quantity q;
          
      //metodo que vai buscar menus da semana atual
      public Menu getCurrentMenu(){
-         m=svc.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()), endOfWeek(Calendar.YEAR,currentWeekNumber())).get();
+         m=svc.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()+1), endOfWeek(Calendar.YEAR,currentWeekNumber()+1)).get();
         return m;
         
      }
 
      //metodo que vai a cada refeicao preencher com o numero de pratos
-    public void setNumberDishesForMeal(Quantity quantity){
+    public MenuPlan setNumberDishesForMeal(int quantity){
         
         List<MenuPlanItem> list=new ArrayList<>();
         
@@ -58,8 +58,9 @@ public class CreateMenuPlanController implements Controller {
         for(int i=0; i<7;i++){
             Iterable<Meal> meals = m.getMealsByDay(bDay);
             for(Meal currentMeal : meals){
-               mpil=new MenuPlanItem(currentMeal, quantity);  //ver se ponho um get || set na quantity
-               list.add(mpil);
+               q.setQuantity(quantity);
+               mpi=new MenuPlanItem(currentMeal,q);  
+               list.add(mpi);
             }
             
             bDay.add(Calendar.DAY_OF_MONTH, 1);
@@ -68,15 +69,13 @@ public class CreateMenuPlanController implements Controller {
         
         menuplan=new MenuPlan(list, m);
         
+        return menuplan;
     }
     
      //metodo que poe isso na base de dados
-    public MenuPlan save() throws DataConcurrencyException, DataIntegrityViolationException{
-        
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
-        
-        MenuPlan savedMenuPlan=mpr.save(menuplan);
-
-        return savedMenuPlan;
+    public void save(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException{
+      
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);      
+        mpr.save(mp);
     }
 }

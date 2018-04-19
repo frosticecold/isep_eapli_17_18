@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -45,11 +45,16 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
                 .getResultList();
     }
 
+    /**
+     * Finds the users next booking in the booked state
+     * @param user
+     * @author Joao Rocha 1161838
+     * @return 
+     */
     @Override
     public Booking findNextBooking(CafeteriaUser user) {
-        Map<String, Object> params = new HashMap<>();
         Booking nextBooking = null;
-        BookingState.BookingStates state = BookingState.BookingStates.BOOKED;
+        BookingState state = new BookingState();
 
         for (Booking booking : findBookingsByCafeteriaUser(user, state)) {
 
@@ -65,23 +70,26 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
     }
 
     /**
-     * Find booking by cafeteria user that are in a booked state
+     * Find booking by cafeteria user that are in a specific state
      *
      * @param user user of the cafeteria
-     * @param bookingState
-     * @return
+     * @param bookingState booking state
+     * @author David Camelo <1161294@isep.ipp.pt>
+     * 
+     * @return list with bookings
      */
     @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState) {
-        final Query q = entityManager().
-                createQuery("SELECT booking "
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, 
+            BookingState bookingState) {
+        Query query = entityManager().createQuery("SELECT booking "
                         + "FROM Booking booking "
-                        + "WHERE booking.user = :user "
-                        + "AND booking.BOOKINGSTATE = :bookingState ");
-
-        q.setParameter("user", user);
-        q.setParameter("bookingState", bookingState);
-        return q.getResultList();
+                        + "WHERE booking.bookingState = :bookingState "
+                        + "AND booking.cafeteriaUser = :cafeteriaUser");
+        
+        query.setParameter("bookingState", bookingState);
+        query.setParameter("cafeteriaUser", user);
+        
+        return query.getResultList();
     }
 
     @Override

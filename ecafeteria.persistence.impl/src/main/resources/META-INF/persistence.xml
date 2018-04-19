@@ -2,13 +2,15 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence">
   <persistence-unit name="eapli.eCafeteriaPU">
     <!--
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    -->
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        -->
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>eapli.ecafeteria.domain.authz.SystemUser</class>
     <class>eapli.ecafeteria.domain.authz.Role</class>
     <class>eapli.ecafeteria.domain.authz.RoleSet</class>
     <class>eapli.ecafeteria.domain.kitchen.Material</class>
+    <class>eapli.ecafeteria.domain.kitchen.MealMaterial</class>
+    <class>eapli.ecafeteria.domain.kitchen.Batch</class>
     <class>eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser</class>
     <class>eapli.ecafeteria.domain.cafeteriauser.SignupRequest</class>
     <class>eapli.ecafeteria.domain.dishes.Dish</class>
@@ -20,12 +22,13 @@
     <class>eapli.ecafeteria.domain.menuplan.MenuPlan</class>
     <class>eapli.ecafeteria.domain.menuplan.MenuPlanItem</class>
     <class>eapli.ecafeteria.domain.menuplan.Quantity</class>
-    <class>eapli.ecafeteria.domain.booking.Booking</class>
+    <class>eapli.ecafeteria.domain.transaction.CreditRecharge</class>
+    <class>eapli.ecafeteria.domain.transaction.Transaction</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ecafeteria"/>
       <!--
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:..\db\ecafeteria;MV_STORE=FALSE"/>
-            -->
+                  <property name="javax.persistence.jdbc.url" value="jdbc:h2:..\db\ecafeteria;MV_STORE=FALSE"/>
+                  -->
       <property name="javax.persistence.jdbc.user" value="sa"/>
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

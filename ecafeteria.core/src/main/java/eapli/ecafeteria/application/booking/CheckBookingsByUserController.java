@@ -5,8 +5,10 @@
  */
 package eapli.ecafeteria.application.booking;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
+import static eapli.ecafeteria.domain.booking.BookingState.BookingStates.BOOKED;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
@@ -18,16 +20,17 @@ import java.util.List;
  *
  * @author Rafael Teixeira, 1160911
  */
-public class CheckReservationsByUserController implements Controller
+public class CheckBookingsByUserController implements Controller
 {
 
     private BookingReportingRepository bookingRepository;
     private CafeteriaUser user;
     private RepositoryFactory repository;
-    private BookingState.BookingStates state = BookingState.BookingStates.BOOKED;
+    private BookingState state;
 
-    public CheckReservationsByUserController()
+    public CheckBookingsByUserController()
     {
+        this.user = repository.cafeteriaUsers().findByUsername( AuthorizationService.session().authenticatedUser().username()).get();
         this.bookingRepository = repository.bookingReporting();
         repository = PersistenceContext.repositories();
     }
@@ -35,6 +38,7 @@ public class CheckReservationsByUserController implements Controller
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState)
     {
         return bookingRepository.findBookingsByCafeteriaUser(user, state);
+
     }
 
 }
