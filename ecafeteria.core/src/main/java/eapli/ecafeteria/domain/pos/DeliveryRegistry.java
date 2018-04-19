@@ -48,7 +48,7 @@ public class DeliveryRegistry implements DomainEntity {
     @JoinColumn(name="CLIENT")
     private CafeteriaUser client;
     
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="SESSION")
     private DeliveryMealSession session;
     
