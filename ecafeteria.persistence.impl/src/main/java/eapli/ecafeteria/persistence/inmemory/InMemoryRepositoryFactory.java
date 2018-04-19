@@ -5,7 +5,6 @@ import eapli.ecafeteria.persistence.*;
 import eapli.framework.persistence.repositories.*;
 
 /**
- *
  * Created by nuno on 20/03/16.
  */
 public class InMemoryRepositoryFactory implements RepositoryFactory {
@@ -130,5 +129,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public ExecutionRepository executions() {
         return new InMemoryExecutionRepository();
+    }
+
+    @Override
+    public AlergenRepository alergens()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

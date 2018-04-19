@@ -79,6 +79,6 @@ public class BookingMealController implements Controller {
     }
 
     public void showAlergen(Meal meal){
-        meal.dish().alergen().getName().toString();
+       // meal.dish().alergenInDish();
     }
 }
