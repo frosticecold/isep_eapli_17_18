@@ -4,7 +4,6 @@ import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.domain.money.Money;
 import java.io.Serializable;
-import java.util.HashMap;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -65,7 +64,8 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     }
 
     /**
-     * removes the credits of the user balance 
+     * removes the credits of the user balance
+     *
      * @param credits
      * @return sucess (true) or insucess (false)
      */
@@ -73,8 +73,9 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
         return this.currentBalance.removeCredits(credits);
     }
 
-     /**
-     * check if there is enough money to make a transaction 
+    /**
+     * check if there is enough money to make a transaction
+     *
      * @param credits is the new value to compare to the user balance
      * @author Beatriz Ferreira
      */
@@ -85,9 +86,7 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     public Balance currentBalance() {
         return currentBalance;
     }
-    
-    
-    
+
     public String cafeteriaUserNameAndCurrentBalance() {
         return "Username: " + systemUser.id().toString() + " Current Balance: " + currentBalance.toString();
     }
