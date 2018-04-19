@@ -9,7 +9,7 @@ import eapli.framework.application.Controller;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class ListingService implements Controller {
+public class ListingService {
     
     public ListingService() {
         
