@@ -43,14 +43,21 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        Menu menu = askForWorkingPeriod();
-        boolean editing = true;
-        do {
-            Calendar calendar = askAndSelectWorkingDay(menu);
-            menuAddOrRemoveMeals(menu, calendar);
-            askForConfirmation(menu);
-            editing = Console.readBoolean("Keep editing? Y/N");
-        } while (editing);
+
+        try {
+            Menu menu = askForWorkingPeriod();
+            boolean editing = true;
+            do {
+                Calendar calendar = askAndSelectWorkingDay(menu);
+                if (calendar != null) {
+                    menuAddOrRemoveMeals(menu, calendar);
+                    askForConfirmation(menu);
+                    editing = Console.readBoolean("Keep editing? Y/N");
+                }
+            } while (editing);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return true;
     }
 
@@ -203,7 +210,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             System.out.println(meal);
             boolean confirm = Console.readBoolean("Confirm meal? Y/N");
             if (confirm) {
-                menu.addMeal(meal);
+                theController.addMealOnMenu(menu, meal);
             }
             adding = Console.readBoolean("Add more? Y/N");
             if (adding) {

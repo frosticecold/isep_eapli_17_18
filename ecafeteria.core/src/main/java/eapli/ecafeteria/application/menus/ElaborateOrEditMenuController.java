@@ -17,7 +17,6 @@ import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.application.Controller;
-import eapli.framework.date.DateEAPLI;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.DateTime;
@@ -121,11 +120,17 @@ public class ElaborateOrEditMenuController implements Controller {
     }
 
     public Calendar selectDay(Integer dayIndex) {
+        if (dayIndex < 0) {
+            return null;
+        }
         selectedDay = mapOfWorkingDays.get(dayIndex);
         return selectedDay;
     }
 
     public Calendar selectDay(Calendar cal) {
+        if (cal == null) {
+            return null;
+        }
         selectedDay = cal;
         return selectedDay;
     }
@@ -138,18 +143,38 @@ public class ElaborateOrEditMenuController implements Controller {
     }
 
     public Iterable<Dish> getDishesByDishType(DishType dishtype) {
+        if (dishtype == null) {
+            return null;
+        }
         return dishrepo.findByDishType(dishtype);
     }
 
     public Iterable<Meal> getMealsByDay(Menu menu, Calendar day) {
+        if (menu == null || day == null) {
+            return null;
+        }
         return menu.getMealsByDay(day);
     }
 
+    public boolean addMealOnMenu(Menu menu, Meal meal) {
+        if (menu == null || meal == null) {
+            return false;
+        }
+        return menu.addMeal(meal);
+    }
+
     public boolean removeMealFromMenu(Menu menu, Meal meal) {
+        if (menu == null || meal == null) {
+            return false;
+
+        }
         return menu.removeMeal(meal);
     }
 
     public Menu saveMenu(Menu menu) throws DataIntegrityViolationException, DataConcurrencyException {
+        if (menu == null) {
+            throw new IllegalArgumentException("Menu must not be null.");
+        }
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
 
