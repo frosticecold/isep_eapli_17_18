@@ -108,4 +108,6 @@ public interface RepositoryFactory {
     MealRepository meals();
     
     ExecutionRepository executions();
+
+    public AlergenRepository alergens();
 }

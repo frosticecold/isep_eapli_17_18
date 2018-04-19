@@ -7,6 +7,7 @@ package eapli.ecafeteria.application.dishes;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
+import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.dishes.NutricionalInfo;
 import eapli.ecafeteria.persistence.DishRepository;
@@ -48,6 +49,15 @@ public class ChangeDishController implements Controller {
         }
         dish.changeNutricionalInfoTo(newNutricionalInfo);
 
+        return this.dishRepository.save(dish);
+    }
+    
+    public Dish addAlergen(Dish dish, Alergen alergen)throws DataConcurrencyException, DataIntegrityViolationException {
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
+        if (dish == null) {
+            throw new IllegalArgumentException();
+        }
+        dish.addAlergen(alergen);
         return this.dishRepository.save(dish);
     }
 }

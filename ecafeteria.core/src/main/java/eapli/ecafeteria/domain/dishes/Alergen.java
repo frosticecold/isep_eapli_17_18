@@ -5,7 +5,10 @@
  */
 package eapli.ecafeteria.domain.dishes;
 
+import eapli.framework.domain.Designation;
+import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,33 +18,45 @@ import javax.persistence.Id;
  *
  * @author Car
  */
-public class Alergen  implements Serializable  {
+public class Alergen  implements AggregateRoot<Designation>, Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
+    @EmbeddedId
+    private Designation name;
     
-    public Alergen (String name){
+    
+    public Alergen (Designation name){
         this.name=name;
     }
 
     /**
      * @return the name
      */
-    public String getName() {
+    public Designation getName() {
         return name;
     }
 
     /**
      * @param name the name to set
      */
-    public void setName(String name) {
+    public void setName(Designation name) {
         this.name = name;
     }
 
     @Override
     public String toString() {
         return "Alergen{" + "name=" + name + '}';
+    }
+
+    @Override
+    public boolean sameAs(Object other) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Designation id() {
+       return this.name;
     }
     
 }
