@@ -2,6 +2,7 @@ package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.persistence.*;
+import eapli.framework.domain.*;
 import eapli.framework.persistence.repositories.impl.inmemory.*;
 import java.util.*;
 
@@ -21,17 +22,17 @@ public class InMemoryMealRepository extends InMemoryRepositoryWithLongPK<Meal> i
     }
 
     @Override
-    public void delete(Meal entity) throws DataIntegrityViolationException {
+    public void delete(Meal entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Long entityId) throws DataIntegrityViolationException {
+    public void delete(Long entityId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Meal save(Meal entity) throws DataConcurrencyException, DataIntegrityViolationException {
+    public Meal save(Meal entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
