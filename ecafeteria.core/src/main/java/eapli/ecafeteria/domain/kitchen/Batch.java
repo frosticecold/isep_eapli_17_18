@@ -19,6 +19,7 @@ public class Batch implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar date;
 
+    @OneToOne
     private Material material;
 
     protected Batch() {
