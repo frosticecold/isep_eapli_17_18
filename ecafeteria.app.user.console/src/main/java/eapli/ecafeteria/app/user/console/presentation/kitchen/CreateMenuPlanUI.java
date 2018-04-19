@@ -5,14 +5,24 @@
  */
 package eapli.ecafeteria.app.user.console.presentation.kitchen;
 
+import eapli.ecafeteria.application.menuplan.CreateMenuPlanController;
+import eapli.ecafeteria.domain.menu.Menu;
+import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.framework.presentation.console.AbstractUI;
 
 
 public class CreateMenuPlanUI extends AbstractUI {
 
+    private CreateMenuPlanController controller = new CreateMenuPlanController();
+     
     @Override
     protected boolean doShow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Menu m=controller.getCurrentMenu();
+        
+        
+        
+        return true;
     }
 
     @Override
