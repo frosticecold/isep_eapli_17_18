@@ -41,16 +41,19 @@ public class BookingMealUI extends AbstractUI {
         Iterable<Meal> mealList = null;
         int option = 0;
 
-        System.out.println("Choose Meal Type:\n1-Lunch\n2-Dinner");
+        System.out.println("Choose Meal Type:\n0-Lunch\n1-Dinner");
 
-        do {
-            option = Console.readInteger("");
-            if (option > 0 && option <= MealType.values().length) {
-                option--;
-            }
-            mealList = controller.listMeals(cal, MealType.values()[option]);
+        option = Console.readInteger("");
 
-        } while (option != 0);
+        switch (option) {
+            case 0:
+                mealList = controller.listMeals(cal, MealType.LUNCH);
+                break;
+
+            case 1:
+                mealList = controller.listMeals(cal, MealType.DINNER);
+                break;
+        }
 
         for (Meal meal : mealList) {
             System.out.println(meal.toString());
@@ -81,34 +84,29 @@ public class BookingMealUI extends AbstractUI {
         System.out.println(choosedMeal.toString());
 
         //===================================SHOW NUTRICIONAL INFO AND CALORICS==================================
-        System.out.println("Alergen Info:\n");
-        controller.showAlergen(choosedMeal);
-        System.out.println("Nutricional Info:\n");
-        controller.showNutricionalInfo(choosedMeal);
-
+//        System.out.println("Alergen Info:\n");
+//        controller.showAlergen(choosedMeal);
+//        System.out.println("Nutricional Info:\n");
+//        controller.showNutricionalInfo(choosedMeal);
         //===================================Paymemnt==================================
         System.out.println("Do you want to continue?\n1-Yes\n2-No\n");
 
         int option2 = 0;
 
-        do {
-            option2 = Console.readInteger("");
+        option2 = Console.readInteger("");
 
-            switch (option2) {
-                case 1:
-                    if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal) == true) {
-                        System.out.println("Operação bem sucedida, foi efetuado o pagamento");
-                    } else {
-                        System.out.println("Operação encerrada");
-                        break;
-                    }
-                case 2:
+        switch (option2) {
+            case 1:
+                if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal) == true) {
+                    System.out.println("Operação bem sucedida, foi efetuado o pagamento");
+                } else {
+                    System.out.println("Operação encerrada");
                     break;
+                }
+            case 2:
+                break;
 
-                case 0:
-                    break;
-            }
-        } while (option2 != 0);
+        }
 
         //====================================SAVE IN DATABASE==================================
         BookingState bookingState = new BookingState();
