@@ -6,7 +6,7 @@
 package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
-import eapli.ecafeteria.domain.transaction.Transaction;
+import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.framework.persistence.repositories.DataRepository;
 
 /**
