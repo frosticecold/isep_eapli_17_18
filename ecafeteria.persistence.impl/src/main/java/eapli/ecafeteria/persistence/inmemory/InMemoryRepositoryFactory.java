@@ -135,4 +135,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public AlergenRepository alergens() {
         return new InMemoryAlergenRepository();
     }
+
+    @Override
+    public TransactionRepository transactioRepository() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

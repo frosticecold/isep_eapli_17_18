@@ -15,6 +15,8 @@ import eapli.ecafeteria.persistence.TransactionRepository;
  */
 public class JpaTransactionRepository extends CafeteriaJpaRepositoryBase<Transaction, Long> implements TransactionRepository {
 
+    
+    
     @Override
     public Iterable<Transaction> findAllTransactionsByMecanographicNumberAndType(MecanographicNumber number, String transactionType) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

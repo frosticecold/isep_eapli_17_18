@@ -17,6 +17,7 @@ import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.domain.money.Money;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.ElementCollection;
 
 /**
  * A Dish
@@ -46,6 +47,7 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     private Money price;
     
     private boolean active;
+    @ElementCollection(targetClass=Integer.class)
     private List<Alergen> alergens=new ArrayList<>();
     public Dish(final DishType dishType, final Designation name,
             final NutricionalInfo nutricionalInfo, Money price) {

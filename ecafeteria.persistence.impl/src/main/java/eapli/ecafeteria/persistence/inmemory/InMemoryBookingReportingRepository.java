@@ -39,7 +39,6 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public Iterable<BookingPerOption> showReportByDay(Date date) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -56,6 +55,11 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
 
     @Override
     public Iterable<BookingPerOption> showReportByMeal(Meal meal) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
