@@ -79,7 +79,12 @@ public class DeliveryRegistry implements DomainEntity {
        
        return flag;
     }
-
+    
+    /**
+     * checks if an object is equal to deliveryRegistry by comparing their identifier
+     * @param otherId
+     * @return 
+     */
     @Override
     public boolean is(Object otherId) {
         return DomainEntity.super.is(otherId); 
