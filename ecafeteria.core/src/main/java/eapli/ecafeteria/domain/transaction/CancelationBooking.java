@@ -23,4 +23,6 @@ public class CancelationBooking extends Transaction<CafeteriaUser, Money>{
         return user.addCredits(credits);
     }
     
+    
+    
 }
