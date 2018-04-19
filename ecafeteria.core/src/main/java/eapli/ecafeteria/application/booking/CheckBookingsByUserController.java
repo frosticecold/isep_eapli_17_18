@@ -34,7 +34,8 @@ public class CheckBookingsByUserController implements Controller
 
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState)
     {
-        return bookingRepository.findBookingsByCafeteriaUser(user, state);
+      //  return bookingRepository.findBookingsByCafeteriaUser(user, state);
+        return null;
     }
 
 }
