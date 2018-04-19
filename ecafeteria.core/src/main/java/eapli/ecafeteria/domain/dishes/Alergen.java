@@ -8,6 +8,7 @@ package eapli.ecafeteria.domain.dishes;
 import eapli.framework.domain.Designation;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.Id;
  *
  * @author Car
  */
+@Embeddable
 public class Alergen  implements AggregateRoot<Designation>, Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
