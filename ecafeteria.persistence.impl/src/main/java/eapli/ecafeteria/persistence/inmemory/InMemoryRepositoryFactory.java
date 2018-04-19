@@ -131,4 +131,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public ExecutionRepository executions() {
         return new InMemoryExecutionRepository();
     }
+
+    @Override
+    public AlergenRepository alergens() {
+        return new InMemoryAlergenRepository();
+    }
 }

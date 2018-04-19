@@ -126,4 +126,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public ExecutionRepository executions() {
         return new JpaExecutionRepository();
     }
+
+    @Override
+    public AlergenRepository alergens() {
+       return new JpaAlergensRepository();
+    }
 }
