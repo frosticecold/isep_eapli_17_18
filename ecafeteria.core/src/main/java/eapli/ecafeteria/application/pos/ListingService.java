@@ -1,9 +1,8 @@
 package eapli.ecafeteria.application.pos;
 
-import eapli.ecafeteria.persistence.DishReportingRepository;
+import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.persistence.ExecutionRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
-import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
-import eapli.framework.application.Controller;
 
 /**
  *
@@ -15,12 +14,11 @@ public class ListingService {
         
     }
     
-    /** List Avaliable Meals
-     * @return  **/
-    public Iterable<DishesPerDishType> showDishesPerDishType() {
+    /** List of Avaliable Meals **/
+    public Iterable<Execution> AvaliableMeals() {
         
-        DishReportingRepository repo = PersistenceContext.repositories().dishReporting();
-        
-        return repo.dishesPerDishType();
+       ExecutionRepository repo = PersistenceContext.repositories().executions();
+       
+       return repo.findAll();
     }
 }
