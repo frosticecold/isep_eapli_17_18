@@ -1,43 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.persistence.inmemory;
 
-import eapli.ecafeteria.domain.meal.Meal;
-import eapli.ecafeteria.domain.meal.MealType;
-import eapli.ecafeteria.persistence.MealRepository;
-import eapli.framework.domain.Designation;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import eapli.ecafeteria.domain.meal.*;
+import eapli.ecafeteria.persistence.*;
+import eapli.framework.domain.*;
+import eapli.framework.persistence.repositories.impl.inmemory.*;
+import java.util.*;
 
-/**
- *
- * @author MFerreira
- */
-public class InMemoryMealRepository implements MealRepository{
-
+public class InMemoryMealRepository extends InMemoryRepositoryWithLongPK<Meal> implements MealRepository {
     @Override
     public List<Meal> listOfMealsByDateAndMealType(Calendar date, MealType mealType) {
+        Iterable<Meal> meals = findAll();
+        List<Meal> thisOne = new ArrayList<>();
+
+        for (Meal m : meals) {
+            if (m.isOnGivenDate(date) && m.mealtype() == mealType) {
+                thisOne.add(m);
+            }
+        }
+
+        return thisOne;
+    }
+
+    @Override
+    public void delete(Meal entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Meal entity) throws DataIntegrityViolationException {
+    public void delete(Long entityId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Long entityId) throws DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Meal save(Meal entity) throws DataConcurrencyException, DataIntegrityViolationException {
+    public Meal save(Meal entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -60,5 +55,5 @@ public class InMemoryMealRepository implements MealRepository{
     public Optional<Meal> findMealByDishID(Designation id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

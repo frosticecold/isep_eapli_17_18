@@ -8,8 +8,12 @@
     <class>eapli.ecafeteria.domain.authz.SystemUser</class>
     <class>eapli.ecafeteria.domain.authz.Role</class>
     <class>eapli.ecafeteria.domain.authz.RoleSet</class>
+
     <class>eapli.ecafeteria.domain.kitchen.Material</class>
-    <class>eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser</class>
+      <class>eapli.ecafeteria.domain.kitchen.MealMaterial</class>
+      <class>eapli.ecafeteria.domain.kitchen.Batch</class>
+
+      <class>eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser</class>
     <class>eapli.ecafeteria.domain.cafeteriauser.SignupRequest</class>
     <class>eapli.ecafeteria.domain.dishes.Dish</class>
     <class>eapli.ecafeteria.domain.dishes.DishType</class>
@@ -19,6 +23,8 @@
     <class>eapli.ecafeteria.domain.booking.Booking</class>
     <class>eapli.ecafeteria.domain.meal.Execution</class>
     <class>eapli.ecafeteria.domain.menuplan.MenuPlan</class>
+    <class>eapli.ecafeteria.domain.menuplan.MenuPlanItem</class>
+    <class>eapli.ecafeteria.domain.menuplan.Quantity</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ecafeteria"/>
       <!--

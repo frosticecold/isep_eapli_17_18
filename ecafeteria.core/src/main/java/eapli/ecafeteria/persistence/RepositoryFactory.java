@@ -67,6 +67,8 @@ public interface RepositoryFactory {
 
     MaterialRepository materials();
 
+    BatchRepository batch();
+
     BookingRepository booking();
 
     MenuRepository menus();
@@ -104,9 +106,9 @@ public interface RepositoryFactory {
      * @return
      */
     DeliveryMealSessionRepository deliveryMealRepository();
-    
+
     MealRepository meals();
-    
+
     ExecutionRepository executions();
 
     public AlergenRepository alergens();

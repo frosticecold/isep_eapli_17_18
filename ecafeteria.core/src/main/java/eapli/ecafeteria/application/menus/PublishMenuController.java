@@ -23,22 +23,30 @@ public class PublishMenuController implements Controller {
     
     //private final ListMenuService svc = new ListMenuService();
     private final MenuRepository menuRepository = PersistenceContext.repositories().menus();
-    private final ListUnpublishedMenus m_list = new ListUnpublishedMenus(menuRepository.listValidMenus());
+    private final ListUnpublishedMenus m_list = new ListUnpublishedMenus(menuRepository.findAll());
     
-    public void publishCriticalMenus() throws DataConcurrencyException, DataIntegrityViolationException {
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
-        if(m_list.criticalMenus() == null) {
-            throw new IllegalArgumentException();
-        }
-        publishMenus(m_list.criticalMenus());
+    public Iterable<Menu> criticalMenus() {
+        return m_list.criticalMenus();
     }
     
-    public void publishNotCriticalMenus() throws DataConcurrencyException, DataIntegrityViolationException {
+    public Iterable<Menu> notCriticalMenus() {
+        return m_list.notCriticalMenus();
+    }
+    
+    public final String publishCriticalMenus() throws DataConcurrencyException, DataIntegrityViolationException {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
-        if(m_list.notCriticalMenus() == null) {
+        if(criticalMenus() == null) {
             throw new IllegalArgumentException();
         }
-        publishMenus(m_list.notCriticalMenus());
+        return publishMenus(criticalMenus());
+    }
+    
+    public final String publishNotCriticalMenus() throws DataConcurrencyException, DataIntegrityViolationException {
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
+        if(notCriticalMenus() == null) {
+            throw new IllegalArgumentException();
+        }
+        return publishMenus(notCriticalMenus());
     }
     
     private String publishMenus(Iterable<Menu> menus) throws DataConcurrencyException, DataIntegrityViolationException {

@@ -45,33 +45,40 @@ public class BookingMealUI extends AbstractUI {
 
         do {
             option = Console.readInteger("");
-            if(option > 0 && option <= MealType.values().length)
+            if (option > 0 && option <= MealType.values().length) {
                 option--;
-            
+            }
             mealList = controller.listMeals(cal, MealType.values()[option]);
 
         } while (option != 0);
 
-       
-        if(!mealList.iterator().hasNext()){
+        for (Meal meal : mealList) {
+            System.out.println(meal.toString());
+        }
+
+        if (!mealList.iterator().hasNext()) {
             System.out.println("\nThere is no meal with that conditions\n");
             return false;
         }
-        
+
         //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
         System.out.println("Choose one meal");
-        final Long id = Console.readLong("Insert the meal id:\n");
+        final Long id = Console.readLong("Insert the meal id:");
 
         Meal choosedMeal = null;
 
         for (Meal meal : mealList) {
             if (meal.id().equals(id)) {
                 choosedMeal = meal;
-            } else {
-                System.out.println("Id inválido");
-                return false;
             }
         }
+        if (choosedMeal == null) {
+            System.out.println("Invalid Id!");
+            return false;
+        }
+
+        System.out.println("\nChoosed Meal:");
+        System.out.println(choosedMeal.toString());
 
         //===================================SHOW NUTRICIONAL INFO AND CALORICS==================================
         System.out.println("Alergen Info:\n");
