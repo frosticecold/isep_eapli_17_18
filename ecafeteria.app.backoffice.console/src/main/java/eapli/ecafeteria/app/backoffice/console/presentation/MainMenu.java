@@ -59,9 +59,7 @@ public class MainMenu extends AbstractUI {
     // MATERIALS
     private static final int MATERIAL_REGISTER_OPTION = 1;
     private static final int MATERIAL_LIST_OPTION = 2;
-
-    // TRACEABILITY
-    private static final int REGISTER_BATCH_USED_IN_MEAL = 1;
+    private static final int REGISTER_BATCH_USED_IN_MEAL = 3;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
@@ -154,12 +152,12 @@ public class MainMenu extends AbstractUI {
             final Menu reportingDishesMenu = buildReportingDishesMenu();
             mainMenu.add(new SubMenu(REPORTING_DISHES_OPTION, reportingDishesMenu,
                     new ShowVerticalSubMenuAction(reportingDishesMenu)));
-            
-            
+
+
             final Menu reportingBookingMenu = buildReportingBookingMenu();
             mainMenu.add(new SubMenu(REPORTING_BOOKING_OPTION, reportingBookingMenu,
                     new ShowVerticalSubMenuAction(reportingBookingMenu)));
-            
+
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -273,10 +271,10 @@ public class MainMenu extends AbstractUI {
 
         return menu;
     }
-    
+
     private Menu buildReportingBookingMenu() {
-        
-         final Menu menu = new Menu("Reporting Booking >");
+
+        final Menu menu = new Menu("Reporting Booking >");
 
         menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
                 () -> new ReportBookingUI().show()));
@@ -292,11 +290,8 @@ public class MainMenu extends AbstractUI {
 //        menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
-        
-        
-        
-        
-        
+
+
     }
 
     private Menu buildMenuOfMenus() {
