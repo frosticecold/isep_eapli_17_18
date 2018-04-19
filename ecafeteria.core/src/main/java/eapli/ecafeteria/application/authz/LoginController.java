@@ -20,6 +20,7 @@ public class LoginController implements Controller {
      *
      * @param userName
      * @param password
+     * @param onlyWithThis
      */
     public boolean login(String userName, String password, ActionRight... onlyWithThis) {
         try {
