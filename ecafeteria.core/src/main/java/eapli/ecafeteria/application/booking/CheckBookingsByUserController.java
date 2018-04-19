@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.application.booking;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import static eapli.ecafeteria.domain.booking.BookingState.BookingStates.BOOKED;
@@ -29,6 +30,7 @@ public class CheckBookingsByUserController implements Controller
 
     public CheckBookingsByUserController()
     {
+        this.user = repository.cafeteriaUsers().findByUsername( AuthorizationService.session().authenticatedUser().username()).get();
         this.bookingRepository = repository.bookingReporting();
         repository = PersistenceContext.repositories();
     }
