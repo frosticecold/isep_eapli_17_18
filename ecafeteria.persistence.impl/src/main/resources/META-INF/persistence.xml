@@ -17,6 +17,8 @@
         <class>eapli.ecafeteria.domain.cafeteriauser.SignupRequest</class>
         <class>eapli.ecafeteria.domain.dishes.Dish</class>
         <class>eapli.ecafeteria.domain.dishes.DishType</class>
+        <class>eapli.ecafeteria.domain.dishes.Alergen</class>
+
         <class>eapli.ecafeteria.domain.menu.Menu</class>
         <class>eapli.ecafeteria.domain.meal.Meal</class>
         <class>eapli.ecafeteria.domain.booking.Rating</class>

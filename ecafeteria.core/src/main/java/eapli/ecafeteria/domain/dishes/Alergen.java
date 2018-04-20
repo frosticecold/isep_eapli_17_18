@@ -5,29 +5,29 @@
  */
 package eapli.ecafeteria.domain.dishes;
 
-import eapli.framework.domain.Designation;
-import eapli.framework.domain.ddd.AggregateRoot;
-import java.io.Serializable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import eapli.framework.domain.*;
+import eapli.framework.domain.ddd.*;
+import java.io.*;
+import javax.persistence.*;
 
 /**
  *
  * @author Car
  */
+@Entity
 public class Alergen  implements AggregateRoot<Designation>, Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @EmbeddedId
     private Designation name;
-    
-    
+
+
     public Alergen (Designation name){
         this.name=name;
+    }
+
+    protected Alergen() {
     }
 
     /**
@@ -58,5 +58,5 @@ public class Alergen  implements AggregateRoot<Designation>, Serializable  {
     public Designation id() {
        return this.name;
     }
-    
+
 }
