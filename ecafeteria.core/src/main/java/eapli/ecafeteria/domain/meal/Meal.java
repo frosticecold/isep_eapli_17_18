@@ -64,6 +64,8 @@ public class Meal implements Serializable {
     /**
      * Menu that a meal belongs to
      */
+    @OneToOne()
+    @JoinColumn(name = "menuid")
     private Menu menu;
 
     /**
