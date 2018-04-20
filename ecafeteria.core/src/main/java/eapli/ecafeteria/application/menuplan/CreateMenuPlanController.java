@@ -6,7 +6,7 @@
 package eapli.ecafeteria.application.menuplan;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.application.menus.ListMenuService;
+import eapli.ecafeteria.application.menus.MenuService;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.menu.Menu;
@@ -30,7 +30,7 @@ import java.util.Optional;
 
 public class CreateMenuPlanController implements Controller {
     
-     private final ListMenuService svc = new ListMenuService();
+     private final MenuService svc = new MenuService();
      
      private final MenuPlanRepository mpr=PersistenceContext.repositories().menuPlan();
      

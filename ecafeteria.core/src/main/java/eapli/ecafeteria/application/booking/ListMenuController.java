@@ -5,7 +5,7 @@
  */
 package eapli.ecafeteria.application.booking;
 
-import eapli.ecafeteria.application.menus.ListMenuService;
+import eapli.ecafeteria.application.menus.MenuService;
 import eapli.ecafeteria.domain.menu.Menu;
 import static eapli.framework.util.DateTime.beginningOfWeek;
 import static eapli.framework.util.DateTime.currentWeekNumber;
@@ -18,7 +18,7 @@ import java.util.Optional;
  * @author Telmo
  */
 public class ListMenuController {
-    private final ListMenuService svc = new ListMenuService();
+    private final MenuService svc = new MenuService();
     
     public Optional<Menu> listMenuCurrentWeek(){
         //PersistenceContext.repositories().menus().findMenuWithinPeriod(startDate, endDate);
