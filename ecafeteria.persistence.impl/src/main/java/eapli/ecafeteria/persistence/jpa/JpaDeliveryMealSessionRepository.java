@@ -104,12 +104,14 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
      */
     public Iterable<DeliveryMealSession> findAllOfSession(Long sessionID) {
         
-        String query = "SELECT DeliveryMealSession.*"
-                    + "FROM DeliveryMealSession"
-                    + "WHERE SESSION = sessionid"
+        String query = "SELECT DeliveryRegistry.*"
+                    + "FROM DeliveryRegistry dr"
+                    + "WHERE dr.SESSION = sessionid"
                     + "ORDER BY DELIVERY ASC";
         
         final Query q = entityManager().createQuery(query, this.entityClass);
+        
+        q.setParameter("sessionid", sessionID);
         
         return q.getResultList();
     }     
