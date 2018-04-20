@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.domain.transaction;
+package eapli.ecafeteria.domain.CreditTransaction;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.money.Money;
@@ -12,7 +12,7 @@ import eapli.framework.domain.money.Money;
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class DebitBooking extends Transaction<CafeteriaUser, Money> {
+public class DebitBooking extends Transaction {
     
     /**
      * This class is inherited from the generic class Transaction, eith the method

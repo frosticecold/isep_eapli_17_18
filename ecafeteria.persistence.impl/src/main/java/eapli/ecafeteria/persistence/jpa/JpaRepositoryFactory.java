@@ -129,6 +129,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public AlergenRepository alergens() {
-        return null;
+       return new JpaAlergensRepository();
+    }
+
+    @Override
+    public TransactionRepository transactioRepository() {
+        return new JpaTransactionRepository();
     }
 }

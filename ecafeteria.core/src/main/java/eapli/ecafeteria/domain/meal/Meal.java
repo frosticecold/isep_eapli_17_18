@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -98,6 +99,46 @@ public class Meal implements Serializable {
     public Dish dish() {
         return dish;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.version);
+        hash = 59 * hash + Objects.hashCode(this.dish);
+        hash = 59 * hash + Objects.hashCode(this.mealtype);
+        hash = 59 * hash + Objects.hashCode(this.date);
+        hash = 59 * hash + Objects.hashCode(this.ratings);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Meal other = (Meal) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.dish, other.dish)) {
+            return false;
+        }
+        if (this.mealtype != other.mealtype) {
+            return false;
+        }
+        if (!Objects.equals(this.date, other.date)) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
     /**
@@ -125,5 +166,7 @@ public class Meal implements Serializable {
     public MealType mealtype() {
         return mealtype;
     }
+    
+    
     
 }

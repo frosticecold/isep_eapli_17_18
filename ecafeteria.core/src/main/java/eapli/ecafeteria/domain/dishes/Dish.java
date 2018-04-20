@@ -1,18 +1,29 @@
 package eapli.ecafeteria.domain.dishes;
 
-import eapli.ecafeteria.dto.*;
-import eapli.ecafeteria.reporting.dishes.*;
-import eapli.framework.domain.*;
-import eapli.framework.domain.ddd.*;
-import eapli.framework.domain.money.*;
-import java.io.*;
-import java.util.*;
-import javax.persistence.*;
+import java.io.Serializable;
+
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.SqlResultSetMapping;
+import javax.persistence.Version;
+
+import eapli.ecafeteria.reporting.dishes.DishesPerCaloricCategory;
+import eapli.ecafeteria.dto.DishDTO;
+import eapli.framework.domain.Designation;
+import eapli.framework.domain.ddd.AggregateRoot;
+import eapli.framework.domain.money.Money;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.ElementCollection;
 
 /**
  * A Dish
  *
  * @author Jorge Santos ajs@isep.ipp.pt
+ *
  */
 @Entity
 @SqlResultSetMapping(name = "DishesPerCaloricCategoryMapping", classes = @ConstructorResult(targetClass = DishesPerCaloricCategory.class, columns = {
@@ -36,9 +47,8 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     private Money price;
 
     private boolean active;
-    @OneToMany
-    private List<Alergen> alergens = new ArrayList<>();
-
+    @ElementCollection(targetClass=Integer.class)
+    private List<Alergen> alergens=new ArrayList<>();
     public Dish(final DishType dishType, final Designation name,
                 final NutricionalInfo nutricionalInfo, Money price) {
         if (dishType == null || name == null || nutricionalInfo == null) {
@@ -138,8 +148,11 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         return this.price;
     }
 
+    
+    
 
     /**
+     *
      * @return true or false whether is or not active
      */
     public boolean isActive() {
@@ -192,13 +205,13 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     public String toString() {
         return "Dish{" + "name=" + name + ", dishType=" + dishType + ", nutricionalInfo=" + nutricionalInfo + ", price=" + price + '}';
     }
-
-
-    public void addAlergen(Alergen a) {
+    
+    
+    public void addAlergen(Alergen a){
         alergens.add(a);
     }
-
-    public List<Alergen> alergenInDish() {
+    
+    public List<Alergen> alergenInDish(){
         return alergens;
     }
 }

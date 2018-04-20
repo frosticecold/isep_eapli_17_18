@@ -11,6 +11,10 @@ ___
 
 * >**Q: Should the answers sent by the Menu Manager also be displayed with the ratings or on a separate menu?**
   >**A:** If the rating has an answer it should be displayed with the rating. _(Subject to change)_
+  
+* >**Q: Should the program get the ratings through the bookings or go directly to root of the ratings?**
+  >**A:** It should access the ratings directly to reduce overflow.
+  
 
 # Business Rules
 ___

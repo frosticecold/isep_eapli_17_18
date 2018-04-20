@@ -133,6 +133,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public AlergenRepository alergens() {
-        return null;
+        return new InMemoryAlergenRepository();
+    }
+
+    @Override
+    public TransactionRepository transactioRepository() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

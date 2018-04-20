@@ -5,7 +5,6 @@
  */
 package eapli.ecafeteria.application.pos;
 
-import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.DishReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;

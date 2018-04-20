@@ -43,7 +43,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * @param currency
      */
     public Money(final double amount, final Currency currency) {
-        this.amount = BigInteger.valueOf(Math.round(amount ));
+        this.amount = BigInteger.valueOf(Math.round(amount *HUNDRED ));
         this.currency = currency;
     }
 
