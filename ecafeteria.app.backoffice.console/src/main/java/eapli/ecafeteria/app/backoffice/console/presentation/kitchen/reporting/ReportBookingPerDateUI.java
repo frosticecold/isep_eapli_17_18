@@ -4,20 +4,23 @@ import eapli.ecafeteria.application.reporting.booking.BookingReportingController
 import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.visitor.Visitor;
-import java.sql.Date;
+import java.util.Date;
 
 public class ReportBookingPerDateUI extends AbstractListUI<BookingPerOption>{
     
     private final BookingReportingController thisController = new BookingReportingController();
+    
+    public static final String BOOKING_PER_DATE_EN = "BOOKING PER DATE";
+    public static final String BOOKING_PER_DATE_LH = "BOOKING PER DATE";
 
     @Override
     protected String elementName() {
-        return "BOOK PER DISH TYPE";
+        return BOOKING_PER_DATE_EN;
     }
 
     @Override
     protected String listHeader() {
-        return "BOOK PER DISH TYPE";
+        return BOOKING_PER_DATE_LH;
     }
     
 

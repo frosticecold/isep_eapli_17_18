@@ -7,9 +7,9 @@ package eapli.ecafeteria.domain.meal;
 
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.dishes.Dish;
+import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -41,7 +41,7 @@ public class Meal implements Serializable {
      * Dish of a meal
      */
     @OneToOne()
-    @JoinColumn(name="dishid")
+    @JoinColumn(name = "dishid")
     private Dish dish;
 
     /**
@@ -57,10 +57,15 @@ public class Meal implements Serializable {
     private Calendar date;
     /*
     * Ratings of the meal
-    */
+     */
     @OneToMany()
     private List<Rating> ratings;
-    
+
+    /**
+     * Menu that a meal belongs to
+     */
+    private Menu menu;
+
     /**
      * For ORM
      */
@@ -75,17 +80,18 @@ public class Meal implements Serializable {
      * @param mt Mealtype for this meal
      * @param cal Date for this meal
      */
-    public Meal(final Dish dish, final MealType mt, final Calendar cal) {
-        setData(dish, mt, cal);
+    public Meal(final Dish dish, final MealType mt, final Calendar cal, final Menu menu) {
+        setData(dish, mt, cal, menu);
     }
 
-    private void setData(final Dish dish, final MealType mt, final Calendar cal) {
-        if (dish == null || mt == null || cal == null) {
+    private void setData(final Dish dish, final MealType mt, final Calendar cal, final Menu menu) {
+        if (dish == null || mt == null || cal == null || menu == null) {
             throw new IllegalArgumentException("Arguments can't be null.");
         }
         this.dish = dish;
         this.mealtype = mt;
         this.date = (Calendar) cal.clone();
+        this.menu = menu;
     }
 
     public boolean isOnGivenDate(Calendar givenDate) {
@@ -138,14 +144,13 @@ public class Meal implements Serializable {
         }
         return true;
     }
-    
-    
-    
+
     /**
      * Returns Meal actual date
-     * @return 
+     *
+     * @return
      */
-    public Calendar getMealDate(){
+    public Calendar getMealDate() {
         return this.date;
     }
 
@@ -154,10 +159,11 @@ public class Meal implements Serializable {
         String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
         return "Meal{" + "id= " + id + ", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
     }
-    
+
     /**
      * Returns the ratings given on said meal
-     * @return 
+     *
+     * @return
      */
     public Iterable<Rating> ratings() {
         return this.ratings;
@@ -169,4 +175,5 @@ public class Meal implements Serializable {
     
     
       
+
 }

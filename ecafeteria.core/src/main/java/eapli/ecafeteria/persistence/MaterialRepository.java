@@ -1,9 +1,8 @@
 package eapli.ecafeteria.persistence;
 
-import java.util.Optional;
-
-import eapli.ecafeteria.domain.kitchen.Material;
-import eapli.framework.persistence.repositories.DataRepository;
+import eapli.ecafeteria.domain.kitchen.*;
+import eapli.framework.persistence.repositories.*;
+import java.util.*;
 
 /**
  * the repository for Materials.

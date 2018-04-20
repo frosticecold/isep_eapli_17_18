@@ -5,15 +5,10 @@
  */
 package eapli.ecafeteria.domain.CreditTransaction;
 
-import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.money.Money;
 import java.io.Serializable;
-import java.util.Calendar;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -24,7 +19,6 @@ public class CreditRecharge extends Transaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private CafeteriaUser user;
     private String transactionType;
 
     /**

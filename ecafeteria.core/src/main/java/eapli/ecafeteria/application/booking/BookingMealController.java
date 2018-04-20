@@ -7,7 +7,7 @@ package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
-import eapli.ecafeteria.application.menus.ListMenuService;
+import eapli.ecafeteria.application.menus.MenuService;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import static eapli.ecafeteria.domain.authz.ActionRight.SELECT_MEAL;
 import eapli.ecafeteria.domain.authz.Username;
@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  */
 public class BookingMealController implements Controller {
 
-    private final ListMenuService svc = new ListMenuService();
+    private final MenuService svc = new MenuService();
     private final CafeteriaUserService userService = new CafeteriaUserService();
 
     private final BookingRepository repository = PersistenceContext.repositories().booking();

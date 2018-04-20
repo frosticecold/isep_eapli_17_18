@@ -6,6 +6,7 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
 import eapli.ecafeteria.application.menus.ElaborateOrEditMenuController;
+import eapli.ecafeteria.application.menus.MenuService;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Meal;
@@ -145,7 +146,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      */
     private void menuAddOrRemoveMeals(Menu menu, Calendar day) {
         boolean editing = true;
-        ListWidget<Meal> widget = new ListWidget<>("List Meal", menu.getMealsByDay(day));
+        ListWidget<Meal> widget = new ListWidget<>("List Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
         do {
             widget.show();
             /**
@@ -187,7 +188,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      */
     private void menuAddMeals(Menu menu, Calendar day) {
         boolean adding = true;
-        ListWidget<Meal> widgetmeals = new ListWidget<>("List Meal", menu.getMealsByDay(day));
+        ListWidget<Meal> widgetmeals = new ListWidget<>("List Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
         SelectWidget<DishType> widgetdishtype = new SelectWidget<>("Select DishType", theController.getDishTypes());
         SelectWidget<Dish> widgetdish;
         SelectWidget<MealType> widgetmealtype = new SelectWidget<>("Select MealType", Arrays.asList(MealType.values()));
@@ -208,7 +209,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             if (mt == null) {
                 break;
             }
-            Meal meal = new Meal(dish, mt, day);
+            Meal meal = new Meal(dish, mt, day, menu);
             System.out.println(meal);
             boolean confirm = Console.readBoolean("Confirm meal? Y/N");
             if (confirm) {
@@ -228,7 +229,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
         SelectWidget<Meal> widgetmeal;
         boolean removing = true;
         do {
-            widgetmeal = new SelectWidget<>("Select Meal", menu.getMealsByDay(day));
+            widgetmeal = new SelectWidget<>("Select Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
             /**
              * Ask what to remove
              */

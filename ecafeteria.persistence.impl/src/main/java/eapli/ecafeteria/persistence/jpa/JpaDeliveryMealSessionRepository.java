@@ -17,12 +17,22 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         
     }
 
+    /**
+     * Deletes a certain DeliveryMealSession from persistence
+     * @param entity
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public void delete(DeliveryMealSession entity) throws DataIntegrityViolationException {
         
         entityManager().remove(entity); 
     }
 
+    /**
+     * Deletes a DeliveryMealSession from persistence that has a certain ID
+     * @param entityId
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public void delete(Long entityId) throws DataIntegrityViolationException {
         
@@ -39,6 +49,13 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         entityManager().remove(entity);
     }
 
+    /**
+     * Persists a DeliveryMealSession on persistence
+     * @param entity
+     * @return
+     * @throws DataConcurrencyException
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public DeliveryMealSession save(DeliveryMealSession entity) throws DataConcurrencyException, DataIntegrityViolationException {
         
@@ -47,6 +64,10 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         return entity;
     }
 
+    /**
+     * Returns a List of all registered DeliveryMealSession
+     * @return 
+     */
     @Override
     public Iterable<DeliveryMealSession> findAll() {
         String query = "SELECT DeliveryMealSession.*"
@@ -57,14 +78,41 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         return q.getResultList();
     }
 
+    /**
+     * Find one DeliveryMealSession by using the id
+     * @param id
+     * @return 
+     */
     @Override
     public Optional<DeliveryMealSession> findOne(Long id) {
         return matchOne("e.id=id","id",id);
     }
 
+    /**
+     * Count All DeliveryMealSession
+     * @return 
+     */
     @Override
     public long count() {
         return 0;
     }
     
+    /**
+     * Returns a List of all DeliveryRegistrys of a certain session
+     * @param sessionID
+     * @return 
+     */
+    public Iterable<DeliveryMealSession> findAllOfSession(Long sessionID) {
+        
+        String query = "SELECT DeliveryRegistry.*"
+                    + "FROM DeliveryRegistry dr"
+                    + "WHERE dr.SESSION = sessionid"
+                    + "ORDER BY DELIVERY ASC";
+        
+        final Query q = entityManager().createQuery(query, this.entityClass);
+        
+        q.setParameter("sessionid", sessionID);
+        
+        return q.getResultList();
+    }     
 }

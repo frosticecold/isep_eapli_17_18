@@ -241,6 +241,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
 
     @Override
     public String toString() {
-        return amount() + " " + currency();
+        return amount()/HUNDRED + " " + currency();
     }
 }
