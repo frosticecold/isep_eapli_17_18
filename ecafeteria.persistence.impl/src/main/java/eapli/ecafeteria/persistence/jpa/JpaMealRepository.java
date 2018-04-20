@@ -7,6 +7,7 @@ package eapli.ecafeteria.persistence.jpa;
 
 
 import eapli.ecafeteria.domain.meal.*;
+import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.domain.*;
 import java.util.*;
@@ -38,9 +39,17 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         return matchOne("e.dish.id=:dishid", params);
     }
 
+    @Override
     public Optional<Meal> findOne(Long id) {
         final Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         return matchOne("e.id=:id", params);
+    }
+    
+    public List<Meal> findMealsByMenu(Menu m){
+        final Query q;
+        q = entityManager().createQuery("SELECT e FROM Meal e WHERE :menu = e.menu", Meal.class);
+        q.setParameter("menu", m);
+        return q.getResultList();
     }
 }
