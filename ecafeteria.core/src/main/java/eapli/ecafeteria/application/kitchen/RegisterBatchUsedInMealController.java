@@ -30,6 +30,7 @@ public class RegisterBatchUsedInMealController implements Controller {
         for (Meal m : mealList) {
             if (m.id() == code) {
                 meal = m;
+                System.out.println(meal.toString());
                 break;
             }
         }
@@ -43,19 +44,19 @@ public class RegisterBatchUsedInMealController implements Controller {
 
         mealList = mealRepository.listOfMealsByDateAndMealType(cal, mealType);
 
-        while (mealList.iterator().hasNext()) {
-            Meal m = mealList.iterator().next();
-
+//        System.out.println(mealList.size());
+        for (Meal m : mealList) {
             System.out.printf("Meal -> Type:%s,  Dish Name:%s, Code: %d\n", m.mealtype(), m.dish().name(), m.id());
+//            System.out.println(m);
         }
     }
 
     public void showMaterial() {
-        List<Material> list = (List<Material>) materialRepository.findAll();
-
-        for (Material m : list) {
-            System.out.printf("Material: %s, Acronym: %s\n", m.description(), m.id());
-        }
+//        List<Material> list = (List<Material>) materialRepository.findByAcronym("");
+//
+//        for (Material m : list) {
+//            System.out.printf("Material: %s, Acronym: %s\n", m.description(), m.id());
+//        }
     }
 
     public void showAvailableBatches(String materialId) {
