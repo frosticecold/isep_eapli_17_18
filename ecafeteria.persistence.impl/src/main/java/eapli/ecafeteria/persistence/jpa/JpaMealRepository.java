@@ -5,7 +5,6 @@
  */
 package eapli.ecafeteria.persistence.jpa;
 
-
 import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.*;
@@ -20,15 +19,14 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
 
     @Override
     public List<Meal> listOfMealsByDateAndMealType(Calendar date, MealType mealType) {
-
-        int mealT = MealType.getId(mealType);
-
-        final Query q = entityManager().
-                createQuery("SELECT meal FROM Meal meal WHERE mealtype=:mealT AND date=:date", this.entityClass);
-
-        q.setParameter("date", date, TemporalType.DATE);
-        q.setParameter("mealT", mealT);
-
+        
+        Query q = entityManager().
+                createQuery("SELECT meal FROM Meal meal "
+                        + "WHERE meal.mealtype=:mealType "
+                        + "AND meal.date=:date", Meal.class);
+        
+        q.setParameter("date", date);
+        q.setParameter("mealType", mealType);
         return q.getResultList();
     }
 
@@ -45,11 +43,19 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         params.put("id", id);
         return matchOne("e.id=:id", params);
     }
-    
-    public List<Meal> findMealsByMenu(Menu m){
+
+    public List<Meal> findMealsByMenu(Menu m) {
         final Query q;
         q = entityManager().createQuery("SELECT e FROM Meal e WHERE :menu = e.menu", Meal.class);
         q.setParameter("menu", m);
         return q.getResultList();
+    }
+
+    @Override
+    public Iterable<Meal> listMealsFromMenuByGivenDay(Menu menu, Calendar day) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("menu", menu);
+        params.put("day", day);
+        return match("e.menu=:menu AND e.date =:day", params);
     }
 }

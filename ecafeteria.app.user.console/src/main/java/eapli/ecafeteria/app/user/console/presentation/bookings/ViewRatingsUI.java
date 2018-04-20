@@ -13,64 +13,38 @@ import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.persistence.NoResultException;
 
 /**
  *
  * @author Rui Almeida <1160818>
  */
-public class ViewRatingsUI extends AbstractUI {
+public class ViewRatingsUI extends ViewNextBookingUI {
 
-    private final ViewRatingsController controller = new ViewRatingsController();
+    private ViewRatingsController controller = null;
 
     @Override
     protected boolean doShow() {
-        int option = -1;
-        ArrayList<Booking> bookings = (ArrayList<Booking>) controller.bookings();
 
-        if (bookings.isEmpty()) {
-            System.out.println("There are no bookings!\n");
-        } else {
-            do {
-                for (Booking booking : bookings) {
-                    System.out.println("Booking ID: " + booking.getIdBooking()
-                            + "\n"
-                            + "Meal: " + booking.getMeal().toString()
-                            + "\n");
+        try {
+            controller = new ViewRatingsController();
+            super.doShow();
+            int option = -1;
+            ArrayList<Rating> ratings = (ArrayList<Rating>) controller.ratings();
+
+            if (ratings.isEmpty()) {
+                System.out.println("»» An error has occurreed!\n There are no ratings!\n");
+            } else {
+                for (Rating rating : ratings) {
+                    System.out.println("---------------------------------------------");
+                    System.out.println("Meal » " + rating.meal().mealtype().toString() + " \nDish » " + rating.meal().dish().name().toString() + "\n"
+                            + "Rating: " + rating.toString());
+                    System.out.print("---------------------------------------------\n");
                 }
+            }
 
-                final Long id = Console.readLong("» Please enter the Booking ID: ");
-
-                controller.setMeal(id);
-
-                if (controller.ratingsFromMeal() == null) {
-
-                    System.out.println("\n-----------------------");
-                    System.out.println("\n»»»»»» Warning!\n» Booking ID is incorrect!\n");
-
-                } else {
-
-                    System.out.println("Booking ID: " + id);
-
-                    Iterator<Rating> it = controller.ratingsFromMeal().iterator();
-
-                    System.out.println("\n-----------------------");
-                    if (!it.hasNext()) {
-                        System.out.println("\n»»»»»» Warning!\n» There are no ratings for this meal\n");
-                    } else {
-                        while (it.hasNext()) {
-                            System.out.println(it.next());
-                        }
-                    }
-                }
-
-                System.out.println("\n-----------------------");
-
-                option = Console.readInteger("\n» Do you wish to see another booking?"
-                        + "\n» Enter any number to continue, 0 to terminate: ");
-
-                System.out.println("\n-----------------------");
-                controller.clearSelection();
-            } while (option != 0);
+        } catch (NoResultException ex) {
+            System.out.println("\n»» An error has occurreed!\n There are no ratings, specified user has an invalid ID\n");
         }
 
         return true;

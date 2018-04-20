@@ -125,7 +125,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         return period.getWorkingDaysIterable();
     }
 
-    
     /**
      * Method that returns if the menu is critical or not
      *
@@ -134,6 +133,14 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      */
     public boolean isCritical() {
         return period.isCritical();
+    }
+
+    /**
+     * Methot that returns if a method is published
+     */
+
+    public boolean isPublished() {
+        return menuState == MenuState.PUBLISHED;
     }
 
     /**

@@ -28,6 +28,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.ListDis
 import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.RegisterDishViaDTOUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterBatchUsedInMealAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMadeMealsAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDateUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
@@ -84,10 +85,11 @@ public class MainMenu extends AbstractUI {
     private static final int CHANGE_DISH_NUTRICIONAL_INFO_OPTION = 1;
     private static final int CHANGE_DISH_PRICE_OPTION = 2;
 
-    // MATERIALS
+    // KITCHEN
     private static final int MATERIAL_REGISTER_OPTION = 1;
     private static final int MATERIAL_LIST_OPTION = 2;
     private static final int REGISTER_BATCH_USED_IN_MEAL = 3;
+    private static final int KITCHEN_REGISTER_MADE_MEALS = 4;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
@@ -269,6 +271,8 @@ public class MainMenu extends AbstractUI {
 
         menu.add(new MenuItem(REGISTER_BATCH_USED_IN_MEAL, "Register batch used in meal", new RegisterBatchUsedInMealAction()));
 
+        menu.add(new MenuItem(KITCHEN_REGISTER_MADE_MEALS, "Register Made Meals", new RegisterMadeMealsAction()));
+        
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;

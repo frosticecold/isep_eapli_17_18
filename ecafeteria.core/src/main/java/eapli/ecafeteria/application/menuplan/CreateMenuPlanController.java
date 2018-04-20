@@ -30,8 +30,7 @@ import java.util.Optional;
 
 public class CreateMenuPlanController implements Controller {
     
-     private final MenuService svc = new MenuService();
-     
+    
      private final MenuPlanRepository mpr=PersistenceContext.repositories().menuPlan();
      
      private Menu m;
@@ -44,7 +43,7 @@ public class CreateMenuPlanController implements Controller {
          
      //metodo que vai buscar menus da semana atual
      public Menu getCurrentMenu(){
-         m=svc.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()+1), endOfWeek(Calendar.YEAR,currentWeekNumber()+1)).get();
+         m=MenuService.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()+1), endOfWeek(Calendar.YEAR,currentWeekNumber()+1)).get();
         return m;
         
      }
@@ -56,7 +55,7 @@ public class CreateMenuPlanController implements Controller {
         
         Calendar bDay = DateTime.beginningOfWeek(Calendar.YEAR, currentWeekNumber());
         for(int i=0; i<7;i++){
-            Iterable<Meal> meals = m.getMealsByDay(bDay);
+            Iterable<Meal> meals = MenuService.getMealsFromMenuByGivenDay(m, bDay);
             for(Meal currentMeal : meals){
                q.setQuantity(quantity);
                mpi=new MenuPlanItem(currentMeal,q);  

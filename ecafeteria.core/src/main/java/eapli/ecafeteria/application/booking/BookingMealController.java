@@ -36,7 +36,6 @@ import java.util.logging.Logger;
  */
 public class BookingMealController implements Controller {
 
-    private final MenuService svc = new MenuService();
     private final CafeteriaUserService userService = new CafeteriaUserService();
 
     private final BookingRepository repository = PersistenceContext.repositories().booking();
@@ -48,7 +47,7 @@ public class BookingMealController implements Controller {
      * @return a list with all meals by date
      */
     public Iterable<Meal> listMeals(Calendar date, MealType mealType) {
-        return svc.getMealsPublishedByDay(date, mealType);
+        return MenuService.getMealsPublishedByDay(date, mealType);
     }
 
     public boolean doTransaction(Username id, Meal meal) {
