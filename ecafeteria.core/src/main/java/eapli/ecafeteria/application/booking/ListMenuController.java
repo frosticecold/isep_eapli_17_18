@@ -18,10 +18,9 @@ import java.util.Optional;
  * @author Telmo
  */
 public class ListMenuController {
-    private final MenuService svc = new MenuService();
     
     public Optional<Menu> listMenuCurrentWeek(){
         //PersistenceContext.repositories().menus().findMenuWithinPeriod(startDate, endDate);
-        return svc.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()), endOfWeek(Calendar.YEAR,currentWeekNumber()));
+        return MenuService.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()), endOfWeek(Calendar.YEAR,currentWeekNumber()));
     }
 }

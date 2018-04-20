@@ -25,8 +25,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -213,7 +211,11 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             System.out.println(meal);
             boolean confirm = Console.readBoolean("Confirm meal? Y/N");
             if (confirm) {
-                theController.addMealOnMenu(menu, meal);
+                try {
+                    theController.addMealOnMenu(menu, meal);
+                } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
+                    System.out.println("Error saving on database" + ex.getMessage());
+                }
             }
             adding = Console.readBoolean("Add more? Y/N");
             if (adding) {
@@ -240,7 +242,11 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             }
             boolean areyousure = Console.readBoolean("Are you sure? Y/N");
             if (areyousure) {
-                menu.removeMeal(meal);
+                try {
+                    theController.removeMealFromMenu(menu, meal);
+                } catch (DataIntegrityViolationException ex) {
+                    System.out.println("Error deleting on database" + ex.getMessage());
+                }
             }
             removing = Console.readBoolean("Remove more? Y/N");
         } while (removing);
@@ -258,13 +264,9 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
                     System.out.println("Problems saving menu...");
 
                 }
-            } catch (DataIntegrityViolationException ex) {
-                Logger.getLogger(ElaborateOrEditMenuUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
+            } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
+                System.out.println("Error saving on database" + ex.getMessage());
 
-            } catch (DataConcurrencyException ex) {
-                Logger.getLogger(ElaborateOrEditMenuUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
             }
 
         }
