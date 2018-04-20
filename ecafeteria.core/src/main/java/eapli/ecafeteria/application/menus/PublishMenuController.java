@@ -23,7 +23,7 @@ public class PublishMenuController implements Controller {
     
     //private final ListMenuService svc = new ListMenuService();
     private final MenuRepository menuRepository = PersistenceContext.repositories().menus();
-    private final ListUnpublishedMenus m_list = new ListUnpublishedMenus(menuRepository.findAll());
+    private final ListUnpublishedMenus m_list = new ListUnpublishedMenus(menuRepository.listValidMenus());
     
     public Iterable<Menu> criticalMenus() {
         return m_list.criticalMenus();
