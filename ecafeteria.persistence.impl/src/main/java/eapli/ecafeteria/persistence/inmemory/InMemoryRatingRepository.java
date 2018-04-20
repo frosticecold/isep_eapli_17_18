@@ -7,6 +7,8 @@ package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.persistence.RatingRepository;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository;
 
 /**
@@ -18,6 +20,11 @@ public class InMemoryRatingRepository extends InMemoryRepository<Rating, Long> i
     @Override
     protected Long newKeyFor(Rating rating) {
         return rating.id();
+    }
+
+    @Override
+    public Rating saveRating(Rating entity) throws DataConcurrencyException, DataIntegrityViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

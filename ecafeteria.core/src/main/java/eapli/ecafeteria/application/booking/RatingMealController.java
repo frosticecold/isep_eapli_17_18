@@ -43,6 +43,20 @@ public class RatingMealController {
      */
     private List<Booking> bookings = null;
 
+    public RatingMealController() {
+        factory = PersistenceContext.repositories();
+        user = factory.cafeteriaUsers().findByUsername(
+                AuthorizationService.session().authenticatedUser().username())
+                .get();
+        
+        
+        ratingRepository = factory.rating();
+        bookingRepository = factory.bookingReporting();
+        BookingState served = new BookingState();
+        served.changeToServed();
+        bookings = bookingRepository.findBookingsByCafeteriaUser(user, served);
+    }
+
     /**
      * Method to add a rating on a booking of the meal
      *
@@ -53,22 +67,13 @@ public class RatingMealController {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
-    public Rating addRating(Booking booking, int rating, String comment) throws DataConcurrencyException, DataIntegrityViolationException {
-
+    public Rating addRating(Booking booking, int rating, String comment) 
+            throws DataConcurrencyException, DataIntegrityViolationException {
+        
+        System.out.println("LLL- " + user.user().id().toString());
         Rating rateMeal = new Rating(user, booking, rating, comment);
-        rateMeal = ratingRepository.save(rateMeal);
+        rateMeal = ratingRepository.saveRating(rateMeal);
         return rateMeal;
-    }
-
-    public RatingMealController() {
-        factory = PersistenceContext.repositories();
-        user = factory.cafeteriaUsers().findByUsername(
-                AuthorizationService.session().authenticatedUser().username())
-                .get();
-        ratingRepository = factory.rating();
-        bookingRepository = factory.bookingReporting();
-        BookingState served = new BookingState();
-        bookings = bookingRepository.findBookingsByCafeteriaUser(user, served);
     }
 
     /**

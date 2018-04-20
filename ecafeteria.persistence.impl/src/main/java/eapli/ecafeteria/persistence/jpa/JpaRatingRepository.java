@@ -16,6 +16,7 @@ import eapli.framework.persistence.DataIntegrityViolationException;
  */
 public class JpaRatingRepository extends CafeteriaJpaRepositoryBase<Rating, Long> implements RatingRepository {
 
+    @Override
     public Rating saveRating(Rating entity) throws DataConcurrencyException, DataIntegrityViolationException {
         return save(entity);
     }
