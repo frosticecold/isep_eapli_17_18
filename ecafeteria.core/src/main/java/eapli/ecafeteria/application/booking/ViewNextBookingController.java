@@ -26,10 +26,19 @@ public class ViewNextBookingController implements Controller {
 
     public ViewNextBookingController() {
         this.repositories = PersistenceContext.repositories();
-        this.user = repositories.cafeteriaUsers().findByUsername(
-                AuthorizationService.session().authenticatedUser().username())
-                .get();
+        this.user = getCurrentUser();
         this.bookingRepo = repositories.bookingReporting();
+    }
+
+    public CafeteriaUser getCurrentUser() {
+        try {
+            return repositories.cafeteriaUsers().findByUsername(
+                    AuthorizationService.session().authenticatedUser().username())
+                    .get();
+        } catch (NoResultException ex) {
+            System.out.println("No users were found");
+            return null;
+        }
     }
 
     /**

@@ -22,12 +22,9 @@ public class ViewNextBookingUI extends AbstractUI {
     private Booking nextBooking;
 
     public ViewNextBookingUI() {
-        try {
             controller = new ViewNextBookingController();
             this.nextBooking = controller.getNextBooking();
-        } catch(NoResultException ex) {
-            System.out.println("\nUser does not have a valid ID! Could not retrieve next booking.");
-        }
+        
     }
 
     @Override

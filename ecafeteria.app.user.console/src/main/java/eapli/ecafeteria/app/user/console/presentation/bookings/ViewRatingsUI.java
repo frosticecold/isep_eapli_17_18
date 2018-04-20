@@ -44,6 +44,7 @@ public class ViewRatingsUI extends ViewNextBookingUI {
             }
 
         } catch (NoResultException ex) {
+            System.out.println("\n»» An error has occurreed!\n There are no ratings, specified user has an invalid ID\n");
         }
 
         return true;
