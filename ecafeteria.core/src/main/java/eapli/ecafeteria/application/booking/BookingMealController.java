@@ -20,6 +20,7 @@ import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.domain.CreditTransaction.DebitBooking;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.*;
+import eapli.framework.date.DateEAPLI;
 import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -60,25 +61,33 @@ public class BookingMealController implements Controller {
         }
         return false;
     }
-    
+
     public Booking persistBooking(final Username cafeteriaUser, final Calendar date,
             final BookingState bookingState, final Meal meal) throws DataIntegrityViolationException, DataConcurrencyException {
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.SELECT_MEAL);
 
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
-        
+
         final Booking newBooking = new Booking(meal, bookingState, user.get(), date);
 
         return this.repository.saveBooking(newBooking);
     }
 
-    public void showNutricionalInfo(Meal meal){
-          meal.dish().nutricionalInfo().toString();
+    public void showNutricionalInfo(Meal meal) {
+        meal.dish().nutricionalInfo().toString();
 
     }
 
-    public void showAlergen(Meal meal){
-       // meal.dish().alergenInDish();
+    public void showAlergen(Meal meal) {
+        // meal.dish().alergenInDish();
+    }
+
+    public boolean is24hBefore(Calendar date) {
+        DateEAPLI dt = new DateEAPLI(date);
+        if (dt.isTomorrow(date)) {
+            return true;
+        }
+        return false;
     }
 }

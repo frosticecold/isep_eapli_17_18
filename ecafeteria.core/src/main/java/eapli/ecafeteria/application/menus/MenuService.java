@@ -22,7 +22,7 @@ public class MenuService {
     private static final MenuRepository menuRepository = PersistenceContext.repositories().menus();
     private static final MealRepository mealRepository = PersistenceContext.repositories().meals();
 
-    private MenuService() {
+    public MenuService() {
     }
 
     public static Optional<Menu> findMenuWithinPeriod(Calendar startDate, Calendar endDate) {

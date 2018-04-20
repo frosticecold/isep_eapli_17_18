@@ -34,7 +34,7 @@ public class ListMenuUI extends AbstractUI{
                 for(Meal m : meals){
                     m.toString();
                 }
-            
+
                 bDay.add(Calendar.DAY_OF_MONTH, 1);
             }
         }catch(Exception e){

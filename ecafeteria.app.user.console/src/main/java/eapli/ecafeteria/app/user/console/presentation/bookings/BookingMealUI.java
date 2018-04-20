@@ -37,6 +37,12 @@ public class BookingMealUI extends AbstractUI {
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
 
+        if(controller.is24hBefore(cal)==false){
+            System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
+            return false;
+        }
+        
+        
         //====================================lIST MEAL============================================
         Iterable<Meal> mealList = null;
         int option = 0;
