@@ -61,7 +61,7 @@ public class BookingMealController implements Controller {
         return false;
     }
     
-    public Booking persistBooking(final Username cafeteriaUser, final Date date,
+    public Booking persistBooking(final Username cafeteriaUser, final Calendar date,
             final BookingState bookingState, final Meal meal) throws DataIntegrityViolationException, DataConcurrencyException {
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.SELECT_MEAL);
