@@ -6,10 +6,19 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
+import eapli.ecafeteria.domain.CreditTransaction.CreditRecharge;
+import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
+import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.ecafeteria.persistence.TransactionRepository;
 import eapli.framework.application.Controller;
 import eapli.framework.domain.money.Money;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +27,7 @@ import java.util.Optional;
 public class ChargeCardController implements Controller {
 
     private final CafeteriaUserService service = new CafeteriaUserService();
+    private final TransactionRepository tr = PersistenceContext.repositories().transactioRepository();
 
     public CafeteriaUser findCafeteriaUserByMecanographicNumber(String mecanographicNumber) {
         Optional<CafeteriaUser> user = service.findCafeteriaUserByMecNumber(mecanographicNumber);
@@ -28,10 +38,24 @@ public class ChargeCardController implements Controller {
     }
 
     public boolean chargeCafeteriaUserCard(CafeteriaUser user, Money creditToCharge) {
+        Transaction t = new CreditRecharge(user, creditToCharge);
+        saveTransaction(t);
         return user.addCredits(creditToCharge);
     }
-    
-    public CafeteriaUser save (CafeteriaUser user){
+
+    public CafeteriaUser save(CafeteriaUser user) {
         return service.save(user);
     }
+
+    private  void saveTransaction(Transaction t) {
+        try {
+            tr.save(t);
+
+        } catch (DataConcurrencyException ex) {
+            Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DataIntegrityViolationException ex) {
+            Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

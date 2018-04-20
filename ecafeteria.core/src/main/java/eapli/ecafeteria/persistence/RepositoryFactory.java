@@ -112,4 +112,6 @@ public interface RepositoryFactory {
     ExecutionRepository executions();
 
     public AlergenRepository alergens();
+    
+    TransactionRepository transactioRepository();
 }

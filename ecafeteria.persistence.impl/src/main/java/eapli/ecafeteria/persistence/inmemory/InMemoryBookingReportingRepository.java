@@ -13,7 +13,6 @@ import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -59,4 +58,5 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+  
 }
