@@ -43,9 +43,9 @@ public class Booking implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private CafeteriaUser cafeteriaUser;
     
-    private Date date;
+    private Calendar date;
 
-    public Booking(Meal meal, BookingState bookingState, CafeteriaUser cafeteriaUser, Date date) {
+    public Booking(Meal meal, BookingState bookingState, CafeteriaUser cafeteriaUser, Calendar date) {
         this.meal = meal;
         this.bookingState = bookingState;
         this.cafeteriaUser = cafeteriaUser;

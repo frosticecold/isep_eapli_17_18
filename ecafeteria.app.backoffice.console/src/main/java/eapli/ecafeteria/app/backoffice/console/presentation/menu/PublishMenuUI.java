@@ -11,6 +11,7 @@ import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.ListWidget;
 import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.util.Console;
 import java.util.ArrayList;
@@ -33,12 +34,29 @@ public class PublishMenuUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         boolean publish = true;
-        List<String> list = new ArrayList<>();
-        list.add("Publish Critical Menus");
-        list.add("Publish Not Critical Menus");
-        SelectWidget<String> widget = new SelectWidget<>("Showing Options", list);
+        List<String> optionsList = new ArrayList<>();
+        List<String> critMenuList = new ArrayList<>();
+        List<String> notCritMenuList = new ArrayList<>();
+        
+        optionsList.add("Publish Critical Menus");
+        optionsList.add("Publish Not Critical Menus");
+        
+        for (Menu criticalMenu : controller.criticalMenus()) {
+            critMenuList.add(criticalMenu.toString());
+        }
+        
+        for (Menu notCriticalMenu : controller.notCriticalMenus()) {
+            notCritMenuList.add(notCriticalMenu.toString());
+        }
+        
+        ListWidget<String> critListMenus = new ListWidget<>("Critical Menus", critMenuList);
+        ListWidget<String> notCritListMenus = new ListWidget<>("Not Critical Menus", notCritMenuList);
+        SelectWidget<String> widget = new SelectWidget<>("Showing Options", optionsList);
+        
         do {
             try {
+                critListMenus.show();
+                notCritListMenus.show();
                 widget.show();
                 int option = widget.selectedOption();
                 switch (option) {

@@ -11,7 +11,6 @@ import eapli.framework.presentation.console.AbstractUI;
 public class RegisterMealDeliveryUI extends AbstractUI {
     
     private RegisterMealDeliveryController ctrl;
-    private ViewAvailableMealsUI availableMeals = new ViewAvailableMealsUI();
 
     /** Construtor that shall receive the entity of the open session of a certain POS **/
     public RegisterMealDeliveryUI() {
@@ -24,15 +23,18 @@ public class RegisterMealDeliveryUI extends AbstractUI {
 
         //recordNewMealDelivery(pos, idBooking); //records the new delivery on the delivery registry of this session 
     }
-
-    @Override
-    protected boolean doShow() {
-        availableMeals.doShow();
-        return true;
-    }
-
+    
+    /**
+     * headline menu
+     * @return 
+     */
     @Override
     public String headline() {
         return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
+    }
+
+    @Override
+    protected boolean doShow() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

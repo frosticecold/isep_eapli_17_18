@@ -37,6 +37,12 @@ public class BookingMealUI extends AbstractUI {
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
 
+        if(controller.is24hBefore(cal)==false){
+            System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
+            return false;
+        }
+        
+        
         //====================================lIST MEAL============================================
         Iterable<Meal> mealList = null;
         int option = 0;
@@ -86,8 +92,6 @@ public class BookingMealUI extends AbstractUI {
         //===================================SHOW NUTRICIONAL INFO AND CALORICS==================================
 //        System.out.println("Alergen Info:\n");
 //        controller.showAlergen(choosedMeal);
-//        System.out.println("Nutricional Info:\n");
-//        controller.showNutricionalInfo(choosedMeal);
         //===================================Paymemnt==================================
         System.out.println("Do you want to continue?\n1-Yes\n2-No\n");
 
@@ -98,12 +102,13 @@ public class BookingMealUI extends AbstractUI {
         switch (option2) {
             case 1:
                 if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal) == true) {
-                    System.out.println("Operação bem sucedida, foi efetuado o pagamento");
+                    System.out.println("Operação bem sucedida, foi efetuado o pagamento.");
                 } else {
-                    System.out.println("Operação encerrada");
+                    System.out.println("Não possui saldo suficiente.");
                     break;
                 }
             case 2:
+                System.out.println("Operação encerrada.");
                 break;
 
         }
@@ -113,7 +118,7 @@ public class BookingMealUI extends AbstractUI {
 
         try {
 
-            controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal.getTime(), bookingState, choosedMeal);
+            controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal, bookingState, choosedMeal);
 
         } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
             Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);

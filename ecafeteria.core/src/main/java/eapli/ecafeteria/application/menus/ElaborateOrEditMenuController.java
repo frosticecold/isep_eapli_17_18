@@ -13,6 +13,7 @@ import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.DishRepository;
 import eapli.ecafeteria.persistence.DishTypeRepository;
+import eapli.ecafeteria.persistence.MealRepository;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RepositoryFactory;
@@ -39,6 +40,7 @@ public class ElaborateOrEditMenuController implements Controller {
     private final MenuRepository menurepo;
     private final DishRepository dishrepo;
     private final DishTypeRepository dishtyperepo;
+    private final MealRepository mealrepo;
     private Map<Integer, Calendar> mapOfWorkingDays;
     private Calendar selectedDay;
 
@@ -59,6 +61,7 @@ public class ElaborateOrEditMenuController implements Controller {
         menurepo = repositories.menus();
         dishrepo = repositories.dishes();
         dishtyperepo = repositories.dishTypes();
+        mealrepo = repositories.meals();
     }
 
     /**
@@ -153,22 +156,28 @@ public class ElaborateOrEditMenuController implements Controller {
         if (menu == null || day == null) {
             return null;
         }
-        return menu.getMealsByDay(day);
+        return mealrepo.listMealsFromMenuByGivenDay(menu, day);
     }
 
-    public boolean addMealOnMenu(Menu menu, Meal meal) {
+    public boolean addMealOnMenu(Menu menu, Meal meal) throws DataConcurrencyException, DataIntegrityViolationException {
         if (menu == null || meal == null) {
             return false;
         }
-        return menu.addMeal(meal);
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
+        return mealrepo.save(meal) != null;
     }
 
-    public boolean removeMealFromMenu(Menu menu, Meal meal) {
+    public boolean removeMealFromMenu(final Menu menu, final Meal meal) throws DataIntegrityViolationException {
         if (menu == null || meal == null) {
             return false;
 
         }
-        return menu.removeMeal(meal);
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
+        if (menu.isPublished()) {
+            return false;
+        }
+        mealrepo.delete(meal);
+        return true;
     }
 
     public Menu saveMenu(Menu menu) throws DataIntegrityViolationException, DataConcurrencyException {

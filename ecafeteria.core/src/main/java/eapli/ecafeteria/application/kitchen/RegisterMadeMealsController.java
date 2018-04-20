@@ -37,6 +37,9 @@ public class RegisterMadeMealsController implements Controller {
 
     public boolean addExecution(Execution e) throws DataConcurrencyException, DataIntegrityViolationException {
         execRepo.save(e);
+        
+        System.out.println(e);
+        
         return true;
     }
 }

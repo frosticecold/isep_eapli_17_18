@@ -194,6 +194,15 @@ public class DateEAPLI {
     }
 
     /**
+     * Is tomorroe?
+     *
+     * @return
+     */
+    public final boolean isTomorrow(Calendar cal) {
+        return DateTime.isTomorrow(cal);
+    }
+
+    /**
      * Returns the day of the week
      *
      * @return

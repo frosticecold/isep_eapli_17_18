@@ -12,4 +12,6 @@ import java.io.Serializable;
 public interface MenuPlanRepository extends DataRepository<MenuPlan,Long> {
     
     public MenuPlan saveMenuPlan(MenuPlan menuplan);
+    
+    public MenuPlan getActiveMenuPlan();
 }

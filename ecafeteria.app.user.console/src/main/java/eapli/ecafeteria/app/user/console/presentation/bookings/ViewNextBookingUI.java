@@ -10,6 +10,7 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -17,11 +18,13 @@ import eapli.framework.presentation.console.AbstractUI;
  */
 public class ViewNextBookingUI extends AbstractUI {
 
-    private final ViewNextBookingController controller = new ViewNextBookingController();
+    private ViewNextBookingController controller = null;
     private Booking nextBooking;
 
     public ViewNextBookingUI() {
-        this.nextBooking = controller.getNextBooking();
+            controller = new ViewNextBookingController();
+            this.nextBooking = controller.getNextBooking();
+        
     }
 
     @Override

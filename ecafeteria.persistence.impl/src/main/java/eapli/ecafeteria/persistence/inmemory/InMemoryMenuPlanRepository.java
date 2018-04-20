@@ -16,5 +16,10 @@ public class InMemoryMenuPlanRepository extends InMemoryRepositoryWithLongPK<Men
     public MenuPlan saveMenuPlan(MenuPlan menuplan) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public MenuPlan getActiveMenuPlan() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

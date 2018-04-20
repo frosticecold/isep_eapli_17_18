@@ -6,6 +6,7 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
 import eapli.ecafeteria.application.menus.ElaborateOrEditMenuController;
+import eapli.ecafeteria.application.menus.MenuService;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Meal;
@@ -24,8 +25,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -53,6 +52,8 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
                     menuAddOrRemoveMeals(menu, calendar);
                     askForConfirmation(menu);
                     editing = Console.readBoolean("Keep editing? Y/N");
+                } else {
+                    editing = false;
                 }
             } while (editing);
         } catch (Exception ex) {
@@ -143,7 +144,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      */
     private void menuAddOrRemoveMeals(Menu menu, Calendar day) {
         boolean editing = true;
-        ListWidget<Meal> widget = new ListWidget<>("List Meal", menu.getMealsByDay(day));
+        ListWidget<Meal> widget = new ListWidget<>("List Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
         do {
             widget.show();
             /**
@@ -185,7 +186,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      */
     private void menuAddMeals(Menu menu, Calendar day) {
         boolean adding = true;
-        ListWidget<Meal> widgetmeals = new ListWidget<>("List Meal", menu.getMealsByDay(day));
+        ListWidget<Meal> widgetmeals = new ListWidget<>("List Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
         SelectWidget<DishType> widgetdishtype = new SelectWidget<>("Select DishType", theController.getDishTypes());
         SelectWidget<Dish> widgetdish;
         SelectWidget<MealType> widgetmealtype = new SelectWidget<>("Select MealType", Arrays.asList(MealType.values()));
@@ -206,11 +207,15 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             if (mt == null) {
                 break;
             }
-            Meal meal = new Meal(dish, mt, day);
+            Meal meal = new Meal(dish, mt, day, menu);
             System.out.println(meal);
             boolean confirm = Console.readBoolean("Confirm meal? Y/N");
             if (confirm) {
-                theController.addMealOnMenu(menu, meal);
+                try {
+                    theController.addMealOnMenu(menu, meal);
+                } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
+                    System.out.println("Error saving on database" + ex.getMessage());
+                }
             }
             adding = Console.readBoolean("Add more? Y/N");
             if (adding) {
@@ -226,7 +231,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
         SelectWidget<Meal> widgetmeal;
         boolean removing = true;
         do {
-            widgetmeal = new SelectWidget<>("Select Meal", menu.getMealsByDay(day));
+            widgetmeal = new SelectWidget<>("Select Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
             /**
              * Ask what to remove
              */
@@ -237,7 +242,11 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             }
             boolean areyousure = Console.readBoolean("Are you sure? Y/N");
             if (areyousure) {
-                menu.removeMeal(meal);
+                try {
+                    theController.removeMealFromMenu(menu, meal);
+                } catch (DataIntegrityViolationException ex) {
+                    System.out.println("Error deleting on database" + ex.getMessage());
+                }
             }
             removing = Console.readBoolean("Remove more? Y/N");
         } while (removing);
@@ -255,13 +264,9 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
                     System.out.println("Problems saving menu...");
 
                 }
-            } catch (DataIntegrityViolationException ex) {
-                Logger.getLogger(ElaborateOrEditMenuUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
+            } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
+                System.out.println("Error saving on database" + ex.getMessage());
 
-            } catch (DataConcurrencyException ex) {
-                Logger.getLogger(ElaborateOrEditMenuUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
             }
 
         }

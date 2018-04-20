@@ -12,32 +12,45 @@ import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.application.Controller;
+import javax.persistence.NoResultException;
 
 /**
  *
  * @author João Rocha 1161838
  */
-public class ViewNextBookingController implements Controller{
-    
-    private BookingReportingRepository bookingRepo; 
+public class ViewNextBookingController implements Controller {
+
+    private BookingReportingRepository bookingRepo;
     private RepositoryFactory repositories;
     private CafeteriaUser user;
-   
-    
-    public ViewNextBookingController(){
+
+    public ViewNextBookingController() {
         this.repositories = PersistenceContext.repositories();
-        this.user = repositories.cafeteriaUsers().findByUsername(
-                AuthorizationService.session().authenticatedUser().username())
-                .get();
+        this.user = getCurrentUser();
         this.bookingRepo = repositories.bookingReporting();
     }
-    
+
+    public CafeteriaUser getCurrentUser() {
+        try {
+            return repositories.cafeteriaUsers().findByUsername(
+                    AuthorizationService.session().authenticatedUser().username())
+                    .get();
+        } catch (NoResultException ex) {
+            System.out.println("No users were found");
+            return null;
+        }
+    }
+
     /**
      * Gets user next booking
-     * @param user
-     * @return 
+     *
+     * @return
      */
-    public Booking getNextBooking(){
-        return bookingRepo.findNextBooking(user);
+    public Booking getNextBooking() throws NoResultException {
+        try {
+            return bookingRepo.findNextBooking(user);
+        } catch (NoResultException ex) {
+            throw new NoResultException();
+        }
     }
 }

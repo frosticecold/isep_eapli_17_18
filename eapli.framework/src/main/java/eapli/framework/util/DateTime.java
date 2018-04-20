@@ -452,6 +452,17 @@ public final class DateTime {
         return compareTimes(a, b) < 0;
     }
 
+    public static boolean is24hBefore(final Calendar choosedDay, final Calendar today) {
+        //86400000millis - 24 hours
+        long choosed = choosedDay.getTimeInMillis();
+        long day = today.getTimeInMillis();
+        if(day + 86400000 <  choosed){
+            return true;
+            
+        }
+        return false;
+    }
+
     /**
      * checks if the calendar time (Hour, Minute, Second and Millisecond) is
      * before or equal the other calendar.
@@ -519,6 +530,10 @@ public final class DateTime {
      */
     public static boolean isBeforeNow(final Calendar a) {
         return isBeforeTime(a, now());
+    }
+
+    public static boolean isTomorrow(final Calendar a) {
+        return is24hBefore(a, now());
     }
 
     /**

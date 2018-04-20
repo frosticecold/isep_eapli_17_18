@@ -68,7 +68,7 @@ public class NutricionalInfo implements ValueObject, Serializable {
 
     @Override
     public String toString() {
-        return this.calories + " " + this.salt;
+        return "NutricionalInfo{" + "calories=" + calories + ", salt=" + salt + '}';
     }
 
     public Integer calories() {
