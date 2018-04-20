@@ -75,16 +75,16 @@ public class RatingTest {
     @After
     public void tearDown() {
     }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void sureRatingHasValidRating() {
-        new Rating(10, "Good meal");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void sureRatingHasValidComment() {
-        new Rating(3, null);
-    }
+//    
+//    @Test(expected = IllegalArgumentException.class)
+//    public void sureRatingHasValidRating() {
+//        new Rating(10, "Good meal");
+//    }
+//
+//    @Test(expected = IllegalArgumentException.class)
+//    public void sureRatingHasValidComment() {
+//        new Rating(3, null);
+//    }
 
 //    /**
 //     * Test of equals method, of class Rating.

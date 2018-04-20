@@ -6,6 +6,7 @@
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.application.booking.RatingMealController;
+
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -24,7 +25,7 @@ public class RatingMealUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        final List<Booking> bookings = controller.findBookings();
+        final List<Booking> bookings = controller.showBookings();
 
         if (!bookings.iterator().hasNext()) {
             System.out.println("There are no registered consumed bookings");
@@ -46,7 +47,7 @@ public class RatingMealUI extends AbstractUI {
         String comment = Console.readLine("Leave a reply (optional) :");
 
         try {
-            controller.addRating(selectedBooking ,rating, comment);
+            controller.addRating(selectedBooking, rating, comment);
             System.out.println("Booking successfully rated \n");
         } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
             System.out.println("Unable to register rating. Try again later");
