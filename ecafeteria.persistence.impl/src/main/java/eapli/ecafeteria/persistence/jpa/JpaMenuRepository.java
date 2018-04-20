@@ -26,7 +26,10 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
     @Override
     public Iterable<Menu> listValidMenus() {
         final Query q;
-        q = entityManager().createQuery("SELECT e FROM Menu e", this.entityClass);
+        String where = "e.menuState=:mstate";
+        q = entityManager().createQuery("SELECT e FROM Menu e WHERE " + where, this.entityClass);
+        
+        q.setParameter("mstate", MenuState.UNPUBLISHED);
 
         return q.getResultList();
     }
@@ -58,5 +61,14 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
         q.setParameter("mealtype", mealType);
 
         return q.getResultList();
+    }
+    
+    public Optional<Menu> findMenuOnDate(Calendar cal){
+        final Query q;
+        q = entityManager().createQuery("SELECT e FROM Menu e WHERE :date=>e.period.startingDate AND :date1<=e.period.endingDate",Menu.class);
+        q.setParameter("date", cal, TemporalType.DATE);
+        q.setParameter("date1", cal, TemporalType.DATE);
+        
+        return q.getResultList().stream().findFirst();
     }
 }

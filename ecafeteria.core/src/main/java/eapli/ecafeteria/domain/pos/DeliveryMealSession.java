@@ -1,6 +1,7 @@
 package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
@@ -26,6 +27,8 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @Transient
     private POS pos; //it wont be persisted on database
     
+    private MealType typeSession;
+    
     protected DeliveryMealSession() {
        //for ORM only
     }
@@ -35,6 +38,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public DeliveryMealSession(POS pos) {
         this.pos = pos;
         this.sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
+        this.defineSessionType();
     }
     
     @Override
@@ -67,5 +71,58 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public void addNewDelivery(MecanographicNumber idUser, long idBooking) {
         
         
+    }
+    
+    /**
+     * Define the type of the session
+     */
+    private void defineSessionType () {
+        
+        int type = -1;
+        
+        //see what is the hour to set the correct type of session LUNCH OR DINNER
+        
+        //check if its lunch
+        if(this.sessionDate.Hour() >= 12 && this.sessionDate.Hour() < 15) type = 1;
+        
+        //check if its dinner
+        if(this.sessionDate.Hour() >= 18 && this.sessionDate.Hour() < 23) type = 2;
+        
+        //change the type of session on previous conditions
+        switch(type) {
+            case 1:
+                this.typeSession = MealType.LUNCH;
+            break;
+            
+            case 2:
+                this.typeSession = MealType.DINNER;
+            break;
+        }
+    }
+    
+    /**
+     * Check if its a lunch session
+     * @return 
+     */
+    public boolean isLunch() {
+        
+        boolean r = false;
+        
+        if(this.typeSession == MealType.LUNCH) r = true;
+        
+        return r;
+    }
+    
+    /**
+     * Check if the session is dinner session
+     * @return 
+     */
+    public boolean isDinner() {
+        
+        boolean r = false;
+        
+        if(this.typeSession == MealType.DINNER) r = true;
+        
+        return r;
     }
 }

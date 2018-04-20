@@ -35,7 +35,7 @@ public abstract class Transaction implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private CafeteriaUser user;
+    private CafeteriaUser cafeteriaUser;
     private Money k;
     private String transactionType;
     @OneToOne
@@ -54,7 +54,7 @@ public abstract class Transaction implements Serializable {
      * Debit, Credit or Cancelation
      */
     public Transaction(CafeteriaUser user, Money k) {
-        this.user = user;
+        this.cafeteriaUser = user;
         this.k = k;
         this.date = DateTime.now();
         this.systemUser = AuthorizationService.session().authenticatedUser();

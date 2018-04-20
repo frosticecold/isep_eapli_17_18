@@ -41,7 +41,7 @@ public class Balance implements ValueObject, Serializable{
      * @author Beatriz Ferreira
      */
     public boolean hasEnoughCredits(Money credits) {
-       return this.currentBalance.lessThan(credits);
+       return this.currentBalance.greaterThanOrEqual(credits);
   
     }
     

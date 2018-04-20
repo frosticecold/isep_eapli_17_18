@@ -1,6 +1,5 @@
 package eapli.ecafeteria.domain.kitchen;
 
-import eapli.ecafeteria.domain.meal.*;
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +10,7 @@ public class MealMaterial {
 
     private long materialCode;
     private long mealCode;
+    @OneToOne
     private Batch batch;
 
     public MealMaterial(long materialCode, long mealCode, Batch batch) {

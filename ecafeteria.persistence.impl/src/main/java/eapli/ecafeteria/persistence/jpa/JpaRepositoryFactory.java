@@ -136,4 +136,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public TransactionRepository transactioRepository() {
         return new JpaTransactionRepository();
     }
+
+    @Override
+    public RatingReportingRepository ratingsReporting() {
+        return new JpaRatingReportingRepository();
+    }
 }

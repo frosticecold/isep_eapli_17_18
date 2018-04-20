@@ -9,7 +9,6 @@ import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.domain.CreditTransaction.CreditRecharge;
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.TransactionRepository;
 import eapli.framework.application.Controller;
@@ -28,29 +27,31 @@ public class ChargeCardController implements Controller {
 
     private final CafeteriaUserService service = new CafeteriaUserService();
     private final TransactionRepository tr = PersistenceContext.repositories().transactioRepository();
+    private Transaction t;
+    private CafeteriaUser user;
 
     public CafeteriaUser findCafeteriaUserByMecanographicNumber(String mecanographicNumber) {
         Optional<CafeteriaUser> user = service.findCafeteriaUserByMecNumber(mecanographicNumber);
         if (user.isPresent()) {
+            this.user = user.get();
             return user.get();
         }
         return null;
     }
 
     public boolean chargeCafeteriaUserCard(CafeteriaUser user, Money creditToCharge) {
-        Transaction t = new CreditRecharge(user, creditToCharge);
+        this.t = new CreditRecharge(user, creditToCharge);
         saveTransaction(t);
         return user.addCredits(creditToCharge);
     }
 
-    public CafeteriaUser save(CafeteriaUser user) {
+    public CafeteriaUser saveCafeteriaUser(CafeteriaUser user) {
         return service.save(user);
     }
 
-    private  void saveTransaction(Transaction t) {
+    private void saveTransaction(Transaction t) {
         try {
-            tr.save(t);
-
+            this.tr.save(this.t);
         } catch (DataConcurrencyException ex) {
             Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DataIntegrityViolationException ex) {
