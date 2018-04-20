@@ -25,10 +25,10 @@ public class ViewNextBookingController implements Controller{
    
     
     public ViewNextBookingController(){
+        this.repositories = PersistenceContext.repositories();
         this.user = repositories.cafeteriaUsers().findByUsername(
                 AuthorizationService.session().authenticatedUser().username())
                 .get();
-        repositories = PersistenceContext.repositories();
         this.bookingRepo = repositories.bookingReporting();
     }
     

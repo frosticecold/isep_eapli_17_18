@@ -29,8 +29,10 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         String query = "SELECT DeliveryMealSession.*"
                     + "FROM DeliverMealSession"
                     + "WHERE e.id = id";
-                
+                     
         final Query q = entityManager().createQuery(query, this.entityClass);
+        
+        q.setParameter("id",entityId);
         
         DeliveryMealSession entity = (DeliveryMealSession) q.getSingleResult();
         
