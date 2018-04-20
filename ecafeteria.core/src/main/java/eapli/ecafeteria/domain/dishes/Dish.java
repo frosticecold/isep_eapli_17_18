@@ -27,8 +27,8 @@ import javax.persistence.ElementCollection;
  */
 @Entity
 @SqlResultSetMapping(name = "DishesPerCaloricCategoryMapping", classes = @ConstructorResult(targetClass = DishesPerCaloricCategory.class, columns = {
-    @ColumnResult(name = "caloricCategory")
-    , @ColumnResult(name = "n")}))
+        @ColumnResult(name = "caloricCategory")
+        , @ColumnResult(name = "n")}))
 public class Dish implements AggregateRoot<Designation>, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,12 +45,12 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     private DishType dishType;
     private NutricionalInfo nutricionalInfo;
     private Money price;
-    
+
     private boolean active;
     @ElementCollection(targetClass=Integer.class)
     private List<Alergen> alergens=new ArrayList<>();
     public Dish(final DishType dishType, final Designation name,
-            final NutricionalInfo nutricionalInfo, Money price) {
+                final NutricionalInfo nutricionalInfo, Money price) {
         if (dishType == null || name == null || nutricionalInfo == null) {
             throw new IllegalArgumentException();
         }
@@ -200,8 +200,6 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
                 nutricionalInfo.calories(), nutricionalInfo.salt(), price.amount(),
                 price.currency().getCurrencyCode(), active);
     }
-    
-    
 
     @Override
     public String toString() {

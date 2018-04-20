@@ -53,6 +53,8 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
                     menuAddOrRemoveMeals(menu, calendar);
                     askForConfirmation(menu);
                     editing = Console.readBoolean("Keep editing? Y/N");
+                } else {
+                    editing = false;
                 }
             } while (editing);
         } catch (Exception ex) {
