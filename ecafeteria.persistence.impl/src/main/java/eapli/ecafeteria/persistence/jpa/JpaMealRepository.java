@@ -65,4 +65,24 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         q.setParameter("menu", m);
         return q.getFirstResult();
     }
+     
+     
+         @Override
+    public Iterable<Meal> listMealsPublishedByDayAndMealType(Calendar date, MealType mealType) {
+        final Query q = entityManager().
+                createQuery("SELECT meal"
+                        //+ " FROM Menu menu, Meal meal"
+                          + " FROM Meal meal"
+                        //+ " WHERE menu.menuState=:state"
+                          + " WHERE meal.date = :date"
+                       // + " WHERE menu.period.startingDate <= :date AND menu.period.endingDate >= :date"
+                        + " AND meal.mealtype = :mealtype", Meal.class);
+
+          q.setParameter("date", date, TemporalType.DATE);
+        // q.setParameter("state", MenuState.PUBLISHED);
+        q.setParameter("mealtype", mealType);
+
+        return q.getResultList();
+    }
+    
 }

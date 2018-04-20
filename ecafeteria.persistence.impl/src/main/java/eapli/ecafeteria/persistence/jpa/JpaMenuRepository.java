@@ -45,24 +45,6 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
         return query.getResultList().stream().findFirst();
     }
 
-    @Override
-    public Iterable<Meal> listMealsPublishedMenu(Calendar date, MealType mealType) {
-        final Query q = entityManager().
-                createQuery("SELECT meal"
-                        //+ " FROM Menu menu, Meal meal"
-                          + " FROM Meal meal"
-                        //+ " WHERE menu.menuState=:state"
-                          + " WHERE meal.date = :date"
-                       // + " WHERE menu.period.startingDate <= :date AND menu.period.endingDate >= :date"
-                        + " AND meal.mealtype = :mealtype", Meal.class);
-
-          q.setParameter("date", date, TemporalType.DATE);
-        // q.setParameter("state", MenuState.PUBLISHED);
-        q.setParameter("mealtype", mealType);
-
-        return q.getResultList();
-    }
-    
     public Optional<Menu> findMenuOnDate(Calendar cal){
         final Query q;
         q = entityManager().createQuery("SELECT e FROM Menu e WHERE :date=>e.period.startingDate AND :date1<=e.period.endingDate",Menu.class);

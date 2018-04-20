@@ -32,7 +32,7 @@ public class MenuService {
 
     public static Iterable<Meal> getMealsPublishedByDay(Calendar date, MealType mealType) {
 
-        return menuRepository.listMealsPublishedMenu(date, mealType);
+        return mealRepository.listMealsPublishedByDayAndMealType(date, mealType);
 
     }
 
