@@ -172,8 +172,5 @@ public class Meal implements Serializable {
     public MealType mealtype() {
         return mealtype;
     }
-    
-    
-      
 
 }
