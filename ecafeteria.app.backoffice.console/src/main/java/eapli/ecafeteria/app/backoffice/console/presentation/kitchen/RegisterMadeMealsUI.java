@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.app.user.console.presentation.kitchen;
+package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.kitchen.RegisterMadeMealsController;
@@ -39,7 +39,7 @@ public class RegisterMadeMealsUI extends AbstractUI{
             System.out.println("1-Lunch");
             System.out.println("2-Dinner");
             n = Console.readInteger("Choose:");
-        }while(n!=1 || n!=2);
+        }while(n!=1 && n!=2);
         
         MealType mealType = null;
         if(n==1){
