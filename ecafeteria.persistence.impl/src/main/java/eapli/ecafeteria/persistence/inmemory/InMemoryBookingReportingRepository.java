@@ -39,10 +39,6 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Iterable<BookingPerOption> showReportByDay(Date date) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public Iterable<BookingPerOption> showReportByDay(java.util.Date date) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
