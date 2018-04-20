@@ -3,7 +3,7 @@ ___________
 ANÀLISE
 __________
 
-Renuião com o cliente 13/04/18
+Renuião com o cliente 20/04/18
 
 Registar a entrega de uma refeição na cantina – registar o levantamento de uma reserva.
 
@@ -12,40 +12,19 @@ __________________
 REGRAS DE NEGÒCIO
 __________________
 
+* Antes da entrega, tem que haver verificação das refeiçõe disponiveis para entregar.
 
-* Fica registado o id da reserva, o id do utilizador que levantou na reserva dentro do registo de entregas de refeições da sessão
-* Reserva só pode ser entregue, se tiver o estado "Reserved". Ficando registado no "DeliveryRegistry"
-* Estado de reserva será alterado (estado - "Served") diretamente no repositorio depois do registo da entrega da refeição
-_______________
+* Cada entrega é registado na session de uma dada refeição (Almoço ou Jantar) de um certo dia, guardando a reserva, o cliente e o operador de caixa.
+
+* Ao momento da entrega de refeição, tem que alterar o estado da reserva que foi entregue. 
+
+* Atualizar quantidade de pratos para um certo tipo de refeição, referente a dia da sessão atual.
+
+* Verificar se a refeição a ser entregue tem um menu associado
 
 TESTE UNITÀRIOS
 _______________
 
-1. Verificar estado de reserva
-
-* Validar estado da reserva
-
-	- Caso não exista
-
-	- Caso não esteja no estado (já entregue)
-
-	- Caso esteja no estado "a entregar" (sucesso)
-
-
-* Registo de entrega da refeição
-
-	- Caso de sucesso
-
-
-2. Alterar estado de reserva para entregue
-
-	* Acesso ao repositorios das reservas
-
-		- Caso de sucesso
-
-	* Alteração do estado
-
-		- Caso reserva mude para entregue (sucesso)
 
 ________________
 

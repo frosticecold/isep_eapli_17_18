@@ -23,9 +23,6 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @Temporal(TemporalType.DATE)
     private DeliverySessionDate sessionDate;
     
-    @OneToMany
-    private DeliveryRegistry registry;
-    
     @Transient
     private POS pos; //it wont be persisted on database
     

@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.domain.booking;
 
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
@@ -31,17 +32,20 @@ public class Rating implements AggregateRoot<Long>, Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
+    @OneToOne(cascade = CascadeType.ALL)
+    private CafeteriaUser user;
     private String reply;
 
     protected Rating() {
         //for ORM 
     }
 
-    public Rating(int rating, String comment) {
+    public Rating(Booking booking ,int rating, String comment) {
         if (booking == null || rating < 0 || rating > 5 || comment == null) {
             throw new IllegalArgumentException("Invalid. Please check.");
         }
         this.rating = rating;
+        this.booking = booking;
         this.comment = comment;
         this.reply = "No reply yet.";
     }
@@ -53,12 +57,12 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param rating
      * @param comment
      */
-    public Rating(Booking booking, int rating, String comment) {
+    public Rating(CafeteriaUser user ,Booking booking, int rating, String comment) {
 
         if (booking == null || rating < 0 || rating > 5 || comment == null) {
             System.out.println("Invalid. Please check.");
         }
-
+        this.user = user;
         this.booking = booking;
         this.rating = rating;
         this.comment = comment;

@@ -6,6 +6,9 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.persistence.DishReportingRepository;
+import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
 import eapli.framework.application.Controller;
 
 /**
@@ -13,13 +16,14 @@ import eapli.framework.application.Controller;
  * @author Oliveira
  */
 public class ClosePOSController implements Controller {
+    
+    private final DishReportingRepository repo = PersistenceContext.repositories().dishReporting();
 
-   
-    public void closeSession(){
+    public void closeSession() {
         AuthorizationService.clearSession();
     }
-    
-    public Iterable<Integer> listDeliveredMeals(){
-        return null;
+
+    public Iterable<DishesPerDishType> listDeliveredMeals() {
+        return repo.dishesPerDishType();
     }
 }

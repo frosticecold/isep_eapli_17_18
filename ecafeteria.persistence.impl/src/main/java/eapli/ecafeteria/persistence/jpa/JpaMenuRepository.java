@@ -26,8 +26,11 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
     @Override
     public Iterable<Menu> listValidMenus() {
         final Query q;
-        q = entityManager().createQuery("SELECT e FROM Menu e", this.entityClass);
+        String where = "e.menuState=:mstate";
+        q = entityManager().createQuery("SELECT e FROM Menu e WHERE " + where, this.entityClass);
         
+        q.setParameter("mstate", MenuState.UNPUBLISHED);
+
         return q.getResultList();
     }
 
@@ -41,20 +44,22 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
         query.setParameter("edate", endDate, TemporalType.DATE);
         return query.getResultList().stream().findFirst();
     }
-    
-    public Iterable<Meal> listMealsPublishedMenu(Calendar date, MealType mealType){
+
+    @Override
+    public Iterable<Meal> listMealsPublishedMenu(Calendar date, MealType mealType) {
         final Query q = entityManager().
                 createQuery("SELECT meal"
-                       // + " FROM Menu menu, Meal meal"
-                         + " FROM Meal meal"
+                        //+ " FROM Menu menu, Meal meal"
+                          + " FROM Meal meal"
                         //+ " WHERE menu.menuState=:state"
-                      //  + " WHERE :date >= menu.period.startingDate AND :date <= menu.period.endingDate"
-                        + " WHERE meal.mealtype = :mealtype", Meal.class);
-        
-     //   q.setParameter("date", date, TemporalType.DATE);
-       // q.setParameter("state", MenuState.PUBLISHED);
+                          + " WHERE meal.date = :date"
+                       // + " WHERE menu.period.startingDate <= :date AND menu.period.endingDate >= :date"
+                        + " AND meal.mealtype = :mealtype", Meal.class);
+
+          q.setParameter("date", date, TemporalType.DATE);
+        // q.setParameter("state", MenuState.PUBLISHED);
         q.setParameter("mealtype", mealType);
-        
+
         return q.getResultList();
     }
 }
