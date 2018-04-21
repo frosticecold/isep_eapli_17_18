@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.persistence.inmemory;
 
+import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.ExecutionRepository;
@@ -51,6 +52,11 @@ public class InMemoryExecutionRepository implements ExecutionRepository{
 
     @Override
     public Iterable<Execution> findMealExecutionByDate(Calendar cal, MealType mealType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Integer getMaxNumberOfServings(DishType dt, Calendar cal, MealType mealType) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

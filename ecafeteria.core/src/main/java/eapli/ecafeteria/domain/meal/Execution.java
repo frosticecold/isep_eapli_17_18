@@ -69,9 +69,7 @@ public class Execution implements AggregateRoot<Long>, Serializable {
 
     @Override
     public String toString() {
-        return "Execution-" + id + ":"
-                +"\n"
-                + "Meal=" + meal.toString() 
+        return "Meal=" + meal.dish().toString()
                 + "\n" + madeMeals.toString();
     }
     

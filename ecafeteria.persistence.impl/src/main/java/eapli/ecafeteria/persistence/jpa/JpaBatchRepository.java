@@ -4,7 +4,7 @@ import eapli.ecafeteria.domain.kitchen.*;
 import eapli.ecafeteria.persistence.*;
 import java.util.*;
 
-public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, Long> implements BatchRepository {
+public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String> implements BatchRepository {
 
     /**
      * Searches for occurrence of a batch
@@ -13,8 +13,8 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, Long> 
      * @return
      */
     @Override
-    public Optional<Batch> findById(long id) {
-        return matchOne(String.valueOf(id));
+    public Optional<Batch> findById(String id) {
+        return matchOne(id);
     }
 
     /**

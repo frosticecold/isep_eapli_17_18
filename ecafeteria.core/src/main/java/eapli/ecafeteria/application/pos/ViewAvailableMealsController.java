@@ -7,6 +7,7 @@ package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.domain.meal.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
+import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
@@ -21,8 +22,8 @@ public class ViewAvailableMealsController implements Controller {
     private final ListAvailableMealsService availableMealsService = new ListAvailableMealsService();
     private final BookingRepository bookingRepo = PersistenceContext.repositories().booking();
 
-    public Iterable<Execution> findExecutionsPerDate(Calendar cal, MealType mealtype) {
-        return availableMealsService.findExecutionsPerDate(cal, MealType.LUNCH);
+    public AvailableMealsStatistics findAvailableMealsPerDay(Calendar cal, MealType mealtype) {
+        return availableMealsService.calcStatistics(cal, mealtype);
     }
 
     public void showNotDeliveredBookedMeals() {
