@@ -203,7 +203,7 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
 
     @Override
     public String toString() {
-        return "Dish{" + "name=" + name + ", dishType=" + dishType + ", nutricionalInfo=" + nutricionalInfo + ", price=" + price + '}';
+        return "Dish{" + "name=" + name + ", dishType=" + dishType + ", " + nutricionalInfo + ", price=" + price + '}';
     }
     
     

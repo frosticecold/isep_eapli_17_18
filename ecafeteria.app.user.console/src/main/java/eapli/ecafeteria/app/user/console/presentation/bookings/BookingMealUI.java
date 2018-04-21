@@ -89,7 +89,7 @@ public class BookingMealUI extends AbstractUI {
         System.out.println("\nChoosed Meal:");
         System.out.println(choosedMeal.toString());
 
-        //===================================SHOW NUTRICIONAL INFO AND CALORICS==================================
+        //===================================SHOW ALERGEN AND CALORICS==================================
 //        System.out.println("Alergen Info:\n");
 //        controller.showAlergen(choosedMeal);
         //===================================Paymemnt==================================
@@ -101,7 +101,7 @@ public class BookingMealUI extends AbstractUI {
 
         switch (option2) {
             case 1:
-                if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal) == true) {
+                if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal)) {
                     System.out.println("Operação bem sucedida, foi efetuado o pagamento.");
                 } else {
                     System.out.println("Não possui saldo suficiente.");
@@ -133,3 +133,15 @@ public class BookingMealUI extends AbstractUI {
     }
 
 }
+    
+//    @Override
+//    public Iterable<Alergen> listAlergenOfMeal(Meal meal) {
+//    final Query q = entityManager().
+//                createQuery("SELECT al"
+//                          + " FROM Alergen al, Meal meal"
+//                          + " WHERE meal = :meal", Alergen.class);
+//        q.setParameter("meal", meal);
+//
+//        return q.getResultList();
+//
+//    }
