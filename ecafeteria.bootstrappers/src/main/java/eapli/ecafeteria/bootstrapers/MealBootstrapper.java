@@ -5,39 +5,35 @@
  */
 package eapli.ecafeteria.bootstrapers;
 
-import eapli.ecafeteria.application.kitchen.RegisterMealController;
-import eapli.ecafeteria.domain.dishes.Dish;
-import eapli.ecafeteria.domain.meal.MealType;
-import eapli.ecafeteria.domain.menu.Menu;
-import eapli.ecafeteria.persistence.DishRepository;
-import eapli.ecafeteria.persistence.MenuRepository;
-import eapli.ecafeteria.persistence.PersistenceContext;
-import eapli.framework.actions.Action;
-import eapli.framework.domain.Designation;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
-import eapli.framework.util.DateTime;
-import java.util.Calendar;
-import java.util.logging.Logger;
+import eapli.ecafeteria.application.kitchen.*;
+import eapli.ecafeteria.domain.dishes.*;
+import eapli.ecafeteria.domain.meal.*;
+import eapli.ecafeteria.domain.menu.*;
+import eapli.ecafeteria.persistence.*;
+import eapli.framework.actions.*;
+import eapli.framework.domain.*;
+import eapli.framework.persistence.*;
+import eapli.framework.util.*;
+import java.util.*;
+import java.util.logging.*;
 
 /**
- *
  * @author Miguel Santos <1161386@isep.ipp.pt>
  */
 public class MealBootstrapper implements Action {
 
     @Override
     public boolean execute() {
-        final DishRepository dishRepo = PersistenceContext.repositories().dishes();
+        final DishRepository dishRepo = Objects.requireNonNull(PersistenceContext.repositories()).dishes();
         final Dish dish1 = dishRepo.findByName(Designation.valueOf("tofu grelhado")).get();
         final Dish dish2 = dishRepo.findByName(Designation.valueOf("picanha")).get();
         final Dish dish3 = dishRepo.findByName(Designation.valueOf("costeleta à salsicheiro")).get();
         final Dish dish4 = dishRepo.findByName(Designation.valueOf("bacalhau à braz")).get();
         final Dish dish5 = dishRepo.findByName(Designation.valueOf("lentilhas salteadas")).get();
         final Dish dish6 = dishRepo.findByName(Designation.valueOf("lagosta suada")).get();
-        
-        final MenuRepository menuRepo = PersistenceContext.repositories().menus();
-        final Menu menu = menuRepo.findOne((long)68).get();
+
+        final MenuRepository menuRepo = Objects.requireNonNull(PersistenceContext.repositories()).menus();
+        final Menu menu = menuRepo.findOne((long) 68).get();
         //06-05-2018
         register(dish1, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
         register(dish3, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
@@ -89,7 +85,7 @@ public class MealBootstrapper implements Action {
         register(dish5, MealType.DINNER, DateTime.parseDate("12-05-2018"), menu);
         return true;
     }
-    
+
     private void register(Dish dish, MealType mealType, Calendar cal, Menu menu) {
         final RegisterMealController controller = new RegisterMealController();
         try {

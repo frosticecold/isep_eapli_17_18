@@ -44,10 +44,13 @@ public class RegisterBatchUsedInMealController implements Controller {
 
         mealList = mealRepository.listOfMealsByDateAndMealType(cal, mealType);
 
-//        System.out.println(mealList.size());
-        for (Meal m : mealList) {
-            System.out.printf("Meal -> Type:%s,  Dish Name:%s, Code: %d\n", m.mealtype(), m.dish().name(), m.id());
-//            System.out.println(m);
+        System.out.println(mealList.size());
+        if (mealList.size() != 0) {
+            for (Meal m : mealList) {
+                System.out.printf("Meal -> Type:%s,  Dish Name:%s, Code: %d\n", m.mealtype(), m.dish().name(), m.id());
+            }
+        } else {
+            System.out.printf("The are no meals available on: %s!", date.toString());
         }
     }
 
