@@ -18,5 +18,5 @@ import java.util.Calendar;
 public interface ExecutionRepository extends DataRepository<Execution, Long>{
     public Iterable<Execution> findMealExecutionByDate(Calendar cal, MealType mealType);
     
-    public Integer getMaxNumberOfServings(final DishType dt,final Calendar cal, final MealType mealType);
+    public Long getMaxNumberOfServings(final DishType dt,final Calendar cal, final MealType mealType);
 }

@@ -28,9 +28,9 @@ public class ListAvailableMealsService {
        Iterable<DishType> activeDishTypes = dishRepo.activeDishTypes();
         AvailableMealsStatistics ams = new AvailableMealsStatistics(cal, mealtype);
         for(DishType dt: activeDishTypes){
-           Integer maxNumberOfServings = repo.getMaxNumberOfServings(dt, cal, mealtype);
+           Long maxNumberOfServings = repo.getMaxNumberOfServings(dt, cal, mealtype);
            ams.addDishTypeQuantity(dt, maxNumberOfServings);
-           Integer countReservedMealsByDishType = bookingRepo.countReservedMealsByDishType(cal, dt, mealtype);
+           Long countReservedMealsByDishType = bookingRepo.countReservedMealsByDishType(cal, dt, mealtype);
            ams.addDishTypeReservedQuantity(dt, countReservedMealsByDishType);
        }
        return ams;

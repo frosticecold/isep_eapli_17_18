@@ -26,7 +26,7 @@ public class InMemoryBookingRepository implements BookingRepository {
     }
 
     @Override
-    public Integer countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType) {
+    public Long countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
