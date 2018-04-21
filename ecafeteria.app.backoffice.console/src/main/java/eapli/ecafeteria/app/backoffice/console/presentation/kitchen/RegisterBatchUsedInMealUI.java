@@ -33,7 +33,8 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
             }
 
             this.theController.showAvailableBatches(matAcro);
-//            Long batchId = Console.readLong("Input batch id:");
+            int batchId = Console.readInteger("Input batch id:");
+            this.theController.registerBatchUsedInMeal(this.theController.getBatchSelected(batchId));
         }
 
 

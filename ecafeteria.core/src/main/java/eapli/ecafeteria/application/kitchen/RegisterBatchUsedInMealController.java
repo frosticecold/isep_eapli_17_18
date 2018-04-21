@@ -14,9 +14,9 @@ public class RegisterBatchUsedInMealController implements Controller {
     BatchRepository batchRepository = Objects.requireNonNull(PersistenceContext.repositories()).batch();
 
     private Meal meal;
-    List<Meal> mealList;
+    private List<Meal> mealList;
 
-    public void registerBatchUsedInMeal(String batchCode) {
+    public void registerBatchUsedInMeal(Batch batch) {
 
     }
 
@@ -43,7 +43,7 @@ public class RegisterBatchUsedInMealController implements Controller {
         System.out.println(mealList.size());
         if (mealList.size() != 0) {
             for (Meal m : mealList) {
-                System.out.printf("Meal -> Dish Name:%s, Code: %d\n", m.mealtype(), m.dish().name(), m.id());
+                System.out.printf("Meal -> Dish Name:%s, Code: %d\n", m.dish().name(), m.id());
             }
         } else {
             System.out.printf("The are no meals available on: %s!", date.toString());
@@ -59,10 +59,18 @@ public class RegisterBatchUsedInMealController implements Controller {
     }
 
     public void showAvailableBatches(String materialId) {
-        List<Batch> list = batchRepository.findAllBatches(materialId);
-
+        int count = 0;
+        Iterable<Batch> list = batchRepository.findAll();
         for (Batch b : list) {
-            System.out.printf("Batch: %s, Use By Date: %s, Material: %s\n", b.barcode(), b.useByDate().toString(), b.material().description());
+            if (b.material().id().compareTo(materialId) == 0) {
+                System.out.printf("Id: %d Batch: %s, Use By Date: %s\n", count, b.barcode(), b.useByDate().getTime().toString());
+                count++;
+            }
         }
+    }
+
+    public Batch getBatchSelected(int id) {
+        List<Batch> list = (List<Batch>) batchRepository.findAll();
+        return list.get(id);
     }
 }
