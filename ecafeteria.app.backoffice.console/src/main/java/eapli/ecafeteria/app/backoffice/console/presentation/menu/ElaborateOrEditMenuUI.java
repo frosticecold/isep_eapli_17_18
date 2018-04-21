@@ -103,7 +103,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * <p>
      * Execution order : 3
      */
-    private Calendar askAndSelectWorkingDay(Menu m) {
+    private Calendar askAndSelectWorkingDay(final Menu m) {
 
         Calendar cal = null;
         boolean runagain = true;
@@ -142,10 +142,11 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      *
      * @param menu
      */
-    private void menuAddOrRemoveMeals(Menu menu, Calendar day) {
+    private void menuAddOrRemoveMeals(final Menu menu,final Calendar day) {
         boolean editing = true;
-        ListWidget<Meal> widget = new ListWidget<>("List Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
+        ListWidget<Meal> widget;
         do {
+            widget = new ListWidget<>("List Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
             widget.show();
             /**
              * Ask for add or remove
@@ -184,9 +185,9 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * @param menu
      * @return
      */
-    private void menuAddMeals(Menu menu, Calendar day) {
+    private void menuAddMeals(final Menu menu,final Calendar day) {
         boolean adding = true;
-        ListWidget<Meal> widgetmeals = new ListWidget<>("List Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
+        ListWidget<Meal> widgetmeals;
         SelectWidget<DishType> widgetdishtype = new SelectWidget<>("Select DishType", theController.getDishTypes());
         SelectWidget<Dish> widgetdish;
         SelectWidget<MealType> widgetmealtype = new SelectWidget<>("Select MealType", Arrays.asList(MealType.values()));
@@ -202,6 +203,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
             if (dish == null) {
                 break;
             }
+            widgetmeals = new ListWidget<>("List Meal", MenuService.getMealsFromMenuByGivenDay(menu, day));
             widgetmealtype.show();
             MealType mt = widgetmealtype.selectedElement();
             if (mt == null) {

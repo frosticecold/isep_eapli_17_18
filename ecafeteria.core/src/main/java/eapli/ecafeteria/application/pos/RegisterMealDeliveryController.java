@@ -12,11 +12,11 @@ public class RegisterMealDeliveryController implements Controller {
         
     /** Construtor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
     
-    private ListingService list; //Listing Services
+    private ListAvailableMealsService list; //Listing Services
     
     public RegisterMealDeliveryController() {
         
-        this.list = new ListingService();
+        this.list = new ListAvailableMealsService();
     }
     
     /**

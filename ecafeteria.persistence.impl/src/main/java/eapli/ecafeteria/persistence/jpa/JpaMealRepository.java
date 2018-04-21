@@ -67,7 +67,7 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
     }
      
      
-         @Override
+    @Override
     public Iterable<Meal> listMealsPublishedByDayAndMealType(Calendar date, MealType mealType) {
         final Query q = entityManager().
                 createQuery("SELECT meal"
