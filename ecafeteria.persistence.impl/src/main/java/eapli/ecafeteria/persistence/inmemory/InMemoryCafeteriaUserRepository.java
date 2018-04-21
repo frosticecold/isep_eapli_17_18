@@ -1,6 +1,7 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.authz.Username;
+import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
@@ -32,5 +33,10 @@ public class InMemoryCafeteriaUserRepository extends InMemoryRepository<Cafeteri
     @Override
     public Iterable<CafeteriaUser> findAllActive() {
         return match(e -> e.user().isActive());
+    }
+
+    @Override
+    public Balance getBalanceOfUser(MecanographicNumber user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

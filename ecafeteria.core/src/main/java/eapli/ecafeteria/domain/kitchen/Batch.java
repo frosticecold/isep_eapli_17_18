@@ -9,7 +9,10 @@ public class Batch implements Serializable {
     private static final long serialVersionUID = 4874306427335164555L;
 
     @Id
-    private long barCode;
+    @GeneratedValue
+    private int pk;
+
+    private String barCode;
     @Version
     private Long version;
 
@@ -25,13 +28,13 @@ public class Batch implements Serializable {
     protected Batch() {
     }
 
-    public Batch(long barCode, Calendar date, Material material) {
+    public Batch(String barCode, Calendar date, Material material) {
         this.barCode = barCode;
         this.date = date;
         this.material = material;
     }
 
-    public long barcode() {
+    public String barcode() {
         return this.barCode;
     }
 

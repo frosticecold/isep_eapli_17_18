@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 public class BookingMealController implements Controller {
 
     private final CafeteriaUserService userService = new CafeteriaUserService();
-
+    
     private final BookingRepository repository = PersistenceContext.repositories().booking();
 
     /**
@@ -53,9 +53,9 @@ public class BookingMealController implements Controller {
     public boolean doTransaction(Username id, Meal meal) {
         Money mealPrice = meal.dish().currentPrice();
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
-        if (user.get().hasEnoughCredits(mealPrice)) {
-            DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());
-            db.movement(user.get(), mealPrice);
+        if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
+//            DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());
+//            db.movement(user.get(), mealPrice);
             return true;
         }
         return false;
@@ -73,13 +73,10 @@ public class BookingMealController implements Controller {
         return this.repository.saveBooking(newBooking);
     }
 
-    public void showNutricionalInfo(Meal meal) {
-        meal.dish().nutricionalInfo().toString();
 
-    }
 
     public void showAlergen(Meal meal) {
-        // meal.dish().alergenInDish();
+//         meal.dish().alergenInDish();
     }
 
     public boolean is24hBefore(Calendar date) {
