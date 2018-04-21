@@ -37,7 +37,7 @@ public class MealBootstrapper implements Action {
         final Dish dish6 = dishRepo.findByName(Designation.valueOf("lagosta suada")).get();
         
         final MenuRepository menuRepo = PersistenceContext.repositories().menus();
-        final Menu menu = menuRepo.findOne((long)68).get();
+        final Menu menu = menuRepo.findMenuWithinPeriod(DateTime.parseDate("06-05-2018"), DateTime.parseDate("12-05-2018")).get();
         //06-05-2018
         register(dish1, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
         register(dish3, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);

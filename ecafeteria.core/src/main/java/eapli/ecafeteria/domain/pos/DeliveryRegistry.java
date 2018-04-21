@@ -25,7 +25,7 @@ public class DeliveryRegistry implements  AggregateRoot<Long>, Serializable {
      * booking
      */
     @OneToOne
-    @Column(name="BOOKING")
+    @JoinColumn(name="BOOKING")
     private Booking booking;
     
     /**

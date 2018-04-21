@@ -81,6 +81,7 @@ public class Meal implements Serializable {
      * @param dish Dish for this meal
      * @param mt Mealtype for this meal
      * @param cal Date for this meal
+     * @param menu Menu where this meal is inserted
      */
     public Meal(final Dish dish, final MealType mt, final Calendar cal, final Menu menu) {
         setData(dish, mt, cal, menu);
