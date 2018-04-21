@@ -3,7 +3,9 @@ package eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting;
 import eapli.ecafeteria.application.reporting.booking.BookingReportingController;
 import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.presentation.console.AbstractListUI;
+import eapli.framework.util.Console;
 import eapli.framework.visitor.Visitor;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ReportBookingPerDateUI extends AbstractListUI<BookingPerOption>{
@@ -26,12 +28,20 @@ public class ReportBookingPerDateUI extends AbstractListUI<BookingPerOption>{
 
     @Override
     protected Iterable<BookingPerOption> elements() {
-        return thisController.reportDishesPerDishType();
+        
+      Calendar date = askForDate();
+      
+      return thisController.reportDishesPerDate(date);
     }
 
     @Override
     protected Visitor<BookingPerOption> elementPrinter() {
         return new BookingPerDatePrinter();
+    }
+    
+    private Calendar askForDate(){
+        
+         return Console.readCalendar("Insert date (DD-MM-YYYY):");
     }
     
 }
