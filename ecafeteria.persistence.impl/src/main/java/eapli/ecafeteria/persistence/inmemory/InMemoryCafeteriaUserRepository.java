@@ -35,8 +35,4 @@ public class InMemoryCafeteriaUserRepository extends InMemoryRepository<Cafeteri
         return match(e -> e.user().isActive());
     }
 
-    @Override
-    public Balance getBalanceOfUser(MecanographicNumber user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

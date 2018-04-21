@@ -54,8 +54,8 @@ public class BookingMealController implements Controller {
         Money mealPrice = meal.dish().currentPrice();
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
         if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
-//            DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());
-//            db.movement(user.get(), mealPrice);
+            DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());
+            db.movement(user.get(), mealPrice);
             return true;
         }
         return false;
