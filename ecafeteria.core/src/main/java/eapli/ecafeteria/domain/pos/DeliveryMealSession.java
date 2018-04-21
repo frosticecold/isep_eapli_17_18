@@ -21,7 +21,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @Column(name="IDDELIVERYEALSESSION")
     private Long idSession;
         
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
     private DeliverySessionDate sessionDate;
     
     @Transient
