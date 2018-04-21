@@ -17,19 +17,24 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         final String mealT = Console.readLine("Insert meal (LUNCH or DINNER):");
-        final Date date = Console.readDate("Insert meal date:", "dd-MM-yyyy");
+        final Calendar date = Console.readCalendar("Insert date (DD-MM-YYYY):");
 
         this.theController.showMeals(mealT, date);
         this.theController.setMeal();
-//        int op = -1;
-//        while (op != 0) {
-//            System.out.println("Material List:\n");
-//            this.theController.showMaterial();
-//            String matAcro = Console.readLine("Input material acronym:");
-//
-//            this.theController.showAvailableBatches(matAcro);
+
+        String matAcro;
+        while (true) {
+            System.out.println("Material List:\n");
+            this.theController.showMaterial();
+            matAcro = Console.readLine("Input material acronym or exit:");
+
+            if (matAcro.compareTo("exit") == 0) {
+                break;
+            }
+
+            this.theController.showAvailableBatches(matAcro);
 //            Long batchId = Console.readLong("Input batch id:");
-//        }
+        }
 
 
 //            this.theController.registerBatchUsedInMeal(batchCode);

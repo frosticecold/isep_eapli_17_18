@@ -5,7 +5,7 @@ import eapli.ecafeteria.persistence.*;
 import eapli.framework.persistence.repositories.impl.inmemory.*;
 import java.util.*;
 
-public class InMemoryBatchRepository extends InMemoryRepositoryWithLongPK<Batch> implements BatchRepository {
+public class InMemoryBatchRepository extends InMemoryRepository<Batch, String> implements BatchRepository {
 
     /**
      * Searches for occurrence of a batch
@@ -14,7 +14,7 @@ public class InMemoryBatchRepository extends InMemoryRepositoryWithLongPK<Batch>
      * @return
      */
     @Override
-    public Optional<Batch> findById(long id) {
+    public Optional<Batch> findById(String id) {
         return matchOne(e -> e.barcode() == (id));
     }
 
@@ -27,5 +27,10 @@ public class InMemoryBatchRepository extends InMemoryRepositoryWithLongPK<Batch>
     @Override
     public List<Batch> findAllBatches(String id) {
         return (List<Batch>) match(e -> Objects.equals(e.material().id(), id));
+    }
+
+    @Override
+    protected String newKeyFor(Batch entity) {
+        return null;
     }
 }
