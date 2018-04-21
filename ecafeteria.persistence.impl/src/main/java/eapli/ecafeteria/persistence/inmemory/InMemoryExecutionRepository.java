@@ -6,9 +6,11 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.ExecutionRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.Calendar;
 import java.util.Optional;
 
 /**
@@ -44,6 +46,11 @@ public class InMemoryExecutionRepository implements ExecutionRepository{
 
     @Override
     public long count() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Iterable<Execution> findMealExecutionByDate(Calendar cal, MealType mealType) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

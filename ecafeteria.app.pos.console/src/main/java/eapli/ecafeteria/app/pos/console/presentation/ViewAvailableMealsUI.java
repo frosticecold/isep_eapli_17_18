@@ -7,8 +7,11 @@ package eapli.ecafeteria.app.pos.console.presentation;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.ViewAvailableMealsController;
+import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.util.DateTime;
 
 /**
  *
@@ -21,10 +24,9 @@ public class ViewAvailableMealsUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         System.out.println("Available Dishes:");
-        Iterable<DishesPerDishType> dishes = controller.showDishesPerDishType();
-        for (DishesPerDishType dish : dishes) {
-            System.out.println(dish.dishType + ":");
-            System.out.println(dish.quantityOfDishes);
+        Iterable<Execution> executions = controller.findExecutionsPerDate(DateTime.parseDate("08-05-2018"), MealType.LUNCH);
+        for (Execution exec : executions) {
+            System.out.println(exec.toString());
         }
         return true;
     }
