@@ -31,6 +31,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterBatc
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMadeMealsAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDateUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDishUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
@@ -315,12 +316,13 @@ public class MainMenu extends AbstractUI {
 
         menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
                 () -> new ReportBookingPerDateUI().show()));
+        menu.add(new MenuItem(REPORTING_BOOKING_PER_PLATE, "Booking per Plate",
+                () -> new ReportBookingPerDishUI().show()));
         menu.add(new MenuItem(REPORTING_BOOKING_PER_MEAL, "Booking per Meal",
                 () -> new ReportBookingPerMealUI().show()));
       //   menu.add(new MenuItem(REPORTING_BOOKING_PER_MEALTYPE, "Booking per MealType",
       //          () -> new ReportBookingPer().show()));
-        menu.add(new MenuItem(REPORTING_BOOKING_PER_PLATE, "Booking per Plate",
-                () -> new ReportBookingPerDateUI().show()));
+        
 
         return menu;
     }
