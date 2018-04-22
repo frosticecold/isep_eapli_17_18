@@ -36,15 +36,15 @@ public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Lo
         q = entityManager().createQuery("SELECT COUNT(e) FROM Booking e "
                 + "WHERE e.meal.mealtype=:mealType "
                 + "AND e.meal.date=:date "
-                + "AND e.meal.dish.dishType=:dt " //     + "AND (e.bookingState=:bs1 OR e.bookingState=:bs2)"
-                ,
+                + "AND e.meal.dish.dishType=:dt " 
+                + "AND (e.bookingState.actualBookingState=:bs1 OR e.bookingState.actualBookingState=:bs2)",
                  Long.class);
 
         q.setParameter("date", cal, TemporalType.DATE);
         q.setParameter("mealType", mealType);
         q.setParameter("dt", dishType);
-        //  q.setParameter("bs1", BookingStates.BOOKED);
-        //  q.setParameter("bs2", BookingStates.SERVED);
+        q.setParameter("bs1", BookingStates.BOOKED);
+        q.setParameter("bs2", BookingStates.SERVED);
         return (Long) q.getSingleResult();
     }
 
@@ -56,13 +56,13 @@ public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Lo
                 + "AND e.meal.date=:date "
                 + "AND e.meal.dish.dishType=:dt "
                 + "AND e.bookingState.actualBookingState=:bs1 ",
-                 Long.class);
+                Long.class);
 
         q.setParameter("date", cal, TemporalType.DATE);
         q.setParameter("mealType", mealType);
         q.setParameter("dt", dishType);
         q.setParameter("bs1", BookingStates.SERVED);
-        
+
         return (Long) q.getSingleResult();
     }
 }
