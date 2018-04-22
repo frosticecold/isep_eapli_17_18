@@ -11,5 +11,8 @@ public interface BatchRepository extends DataRepository<Batch, String> {
 
     List<Batch> findAllBatches(String id);
 
+    List<Batch> findAll();
+
     void removeUsedBatch(Batch calendar, double quantity) throws Exception;
+
 }

@@ -106,12 +106,20 @@ public interface RepositoryFactory {
      * @return
      */
     DeliveryMealSessionRepository deliveryMealRepository();
+
+    /**
+     * MealMaterialRepositorySession Repo
+     * @return 
+     */
+    MealMaterialRepository mealMaterials();
     
+
     /**
      * Ratings reporting repository
      * @return 
      */
     RatingReportingRepository ratingsReporting();
+
 
     MealRepository meals();
 
