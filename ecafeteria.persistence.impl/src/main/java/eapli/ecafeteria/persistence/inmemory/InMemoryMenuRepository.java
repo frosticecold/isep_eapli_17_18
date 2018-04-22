@@ -30,7 +30,7 @@ public class InMemoryMenuRepository extends InMemoryRepositoryWithLongPK<Menu> i
     }
 
     @Override
-    public Optional<Menu> findLatestMenu(Calendar cal) {
+    public Optional<Menu> findLatestMenu() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
      

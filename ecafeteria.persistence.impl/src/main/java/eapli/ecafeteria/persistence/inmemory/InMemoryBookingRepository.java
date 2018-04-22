@@ -59,5 +59,10 @@ public class InMemoryBookingRepository implements BookingRepository {
     public long count() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Long getNumberOfDeliveredMealsByDishTypeByDayAndMealType(Calendar cal, MealType mealType, DishType dishType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

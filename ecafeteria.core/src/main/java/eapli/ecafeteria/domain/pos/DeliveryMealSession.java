@@ -125,4 +125,13 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
         
         return r;
     }
+    
+    /**
+     * Returns the sessions date
+     * @return 
+     */
+    public Calendar date() {
+       
+        return this.sessionDate.calendar();
+    }
 }

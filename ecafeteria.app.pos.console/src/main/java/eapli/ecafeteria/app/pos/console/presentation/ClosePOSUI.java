@@ -6,16 +6,20 @@
 package eapli.ecafeteria.app.pos.console.presentation;
 
 import eapli.cafeteria.app.common.console.presentation.authz.LoginAction;
-import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.ClosePOSController;
 import eapli.ecafeteria.domain.authz.ActionRight;
-import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
+import eapli.ecafeteria.domain.dishes.DishType;
+import eapli.ecafeteria.domain.meal.MealType;
+import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.util.DateTime;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  *
- * @author Oliveira
+ * @author André Oliveira 1040862
  */
 public class ClosePOSUI extends AbstractUI {
 
@@ -28,10 +32,13 @@ public class ClosePOSUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         controller.closeSession();
-        Iterable<DishesPerDishType> dishes = controller.listDeliveredMeals();
-        for (DishesPerDishType dish : dishes) {
-            System.out.println(dish.dishType + ":" + dish.quantityOfDishes);
+        Map<DishType, Long> map = controller.listDeliveredMeals(DateTime.parseDate("08-05-2018"), MealType.LUNCH);
+
+        String output = "";
+        for (Entry<DishType, Long> e : map.entrySet()) {
+            output += e.getKey() + " : " + e.getValue() + "\n";
         }
+        System.out.println(output);
         new LoginAction(ActionRight.SALE).execute();
         return true;
     }
