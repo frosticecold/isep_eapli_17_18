@@ -21,7 +21,6 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
     private List<Batch> batches = new ArrayList<>();
 
     @Override
-
     protected boolean doShow() {
         final String mealT;
         int mT = Console.readInteger("Insert meal type (LUNCH - 0 or DINNER - 1):");
@@ -35,6 +34,7 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
         while (true) {
             System.out.println("Material List:\n");
             this.theController.showMaterial();
+
             matAcro = Console.readLine("Input material acronym or exit:");
 
             if (matAcro.compareTo("exit") == 0) {
@@ -42,8 +42,8 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
             }
 
             this.theController.showAvailableBatches(matAcro);
-            int batchId = Console.readInteger("Input batch id:");
-            Batch b = this.theController.getBatchSelected(batchId);
+            int pk = Console.readInteger("Insert id: ");
+            Batch b = this.theController.getBatchSelected(pk);
             batches.add(b);
             this.theController.registerBatchUsedInMeal(b);
             System.out.println("Batch successfully saved!\n");

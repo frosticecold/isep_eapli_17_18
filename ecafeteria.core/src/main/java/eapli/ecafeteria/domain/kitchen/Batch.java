@@ -60,4 +60,8 @@ public class Batch implements Serializable {
     public Object pk() {
         return pk;
     }
+
+    public boolean isAvailable() {
+        return status == 0;
+    }
 }

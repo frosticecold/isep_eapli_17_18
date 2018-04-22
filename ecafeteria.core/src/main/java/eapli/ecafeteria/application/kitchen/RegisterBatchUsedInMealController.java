@@ -29,7 +29,6 @@ public class RegisterBatchUsedInMealController implements Controller {
     }
 
     public void registerBatchUsedInMeal(Batch batch) {
-
         materialRepository.findByAcronym(batch.material().id());
         MealMaterial m = new MealMaterial(batch.material(), meal, batch);
 
@@ -42,7 +41,12 @@ public class RegisterBatchUsedInMealController implements Controller {
     }
 
     public void setMeal() {
-        long code = Console.readLong("Insert meal code:");
+        long code = Console.readLong("Insert dish code:");
+
+        if (code == -1) {
+            meal = null;
+            return;
+        }
 
         for (Meal m : mealList) {
             if (m.id() == code) {
@@ -62,7 +66,7 @@ public class RegisterBatchUsedInMealController implements Controller {
                 System.out.printf("Meal -> Dish Name:%s, Code: %d\n", m.dish().name(), m.id());
             }
         } else {
-            System.out.printf("The are no meals available on: %s!", date.toString());
+            System.out.printf("The are no meals available on: %s!", date.getTime().toString());
         }
     }
 
@@ -75,18 +79,21 @@ public class RegisterBatchUsedInMealController implements Controller {
     }
 
     public void showAvailableBatches(String materialId) {
-        int count = 0;
         Iterable<Batch> list = batchRepository.findAll();
         for (Batch b : list) {
-            if (b.material().id().compareTo(materialId) == 0) {
-                System.out.printf("Id: %d Batch: %s, Use By Date: %s\n", count, b.barcode(), b.useByDate().getTime().toString());
-                count++;
+            if (b.material().id().compareTo(materialId) == 0 && b.isAvailable()) {
+                System.out.printf("Id: %d Batch: %s, Expiration: %s\n", b.pk(), b.barcode(), b.useByDate().getTime().toString());
             }
         }
     }
 
     public Batch getBatchSelected(int id) {
         List<Batch> list = (List<Batch>) batchRepository.findAll();
-        return list.get(id);
+        for (Batch b : list) {
+            if ((int) b.pk() == id) {
+                return b;
+            }
+        }
+        return null;
     }
 }
