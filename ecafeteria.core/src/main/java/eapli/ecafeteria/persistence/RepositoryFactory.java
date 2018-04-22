@@ -74,6 +74,8 @@ public interface RepositoryFactory {
     MenuRepository menus();
 
     MenuPlanRepository menuPlan();
+    
+    MenuPlanItemRepository menuPlanItem();
 
     RatingRepository rating();
 

@@ -147,5 +147,10 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaRatingReportingRepository();
     }
 
+    @Override
+    public MenuPlanItemRepository menuPlanItem() {
+        return new JpaMenuPlanItemRepository();
+    }
+
 
 }

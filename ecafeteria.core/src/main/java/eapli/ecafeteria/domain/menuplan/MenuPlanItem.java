@@ -6,8 +6,10 @@
 package eapli.ecafeteria.domain.menuplan;
 
 import eapli.ecafeteria.domain.meal.Meal;
+import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
 @Entity
-public class MenuPlanItem implements Serializable {
+public class MenuPlanItem implements AggregateRoot<Long>,Serializable {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -29,7 +31,7 @@ public class MenuPlanItem implements Serializable {
     @OneToOne
     private Meal currentMeal;
    
-    @OneToOne
+    @Embedded
     private Quantity quantityNumber;
     
     protected MenuPlanItem(){
@@ -43,6 +45,25 @@ public class MenuPlanItem implements Serializable {
     public MenuPlanItem(Meal currentMeal, Quantity quantity) {
         this.currentMeal = currentMeal;
         this.quantityNumber = quantity;
+    }
+
+    @Override
+    public boolean sameAs(Object other) {
+        if(!(other instanceof MenuPlan )){
+            return false;
+        }
+        final MenuPlanItem mpi=(MenuPlanItem) other;
+        
+        if(this==mpi){
+            return true;
+        }
+        
+        return this.id==mpi.id();
+    }
+
+    @Override
+    public Long id() {
+        return id;
     }
   
 }

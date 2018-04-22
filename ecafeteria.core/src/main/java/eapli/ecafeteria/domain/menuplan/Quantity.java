@@ -5,24 +5,18 @@
  */
 package eapli.ecafeteria.domain.menuplan;
 
+import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-@Entity
-public class Quantity {
-    
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "id_menu_plan_item")
-    private long id;
-    
-    @Version
-    private Long version;
-    
+@Embeddable
+public class Quantity implements Serializable {
+        
     private int quantity;
     
     protected Quantity(){
