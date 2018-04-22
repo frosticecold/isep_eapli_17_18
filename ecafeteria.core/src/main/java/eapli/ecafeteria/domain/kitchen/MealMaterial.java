@@ -1,13 +1,14 @@
 package eapli.ecafeteria.domain.kitchen;
 
 import eapli.ecafeteria.domain.meal.Meal;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class MealMaterial {
+public class MealMaterial implements Serializable {
     @Id
     @GeneratedValue
     private long pk;

@@ -33,7 +33,7 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String
 
     public List<Batch> findAll() {
 
-        return entityManager().createQuery("SELECT b  "
+        return entityManager().createQuery("SELECT b "
                 + "FROM Batch b")
                 .getResultList();
 
