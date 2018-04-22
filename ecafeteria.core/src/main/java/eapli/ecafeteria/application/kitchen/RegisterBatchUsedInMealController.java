@@ -40,23 +40,24 @@ public class RegisterBatchUsedInMealController implements Controller {
         }
     }
 
-    public void setMeal() {
+    public int setMeal() {
         long code = Console.readLong("Insert dish code:");
 
         if (code == -1) {
             meal = null;
-            return;
+            return -1;
         }
 
         for (Meal m : mealList) {
             if (m.id() == code) {
                 meal = m;
-                break;
+                return 0;
             }
         }
+        return -1;
     }
 
-    public void showMeals(String mealT, Calendar date) {
+    public int showMeals(String mealT, Calendar date) {
         MealType mealType = MealType.valueOf(mealT);
 
         mealList = mealRepository.listOfMealsByDateAndMealType(date, mealType);
@@ -66,8 +67,10 @@ public class RegisterBatchUsedInMealController implements Controller {
                 System.out.printf("Meal -> Dish Name:%s, Code: %d\n", m.dish().name(), m.id());
             }
         } else {
-            System.out.printf("The are no meals available on: %s!", date.getTime().toString());
+            System.out.printf("The are no meals available on: %s!\n", date.getTime().toString());
+            return -1;
         }
+        return 0;
     }
 
     public void showMaterial() {

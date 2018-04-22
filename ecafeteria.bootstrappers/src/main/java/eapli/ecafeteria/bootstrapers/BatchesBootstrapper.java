@@ -13,7 +13,6 @@ import java.util.GregorianCalendar;
 public class BatchesBootstrapper implements Action {
     @Override
     public boolean execute() {
-
         BatchRepository batchRepository = PersistenceContext.repositories().batch();
         MaterialRepository materialRepository = PersistenceContext.repositories().materials();
 

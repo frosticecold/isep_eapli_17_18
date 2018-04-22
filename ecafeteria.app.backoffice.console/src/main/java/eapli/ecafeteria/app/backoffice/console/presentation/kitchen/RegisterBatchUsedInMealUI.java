@@ -26,10 +26,16 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
         final String mealT;
         int mT = Console.readInteger("Insert meal type (LUNCH - 0 or DINNER - 1):");
         mealT = MealType.getMealTypeById(mT).name();
-        final Calendar date = Console.readCalendar("Insert date (DD-MM-YYYY):");
 
-        this.theController.showMeals(mealT, date);
-        this.theController.setMeal();
+        Calendar date;
+        do {
+            date = Console.readCalendar("Insert date (DD-MM-YYYY):");
+        } while ((this.theController.showMeals(mealT, date) == -1));
+
+        int state;
+        do {
+            state = this.theController.setMeal();
+        } while (state != 0);
 
         String matAcro;
         while (true) {
