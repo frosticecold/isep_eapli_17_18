@@ -51,7 +51,7 @@ public class BookingState implements ValueObject, Serializable {
     /**
      * Actual booking state
      */
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     @Column(name = "bookingstate")
     private BookingStates actualBookingState;
 
