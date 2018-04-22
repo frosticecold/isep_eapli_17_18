@@ -30,17 +30,20 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String
     }
 
     @Override
-<<<<<<< HEAD
+
     public List<Batch> findAll() {
         return entityManager().createQuery("SELECT batch.*  "
                 + "FROM Batch batch ")
                 .getResultList();
-=======
+
+    }
+
+    @Override
     public void removeUsedBatch(Batch batch, double quantity) throws Exception {
+
         Batch b = entityManager().find(Batch.class, batch.pk());
         entityManager().getTransaction().begin();
         b.updatePercentageUsed(quantity);
         entityManager().getTransaction().commit();
->>>>>>> 039b656c242af05bfe91da3e37d027d1683f064d
     }
 }
