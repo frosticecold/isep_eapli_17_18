@@ -42,6 +42,7 @@ public class CreateMenuPlanUI extends AbstractUI {
 
             System.out.println("1-Create plan");
             System.out.println("2-Edit plan");
+            System.out.println("0-Exit");
 
             n = Console.readInteger("Choose:");
         } while (n != 1 && n != 2 && n != 0);
@@ -49,37 +50,37 @@ public class CreateMenuPlanUI extends AbstractUI {
         if (n == 1) {
 
             Menu menu = controller.getCurrentMenuWithoutPlan();
-
-            if (menu != null) {
+                    
+            if (menu == null) {
                 System.out.println("O ultimo menu já possui um plano de refeicoes");
 
             } else {
 
                 List<MenuPlanItem> list = new ArrayList<>();
 
-                Calendar bDay = DateTime.beginningOfWeek(Calendar.YEAR, currentWeekNumber());   //esta mal
+               Iterable<Calendar> listDays= menu.getWorkWeekDaysIterable();
 
-                for (int i = 0; i < 7; i++) {
-
+                for (Calendar bDay:listDays) {
+                    
                     Iterable<Meal> meals = controller.mealsFromMenuByDay(bDay, menu);
 
                     for (Meal currentMeal : meals) {
                         
-                       int quantity = Console.readInteger("Insert the quantity of dishes for meal:"+currentMeal.toString());
+                       int quantity = Console.readInteger("Insert the quantity of dishes for meal:"+currentMeal.dish());
                        
                        Quantity q=controller.insertQuantity(quantity);
-                       controller.createMenuPlanItemList(currentMeal, list, q);
+                       
+                       controller.fillMenuPlanItemList(currentMeal, list, q);
                        
                     }
                     
-                    bDay.add(Calendar.DAY_OF_MONTH, 1);
                    
                 }
                 
                  mp=controller.createMenuPlan(list, menu);
 
                 try {
-                    
+                     System.out.println("menuPlan->->->->"+mp.getMenuPlanItemList().size());
                     controller.save(mp);
                     
                 } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
@@ -92,6 +93,8 @@ public class CreateMenuPlanUI extends AbstractUI {
 
             controller.editMenuPlan(n);
 
+        }else{
+            System.exit(0);
         }
         return true;
     }
