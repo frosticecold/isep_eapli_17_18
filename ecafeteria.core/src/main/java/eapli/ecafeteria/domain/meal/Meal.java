@@ -109,6 +109,10 @@ public class Meal implements Serializable {
         return dish;
     }
 
+    public Menu menu() {
+        return menu;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
