@@ -18,15 +18,6 @@ import javax.persistence.Query;
  */
 public class JpaTransactionRepository extends CafeteriaJpaRepositoryBase<Transaction, Long> implements TransactionRepository {
 
-    @Override
-    public Iterable<Transaction> findAllTransactionsByCafeteriaUserAndType(CafeteriaUser user, String transactionType) {
-        Query query = entityManager().createQuery("SELECT transaction "
-                                                + "FROM  Transaction transaction "
-                                                + "WHERE transaction.cafeteriaUser=:user AND transaction.transactionType=:ttype");
-        query.setParameter("user", user);
-        query.setParameter("ttype", transactionType);
-        return query.getResultList();
-    }
 
     @Override
     public Iterable<Transaction> findAllActive() {
@@ -44,15 +35,9 @@ public class JpaTransactionRepository extends CafeteriaJpaRepositoryBase<Transac
     }
 
     @Override
-    public boolean setNewBalance(MecanographicNumber user, Balance balance) {
-        Query q = entityManager().
-                createQuery("UPDATE CafeteriaUser"
-                        + " SET currentBalance =:balance"
-                        + " WHERE mecanographicNumber=:user", Balance.class);
-
-        q.setParameter("user", user);
-        q.setParameter("balance", balance);
-        return true;
+    public Iterable<Transaction> findAllTransactionsByCafeteriaUserAndType(CafeteriaUser user, String transactionType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }

@@ -51,8 +51,6 @@ public class ChargeCardController implements Controller {
     private void saveTransaction(Transaction t) {
         try {
             this.tr.save(this.t);
-            
-            
         } catch (DataConcurrencyException ex) {
             Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DataIntegrityViolationException ex) {

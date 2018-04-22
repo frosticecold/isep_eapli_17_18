@@ -29,6 +29,5 @@ public interface TransactionRepository extends DataRepository<Transaction, Long>
 
       public Balance getBalanceOfUser(MecanographicNumber user);
       
-      public boolean setNewBalance(MecanographicNumber user, Balance balance);
-    
+  
 }
