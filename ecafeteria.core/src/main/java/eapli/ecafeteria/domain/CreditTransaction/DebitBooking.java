@@ -7,6 +7,7 @@ package eapli.ecafeteria.domain.CreditTransaction;
 
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.application.pos.ChargeCardController;
+import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.TransactionRepository;
@@ -16,11 +17,13 @@ import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
+@Entity
 public class DebitBooking extends Transaction {
 
     private final CafeteriaUserService service = new CafeteriaUserService();
@@ -40,40 +43,33 @@ public class DebitBooking extends Transaction {
         super(user, credits);
     }
 
-    public CafeteriaUser findCafeteriaUserByMecanographicNumber(String mecanographicNumber) {
-        Optional<CafeteriaUser> user = service.findCafeteriaUserByMecNumber(mecanographicNumber);
-        if (user.isPresent()) {
-            this.user = user.get();
-            return user.get();
-        }
-        return null;
-    }
-
-    public boolean movement(CafeteriaUser user, Money credits) {
-        this.t = new DebitBooking(user, credits);
-        saveTransaction(t);
-        if (user.removeCredits(credits)) {
-            saveCafeteriaUser(user);
-            return true;
-
-        }
-        return false;
-    }
-
-    public CafeteriaUser saveCafeteriaUser(CafeteriaUser user) {
-        return service.save(user);
+    /**
+     * removes the price of the meal of the users balance
+     * saves the transaction
+     * @param user
+     * @param mealPrice
+     * @return 
+     */
+    public boolean movement(CafeteriaUser user, Money mealPrice) {
+        t = new DebitBooking(user, mealPrice);
+        
+        Balance userBalance =  service.getBalanceOfUser(user.mecanographicNumber());
+        Money money = userBalance.currentBalance().subtract(mealPrice);
+        Balance newBalance = new Balance(money);
+        
+//        saveTransaction(t);
+  
+        return tr.setNewBalance(user.mecanographicNumber(), newBalance);
     }
 
     private void saveTransaction(Transaction t) {
         try {
-            this.tr.save(this.t);
+            tr.save(t);
         } catch (DataConcurrencyException ex) {
             Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DataIntegrityViolationException ex) {
             Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-
 
 }

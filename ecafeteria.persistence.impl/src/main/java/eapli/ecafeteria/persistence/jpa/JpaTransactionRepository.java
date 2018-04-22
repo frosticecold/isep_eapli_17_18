@@ -37,4 +37,16 @@ public class JpaTransactionRepository extends CafeteriaJpaRepositoryBase<Transac
         return (Balance) q.getSingleResult();
     }
 
+    @Override
+    public boolean setNewBalance(MecanographicNumber user, Balance balance) {
+        Query q = entityManager().
+                createQuery("UPDATE CafeteriaUser"
+                        + " SET currentBalance =:balance"
+                        + " WHERE mecanographicNumber=:user", Balance.class);
+
+        q.setParameter("user", user);
+         q.setParameter("balance", balance);
+       return true;
+    }
+
 }

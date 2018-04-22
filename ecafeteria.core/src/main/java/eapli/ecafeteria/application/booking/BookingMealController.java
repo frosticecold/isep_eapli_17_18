@@ -18,6 +18,7 @@ import eapli.ecafeteria.domain.dishes.NutricionalInfo;
 import eapli.ecafeteria.domain.menu.*;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.domain.CreditTransaction.DebitBooking;
+import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.*;
 import eapli.framework.date.DateEAPLI;
@@ -25,10 +26,7 @@ import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -37,7 +35,7 @@ import java.util.logging.Logger;
 public class BookingMealController implements Controller {
 
     private final CafeteriaUserService userService = new CafeteriaUserService();
-    
+
     private final BookingRepository repository = PersistenceContext.repositories().booking();
 
     /**
@@ -54,7 +52,7 @@ public class BookingMealController implements Controller {
         Money mealPrice = meal.dish().currentPrice();
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
         if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
-            DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());
+            DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());     
             db.movement(user.get(), mealPrice);
             return true;
         }
@@ -72,8 +70,6 @@ public class BookingMealController implements Controller {
 
         return this.repository.saveBooking(newBooking);
     }
-
-
 
     public void showAlergen(Meal meal) {
 //         meal.dish().alergenInDish();
