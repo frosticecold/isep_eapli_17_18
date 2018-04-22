@@ -43,13 +43,13 @@ public class CreateMenuPlanController implements Controller {
 
         MenuPlan mp;
 
-        m = MenuService.findLatestMenu(DateTime.now()).get();
+        m = MenuService.findLatestMenu().get();
+   
+       // mp = mpr.getMenuPlanFromMenu(m);
 
-        mp = mpr.getMenuPlanFromMenu(m);
-
-        if (mp != null) {
-            return null;
-        }
+//        if (mp != null) {
+//            return null;
+//        }
 
         return m;
     }
@@ -63,7 +63,7 @@ public class CreateMenuPlanController implements Controller {
         return q;
     }
 
-    public void createMenuPlanItemList(Meal currentMeal, List<MenuPlanItem> list, Quantity q) {
+    public void fillMenuPlanItemList(Meal currentMeal, List<MenuPlanItem> list, Quantity q) {
         mpi = new MenuPlanItem(currentMeal, q);
         list.add(mpi);
 
@@ -73,13 +73,12 @@ public class CreateMenuPlanController implements Controller {
     public MenuPlan createMenuPlan(List<MenuPlanItem> lista, Menu m) {
 
         menuplan = new MenuPlan(lista, m);
-
+              
         return menuplan;
     }
 
     public void save(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException {
-
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        
         mpr.save(mp);
     }
 
