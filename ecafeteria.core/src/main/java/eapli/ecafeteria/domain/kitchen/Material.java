@@ -82,4 +82,7 @@ public class Material implements AggregateRoot<String>, Serializable {
     public int hashCode() {
         return this.acronym.hashCode();
     }
+    public String acronym(){
+        return acronym;
+    }
 }

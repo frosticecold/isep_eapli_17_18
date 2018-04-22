@@ -40,4 +40,9 @@ public class InMemoryBatchRepository extends InMemoryRepository<Batch, String> i
     protected String newKeyFor(Batch entity) {
         return null;
     }
+
+    @Override
+    public List<Batch> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

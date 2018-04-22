@@ -54,19 +54,14 @@ public class BookingMealController implements Controller {
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
         if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
 
-            Transaction t = new Transaction(user.get(), mealPrice) {
-                @Override
-                public boolean movement(CafeteriaUser user, Money obj) {
-                    Balance userBalance = userService.getBalanceOfUser(user.mecanographicNumber());
-                    Money money = userBalance.currentBalance().subtract(mealPrice);
-                    Balance newBalance = new Balance(money);
+            Balance userBalance = userService.getBalanceOfUser(user.get().mecanographicNumber());
+            Money money = userBalance.currentBalance().subtract(mealPrice);
+            Balance newBalance = new Balance(money);
 
-                    user.setCurrentBalance(newBalance);
-                    userService.save(user);
-                    return true;
-                }
-            };
-            t.movement(user.get(), mealPrice);
+            user.get().setCurrentBalance(newBalance);
+            userService.save(user.get());
+            //Transaction t = new Transaction(user.get(), mealPrice);
+            //saveTransaction(t);
             return true;
         } else {
             System.out.println("USER HASN'T ENOUGH MONEY");
