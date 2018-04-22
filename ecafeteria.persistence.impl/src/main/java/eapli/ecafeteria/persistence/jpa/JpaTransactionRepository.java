@@ -8,6 +8,7 @@ package eapli.ecafeteria.persistence.jpa;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.Balance;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.TransactionRepository;
 import javax.persistence.Query;
 
@@ -18,8 +19,13 @@ import javax.persistence.Query;
 public class JpaTransactionRepository extends CafeteriaJpaRepositoryBase<Transaction, Long> implements TransactionRepository {
 
     @Override
-    public Iterable<Transaction> findAllTransactionsByMecanographicNumberAndType(MecanographicNumber number, String transactionType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Iterable<Transaction> findAllTransactionsByCafeteriaUserAndType(CafeteriaUser user, String transactionType) {
+        Query query = entityManager().createQuery("SELECT transaction "
+                                                + "FROM  Transaction transaction "
+                                                + "WHERE transaction.cafeteriaUser=:user AND transaction.transactionType=:ttype");
+        query.setParameter("user", user);
+        query.setParameter("ttype", transactionType);
+        return query.getResultList();
     }
 
     @Override
@@ -45,8 +51,8 @@ public class JpaTransactionRepository extends CafeteriaJpaRepositoryBase<Transac
                         + " WHERE mecanographicNumber=:user", Balance.class);
 
         q.setParameter("user", user);
-         q.setParameter("balance", balance);
-       return true;
+        q.setParameter("balance", balance);
+        return true;
     }
 
 }
