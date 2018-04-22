@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
+package eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting;
 
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.SearchBatchUsageUI;
 import eapli.framework.actions.Action;
 
 /**

@@ -33,6 +33,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMate
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDateUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDishUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.SearchBatchUsageAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
@@ -91,12 +92,13 @@ public class MainMenu extends AbstractUI {
     private static final int MATERIAL_LIST_OPTION = 2;
     private static final int REGISTER_BATCH_USED_IN_MEAL = 3;
     private static final int KITCHEN_REGISTER_MADE_MEALS = 4;
+    private static final int KITCHEN_LIST_MEALS_BY_BATCH_OPTION = 5;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
     private static final int REPORTING_HIGH_CALORIES_DISHES_OPTION = 2;
     private static final int REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION = 3;
-    
+
     //BOOKING REPORTING
     private static final int REPORTING_BOOKING_PER_DATE = 1;
     private static final int REPORTING_BOOKING_PER_MEALTYPE = 2;
@@ -189,7 +191,6 @@ public class MainMenu extends AbstractUI {
             mainMenu.add(new SubMenu(REPORTING_DISHES_OPTION, reportingDishesMenu,
                     new ShowVerticalSubMenuAction(reportingDishesMenu)));
 
-
             final Menu reportingBookingMenu = buildReportingBookingMenu();
             mainMenu.add(new SubMenu(REPORTING_BOOKING_OPTION, reportingBookingMenu,
                     new ShowVerticalSubMenuAction(reportingBookingMenu)));
@@ -273,7 +274,9 @@ public class MainMenu extends AbstractUI {
         menu.add(new MenuItem(REGISTER_BATCH_USED_IN_MEAL, "Register batch used in meal", new RegisterBatchUsedInMealAction()));
 
         menu.add(new MenuItem(KITCHEN_REGISTER_MADE_MEALS, "Register Made Meals", new RegisterMadeMealsAction()));
-        
+
+        menu.add(new MenuItem(KITCHEN_LIST_MEALS_BY_BATCH_OPTION, "List Meals by batch", new SearchBatchUsageAction()));
+
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
@@ -320,9 +323,8 @@ public class MainMenu extends AbstractUI {
                 () -> new ReportBookingPerDishUI().show()));
         menu.add(new MenuItem(REPORTING_BOOKING_PER_MEAL, "Booking per Meal",
                 () -> new ReportBookingPerMealUI().show()));
-      //   menu.add(new MenuItem(REPORTING_BOOKING_PER_MEALTYPE, "Booking per MealType",
-      //          () -> new ReportBookingPer().show()));
-        
+        //   menu.add(new MenuItem(REPORTING_BOOKING_PER_MEALTYPE, "Booking per MealType",
+        //          () -> new ReportBookingPer().show()));
 
         return menu;
     }

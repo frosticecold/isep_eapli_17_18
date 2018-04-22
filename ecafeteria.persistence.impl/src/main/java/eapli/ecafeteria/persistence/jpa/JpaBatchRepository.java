@@ -32,8 +32,9 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String
     @Override
 
     public List<Batch> findAll() {
-        return entityManager().createQuery("SELECT batch.*  "
-                + "FROM Batch batch ")
+
+        return entityManager().createQuery("SELECT b  "
+                + "FROM Batch b")
                 .getResultList();
 
     }
@@ -46,4 +47,5 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String
         b.updatePercentageUsed(quantity);
         entityManager().getTransaction().commit();
     }
+
 }
