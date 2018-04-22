@@ -1,9 +1,9 @@
 package eapli.ecafeteria.persistence.jpa;
 
-import eapli.ecafeteria.*;
+import eapli.ecafeteria.Application;
 import eapli.ecafeteria.persistence.*;
-import eapli.framework.persistence.repositories.*;
-import eapli.framework.persistence.repositories.impl.jpa.*;
+import eapli.framework.persistence.repositories.TransactionalContext;
+import eapli.framework.persistence.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
  * Created by nuno on 21/03/16.
@@ -123,7 +123,27 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public MealMaterialRepository mealMaterial() {
+        return new JpaMealMaterialRepository();
+    }
+
+    @Override
     public ExecutionRepository executions() {
         return new JpaExecutionRepository();
+    }
+
+    @Override
+    public AlergenRepository alergens() {
+        return new JpaAlergensRepository();
+    }
+
+    @Override
+    public TransactionRepository transactioRepository() {
+        return new JpaTransactionRepository();
+    }
+
+    @Override
+    public RatingReportingRepository ratingsReporting() {
+        return new JpaRatingReportingRepository();
     }
 }

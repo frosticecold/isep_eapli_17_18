@@ -5,15 +5,16 @@
  */
 package eapli.ecafeteria.application.booking;
 
-import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.BookingState;
+import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.booking.Rating;
-import eapli.ecafeteria.domain.meal.Meal;
-import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.ecafeteria.persistence.RatingReportingRepository;
+import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.application.Controller;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -21,88 +22,59 @@ import java.util.List;
  */
 public final class ViewRatingsController implements Controller {
 
-    BookingReportingRepository bookingRepo = PersistenceContext.repositories().bookingReporting();
+    RatingReportingRepository ratingsRepo = PersistenceContext.repositories().ratingsReporting();
 
     /**
-     * List of relevant bookings
+     * List of ratings
      */
-    private List<Booking> bookings;
+    private List<Rating> ratings;
+
     /**
-     * Meal to check the rating of
+     * Repository Factory
      */
-    private Meal meal;
+    private RepositoryFactory factory;
+    /**
+     * Cafeteria user
+     */
+    private CafeteriaUser user = null;
 
     public ViewRatingsController() {
-        readBookings();
+        this.factory = PersistenceContext.repositories();
+
+        this.user = factory.cafeteriaUsers().findByUsername(
+                AuthorizationService.session().authenticatedUser().username())
+                .get();
+        
+        readRatings(user);
     }
 
     /**
-     * Loads all the bookings that have been served or served but not
-     * eaten/cancelled in time
+     * Loads all the ratings to an arrayList
      *
+     * @param user 
      */
-    public void readBookings() {
-        bookings = new ArrayList<>();
-        BookingState served = new BookingState();
-        served.changeToServed();
-        BookingState notServed = new BookingState();
-        notServed.changeToNotServed();
-
+    public void readRatings(CafeteriaUser user) throws NoResultException{
+        ratings = new ArrayList<>();
         /*
-        Adds bookings that have been served
+        Adds all ratings to an array list
          */
-        for (Booking booking : bookingRepo.findBookingByState(served)) {
-            bookings.add(booking);
-        }
-        /*
-        Adds bookings that were not served but reserved and not cancelled
-         */
-        for (Booking booking : bookingRepo.findBookingByState(notServed)) {
-            bookings.add(booking);
-        }
-    }
-
-    /**
-     * Selects a meal from a list of bookings given an ID
-     *
-     * @param id
-     */
-    public void setMeal(Long id) {
-        for (Booking booking : bookings) {
-            if (id.compareTo(booking.getIdBooking()) == 0) {
-                this.meal = booking.getMeal();
+        try {
+            for (Rating rating : ratingsRepo.findRatingsByUser(user)) {
+                ratings.add(rating);
             }
+        } catch (NoResultException ex) {
+            throw new NoResultException();
         }
     }
 
     /**
-     * After the selection of a meal, returns a list with all of its ratings.
-     *
-     * @param meal
-     * @return
-     */
-    public Iterable<Rating> ratingsFromMeal() {
-        if (meal == null) {
-            return null;
-        } else {
-            return meal.ratings();
-        }
-    }
-
-    /**
-     * Returns the read bookings
+     * Returns the ratings stored in the repository
      *
      * @return
      */
-    public Iterable<Booking> bookings() {
-        return this.bookings;
+    public List<Rating> ratings() {
+        return this.ratings;
     }
     
-    /**
-     * Clears selected meal
-     */
-    public void clearSelection() {
-        this.meal = null;
-    }
 
 }

@@ -5,16 +5,20 @@
  */
 package eapli.ecafeteria.application.booking;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.Rating;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RatingRepository;
+import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -22,6 +26,15 @@ import java.util.List;
  */
 public class RatingMealController {
 
+    /**
+     * Factory
+     */
+    RepositoryFactory factory;
+    /**
+     * Cafeteria user
+     */
+    private CafeteriaUser user = null;
+    private Booking selectedBooking = null;
     BookingReportingRepository bookingRepository = PersistenceContext.repositories().bookingReporting();
     private RatingRepository ratingRepository = PersistenceContext.repositories().rating();
 
@@ -29,6 +42,20 @@ public class RatingMealController {
      * List with all bookings of the user
      */
     private List<Booking> bookings = null;
+
+    public RatingMealController() {
+        factory = PersistenceContext.repositories();
+        user = factory.cafeteriaUsers().findByUsername(
+                AuthorizationService.session().authenticatedUser().username())
+                .get();
+        
+        
+        ratingRepository = factory.rating();
+        bookingRepository = factory.bookingReporting();
+        BookingState served = new BookingState();
+        served.changeToServed();
+        bookings = bookingRepository.findBookingsByCafeteriaUser(user, served);
+    }
 
     /**
      * Method to add a rating on a booking of the meal
@@ -40,27 +67,13 @@ public class RatingMealController {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
-    public Rating addRating(Booking booking, int rating, String comment) throws DataConcurrencyException, DataIntegrityViolationException {
-        Rating rateMeal = new Rating(booking, rating, comment);
-        rateMeal = ratingRepository.save(rateMeal);
+    public Rating addRating(Booking booking, int rating, String comment) 
+            throws DataConcurrencyException, DataIntegrityViolationException {
+        
+        System.out.println("LLL- " + user.user().id().toString());
+        Rating rateMeal = new Rating(user, booking, rating, comment);
+        rateMeal = ratingRepository.saveRating(rateMeal);
         return rateMeal;
-    }
-
-    /**
-     * Method to find all consumed bookings without rating
-     *
-     * @return all consumed booking without rating
-     */
-    public List<Booking> findBookings() {
-        bookings = new ArrayList<>();
-        BookingState served = new BookingState();
-        served.changeToServed();
-
-        for (Booking booking : bookingRepository.findBookingByState(served)) {
-            bookings.add(booking);
-        }
-        return bookings;
-
     }
 
     /**
@@ -71,4 +84,5 @@ public class RatingMealController {
     public List<Booking> showBookings() {
         return bookings;
     }
+
 }

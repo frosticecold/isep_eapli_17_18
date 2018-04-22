@@ -35,7 +35,8 @@ public class ChargeCardUI extends AbstractUI {
         final double tempCredits = Console.readDouble("Please enter the amount of Credits to charge:");
         Money credits = new Money(tempCredits, Currency.getInstance("EUR"));
         boolean resultOfOperation = theController.chargeCafeteriaUserCard(user, credits);
-        CafeteriaUser result = theController.save(user);
+        CafeteriaUser result = theController.saveCafeteriaUser(user);
+        
         if (result == null) {
             resultOfOperation = false;
             System.out.println("Error has occurred during the operation");

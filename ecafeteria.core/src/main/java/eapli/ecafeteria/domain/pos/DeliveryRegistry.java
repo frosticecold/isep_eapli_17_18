@@ -2,7 +2,8 @@ package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.framework.domain.ddd.DomainEntity;
+import eapli.framework.domain.ddd.AggregateRoot;
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
@@ -10,7 +11,7 @@ import javax.persistence.*;
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
 @Entity
-public class DeliveryRegistry implements DomainEntity {
+public class DeliveryRegistry implements  AggregateRoot<Long>, Serializable {
 
     /**
      * identifier of the delivery
@@ -21,25 +22,11 @@ public class DeliveryRegistry implements DomainEntity {
     private Long id;
     
     /**
-     * POS
-     */
-    @OneToOne
-    @JoinColumn (name="POS")
-    private POS pos;
-    
-    /**
      * booking
      */
     @OneToOne
-    @Column(name="BOOKING")
-    private Booking Booking;
-    
-    /**
-     * POS User
-     */
-    @OneToOne
-    @JoinColumn(name="POSUSER")
-    private CafeteriaUser employee;
+    @JoinColumn(name="BOOKING")
+    private Booking booking;
     
     /**
      * CLIENT
@@ -48,7 +35,7 @@ public class DeliveryRegistry implements DomainEntity {
     @JoinColumn(name="CLIENT")
     private CafeteriaUser client;
     
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="SESSION")
     private DeliveryMealSession session;
     
@@ -56,11 +43,10 @@ public class DeliveryRegistry implements DomainEntity {
         //for ORM only
     }
     
-    public DeliveryRegistry(DeliveryMealSession session, POS pos, CafeteriaUser Client, Booking Booking) {
-        this.client = Client;
-        this.Booking = Booking;
-        this.session = session;
-        this.pos = pos;
+    public DeliveryRegistry(DeliveryMealSession session, CafeteriaUser client, Booking booking) {
+            this.session = session;
+            this.client = client;
+            this.booking = booking;
     }
     /**
      * compares this object with another
@@ -81,17 +67,17 @@ public class DeliveryRegistry implements DomainEntity {
     }
 
     @Override
-    public boolean is(Object otherId) {
-        return DomainEntity.super.is(otherId); 
+    public boolean is(Long otherId) {
+        return AggregateRoot.super.is(otherId); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    
     /**
-     * Returns the delivery id
+     * Return the DeliveryRegistry ID
      * @return 
      */
     @Override
-    public Object id() {
-        return this.id;
-    }
-   
+    public Long id() {
+       return this.id;
+    } 
 }

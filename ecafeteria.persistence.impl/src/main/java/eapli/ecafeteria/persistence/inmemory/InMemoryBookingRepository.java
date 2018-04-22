@@ -6,9 +6,13 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.dishes.DishType;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.Calendar;
+import java.util.Optional;
 
 /**
  *
@@ -18,6 +22,41 @@ public class InMemoryBookingRepository implements BookingRepository {
 
     @Override
     public Booking saveBooking(Booking entity) throws DataConcurrencyException, DataIntegrityViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Long countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Booking entity) throws DataIntegrityViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Long entityId) throws DataIntegrityViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Booking save(Booking entity) throws DataConcurrencyException, DataIntegrityViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Iterable<Booking> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Optional<Booking> findOne(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public long count() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

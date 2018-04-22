@@ -47,6 +47,14 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
         closed=false;
     }
 
+    public List<MenuPlanItem> getMenuPlanItemList() {
+        return menuPlanItemList;
+    }
+
+    public Menu getSelectedMenu() {
+        return selectedMenu;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         if(!(other instanceof MenuPlan )){

@@ -5,33 +5,30 @@
  */
 package eapli.ecafeteria.application.kitchen;
 
-import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.domain.authz.ActionRight;
-import eapli.ecafeteria.domain.dishes.Dish;
-import eapli.ecafeteria.domain.meal.Meal;
-import eapli.ecafeteria.domain.meal.MealType;
-import eapli.ecafeteria.persistence.MealRepository;
-import eapli.ecafeteria.persistence.PersistenceContext;
-import eapli.framework.application.Controller;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.Calendar;
+import eapli.ecafeteria.application.authz.*;
+import eapli.ecafeteria.domain.authz.*;
+import eapli.ecafeteria.domain.dishes.*;
+import eapli.ecafeteria.domain.meal.*;
+import eapli.ecafeteria.domain.menu.*;
+import eapli.ecafeteria.persistence.*;
+import eapli.framework.application.*;
+import eapli.framework.persistence.*;
+import java.util.*;
 
 /**
- *
  * @author Miguel Santos <1161386@isep.ipp.pt>
  */
 public class RegisterMealController implements Controller {
-    
+
     private final MealRepository mealRepo = PersistenceContext.repositories().meals();
-    
-    public Meal registerMeal(final Dish dish, final MealType mealType, final Calendar cal) throws DataIntegrityViolationException, DataConcurrencyException {
+
+    public Meal registerMeal(final Dish dish, final MealType mealType, final Calendar cal, final Menu menu) throws DataIntegrityViolationException, DataConcurrencyException {
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
 
-        final Meal newMeal = new Meal(dish, mealType, cal);
+        final Meal newMeal = new Meal(dish, mealType, cal, menu);
 
         return this.mealRepo.save(newMeal);
     }
-    
+
 }

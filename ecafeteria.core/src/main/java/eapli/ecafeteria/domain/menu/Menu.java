@@ -1,25 +1,16 @@
 package eapli.ecafeteria.domain.menu;
 
-import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.meal.Meal;
-import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 /**
@@ -60,9 +51,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
     @Embedded
     private Period period;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Meal> listOfMeals;
-
     /*
     ============================================================================
                                     Functions
@@ -84,7 +72,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      */
     public Menu(final String startingDayOfWeek, final String endingDayOfWeek) throws IllegalArgumentException {
         menuState = MenuState.UNPUBLISHED;
-        listOfMeals = new LinkedList<>();
         setPeriod(startingDayOfWeek, endingDayOfWeek);
     }
 
@@ -96,7 +83,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      */
     public Menu(final Calendar startingOfWeek, final Calendar endOfWeek) throws IllegalArgumentException {
         menuState = MenuState.UNPUBLISHED;
-        listOfMeals = new LinkedList<>();
         period = new Period(startingOfWeek, endOfWeek);
     }
 
@@ -140,21 +126,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
     }
 
     /**
-     *
-     * @param day
-     * @return
-     */
-    public Iterable<Meal> getMealsByDay(Calendar day) {
-        List<Meal> list = new LinkedList<>();
-        for (Meal m : listOfMeals) {
-            if (m.isOnGivenDate(day)) {
-                list.add(m);
-            }
-        }
-        return list;
-    }
-
-    /**
      * Method that returns if the menu is critical or not
      *
      * @author Raúl Correia
@@ -162,6 +133,15 @@ public class Menu implements AggregateRoot<Period>, Serializable {
      */
     public boolean isCritical() {
         return period.isCritical();
+    }
+
+    /**
+     * Methot that returns if a method is published
+     * @return 
+     */
+
+    public boolean isPublished() {
+        return menuState == MenuState.PUBLISHED;
     }
 
     /**
@@ -176,50 +156,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         }
         menuState = MenuState.PUBLISHED;
         return true;
-    }
-
-    public boolean isReadyToPublish(Iterable<DishType> dishTypes) {
-        Map<Calendar, Map<MealType, DishType>> mealsPerDay = new LinkedHashMap<>();
-        //Set<DishType> dishesSet = new HashSet<>();
-
-        if (menuState == MenuState.PUBLISHED) {
-            return false;
-        }
-
-//        for (DishType dishType : dishTypes) {
-//            dishesSet.add(dishType);
-//        }
-        for (Calendar day : getWorkWeekDaysIterable()) {
-            Map<MealType, DishType> map = new HashMap<>();
-            for (Meal meal : getMealsByDay(day)) {
-                map.put(meal.mealtype(), meal.dish().dishType());
-            }
-            // falta validar se existem as condições necessárias no mapa
-            mealsPerDay.put(day, map);
-        }
-
-        return true;
-
-    }
-
-    /**
-     * Method that adds a Meal to a Menu
-     *
-     * @author Raúl Correia
-     * @param m
-     * @return
-     */
-    public boolean addMeal(Meal m) {
-        return listOfMeals.add(m);
-    }
-
-    /**
-     *
-     * @param meal
-     * @return
-     */
-    public boolean removeMeal(Meal meal) {
-        return listOfMeals.remove(meal);
     }
 
     @Override

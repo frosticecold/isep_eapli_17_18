@@ -23,6 +23,12 @@ public class POS implements AggregateRoot<Long>, Serializable{
     @OneToOne
     @JoinColumn(name ="POSUser")
     private CafeteriaUser posUser;
+    
+    @Transient
+    private long identification;
+    
+    @Transient
+    private boolean open;
 
     protected POS () {
         //for ORM only
@@ -30,6 +36,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
     
     public POS (CafeteriaUser posUser) {
         this.posUser = posUser;
+        this.identification = 1;
     }
 
     /**
@@ -53,8 +60,27 @@ public class POS implements AggregateRoot<Long>, Serializable{
         return finalResult;
     }
 
+    /**
+     * Return the id of POS
+     * @return 
+     */
     @Override
     public Long id() {
        return this.idPOS;
+    }
+
+    /**
+     * Check if pos is closed
+     * @return 
+     */
+    public boolean isClosed() {
+        return this.open == false;
+    }
+
+    /**
+     * change state of POS
+     */
+    public void changeState() {
+        this.open = !this.open;
     }
  }

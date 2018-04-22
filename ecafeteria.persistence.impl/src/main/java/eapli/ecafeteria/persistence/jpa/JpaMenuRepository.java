@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -25,8 +26,11 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
     @Override
     public Iterable<Menu> listValidMenus() {
         final Query q;
-        q = entityManager().createQuery("SELECT e FROM Menu e", this.entityClass);
+        String where = "e.menuState=:mstate";
+        q = entityManager().createQuery("SELECT e FROM Menu e WHERE " + where, this.entityClass);
         
+        q.setParameter("mstate", MenuState.UNPUBLISHED);
+
         return q.getResultList();
     }
 
@@ -40,19 +44,22 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
         query.setParameter("edate", endDate, TemporalType.DATE);
         return query.getResultList().stream().findFirst();
     }
-    
-    public Iterable<Meal> listMealsPublishedMenu(Calendar date, MealType mealType){
-        final Query q = entityManager().
-                createQuery("SELECT meal"
-                        + " FROM Menu menu, Meal meal "
-                        + " WHERE menu.menuState=:state"
-                        + " AND :date >= menu.period.startingDate AND :date <= menu.period.endingDate"
-                        + " AND :mealtype = meal.mealtype", Meal.class);
+
+    public Optional<Menu> findMenuOnDate(Calendar cal){
+        final Query q;
+        q = entityManager().createQuery("SELECT e FROM Menu e WHERE :date=>e.period.startingDate AND :date1<=e.period.endingDate",Menu.class);
+        q.setParameter("date", cal, TemporalType.DATE);
+        q.setParameter("date1", cal, TemporalType.DATE);
         
-        q.setParameter("date", date, TemporalType.DATE);
-        q.setParameter("state", MenuState.PUBLISHED);
-        q.setParameter("mealtype", mealType);
+        return q.getResultList().stream().findFirst();
+    }
+
+    @Override
+    public Optional<Menu> findLatestMenu(Calendar cal) {
+        final Query q;
+        q = entityManager().createQuery("SELECT m FROM Menu m WHERE m.period.startingDate-:date=(SELECT MIN(m.period.startingDate-:date) FROM Menu m");
+        q.setParameter("date", cal,TemporalType.DATE);
         
-        return q.getResultList();
+        return q.getResultList().stream().findFirst();
     }
 }

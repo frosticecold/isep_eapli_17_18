@@ -1,10 +1,11 @@
 package eapli.ecafeteria.persistence.jpa;
 
-import eapli.ecafeteria.domain.kitchen.*;
-import eapli.ecafeteria.persistence.*;
-import java.util.*;
+import eapli.ecafeteria.domain.kitchen.Batch;
+import eapli.ecafeteria.persistence.BatchRepository;
+import java.util.List;
+import java.util.Optional;
 
-public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, Long> implements BatchRepository {
+public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String> implements BatchRepository {
 
     /**
      * Searches for occurrence of a batch
@@ -13,8 +14,8 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, Long> 
      * @return
      */
     @Override
-    public Optional<Batch> findById(long id) {
-        return matchOne(String.valueOf(id));
+    public Optional<Batch> findById(String id) {
+        return matchOne(id);
     }
 
     /**
@@ -29,9 +30,17 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, Long> 
     }
 
     @Override
+<<<<<<< HEAD
     public List<Batch> findAll() {
         return entityManager().createQuery("SELECT batch.*  "
                 + "FROM Batch batch ")
                 .getResultList();
+=======
+    public void removeUsedBatch(Batch batch, double quantity) throws Exception {
+        Batch b = entityManager().find(Batch.class, batch.pk());
+        entityManager().getTransaction().begin();
+        b.updatePercentageUsed(quantity);
+        entityManager().getTransaction().commit();
+>>>>>>> 039b656c242af05bfe91da3e37d027d1683f064d
     }
 }

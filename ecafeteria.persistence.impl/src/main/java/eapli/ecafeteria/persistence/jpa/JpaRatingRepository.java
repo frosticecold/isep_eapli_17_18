@@ -3,16 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.persistence.RatingRepository;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 
 /**
  *
  * @author Joana Oliveira <1161261@isep.ipp.pt>
  */
-public class JpaRatingRepository extends CafeteriaJpaRepositoryBase<Rating, Long> implements  RatingRepository{
+public class JpaRatingRepository extends CafeteriaJpaRepositoryBase<Rating, Long> implements RatingRepository {
 
+    @Override
+    public Rating saveRating(Rating entity) throws DataConcurrencyException, DataIntegrityViolationException {
+        return save(entity);
+    }
 }

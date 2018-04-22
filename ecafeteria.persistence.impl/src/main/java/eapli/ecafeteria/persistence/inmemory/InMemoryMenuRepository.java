@@ -29,11 +29,9 @@ public class InMemoryMenuRepository extends InMemoryRepositoryWithLongPK<Menu> i
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-
     @Override
-    public Iterable<Meal> listMealsPublishedMenu(Calendar date, MealType mealType) {
+    public Optional<Menu> findLatestMenu(Calendar cal) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
      
 }

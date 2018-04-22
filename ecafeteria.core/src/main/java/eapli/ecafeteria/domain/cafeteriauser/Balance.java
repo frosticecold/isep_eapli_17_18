@@ -25,6 +25,11 @@ public class Balance implements ValueObject, Serializable{
         this.currentBalance = Money.euros(0);
     }
 
+     public Balance(Money currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
+    
     /**
      *
      * @param credits is the new value to add to the currentBalance
@@ -41,7 +46,7 @@ public class Balance implements ValueObject, Serializable{
      * @author Beatriz Ferreira
      */
     public boolean hasEnoughCredits(Money credits) {
-       return this.currentBalance.lessThan(credits);
+       return this.currentBalance.greaterThanOrEqual(credits);
   
     }
     

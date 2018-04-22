@@ -8,7 +8,9 @@ package eapli.ecafeteria.bootstrapers;
 import eapli.ecafeteria.application.kitchen.RegisterMealController;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.meal.MealType;
+import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.DishRepository;
+import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.Designation;
@@ -33,62 +35,65 @@ public class MealBootstrapper implements Action {
         final Dish dish4 = dishRepo.findByName(Designation.valueOf("bacalhau à braz")).get();
         final Dish dish5 = dishRepo.findByName(Designation.valueOf("lentilhas salteadas")).get();
         final Dish dish6 = dishRepo.findByName(Designation.valueOf("lagosta suada")).get();
+        
+        final MenuRepository menuRepo = PersistenceContext.repositories().menus();
+        final Menu menu = menuRepo.findMenuWithinPeriod(DateTime.parseDate("06-05-2018"), DateTime.parseDate("12-05-2018")).get();
         //06-05-2018
-        register(dish1, MealType.LUNCH, DateTime.parseDate("06-05-2018"));
-        register(dish3, MealType.LUNCH, DateTime.parseDate("06-05-2018"));
-        register(dish6, MealType.LUNCH, DateTime.parseDate("06-05-2018"));
-        register(dish1, MealType.DINNER, DateTime.parseDate("06-05-2018"));
-        register(dish3, MealType.DINNER, DateTime.parseDate("06-05-2018"));
-        register(dish6, MealType.DINNER, DateTime.parseDate("06-05-2018"));
+        register(dish1, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
+        register(dish3, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
+        register(dish6, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
+        register(dish1, MealType.DINNER, DateTime.parseDate("06-05-2018"), menu);
+        register(dish3, MealType.DINNER, DateTime.parseDate("06-05-2018"), menu);
+        register(dish6, MealType.DINNER, DateTime.parseDate("06-05-2018"), menu);
         //07-05-2018
-        register(dish1, MealType.LUNCH, DateTime.parseDate("07-05-2018"));
-        register(dish3, MealType.LUNCH, DateTime.parseDate("07-05-2018"));
-        register(dish6, MealType.LUNCH, DateTime.parseDate("07-05-2018"));
-        register(dish1, MealType.DINNER, DateTime.parseDate("07-05-2018"));
-        register(dish3, MealType.DINNER, DateTime.parseDate("07-05-2018"));
-        register(dish6, MealType.DINNER, DateTime.parseDate("07-05-2018"));
+        register(dish1, MealType.LUNCH, DateTime.parseDate("07-05-2018"), menu);
+        register(dish3, MealType.LUNCH, DateTime.parseDate("07-05-2018"), menu);
+        register(dish6, MealType.LUNCH, DateTime.parseDate("07-05-2018"), menu);
+        register(dish1, MealType.DINNER, DateTime.parseDate("07-05-2018"), menu);
+        register(dish3, MealType.DINNER, DateTime.parseDate("07-05-2018"), menu);
+        register(dish6, MealType.DINNER, DateTime.parseDate("07-05-2018"), menu);
         //08-05-2018
-        register(dish2, MealType.LUNCH, DateTime.parseDate("08-05-2018"));
-        register(dish4, MealType.LUNCH, DateTime.parseDate("08-05-2018"));
-        register(dish5, MealType.LUNCH, DateTime.parseDate("08-05-2018"));
-        register(dish2, MealType.DINNER, DateTime.parseDate("08-05-2018"));
-        register(dish4, MealType.DINNER, DateTime.parseDate("08-05-2018"));
-        register(dish5, MealType.DINNER, DateTime.parseDate("08-05-2018"));
+        register(dish2, MealType.LUNCH, DateTime.parseDate("08-05-2018"), menu);
+        register(dish4, MealType.LUNCH, DateTime.parseDate("08-05-2018"), menu);
+        register(dish5, MealType.LUNCH, DateTime.parseDate("08-05-2018"), menu);
+        register(dish2, MealType.DINNER, DateTime.parseDate("08-05-2018"), menu);
+        register(dish4, MealType.DINNER, DateTime.parseDate("08-05-2018"), menu);
+        register(dish5, MealType.DINNER, DateTime.parseDate("08-05-2018"), menu);
         //09-05-2018
-        register(dish2, MealType.LUNCH, DateTime.parseDate("09-05-2018"));
-        register(dish4, MealType.LUNCH, DateTime.parseDate("09-05-2018"));
-        register(dish5, MealType.LUNCH, DateTime.parseDate("09-05-2018"));
-        register(dish2, MealType.DINNER, DateTime.parseDate("09-05-2018"));
-        register(dish4, MealType.DINNER, DateTime.parseDate("09-05-2018"));
-        register(dish5, MealType.DINNER, DateTime.parseDate("09-05-2018"));
+        register(dish2, MealType.LUNCH, DateTime.parseDate("09-05-2018"), menu);
+        register(dish4, MealType.LUNCH, DateTime.parseDate("09-05-2018"), menu);
+        register(dish5, MealType.LUNCH, DateTime.parseDate("09-05-2018"), menu);
+        register(dish2, MealType.DINNER, DateTime.parseDate("09-05-2018"), menu);
+        register(dish4, MealType.DINNER, DateTime.parseDate("09-05-2018"), menu);
+        register(dish5, MealType.DINNER, DateTime.parseDate("09-05-2018"), menu);
         //10-05-2018
-        register(dish1, MealType.LUNCH, DateTime.parseDate("10-05-2018"));
-        register(dish3, MealType.LUNCH, DateTime.parseDate("10-05-2018"));
-        register(dish6, MealType.LUNCH, DateTime.parseDate("10-05-2018"));
-        register(dish1, MealType.DINNER, DateTime.parseDate("10-05-2018"));
-        register(dish3, MealType.DINNER, DateTime.parseDate("10-05-2018"));
-        register(dish6, MealType.DINNER, DateTime.parseDate("10-05-2018"));
+        register(dish1, MealType.LUNCH, DateTime.parseDate("10-05-2018"), menu);
+        register(dish3, MealType.LUNCH, DateTime.parseDate("10-05-2018"), menu);
+        register(dish6, MealType.LUNCH, DateTime.parseDate("10-05-2018"), menu);
+        register(dish1, MealType.DINNER, DateTime.parseDate("10-05-2018"), menu);
+        register(dish3, MealType.DINNER, DateTime.parseDate("10-05-2018"), menu);
+        register(dish6, MealType.DINNER, DateTime.parseDate("10-05-2018"), menu);
         //11-05-2018
-        register(dish1, MealType.LUNCH, DateTime.parseDate("11-05-2018"));
-        register(dish3, MealType.LUNCH, DateTime.parseDate("11-05-2018"));
-        register(dish6, MealType.LUNCH, DateTime.parseDate("11-05-2018"));
-        register(dish1, MealType.DINNER, DateTime.parseDate("11-05-2018"));
-        register(dish3, MealType.DINNER, DateTime.parseDate("11-05-2018"));
-        register(dish6, MealType.DINNER, DateTime.parseDate("11-05-2018"));
+        register(dish1, MealType.LUNCH, DateTime.parseDate("11-05-2018"), menu);
+        register(dish3, MealType.LUNCH, DateTime.parseDate("11-05-2018"), menu);
+        register(dish6, MealType.LUNCH, DateTime.parseDate("11-05-2018"), menu);
+        register(dish1, MealType.DINNER, DateTime.parseDate("11-05-2018"), menu);
+        register(dish3, MealType.DINNER, DateTime.parseDate("11-05-2018"), menu);
+        register(dish6, MealType.DINNER, DateTime.parseDate("11-05-2018"), menu);
         //12-05-2018
-        register(dish2, MealType.LUNCH, DateTime.parseDate("12-05-2018"));
-        register(dish4, MealType.LUNCH, DateTime.parseDate("12-05-2018"));
-        register(dish5, MealType.LUNCH, DateTime.parseDate("12-05-2018"));
-        register(dish2, MealType.DINNER, DateTime.parseDate("12-05-2018"));
-        register(dish4, MealType.DINNER, DateTime.parseDate("12-05-2018"));
-        register(dish5, MealType.DINNER, DateTime.parseDate("12-05-2018"));
+        register(dish2, MealType.LUNCH, DateTime.parseDate("12-05-2018"), menu);
+        register(dish4, MealType.LUNCH, DateTime.parseDate("12-05-2018"), menu);
+        register(dish5, MealType.LUNCH, DateTime.parseDate("12-05-2018"), menu);
+        register(dish2, MealType.DINNER, DateTime.parseDate("12-05-2018"), menu);
+        register(dish4, MealType.DINNER, DateTime.parseDate("12-05-2018"), menu);
+        register(dish5, MealType.DINNER, DateTime.parseDate("12-05-2018"), menu);
         return true;
     }
     
-    private void register(Dish dish, MealType mealType, Calendar cal) {
+    private void register(Dish dish, MealType mealType, Calendar cal, Menu menu) {
         final RegisterMealController controller = new RegisterMealController();
         try {
-            controller.registerMeal(dish, mealType, cal);
+            controller.registerMeal(dish, mealType, cal, menu);
         } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
             // ignoring exception. assuming it is just a primary key violation
             // due to the tentative of inserting a duplicated user
