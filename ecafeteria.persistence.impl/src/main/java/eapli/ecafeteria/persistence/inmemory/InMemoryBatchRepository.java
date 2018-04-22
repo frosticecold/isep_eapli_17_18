@@ -32,7 +32,7 @@ public class InMemoryBatchRepository extends InMemoryRepository<Batch, String> i
     }
 
     @Override
-    public void removeUsedBatch(Batch calendar) {
+    public void removeUsedBatch(Batch calendar, double quantity) {
 
     }
 

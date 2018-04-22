@@ -28,15 +28,15 @@ public class RegisterBatchUsedInMealController implements Controller {
         return this.meal;
     }
 
-    public void registerBatchUsedInMeal(Batch batch) {
+    public void registerBatchUsedInMeal(Batch batch, double quantity) throws Exception {
         materialRepository.findByAcronym(batch.material().id());
-        MealMaterial m = new MealMaterial(batch.material(), meal, batch);
+        MealMaterial m = new MealMaterial(batch.material(), meal, batch, quantity);
 
         try {
             mealMaterialRepository.save(m);
-            batchRepository.removeUsedBatch(batch);
+            batchRepository.removeUsedBatch(batch, quantity);
         } catch (DataConcurrencyException | DataIntegrityViolationException e) {
-            e.printStackTrace();
+            e.getCause();
         }
     }
 
@@ -79,15 +79,19 @@ public class RegisterBatchUsedInMealController implements Controller {
     }
 
     public void showAvailableBatches(String materialId) {
+        Calendar today = Calendar.getInstance();
+
+
         Iterable<Batch> list = batchRepository.findAll();
         for (Batch b : list) {
-            if (b.material().id().compareTo(materialId) == 0 && b.isAvailable()) {
-                System.out.printf("Id: %d Batch: %s, Expiration: %s\n", b.pk(), b.barcode(), b.useByDate().getTime().toString());
+            if (b.material().id().compareTo(materialId) == 0 && b.isAvailable() && b.useByDate().compareTo(today) > 0) {
+                System.out.printf("Id: %d Batch: %s, Quantity Available: %f Expiration: %s\n",
+                        b.pk(), b.barcode(), b.availableQuantity(), b.useByDate().getTime().toString());
             }
         }
     }
 
-    public Batch getBatchSelected(int id) {
+    public Batch getSelectedBatch(int id) {
         List<Batch> list = (List<Batch>) batchRepository.findAll();
         for (Batch b : list) {
             if ((int) b.pk() == id) {

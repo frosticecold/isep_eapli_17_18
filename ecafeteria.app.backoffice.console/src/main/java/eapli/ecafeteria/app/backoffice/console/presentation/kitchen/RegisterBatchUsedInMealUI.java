@@ -6,9 +6,10 @@ import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class RegisterBatchUsedInMealUI extends AbstractUI {
 
@@ -18,7 +19,7 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
         return this.theController;
     }
 
-    private List<Batch> batches = new ArrayList<>();
+    private Map<Batch, Double> batches = new HashMap<>();
 
     @Override
     protected boolean doShow() {
@@ -43,15 +44,20 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
 
             this.theController.showAvailableBatches(matAcro);
             int pk = Console.readInteger("Insert id: ");
-            Batch b = this.theController.getBatchSelected(pk);
-            batches.add(b);
-            this.theController.registerBatchUsedInMeal(b);
+            Batch b = this.theController.getSelectedBatch(pk);
+            double quantity = Console.readDouble("Insert quantity used:");
+            try {
+                this.theController.registerBatchUsedInMeal(b, quantity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            batches.put(b, quantity);
             System.out.println("Batch successfully saved!\n");
         }
 
         System.out.println("--- BATCHES REGISTERED ON MEAL ---");
-        for (Batch b : batches) {
-            System.out.printf("Material: %s, Batch Code: %s, Expiration Date: %s\n", b.material().description(), b.barcode(), b.useByDate().getTime());
+        for (Entry<Batch, Double> b : batches.entrySet()) {
+            System.out.printf("Material: %s, Batch Code: %s, Used Quantity: %f Expiration Date: %s\n", b.getKey().material().description(), b.getKey().barcode(), b.getValue(), b.getKey().useByDate().getTime());
         }
 
         return false;

@@ -11,18 +11,19 @@ public class MealMaterial {
     @Id
     @GeneratedValue
     private long pk;
-
     @OneToOne
     private Material materialCode;
     @OneToOne
     private Meal meal;
     @OneToOne
     private Batch batch;
+    private double quantity;
 
-    public MealMaterial(Material material, Meal meal, Batch batch) {
+    public MealMaterial(Material material, Meal meal, Batch batch, double qntd) {
         this.materialCode = material;
         this.meal = meal;
         this.batch = batch;
+        this.quantity = qntd;
     }
 
     public MealMaterial() {
