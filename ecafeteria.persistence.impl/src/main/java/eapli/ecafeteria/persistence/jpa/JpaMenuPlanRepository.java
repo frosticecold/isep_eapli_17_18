@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import java.io.Serializable;
@@ -14,11 +15,6 @@ import javax.persistence.TypedQuery;
 public class JpaMenuPlanRepository extends CafeteriaJpaRepositoryBase<MenuPlan,Long> implements MenuPlanRepository  {
 
     @Override
-    public MenuPlan saveMenuPlan(MenuPlan menuplan) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public MenuPlan getActiveMenuPlan() {
           String where = "mp.closed=:isClosed";
         TypedQuery<MenuPlan> query = entityManager().createQuery("SELECT mp FROM MenuPlan mp WHERE " + where,
@@ -26,6 +22,14 @@ public class JpaMenuPlanRepository extends CafeteriaJpaRepositoryBase<MenuPlan,L
         
         query.setParameter("isClosed",false);
         return query.getSingleResult();
+    }
+
+    @Override
+    public MenuPlan getMenuPlanFromMenu(Menu m) {
+          TypedQuery<MenuPlan> q;
+        q = entityManager().createQuery("SELECT mp FROM MenuPlan mp WHERE mp.selectedMenu=:menu", MenuPlan.class);
+        q.setParameter("menu", m);
+        return q.getSingleResult();
     }
     
 }

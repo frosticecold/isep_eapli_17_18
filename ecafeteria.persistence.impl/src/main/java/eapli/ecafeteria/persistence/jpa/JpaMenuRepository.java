@@ -53,4 +53,13 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
         
         return q.getResultList().stream().findFirst();
     }
+
+    @Override
+    public Optional<Menu> findLatestMenu(Calendar cal) {
+        final Query q;
+        q = entityManager().createQuery("SELECT m FROM Menu m WHERE m.period.startingDate-:date=(SELECT MIN(m.period.startingDate-:date) FROM Menu m");
+        q.setParameter("date", cal,TemporalType.DATE);
+        
+        return q.getResultList().stream().findFirst();
+    }
 }

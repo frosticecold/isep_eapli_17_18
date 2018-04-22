@@ -44,5 +44,9 @@ public class MenuService {
     public static Iterable<Meal> getMealsFromMenuByGivenDay(final Menu menu, final Calendar cal) {
         return mealRepository.listMealsFromMenuByGivenDay(menu, cal);
     }
+    
+     public static Optional<Menu> findLatestMenu(Calendar cal){
+        return menuRepository.findLatestMenu(cal);
+    }
 
 }
