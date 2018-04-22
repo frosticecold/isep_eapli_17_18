@@ -9,15 +9,12 @@ import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.application.menus.MenuService;
 import eapli.ecafeteria.domain.authz.ActionRight;
-import static eapli.ecafeteria.domain.authz.ActionRight.SELECT_MEAL;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.dishes.NutricionalInfo;
-import eapli.ecafeteria.domain.menu.*;
 import eapli.ecafeteria.domain.meal.*;
-import eapli.ecafeteria.domain.CreditTransaction.DebitBooking;
+import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.*;
@@ -27,6 +24,8 @@ import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,6 +37,8 @@ public class BookingMealController implements Controller {
 
     private final BookingRepository repository = PersistenceContext.repositories().booking();
 
+    private final TransactionRepository trepo = PersistenceContext.repositories().transactioRepository();
+
     /**
      *
      * @param date
@@ -48,15 +49,30 @@ public class BookingMealController implements Controller {
         return MenuService.getMealsPublishedByDay(date, mealType);
     }
 
-    public boolean doTransaction(Username id, Meal meal) {
+    public boolean doTransaction(Username id, Meal meal) throws DataConcurrencyException, DataIntegrityViolationException {
         Money mealPrice = meal.dish().currentPrice();
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
         if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
-            DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());     
-            db.movement(user.get(), mealPrice);
+
+            Transaction t = new Transaction(user.get(), mealPrice) {
+                @Override
+                public boolean movement(CafeteriaUser user, Money obj) {
+                    Balance userBalance = userService.getBalanceOfUser(user.mecanographicNumber());
+                    Money money = userBalance.currentBalance().subtract(mealPrice);
+                    Balance newBalance = new Balance(money);
+
+                    user.setCurrentBalance(newBalance);
+                    userService.save(user);
+                    return true;
+                }
+            };
+            t.movement(user.get(), mealPrice);
             return true;
+        } else {
+            System.out.println("USER HASN'T ENOUGH MONEY");
+            return false;
         }
-        return false;
+
     }
 
     public Booking persistBooking(final Username cafeteriaUser, final Calendar date,

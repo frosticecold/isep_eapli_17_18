@@ -73,6 +73,10 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
         return this.currentBalance.removeCredits(credits);
     }
 
+    public void setCurrentBalance(Balance currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
     /**
      * check if there is enough money to make a transaction
      *
