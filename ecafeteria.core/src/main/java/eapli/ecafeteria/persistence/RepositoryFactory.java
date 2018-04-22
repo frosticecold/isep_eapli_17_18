@@ -106,7 +106,12 @@ public interface RepositoryFactory {
      * @return
      */
     DeliveryMealSessionRepository deliveryMealRepository();
-
+    /**
+     * MealMaterialRepositorySession Repo
+     * @return 
+     */
+    MealMaterialRepository mealMaterials();
+    
     MealRepository meals();
 
     ExecutionRepository executions();

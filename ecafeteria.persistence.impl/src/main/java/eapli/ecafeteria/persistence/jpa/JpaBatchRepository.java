@@ -27,4 +27,11 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, Long> 
     public List<Batch> findAllBatches(String id) {
         return match(id);
     }
+
+    @Override
+    public List<Batch> findAll() {
+        return entityManager().createQuery("SELECT batch.*  "
+                + "FROM Batch batch ")
+                .getResultList();
+    }
 }

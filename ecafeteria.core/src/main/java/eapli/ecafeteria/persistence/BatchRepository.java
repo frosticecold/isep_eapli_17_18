@@ -9,4 +9,6 @@ public interface BatchRepository extends DataRepository<Batch, Long> {
     Optional<Batch> findById(long id);
 
     List<Batch> findAllBatches(String id);
+    
+    List<Batch> findAll();
 }
