@@ -9,30 +9,46 @@ import eapli.ecafeteria.persistence.DishTypeRepository;
 import eapli.ecafeteria.persistence.ExecutionRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
 public class ListAvailableMealsService {
-    
+
     private final ExecutionRepository repo = PersistenceContext.repositories().executions();
     private final DishTypeRepository dishRepo = PersistenceContext.repositories().dishTypes();
     private final BookingRepository bookingRepo = PersistenceContext.repositories().booking();
-    
-    /** List of Avaliable Meals
+
+    /**
+     * List of Avaliable Meals
+     *
      * @param cal
      * @param mealtype
-     * @return  **/
+     * @return *
+     */
     public AvailableMealsStatistics calcStatistics(Calendar cal, MealType mealtype) {
-       Iterable<DishType> activeDishTypes = dishRepo.activeDishTypes();
+        Iterable<DishType> activeDishTypes = dishRepo.activeDishTypes();
         AvailableMealsStatistics ams = new AvailableMealsStatistics(cal, mealtype);
-        for(DishType dt: activeDishTypes){
-           Long maxNumberOfServings = repo.getMaxNumberOfServings(dt, cal, mealtype);
-           ams.addDishTypeQuantity(dt, maxNumberOfServings);
-           Long countReservedMealsByDishType = bookingRepo.countReservedMealsByDishType(cal, dt, mealtype);
-           ams.addDishTypeReservedQuantity(dt, countReservedMealsByDishType);
-       }
-       return ams;
+        for (DishType dt : activeDishTypes) {
+            Long maxNumberOfServings = repo.getMaxNumberOfServings(dt, cal, mealtype);
+            ams.addDishTypeQuantity(dt, maxNumberOfServings);
+            Long countReservedMealsByDishType = bookingRepo.countReservedMealsByDishType(cal, dt, mealtype);
+            ams.addDishTypeReservedQuantity(dt, countReservedMealsByDishType);
+        }
+        return ams;
+    }
+
+    public Map<DishType, Long> calcDeliveredStatistics(Calendar cal, MealType mealtype) {
+        Map<DishType, Long> map = new LinkedHashMap<>();
+        Iterable<DishType> activeDishTypes = dishRepo.activeDishTypes();
+
+        for (DishType dt : activeDishTypes) {
+            Long delivered = bookingRepo.getNumberOfDeliveredMealsByDishTypeByDayAndMealType(cal, mealtype, dt);
+            map.put(dt, delivered);
+        }
+        return map;
     }
 }

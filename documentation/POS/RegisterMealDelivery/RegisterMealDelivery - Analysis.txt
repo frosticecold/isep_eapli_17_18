@@ -20,8 +20,6 @@ __________________
 
 * Atualizar quantidade de pratos para um certo tipo de refeição, referente a dia da sessão atual.
 
-* Verificar se a refeição a ser entregue tem um menu associado
-
 TESTE UNITÀRIOS
 _______________
 

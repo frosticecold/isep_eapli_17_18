@@ -77,7 +77,7 @@ public interface RepositoryFactory {
 
     RatingRepository rating();
 
-    /**
+    /*
      * ************************
      * reporting ************************
      */
@@ -106,18 +106,28 @@ public interface RepositoryFactory {
      * @return
      */
     DeliveryMealSessionRepository deliveryMealRepository();
+
     
+    
+
     /**
      * Ratings reporting repository
      * @return 
      */
     RatingReportingRepository ratingsReporting();
 
+
     MealRepository meals();
 
     ExecutionRepository executions();
 
-    public AlergenRepository alergens();
+    AlergenRepository alergens();
     
     TransactionRepository transactioRepository();
+
+        /**
+     * MealMaterialRepositorySession Repo
+     * @return 
+     */
+    MealMaterialRepository mealMaterial();
 }

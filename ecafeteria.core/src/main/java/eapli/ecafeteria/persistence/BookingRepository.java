@@ -23,4 +23,6 @@ public interface BookingRepository extends DataRepository<Booking, Long>{
             DataIntegrityViolationException;
     
     public Long countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType);
+    
+    public Long getNumberOfDeliveredMealsByDishTypeByDayAndMealType(final Calendar cal, final MealType mealType, final DishType dishType);
 }

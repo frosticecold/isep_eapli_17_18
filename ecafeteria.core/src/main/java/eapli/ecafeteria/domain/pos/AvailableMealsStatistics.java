@@ -66,6 +66,7 @@ public class AvailableMealsStatistics {
         mapWithRemaningQuantity = map;
         return map;
     }
+    
 
     @Override
     public String toString() {

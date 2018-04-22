@@ -1,7 +1,7 @@
 package eapli.ecafeteria.domain.kitchen;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Calendar;
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +15,16 @@ public class Batch implements Serializable {
     private String barCode;
     @Version
     private Long version;
+    /**
+     * It references if the batch has been used or not
+     * <p>
+     * 0 - Available
+     * 1 - Used
+     */
+    private int status = 0;
+
+    private double quantity;
+    private double availableQuantitity;
 
     /**
      * Data de validade
@@ -28,10 +38,12 @@ public class Batch implements Serializable {
     protected Batch() {
     }
 
-    public Batch(String barCode, Calendar date, Material material) {
+    public Batch(String barCode, Calendar date, Material material, double quantity) {
         this.barCode = barCode;
         this.date = date;
         this.material = material;
+        this.quantity = quantity;
+        this.availableQuantitity = quantity;
     }
 
     public String barcode() {
@@ -45,4 +57,37 @@ public class Batch implements Serializable {
     public Material material() {
         return material;
     }
+
+    public void used() {
+        status = 1;
+    }
+
+    public Object pk() {
+        return pk;
+    }
+
+    public boolean isAvailable() {
+        return status == 0;
+    }
+
+    public double availableQuantity() {
+        return availableQuantitity;
+    }
+
+    public void updatePercentageUsed(double quantity) throws Exception {
+        double aux = this.availableQuantitity - quantity;
+
+        if (aux < 0) {
+            throw new Exception("Quantity used is over available quantity!");
+        } else if (aux > 0) {
+            this.availableQuantitity = aux;
+        } else {
+            this.availableQuantitity = aux;
+            used();
+        }
+    }
+    public String info(){
+        return this.pk + " " + this.material.acronym();
+    }
+   
 }

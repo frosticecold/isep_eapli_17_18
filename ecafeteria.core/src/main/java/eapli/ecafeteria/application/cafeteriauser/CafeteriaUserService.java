@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 public class CafeteriaUserService {
 
     private final CafeteriaUserRepository repo = PersistenceContext.repositories().cafeteriaUsers();
-    
+
     private final TransactionRepository trepo= PersistenceContext.repositories().transactioRepository();
 
 
@@ -50,6 +50,11 @@ public class CafeteriaUserService {
         }
         return updateUser;
     }
+   
+    
+      public Balance getBalanceOfUser(MecanographicNumber user) {
+           return trepo.getBalanceOfUser(user);
+       }
 
     public boolean hasEnoughtMoney(CafeteriaUser user, Money money) {
         Balance userBalance = trepo.getBalanceOfUser(user.mecanographicNumber());

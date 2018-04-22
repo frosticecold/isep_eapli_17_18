@@ -1,9 +1,11 @@
 package eapli.ecafeteria.persistence.inmemory;
 
-import eapli.ecafeteria.domain.kitchen.*;
-import eapli.ecafeteria.persistence.*;
-import eapli.framework.persistence.repositories.impl.inmemory.*;
-import java.util.*;
+import eapli.ecafeteria.domain.kitchen.Batch;
+import eapli.ecafeteria.persistence.BatchRepository;
+import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class InMemoryBatchRepository extends InMemoryRepository<Batch, String> implements BatchRepository {
 
@@ -30,7 +32,17 @@ public class InMemoryBatchRepository extends InMemoryRepository<Batch, String> i
     }
 
     @Override
+    public void removeUsedBatch(Batch calendar, double quantity) {
+
+    }
+
+    @Override
     protected String newKeyFor(Batch entity) {
         return null;
+    }
+
+    @Override
+    public List<Batch> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
