@@ -62,12 +62,18 @@ public class BookingMealUI extends AbstractUI {
         }
 
         if (!mealList.iterator().hasNext()) {
-            System.out.println("\nThere is no meal with that conditions\n");
+            System.out.println("\nThere are no meals in that conditions\n");
             return false;
         }
 
         for (Meal meal : mealList) {
-            System.out.println(meal.toString());
+            if (meal.menu().isPublished()) {
+                System.out.println(meal.toString());
+            }else{
+                System.out.println("\nThere are no meals published.\n");
+                return false;
+            }
+            
         }
 
         //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
@@ -105,7 +111,7 @@ public class BookingMealUI extends AbstractUI {
                     if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal)) {
                         System.out.println("Sucess, the transaction was done.");
                     }
-                } catch (DataConcurrencyException ex ) {
+                } catch (DataConcurrencyException ex) {
                     Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (DataIntegrityViolationException ex) {
                     Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
