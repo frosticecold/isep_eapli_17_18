@@ -43,4 +43,9 @@ public class CreditRecharge extends Transaction implements Serializable {
         return user.addCredits(credits);
     }
 
+    @Override
+    public String toString() {
+        return "Transaction type: " + transactionType + " Amount: " + super.k + " " + super.cafeteriaUser.id();
+    }
+
 }

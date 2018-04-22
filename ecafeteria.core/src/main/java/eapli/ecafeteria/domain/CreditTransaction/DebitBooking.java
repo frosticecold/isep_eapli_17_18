@@ -44,21 +44,20 @@ public class DebitBooking extends Transaction {
     }
 
     /**
-     * removes the price of the meal of the users balance
-     * saves the transaction
+     * removes the price of the meal of the users balance saves the transaction
+     *
      * @param user
      * @param mealPrice
-     * @return 
+     * @return
      */
     public boolean movement(CafeteriaUser user, Money mealPrice) {
         t = new DebitBooking(user, mealPrice);
-        
-        Balance userBalance =  service.getBalanceOfUser(user.mecanographicNumber());
+
+        Balance userBalance = service.getBalanceOfUser(user.mecanographicNumber());
         Money money = userBalance.currentBalance().subtract(mealPrice);
         Balance newBalance = new Balance(money);
-        
+
 //        saveTransaction(t);
-  
         return tr.setNewBalance(user.mecanographicNumber(), newBalance);
     }
 
@@ -70,6 +69,11 @@ public class DebitBooking extends Transaction {
         } catch (DataIntegrityViolationException ex) {
             Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction type: " + transactionType + " Amount: " + super.k + " " + super.cafeteriaUser.id();
     }
 
 }
