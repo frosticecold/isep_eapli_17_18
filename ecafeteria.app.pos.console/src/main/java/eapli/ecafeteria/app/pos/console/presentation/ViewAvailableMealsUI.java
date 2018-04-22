@@ -23,7 +23,7 @@ public class ViewAvailableMealsUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         System.out.println("Available Dishes:");
-        AvailableMealsStatistics availableMeals = controller.findAvailableMealsPerDay(DateTime.parseDate("08-05-2018"), MealType.LUNCH);
+        AvailableMealsStatistics availableMeals = controller.findAvailableMealsPerDay(DateTime.now(), MealType.LUNCH);
         System.out.println(availableMeals);
         return true;
     }

@@ -6,24 +6,27 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.persistence.DishReportingRepository;
-import eapli.ecafeteria.persistence.PersistenceContext;
-import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
+import eapli.ecafeteria.domain.dishes.DishType;
+import eapli.ecafeteria.domain.meal.MealType;
+import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.framework.application.Controller;
+import java.util.Calendar;
+import java.util.Map;
 
 /**
  *
- * @author Oliveira
+ * @author André Oliveira 1040862
  */
 public class ClosePOSController implements Controller {
-    
-    private final DishReportingRepository repo = PersistenceContext.repositories().dishReporting();
+
+    private final ListAvailableMealsService availableMealsService = new ListAvailableMealsService();
 
     public void closeSession() {
         AuthorizationService.clearSession();
     }
 
-    public Iterable<DishesPerDishType> listDeliveredMeals() {
-        return repo.dishesPerDishType();
+    public Map<DishType, Long> listDeliveredMeals(Calendar cal, MealType mt) {
+        Map<DishType, Long> calcDeliveredStatistics = availableMealsService.calcDeliveredStatistics(cal, mt);
+        return calcDeliveredStatistics;
     }
 }
