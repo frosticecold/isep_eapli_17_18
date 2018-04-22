@@ -27,54 +27,68 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
-
 public class CreateMenuPlanController implements Controller {
-    
-    
-     private final MenuPlanRepository mpr=PersistenceContext.repositories().menuPlan();
-     
-     private Menu m;
-     
-     private MenuPlan menuplan;
-     
-     private MenuPlanItem mpi;
-     
-     private Quantity q;
-         
-     //metodo que vai buscar menus da semana atual
-     public Menu getCurrentMenu(){
-         m=MenuService.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()+1), endOfWeek(Calendar.YEAR,currentWeekNumber()+1)).get();
-        return m;
-        
-     }
 
-     //metodo que vai a cada refeicao preencher com o numero de pratos
-    public MenuPlan setNumberDishesForMeal(int quantity){
-        
-        List<MenuPlanItem> list=new ArrayList<>();
-        
-        Calendar bDay = DateTime.beginningOfWeek(Calendar.YEAR, currentWeekNumber());
-        for(int i=0; i<7;i++){
-            Iterable<Meal> meals = MenuService.getMealsFromMenuByGivenDay(m, bDay);
-            for(Meal currentMeal : meals){
-               q.setQuantity(quantity);
-               mpi=new MenuPlanItem(currentMeal,q);  
-               list.add(mpi);
-            }
-            
-            bDay.add(Calendar.DAY_OF_MONTH, 1);
-        
+    private final MenuPlanRepository mpr = PersistenceContext.repositories().menuPlan();
+
+    private Menu m;
+
+    private MenuPlan menuplan;
+
+    private MenuPlanItem mpi;
+
+    private Quantity q;
+
+    public Menu getCurrentMenuWithoutPlan() {
+
+        MenuPlan mp;
+
+        m = MenuService.findLatestMenu(DateTime.now()).get();
+
+        mp = mpr.getMenuPlanFromMenu(m);
+
+        if (mp != null) {
+            return null;
         }
-        
-        menuplan=new MenuPlan(list, m);
-        
+
+        return m;
+    }
+
+    public Iterable<Meal> mealsFromMenuByDay(Calendar bDay, Menu me) {
+        return MenuService.getMealsFromMenuByGivenDay(me, bDay);
+    }
+
+    public Quantity insertQuantity(int quantity) {
+        q = new Quantity(quantity);
+        return q;
+    }
+
+    public void createMenuPlanItemList(Meal currentMeal, List<MenuPlanItem> list, Quantity q) {
+        mpi = new MenuPlanItem(currentMeal, q);
+        list.add(mpi);
+
+    }
+
+   
+    public MenuPlan createMenuPlan(List<MenuPlanItem> lista, Menu m) {
+
+        menuplan = new MenuPlan(lista, m);
+
         return menuplan;
     }
-    
-     //metodo que poe isso na base de dados
-    public void save(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException{
-      
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);      
+
+    public void save(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException {
+
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
         mpr.save(mp);
+    }
+
+    public void editMenuPlan(int quantity) {
+        MenuPlan mp = mpr.getActiveMenuPlan();
+   
+        for (MenuPlanItem menu_plan_item:mp.getMenuPlanItemList()) {
+            menu_plan_item.getQuantityNumber().setQuantity(quantity);
+        }
+
     }
 }

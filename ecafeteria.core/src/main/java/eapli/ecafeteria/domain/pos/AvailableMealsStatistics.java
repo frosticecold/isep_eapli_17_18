@@ -23,9 +23,9 @@ public class AvailableMealsStatistics {
 
     private Calendar day;
     private MealType mealType;
-    private Map<DishType, Integer> mapDishtypeQuantity;
-    private Map<DishType, Integer> mapWithReservedQuantity;
-    private Map<DishType, Integer> mapWithRemaningQuantity;
+    private Map<DishType, Long> mapDishtypeQuantity;
+    private Map<DishType, Long> mapWithReservedQuantity;
+    private Map<DishType, Long> mapWithRemaningQuantity;
 
     public AvailableMealsStatistics(Calendar day, MealType mealType) {
         this.day = day;
@@ -34,7 +34,7 @@ public class AvailableMealsStatistics {
         this.mapWithReservedQuantity = new HashMap<>();
     }
 
-    private boolean addToMap(Map<DishType, Integer> map, DishType dishType, Integer quantity) {
+    private boolean addToMap(Map<DishType, Long> map, DishType dishType, Long quantity) {
         if (map == null || dishType == null || quantity == null) {
             return false;
         }
@@ -43,24 +43,24 @@ public class AvailableMealsStatistics {
         return true;
     }
 
-    public boolean addDishTypeQuantity(DishType dt, Integer qt) {
+    public boolean addDishTypeQuantity(DishType dt, Long qt) {
         if (!mapDishtypeQuantity.containsKey(dt)) {
-            mapDishtypeQuantity.put(dt, 0);
+            mapDishtypeQuantity.put(dt,(long) 0);
         }
         return addToMap(mapDishtypeQuantity, dt, qt);
     }
 
-    public boolean addDishTypeReservedQuantity(DishType dt, Integer qt) {
+    public boolean addDishTypeReservedQuantity(DishType dt, Long qt) {
         if (!mapWithReservedQuantity.containsKey(dt)) {
-            mapWithReservedQuantity.put(dt, 0);
+            mapWithReservedQuantity.put(dt,(long) 0);
         }
         return addToMap(mapWithReservedQuantity, dt, qt);
     }
 
-    public Map<DishType, Integer> calcRemainingDishes() {
-        Map<DishType, Integer> map = new LinkedHashMap<>();
+    public Map<DishType, Long> calcRemainingDishes() {
+        Map<DishType, Long> map = new LinkedHashMap<>();
         for (DishType dt : mapDishtypeQuantity.keySet()) {
-            Integer dif = mapDishtypeQuantity.get(dt) - mapWithReservedQuantity.get(dt);
+            Long dif = mapDishtypeQuantity.get(dt) - mapWithReservedQuantity.get(dt);
             map.put(dt, dif);
         }
         mapWithRemaningQuantity = map;

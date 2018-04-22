@@ -56,7 +56,7 @@ public class InMemoryExecutionRepository implements ExecutionRepository{
     }
 
     @Override
-    public Integer getMaxNumberOfServings(DishType dt, Calendar cal, MealType mealType) {
+    public Long getMaxNumberOfServings(DishType dt, Calendar cal, MealType mealType) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -22,5 +22,5 @@ public interface BookingRepository extends DataRepository<Booking, Long>{
     public Booking saveBooking(Booking entity) throws DataConcurrencyException, 
             DataIntegrityViolationException;
     
-    public Integer countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType);
+    public Long countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType);
 }

@@ -33,7 +33,7 @@ public class JpaExecutionRepository extends CafeteriaJpaRepositoryBase<Execution
         return q.getResultList();
     }
 
-    public Integer getMaxNumberOfServings(final DishType dt,final Calendar cal, final MealType mealType) {
+    public Long getMaxNumberOfServings(final DishType dt,final Calendar cal, final MealType mealType) {
         final Query q;
 
         q = entityManager().createQuery("SELECT SUM(e.madeMeals.madeMeals) FROM Execution e "
@@ -45,7 +45,7 @@ public class JpaExecutionRepository extends CafeteriaJpaRepositoryBase<Execution
         q.setParameter("mealType", mealType);
         q.setParameter("dt", dt);
  
-        return (Integer) q.getSingleResult();
+        return (Long) q.getSingleResult();
     }
 
 }

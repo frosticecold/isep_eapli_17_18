@@ -30,22 +30,21 @@ public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Lo
     }
 
     @Override
-    public Integer countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType) {
+    public Long countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType) {
         final Query q;
 
         q = entityManager().createQuery("SELECT COUNT(e) FROM Booking e "
                 + "WHERE e.meal.mealtype=:mealType "
                 + "AND e.meal.date=:date "
                 + "AND e.meal.dish.dishType=:dt "
-                + "AND (e.bookingState=:bs1 OR e.bookingState=:bs2)"
+           //     + "AND (e.bookingState=:bs1 OR e.bookingState=:bs2)"
                 , Long.class);
-
+        
         q.setParameter("date", cal, TemporalType.DATE);
         q.setParameter("mealType", mealType);
         q.setParameter("dt", dishType);
-        q.setParameter("bs1", BookingStates.BOOKED);
-        q.setParameter("bs2", BookingStates.SERVED);
- 
-        return (Integer) q.getSingleResult();
+      //  q.setParameter("bs1", BookingStates.BOOKED);
+      //  q.setParameter("bs2", BookingStates.SERVED);
+        return (Long) q.getSingleResult();
     }
 }
