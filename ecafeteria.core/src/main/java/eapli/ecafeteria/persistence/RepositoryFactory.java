@@ -77,7 +77,7 @@ public interface RepositoryFactory {
 
     RatingRepository rating();
 
-    /**
+    /*
      * ************************
      * reporting ************************
      */
@@ -117,7 +117,9 @@ public interface RepositoryFactory {
 
     ExecutionRepository executions();
 
-    public AlergenRepository alergens();
+    AlergenRepository alergens();
     
     TransactionRepository transactioRepository();
+
+    MealMaterialRepository mealMaterial();
 }

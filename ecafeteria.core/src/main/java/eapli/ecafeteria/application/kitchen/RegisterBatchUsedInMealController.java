@@ -1,27 +1,44 @@
 package eapli.ecafeteria.application.kitchen;
 
-import eapli.ecafeteria.domain.kitchen.*;
-import eapli.ecafeteria.domain.meal.*;
+import eapli.ecafeteria.domain.kitchen.Batch;
+import eapli.ecafeteria.domain.kitchen.Material;
+import eapli.ecafeteria.domain.kitchen.MealMaterial;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.*;
-import eapli.framework.application.*;
-import eapli.framework.util.*;
-import java.util.*;
+import eapli.framework.application.Controller;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.util.Console;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 
 public class RegisterBatchUsedInMealController implements Controller {
 
     MealRepository mealRepository = Objects.requireNonNull(PersistenceContext.repositories()).meals();
     MaterialRepository materialRepository = Objects.requireNonNull(PersistenceContext.repositories()).materials();
     BatchRepository batchRepository = Objects.requireNonNull(PersistenceContext.repositories()).batch();
+    MealMaterialRepository mealMaterialRepository = PersistenceContext.repositories().mealMaterial();
 
     private Meal meal;
     private List<Meal> mealList;
 
-    public void registerBatchUsedInMeal(Batch batch) {
-
+    public Meal meal() {
+        return this.meal;
     }
 
-    public Optional<Batch> getBatch(String id) {
-        return batchRepository.findById(id);
+    public void registerBatchUsedInMeal(Batch batch) {
+
+        materialRepository.findByAcronym(batch.material().id());
+        MealMaterial m = new MealMaterial(batch.material(), meal, batch);
+
+        try {
+            mealMaterialRepository.save(m);
+            batchRepository.removeUsedBatch(batch);
+        } catch (DataConcurrencyException | DataIntegrityViolationException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setMeal() {
@@ -40,7 +57,6 @@ public class RegisterBatchUsedInMealController implements Controller {
 
         mealList = mealRepository.listOfMealsByDateAndMealType(date, mealType);
 
-        System.out.println(mealList.size());
         if (mealList.size() != 0) {
             for (Meal m : mealList) {
                 System.out.printf("Meal -> Dish Name:%s, Code: %d\n", m.dish().name(), m.id());

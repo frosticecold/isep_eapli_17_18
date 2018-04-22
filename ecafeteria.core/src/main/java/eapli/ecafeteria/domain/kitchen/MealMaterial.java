@@ -1,6 +1,10 @@
 package eapli.ecafeteria.domain.kitchen;
 
-import javax.persistence.*;
+import eapli.ecafeteria.domain.meal.Meal;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class MealMaterial {
@@ -8,21 +12,23 @@ public class MealMaterial {
     @GeneratedValue
     private long pk;
 
-    private long materialCode;
-    private long mealCode;
+    @OneToOne
+    private Material materialCode;
+    @OneToOne
+    private Meal meal;
     @OneToOne
     private Batch batch;
 
-    public MealMaterial(long materialCode, long mealCode, Batch batch) {
-        this.materialCode = materialCode;
-        this.mealCode = mealCode;
+    public MealMaterial(Material material, Meal meal, Batch batch) {
+        this.materialCode = material;
+        this.meal = meal;
         this.batch = batch;
     }
 
     public MealMaterial() {
     }
 
-    public long meal() {
-        return this.mealCode;
+    public Meal meal() {
+        return this.meal;
     }
 }

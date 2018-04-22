@@ -1,7 +1,7 @@
 package eapli.ecafeteria.domain.kitchen;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Calendar;
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +15,13 @@ public class Batch implements Serializable {
     private String barCode;
     @Version
     private Long version;
+    /**
+     * It references if the batch has been used or not
+     * <p>
+     * 0 - Available
+     * 1 - Used
+     */
+    private int status = 0;
 
     /**
      * Data de validade
@@ -44,5 +51,13 @@ public class Batch implements Serializable {
 
     public Material material() {
         return material;
+    }
+
+    public void used() {
+        status = 1;
+    }
+
+    public Object pk() {
+        return pk;
     }
 }

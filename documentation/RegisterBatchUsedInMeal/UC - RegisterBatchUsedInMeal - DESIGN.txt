@@ -27,7 +27,7 @@
         controller -> ui: showApprovedMeals()
         controller --> user: Asks what meal to refer
         user -> controller: code = insert meal code (date + type)
-        controller --> controller: mealCode = getsMeal(code)
+        controller --> controller: meal = getsMeal(code)
 
         loop while (stat != 1)
             loop while(op != -1)
@@ -42,7 +42,7 @@
                 controller --> ui: requests batch code
                 user -> controller: batchCode = inserts batch code
 
-                controller -> mmr: addMaterial(mealCode, foodCode, quantity, batchCode)
+                controller -> mmr: addMaterial(meal, foodCode, quantity, batchCode)
                 controller -> ui: Procceed?(0) Terminate(-1)
 
                 user -> controller: op = option
