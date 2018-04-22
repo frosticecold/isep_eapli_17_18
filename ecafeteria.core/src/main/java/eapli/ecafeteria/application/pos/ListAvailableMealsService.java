@@ -1,7 +1,11 @@
 package eapli.ecafeteria.application.pos;
 
+import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
+import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
+import eapli.ecafeteria.persistence.BookingRepository;
+import eapli.ecafeteria.persistence.DishTypeRepository;
 import eapli.ecafeteria.persistence.ExecutionRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import java.util.Calendar;
@@ -12,12 +16,23 @@ import java.util.Calendar;
  */
 public class ListAvailableMealsService {
     
-    ExecutionRepository repo = PersistenceContext.repositories().executions();
+    private final ExecutionRepository repo = PersistenceContext.repositories().executions();
+    private final DishTypeRepository dishRepo = PersistenceContext.repositories().dishTypes();
+    private final BookingRepository bookingRepo = PersistenceContext.repositories().booking();
     
     /** List of Avaliable Meals
      * @param cal
+     * @param mealtype
      * @return  **/
-    public Iterable<Execution> findExecutionsPerDate(Calendar cal, MealType mealtype) {
-       return repo.findMealExecutionByDate(cal, mealtype);
+    public AvailableMealsStatistics calcStatistics(Calendar cal, MealType mealtype) {
+       Iterable<DishType> activeDishTypes = dishRepo.activeDishTypes();
+        AvailableMealsStatistics ams = new AvailableMealsStatistics(cal, mealtype);
+        for(DishType dt: activeDishTypes){
+           Long maxNumberOfServings = repo.getMaxNumberOfServings(dt, cal, mealtype);
+           ams.addDishTypeQuantity(dt, maxNumberOfServings);
+           Long countReservedMealsByDishType = bookingRepo.countReservedMealsByDishType(cal, dt, mealtype);
+           ams.addDishTypeReservedQuantity(dt, countReservedMealsByDishType);
+       }
+       return ams;
     }
 }
