@@ -86,4 +86,8 @@ public class Batch implements Serializable {
             used();
         }
     }
+    public String info(){
+        return this.pk + " " + this.material.acronym();
+    }
+   
 }

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class SearchBatchUsageController {
 
-    private final MealMaterialRepository mealRepo = PersistenceContext.repositories().mealMaterials();
+    private final MealMaterialRepository mealRepo = PersistenceContext.repositories().mealMaterial();
     private final BatchRepository batchRepo = PersistenceContext.repositories().batch();
 
     public List<Batch> getAllBatches() {

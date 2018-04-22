@@ -107,11 +107,7 @@ public interface RepositoryFactory {
      */
     DeliveryMealSessionRepository deliveryMealRepository();
 
-    /**
-     * MealMaterialRepositorySession Repo
-     * @return 
-     */
-    MealMaterialRepository mealMaterials();
+    
     
 
     /**
@@ -129,5 +125,9 @@ public interface RepositoryFactory {
     
     TransactionRepository transactioRepository();
 
+        /**
+     * MealMaterialRepositorySession Repo
+     * @return 
+     */
     MealMaterialRepository mealMaterial();
 }

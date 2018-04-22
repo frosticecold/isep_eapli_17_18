@@ -10,6 +10,7 @@ import eapli.ecafeteria.domain.kitchen.Batch;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.visitor.Visitor;
+import java.util.Scanner;
 
 /**
  *
@@ -22,8 +23,12 @@ public class SearchBatchUsageUI extends AbstractUI {
     protected boolean doShow() {
         System.out.println("Pick one of the batches");
         for(Batch e :  controller.getAllBatches()){
-            System.out.println(e.);
+            System.out.println(e.info());
         }
+        Scanner ler = new Scanner(System.in);
+        int op = ler.nextInt();
+        
+        return false;
     }
 
     @Override
