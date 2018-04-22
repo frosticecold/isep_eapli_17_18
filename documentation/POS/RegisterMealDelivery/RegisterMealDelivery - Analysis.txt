@@ -12,9 +12,9 @@ __________________
 REGRAS DE NEGÒCIO
 __________________
 
-* Antes da entrega, tem que haver verificação das refeiçõe disponiveis para entregar.
+* Antes da entrega, tem que haver verificação das refeições disponiveis para entregar.
 
-* Cada entrega é registado na session de uma dada refeição (Almoço ou Jantar) de um certo dia, guardando a reserva, o cliente e o operador de caixa.
+* Cada entrega é registado na session de uma dada refeição (Almoço ou Jantar) de um certo dia, guardando a reserva da refeição entregue, o cliente a que foi entregue e o operador de caixa que entregou a mesma.
 
 * Ao momento da entrega de refeição, tem que alterar o estado da reserva que foi entregue. 
 
