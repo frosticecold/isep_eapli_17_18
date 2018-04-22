@@ -7,6 +7,7 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
+import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
@@ -37,12 +38,11 @@ public class BookingMealUI extends AbstractUI {
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
 
-        if(controller.is24hBefore(cal)==false){
+        if (controller.is24hBefore(cal) == false) {
             System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
             return false;
         }
-        
-        
+
         //====================================lIST MEAL============================================
         Iterable<Meal> mealList = null;
         int option = 0;
@@ -61,13 +61,13 @@ public class BookingMealUI extends AbstractUI {
                 break;
         }
 
-        for (Meal meal : mealList) {
-            System.out.println(meal.toString());
-        }
-
         if (!mealList.iterator().hasNext()) {
             System.out.println("\nThere is no meal with that conditions\n");
             return false;
+        }
+
+        for (Meal meal : mealList) {
+            System.out.println(meal.toString());
         }
 
         //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
@@ -101,14 +101,18 @@ public class BookingMealUI extends AbstractUI {
 
         switch (option2) {
             case 1:
-                if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal)) {
-                    System.out.println("Operação bem sucedida, foi efetuado o pagamento.");
-                } else {
-                    System.out.println("Não possui saldo suficiente.");
-                    break;
+                try {
+                    if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal)) {
+                        System.out.println("Sucess, the transaction was done.");
+                    }
+                } catch (DataConcurrencyException ex ) {
+                    Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (DataIntegrityViolationException ex) {
+                    Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             case 2:
-                System.out.println("Operação encerrada.");
+                System.out.println("Operation closed.");
                 break;
 
         }
@@ -133,7 +137,7 @@ public class BookingMealUI extends AbstractUI {
     }
 
 }
-    
+
 //    @Override
 //    public Iterable<Alergen> listAlergenOfMeal(Meal meal) {
 //    final Query q = entityManager().

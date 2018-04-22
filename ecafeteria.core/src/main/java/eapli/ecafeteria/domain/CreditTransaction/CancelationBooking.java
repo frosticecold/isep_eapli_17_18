@@ -12,7 +12,7 @@ import eapli.framework.domain.money.Money;
  *
  * @author David Camelo 1161294@isep.ipp.pt
  */
-public class CancelationBooking extends Transaction{
+public class CancelationBooking extends Transaction {
 
     public CancelationBooking(CafeteriaUser user, Money k) {
         super(user, k);
@@ -22,5 +22,10 @@ public class CancelationBooking extends Transaction{
     public boolean movement(CafeteriaUser user, Money credits) {
         return user.addCredits(credits);
     }
-    
+
+    @Override
+    public String toString() {
+        return "Transaction type: " + transactionType + " Amount: " + super.k + " " + super.cafeteriaUser.id();
+    }
+
 }

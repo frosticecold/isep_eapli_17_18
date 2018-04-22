@@ -101,9 +101,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaPOSRepository();
     }
 
-
     /**
-     * Returns a new DeliveryMealSession Repository when persistence is done on JPA
+     * Returns a new DeliveryMealSession Repository when persistence is done on
+     * JPA
      *
      * @return
      */
@@ -146,4 +146,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public RatingReportingRepository ratingsReporting() {
         return new JpaRatingReportingRepository();
     }
+
+
 }

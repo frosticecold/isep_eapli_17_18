@@ -9,7 +9,12 @@ public interface BatchRepository extends DataRepository<Batch, String> {
 
     Optional<Batch> findById(String id);
 
+   
+
     List<Batch> findAllBatches(String id);
 
+    List<Batch> findAll();
+
     void removeUsedBatch(Batch calendar, double quantity) throws Exception;
+
 }

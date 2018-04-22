@@ -150,4 +150,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public RatingReportingRepository ratingsReporting() {
         return new InMemoryRatingReportingRepository();
     }
+
+
 }

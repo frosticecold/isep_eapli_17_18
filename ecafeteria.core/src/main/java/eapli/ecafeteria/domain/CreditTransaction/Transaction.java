@@ -33,18 +33,18 @@ public abstract class Transaction implements Serializable {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    protected Long id;
     @ManyToOne
-    private CafeteriaUser cafeteriaUser;
-    private Money k;
-    private String transactionType;
+    protected CafeteriaUser cafeteriaUser;
+    protected Money k;
+    protected String transactionType;
     @OneToOne
-    private SystemUser systemUser;
+    protected SystemUser systemUser;
     @Temporal(TemporalType.DATE)
-    private Calendar date;
+    protected Calendar date;
 
     @Version
-    private Long version;
+    protected Long version;
 
     /**
      *
@@ -73,4 +73,8 @@ public abstract class Transaction implements Serializable {
      */
     public abstract boolean movement(CafeteriaUser user, Money obj);
 
+    @Override
+    public abstract String toString();
+
+    
 }
