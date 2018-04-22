@@ -8,6 +8,7 @@ package eapli.ecafeteria.application.booking;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.application.menus.MenuService;
+import eapli.ecafeteria.domain.CreditTransaction.Debit;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
@@ -36,6 +37,7 @@ public class BookingMealController implements Controller {
     private final CafeteriaUserService userService = new CafeteriaUserService();
 
     private final BookingRepository repository = PersistenceContext.repositories().booking();
+    private Transaction t;
 
     private final TransactionRepository trepo = PersistenceContext.repositories().transactioRepository();
 
@@ -60,14 +62,25 @@ public class BookingMealController implements Controller {
 
             user.get().setCurrentBalance(newBalance);
             userService.save(user.get());
-            //Transaction t = new Transaction(user.get(), mealPrice);
-            //saveTransaction(t);
+            this.t= new Debit(user.get(), mealPrice);
+            saveTransaction(t);
+            
             return true;
         } else {
             System.out.println("USER HASN'T ENOUGH MONEY");
             return false;
         }
 
+    }
+
+    private void saveTransaction(Transaction t) {
+        try {
+            this.trepo.save(this.t);
+        } catch (DataConcurrencyException ex) {
+            Logger.getLogger(BookingMealController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DataIntegrityViolationException ex) {
+            Logger.getLogger(BookingMealController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Booking persistBooking(final Username cafeteriaUser, final Calendar date,

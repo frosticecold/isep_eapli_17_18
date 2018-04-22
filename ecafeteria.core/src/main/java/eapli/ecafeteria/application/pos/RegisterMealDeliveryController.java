@@ -1,8 +1,11 @@
 package eapli.ecafeteria.application.pos;
 
-import eapli.ecafeteria.persistence.DishReportingRepository;
-import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.ecafeteria.domain.meal.MealType;
+import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
+import eapli.ecafeteria.domain.pos.DeliveryMealSession;
+import eapli.ecafeteria.domain.pos.DeliverySessionDate;
 import eapli.framework.application.Controller;
+import java.util.Calendar;
 
 /**
  *
@@ -35,5 +38,22 @@ public class RegisterMealDeliveryController implements Controller {
         //changeState(idBooking, bookingsRepo); //will change the state of the booking delivered
         
         return true;
+    }
+    
+    /**
+     * Returns all AvaliableMealStatics of this certain session to list on UI
+     * @param session
+     * @return 
+     */
+    public AvailableMealsStatistics showCurrentStatics(DeliveryMealSession session) {
+        
+        MealType sessionType;
+        
+        if(session.isLunch()) sessionType = MealType.LUNCH;
+        else sessionType = MealType.DINNER;
+        
+        Calendar ca = session.date();
+
+        return new AvailableMealsStatistics(ca, sessionType);
     }
 }

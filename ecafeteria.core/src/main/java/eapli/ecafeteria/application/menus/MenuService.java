@@ -31,9 +31,8 @@ public class MenuService {
     }
 
     public static Iterable<Meal> getMealsPublishedByDay(Calendar date, MealType mealType) {
-
-        return mealRepository.listMealsPublishedByDayAndMealType(date, mealType);
-
+        
+        return mealRepository.listOfMealsByDateAndMealType(date, mealType);
     }
 
     public static Iterable<Calendar> getWorkingDaysOfMenu(Menu m) {
