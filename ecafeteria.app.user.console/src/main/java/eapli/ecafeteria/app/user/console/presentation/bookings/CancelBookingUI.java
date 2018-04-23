@@ -36,7 +36,7 @@ public class CancelBookingUI extends AbstractUI{
             selectWidget.show();
             // Select booking
             try {
-                controller.selectBooking(selectWidget.selectedOption());
+                controller.selectBooking(selectWidget.selectedOption() -1);
             } catch (IllegalArgumentException e) {
                 System.out.println("Index not valid!");
             }
@@ -48,10 +48,9 @@ public class CancelBookingUI extends AbstractUI{
                 System.out.println(controller.informRefundValue());
 
                 // Cancel & Confirm
-                System.out.println("Would you like to cancel the booking? [y/n]");
                 String answer = null;
                 do {                
-                    Console.readLine(answer);
+                    answer = Console.readLine("Would you like to cancel the booking? [y/n]");
                 } while (!answer.equals("y") && !answer.equals("n"));
 
                 if(answer.equals("n")){
