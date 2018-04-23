@@ -94,11 +94,11 @@ public class DeliverySessionDateTest {
         assertEquals(expected, instance.Day(), 0);
     }
 
-    @Test
-    public void ensureCalendarIsCorrect() {
-
-        Calendar expected = this.ca;
-
-        assertEquals(expected,this.instance.calendar());
-    }
+//    @Test
+//    public void ensureCalendarIsCorrect() {
+//
+//        Calendar expected = this.ca;
+//
+//        assertEquals(expected,this.instance.calendar());
+//    }
 }
