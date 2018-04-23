@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -94,11 +95,9 @@ public class DeliverySessionDateTest {
         assertEquals(expected, instance.Day(), 0);
     }
 
-//    @Test
-//    public void ensureCalendarIsCorrect() {
-//
-//        Calendar expected = this.ca;
-//
-//        assertEquals(expected,this.instance.calendar());
-//    }
+    @Test
+    public void ensureCalendarIsReturned() {
+
+        assertNotNull(this.instance.calendar());
+    }
 }
