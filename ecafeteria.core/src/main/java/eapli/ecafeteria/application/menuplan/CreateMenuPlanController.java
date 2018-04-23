@@ -42,19 +42,15 @@ public class CreateMenuPlanController implements Controller {
 
     private Quantity q;
 
-    public Menu getCurrentMenuWithoutPlan() {
-
-        MenuPlan mp;
+    public Menu getCurrentMenu() {
 
         m = MenuService.findLatestMenu().get();
-
-//        mp = mpr.getMenuPlanFromMenu(m);
-
-//        if (mp != null) {
-//            return null;
-//        }
-//
         return m;
+    }
+    
+    public MenuPlan getMenuPlanFromMenu(Menu m){
+     
+        return mpr.getMenuPlanFromMenu(m);
     }
 
     public Iterable<Meal> mealsFromMenuByDay(Calendar bDay, Menu me) {
@@ -79,12 +75,17 @@ public class CreateMenuPlanController implements Controller {
         return menuplan;
     }
 
-    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
-        mpir.save(mpi);
-    }
+//    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
+//        mpir.save(mpi);
+//    }
 
-    public void saveMenuPlan(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException {
-
+    public void saveMenuPlan(MenuPlan mp,List<MenuPlanItem>list) throws DataConcurrencyException, DataIntegrityViolationException {
+        System.out.println("quantidade de MenuPlanItem: "+list.size());
+        
+        for (MenuPlanItem mpi:list) {
+            System.out.println("menu plan item guardado: "+mpir.save(mpi));
+        }
+        
         mpr.save(mp);
     }
     
