@@ -13,6 +13,7 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.domain.menuplan.MenuPlanItem;
 import eapli.ecafeteria.domain.menuplan.Quantity;
+import eapli.ecafeteria.persistence.MenuPlanItemRepository;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
@@ -31,6 +32,8 @@ public class CreateMenuPlanController implements Controller {
 
     private final MenuPlanRepository mpr = PersistenceContext.repositories().menuPlan();
 
+    private final MenuPlanItemRepository mpir = PersistenceContext.repositories().menuPlanItem();
+
     private Menu m;
 
     private MenuPlan menuplan;
@@ -44,13 +47,13 @@ public class CreateMenuPlanController implements Controller {
         MenuPlan mp;
 
         m = MenuService.findLatestMenu().get();
-   
-       // mp = mpr.getMenuPlanFromMenu(m);
+
+//        mp = mpr.getMenuPlanFromMenu(m);
 
 //        if (mp != null) {
 //            return null;
 //        }
-
+//
         return m;
     }
 
@@ -63,31 +66,38 @@ public class CreateMenuPlanController implements Controller {
         return q;
     }
 
-    public void fillMenuPlanItemList(Meal currentMeal, List<MenuPlanItem> list, Quantity q) {
+    public MenuPlanItem createMenuPlanItem(Meal currentMeal, Quantity q) {
         mpi = new MenuPlanItem(currentMeal, q);
-        list.add(mpi);
+        return mpi;
 
     }
 
-   
     public MenuPlan createMenuPlan(List<MenuPlanItem> lista, Menu m) {
 
         menuplan = new MenuPlan(lista, m);
-              
+
         return menuplan;
     }
 
-    public void save(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException {
-        
-        mpr.save(mp);
+    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
+        mpir.save(mpi);
     }
 
-    public void editMenuPlan(int quantity) {
-        MenuPlan mp = mpr.getActiveMenuPlan();
-   
-        for (MenuPlanItem menu_plan_item:mp.getMenuPlanItemList()) {
-            menu_plan_item.getQuantityNumber().setQuantity(quantity);
-        }
+    public void saveMenuPlan(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException {
+
+        mpr.save(mp);
+    }
+    
+    public MenuPlan getActiveMenuPlan(){
+        return mpr.getActiveMenuPlan();
+    }
+    
+  
+
+    public void editMenuPlan(int quantity, MenuPlanItem menu_plan_item) {
+        
+
+        menu_plan_item.getQuantityNumber().setQuantity(quantity);
 
     }
 }

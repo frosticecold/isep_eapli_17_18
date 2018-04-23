@@ -5,14 +5,18 @@
  */
 package eapli.ecafeteria.persistence.inmemory;
 
+import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.domain.menuplan.MenuPlanItem;
 import eapli.ecafeteria.persistence.MenuPlanItemRepository;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
+import java.util.List;
 
 /**
  *
  * @author pedro
  */
 public class InMemoryMenuPlanItemRepository extends InMemoryRepositoryWithLongPK<MenuPlanItem> implements MenuPlanItemRepository {
+
+   
     
 }

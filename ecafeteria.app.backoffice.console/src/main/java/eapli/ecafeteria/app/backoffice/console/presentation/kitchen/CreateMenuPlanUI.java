@@ -59,7 +59,7 @@ public class CreateMenuPlanUI extends AbstractUI {
                 List<MenuPlanItem> list = new ArrayList<>();
 
                Iterable<Calendar> listDays= menu.getWorkWeekDaysIterable();
-
+int i=0;
                 for (Calendar bDay:listDays) {
                     
                     Iterable<Meal> meals = controller.mealsFromMenuByDay(bDay, menu);
@@ -70,18 +70,32 @@ public class CreateMenuPlanUI extends AbstractUI {
                        
                        Quantity q=controller.insertQuantity(quantity);
                        
-                       controller.fillMenuPlanItemList(currentMeal, list, q);
+                       MenuPlanItem mpi=controller.createMenuPlanItem(currentMeal,q);
                        
+                        try {
+                            
+                            controller.saveMenuPlanItem(mpi);
+                            
+                            System.out.println("GUARDOU O MENUPlAN ITEM");
+                            
+                        } catch (DataConcurrencyException  | DataIntegrityViolationException ex ) {
+                            Logger.getLogger(CreateMenuPlanUI.class.getName()).log(Level.SEVERE, null, ex);
+                        } 
+                       
+                       list.add(mpi);
+                      
                     }
                     
                    
                 }
                 
                  mp=controller.createMenuPlan(list, menu);
-
+                System.out.println("numero de menuPLanItem:"+mp.getMenuPlanItemList().size()); 
                 try {
-                     System.out.println("menuPlan->->->->"+mp.getMenuPlanItemList().size());
-                    controller.save(mp);
+                     
+                    controller.saveMenuPlan(mp);
+                    
+                    System.out.println("GUARDOU O MENUPLAN");
                     
                 } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
                     System.out.println("Unable to add this Execution");
@@ -90,8 +104,34 @@ public class CreateMenuPlanUI extends AbstractUI {
             }
 
         } else if (n == 2) {
-
-            controller.editMenuPlan(n);
+            
+            MenuPlan mplan=controller.getActiveMenuPlan();
+            
+            List<MenuPlanItem>list=mplan.getMenuPlanItemList();
+            
+            for (MenuPlanItem mPlanItem:list) {
+                int quantity = Console.readInteger("Insert the quantity of dishes for meal:"+mPlanItem.getCurrentMeal().dish());
+                mPlanItem.getQuantityNumber().setQuantity(quantity);
+                
+                try {
+                    
+                    controller.saveMenuPlanItem(mPlanItem);
+                    System.out.println("MENU PLAN ITEM WAS EDITED");
+                    
+                }  catch (DataConcurrencyException | DataIntegrityViolationException ex) {
+                    System.out.println("Unable to add this Execution");
+                }
+                
+            }
+            
+            try {
+                
+                controller.saveMenuPlan(mplan);
+                
+            } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
+                    System.out.println("Unable to add this Execution");
+                }
+            
 
         }else{
             System.exit(0);

@@ -65,5 +65,9 @@ public class MenuPlanItem implements AggregateRoot<Long>,Serializable {
     public Long id() {
         return id;
     }
+
+    public Meal getCurrentMeal() {
+        return currentMeal;
+    }
   
 }
