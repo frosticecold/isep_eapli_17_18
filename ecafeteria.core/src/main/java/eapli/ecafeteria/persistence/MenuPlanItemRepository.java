@@ -5,8 +5,10 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.domain.menuplan.MenuPlanItem;
 import eapli.framework.persistence.repositories.DataRepository;
+import java.util.List;
 
 /**
  *

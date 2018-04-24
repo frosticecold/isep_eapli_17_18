@@ -13,6 +13,7 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.domain.menuplan.MenuPlanItem;
 import eapli.ecafeteria.domain.menuplan.Quantity;
+import eapli.ecafeteria.persistence.MenuPlanItemRepository;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
@@ -31,6 +32,8 @@ public class CreateMenuPlanController implements Controller {
 
     private final MenuPlanRepository mpr = PersistenceContext.repositories().menuPlan();
 
+    private final MenuPlanItemRepository mpir = PersistenceContext.repositories().menuPlanItem();
+
     private Menu m;
 
     private MenuPlan menuplan;
@@ -39,19 +42,15 @@ public class CreateMenuPlanController implements Controller {
 
     private Quantity q;
 
-    public Menu getCurrentMenuWithoutPlan() {
-
-        MenuPlan mp;
+    public Menu getCurrentMenu() {
 
         m = MenuService.findLatestMenu().get();
-   
-       // mp = mpr.getMenuPlanFromMenu(m);
-
-//        if (mp != null) {
-//            return null;
-//        }
-
         return m;
+    }
+    
+    public MenuPlan getMenuPlanFromMenu(Menu m){
+     
+        return mpr.getMenuPlanFromMenu(m);
     }
 
     public Iterable<Meal> mealsFromMenuByDay(Calendar bDay, Menu me) {
@@ -63,31 +62,43 @@ public class CreateMenuPlanController implements Controller {
         return q;
     }
 
-    public void fillMenuPlanItemList(Meal currentMeal, List<MenuPlanItem> list, Quantity q) {
+    public MenuPlanItem createMenuPlanItem(Meal currentMeal, Quantity q) {
         mpi = new MenuPlanItem(currentMeal, q);
-        list.add(mpi);
+        return mpi;
 
     }
 
-   
     public MenuPlan createMenuPlan(List<MenuPlanItem> lista, Menu m) {
 
         menuplan = new MenuPlan(lista, m);
-              
+
         return menuplan;
     }
 
-    public void save(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException {
+//    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
+//        mpir.save(mpi);
+//    }
+
+    public void saveMenuPlan(MenuPlan mp,List<MenuPlanItem>list) throws DataConcurrencyException, DataIntegrityViolationException {
+        System.out.println("quantidade de MenuPlanItem: "+list.size());
+        
+        for (MenuPlanItem mpi:list) {
+            System.out.println("menu plan item guardado: "+mpir.save(mpi));
+        }
         
         mpr.save(mp);
     }
+    
+    public MenuPlan getActiveMenuPlan(){
+        return mpr.getActiveMenuPlan();
+    }
+    
+  
 
-    public void editMenuPlan(int quantity) {
-        MenuPlan mp = mpr.getActiveMenuPlan();
-   
-        for (MenuPlanItem menu_plan_item:mp.getMenuPlanItemList()) {
-            menu_plan_item.getQuantityNumber().setQuantity(quantity);
-        }
+    public void editMenuPlan(int quantity, MenuPlanItem menu_plan_item) {
+        
+
+        menu_plan_item.getQuantityNumber().setQuantity(quantity);
 
     }
 }
