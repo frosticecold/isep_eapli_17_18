@@ -3,6 +3,7 @@ package eapli.ecafeteria.application.pos;
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.meal.MadeMeals;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
@@ -65,9 +66,8 @@ public class RegisterMealDeliveryController implements Controller {
         //get id the meal associated  to the booking
         Meal meal = PersistenceContext.repositories().booking().findOne(idBooking).get().getMeal();
         
-        //update dish quantity of execution
+        //update dish quantity of execution - maybe?
         
-        PersistenceContext.repositories().executions().findExecutionByMeal(meal);
     }
     
     /**
