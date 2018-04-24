@@ -73,6 +73,17 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
         
     }
     
+    public DeliverySessionDate sessionDate(){
+        return this.sessionDate;
+    }
+    /**
+     * 
+     * @return 
+     */
+    public POS loggedPOS(){
+        return this.pos;
+    }
+    
     /**
      * Define the type of the session
      */
