@@ -31,7 +31,11 @@ public class RegisterMadeMealsController implements Controller {
         return mealRepo.listOfMealsByDateAndMealType(date, mealType);
     }
 
-    public Execution createExecution(Meal meal, MadeMeals madeMeals) {
+    public Execution checkIfExists(Meal meal){
+        return execRepo.findExecutionByMeal(meal);
+    } 
+    
+    public Execution createExecution(Meal meal, MadeMeals madeMeals) {   
         return new Execution(meal, madeMeals);
     }
 

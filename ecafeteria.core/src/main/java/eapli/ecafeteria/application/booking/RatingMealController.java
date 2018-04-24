@@ -16,9 +16,8 @@ import eapli.ecafeteria.persistence.RatingRepository;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.ArrayList;
+import eapli.framework.util.Console;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -30,12 +29,20 @@ public class RatingMealController {
      * Factory
      */
     RepositoryFactory factory;
+
     /**
      * Cafeteria user
      */
     private CafeteriaUser user = null;
-    private Booking selectedBooking = null;
-    BookingReportingRepository bookingRepository = PersistenceContext.repositories().bookingReporting();
+
+    /**
+     * Booking Reporting Repository
+     */
+    private BookingReportingRepository bookingRepository = PersistenceContext.repositories().bookingReporting();
+
+    /**
+     * Rating repository
+     */
     private RatingRepository ratingRepository = PersistenceContext.repositories().rating();
 
     /**
@@ -43,13 +50,18 @@ public class RatingMealController {
      */
     private List<Booking> bookings = null;
 
+    private int rate;
+    private String comment;
+
+    /**
+     * Constructor
+     */
     public RatingMealController() {
         factory = PersistenceContext.repositories();
         user = factory.cafeteriaUsers().findByUsername(
                 AuthorizationService.session().authenticatedUser().username())
                 .get();
-        
-        
+
         ratingRepository = factory.rating();
         bookingRepository = factory.bookingReporting();
         BookingState served = new BookingState();
@@ -67,11 +79,19 @@ public class RatingMealController {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
-    public Rating addRating(Booking booking, int rating, String comment) 
+    public Rating addRating(Booking booking, String comment)
             throws DataConcurrencyException, DataIntegrityViolationException {
-        
-        System.out.println("LLL- " + user.user().id().toString());
-        Rating rateMeal = new Rating(user, booking, rating, comment);
+        if (booking == null || comment == null) {
+            System.out.println("Invalid. Please check.");
+            //throw new IllegalArgumentException("Invalid. Please check.");
+        }
+        // System.out.println("Username: " + user.user().id().toString());
+//        try {
+//            addRating(null, 0, null);
+//        } catch (IllegalArgumentException e) {
+//            System.out.println("Invalid!");
+//        }
+        Rating rateMeal = new Rating(booking, rate, comment);
         rateMeal = ratingRepository.saveRating(rateMeal);
         return rateMeal;
     }
@@ -85,4 +105,21 @@ public class RatingMealController {
         return bookings;
     }
 
+    public boolean readRating(int rating) {
+        if (rating < 0 || rating > 5) {
+            System.out.println("Rating Invalid. Check!");
+            return false;
+        }
+        this.rate = rating;
+        return true;
+    }
+
+    public boolean readComment() {
+        String answer = "";
+        do {
+            answer = Console.readLine("Do you wish to leave a comment? (yes) or (no)");
+        } while (!answer.equals("yes") && !answer.equals("no"));
+
+        return !answer.equals("no");
+    }
 }

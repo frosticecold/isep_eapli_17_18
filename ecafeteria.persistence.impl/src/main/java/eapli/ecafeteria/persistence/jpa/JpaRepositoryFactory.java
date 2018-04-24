@@ -161,6 +161,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
         return new JpaAutoTxTransactionRepository(autoTx);
     }
+    /**
+     * Return JpaDeliveryRegistryRepository
+     * @return 
+     */
+    @Override
+    public DeliveryRegistryRepository deliveryRegistryRepository() {
+        return new JpaDeliveryRegistryRepository();
+    }
 
 
 }

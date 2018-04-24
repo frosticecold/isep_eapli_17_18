@@ -109,8 +109,10 @@ public interface RepositoryFactory {
      */
     DeliveryMealSessionRepository deliveryMealRepository();
 
-    
-    
+    /**
+     * DeliveryRegistry Repo
+     */
+    DeliveryRegistryRepository deliveryRegistryRepository();
 
     /**
      * Ratings reporting repository

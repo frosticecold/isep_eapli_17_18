@@ -26,6 +26,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.dishes.reporting.Rep
 import eapli.ecafeteria.app.backoffice.console.presentation.dishes.reporting.ReportHighCaloriesDishesUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.ListDishViaDTOUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.RegisterDishViaDTOUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.CloseMenuPlanAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.CreateMenuPlanAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterBatchUsedInMealAction;
@@ -94,7 +95,8 @@ public class MainMenu extends AbstractUI {
     private static final int REGISTER_BATCH_USED_IN_MEAL = 3;
     private static final int KITCHEN_REGISTER_MADE_MEALS = 4;
     private static final int KITCHEN_LIST_MEALS_BY_BATCH_OPTION = 5;
-    private static final int KITCHEN_CRREATE_OR_EDIT_MENUPLAN = 6;
+    private static final int KITCHEN_CREATE_OR_EDIT_MENUPLAN = 6;
+    private static final int KITCHEN_CLOSE_MENU_PLAN = 7;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
@@ -279,7 +281,9 @@ public class MainMenu extends AbstractUI {
 
         menu.add(new MenuItem(KITCHEN_LIST_MEALS_BY_BATCH_OPTION, "List Meals by batch", new SearchBatchUsageAction()));
         
-        menu.add(new MenuItem(KITCHEN_CRREATE_OR_EDIT_MENUPLAN, "Create or edit menuplan", new CreateMenuPlanAction()));
+        menu.add(new MenuItem(KITCHEN_CREATE_OR_EDIT_MENUPLAN, "Create or edit menuplan", new CreateMenuPlanAction()));
+        
+        menu.add(new MenuItem(KITCHEN_CLOSE_MENU_PLAN, "Close menuplan", new CloseMenuPlanAction()));
 
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 

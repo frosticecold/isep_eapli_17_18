@@ -17,6 +17,7 @@ import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -53,26 +54,48 @@ public class RegisterMadeMealsUI extends AbstractUI{
         } else{
             System.out.println("List of Meals with that criteria;");
             for (int i = 0; i < meals.size(); i++) {
-                System.out.println((i+1) + meals.get(i).toString());
+                System.out.println((i+1) + "- " + meals.get(i).toString());
             }
             int x;
             do{
                 x = Console.readInteger("Choose the meal:");
             }while(x<0 || x>meals.size());
             
-            int numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
-            MadeMeals madeMeals = new MadeMeals(numMadeMeals);
             
-            Execution e = controller.createExecution(meals.get(x-1), madeMeals);
-            
+            Execution exec;
             try {
-                controller.addExecution(e);
-                System.out.println("Execution added!");
-            } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
-                System.out.println("Unable to add this Execution");
+                exec = controller.checkIfExists(meals.get(x-1));
+                System.out.println("You are going to edit an existing Execution:");
+                
+                int numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
+                MadeMeals madeMeals = new MadeMeals(numMadeMeals);
+                exec.changeMadeMeals(madeMeals);
+            
+                saveExecution(exec);
+                
+            } catch (NoResultException e) {
+
+                int numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
+                MadeMeals madeMeals = new MadeMeals(numMadeMeals);
+            
+                exec = controller.createExecution(meals.get(x-1), madeMeals);
+                
+                saveExecution(exec);
             }
+            
+            
         }
         return true;
+    }
+    
+    private void saveExecution(Execution exec){
+        
+        try {
+            controller.addExecution(exec);
+            System.out.println("Execution added!");
+        } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
+            System.out.println("Unable to add this Execution");
+        }
     }
 
     @Override

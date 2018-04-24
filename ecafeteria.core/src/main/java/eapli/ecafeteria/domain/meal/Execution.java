@@ -61,6 +61,10 @@ public class Execution implements AggregateRoot<Long>, Serializable {
         }
         return true;
     }
+    
+    public void changeMadeMeals(MadeMeals meals){
+        this.madeMeals = meals;
+    }
 
     @Override
     public Long id() {
