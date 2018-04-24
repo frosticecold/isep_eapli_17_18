@@ -1,7 +1,7 @@
 package eapli.ecafeteria.domain.pos;
 
-import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -33,7 +33,7 @@ public class DeliveryRegistry implements  AggregateRoot<Long>, Serializable {
      */
     @OneToOne
     @JoinColumn(name="CLIENT")
-    private SystemUser client;
+    private CafeteriaUser client;
     
     @ManyToOne
     @JoinColumn(name="SESSION")
@@ -43,7 +43,7 @@ public class DeliveryRegistry implements  AggregateRoot<Long>, Serializable {
         //for ORM only
     }
     
-    public DeliveryRegistry(DeliveryMealSession session, SystemUser client, Booking booking) {
+    public DeliveryRegistry(DeliveryMealSession session, CafeteriaUser client, Booking booking) {
             this.session = session;
             this.client = client;
             this.booking = booking;

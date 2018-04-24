@@ -24,7 +24,7 @@ public class RegisterMealDeliveryUI extends AbstractUI {
     
     public void recordNewMealDelivery(String idClient, long booking) {
 
-        this.ctrl.registerNewMealDelivery(idClient, booking);
+        //this.ctrl.registerNewMealDelivery(idClient, booking);
     }
     
     /**
