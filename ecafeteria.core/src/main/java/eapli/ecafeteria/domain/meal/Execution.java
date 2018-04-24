@@ -76,6 +76,6 @@ public class Execution implements AggregateRoot<Long>, Serializable {
         return "Meal=" + meal.dish().toString()
                 + "\n" + madeMeals.toString();
     }
-    
+
     
 }
