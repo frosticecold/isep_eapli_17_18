@@ -13,12 +13,22 @@ import javax.persistence.Query;
  */
 public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<DeliveryRegistry, Long> implements DeliveryRegistryRepository{
 
+    /**
+     * Delete certain entity of DeliveryRegistry
+     * @param entity
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public void delete(DeliveryRegistry entity) throws DataIntegrityViolationException {
         
         entityManager().remove(entity);
     }
 
+    /**
+     * Delete DeliveryRegistry by id
+     * @param entityId
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public void delete(Long entityId) throws DataIntegrityViolationException {
         
@@ -35,6 +45,13 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
         entityManager().remove(entity);
     }
 
+    /**
+     * Persists a deliveryregistry entity
+     * @param entity
+     * @return
+     * @throws DataConcurrencyException
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public DeliveryRegistry save(DeliveryRegistry entity) throws DataConcurrencyException, DataIntegrityViolationException {
        
@@ -43,6 +60,10 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
        return entity;
     }
 
+    /**
+     * Returns a list of all DeliveryRegistry
+     * @return 
+     */
     @Override
     public Iterable<DeliveryRegistry> findAll() {
        String query = "SELECT DeliveryRegistry.*"
@@ -53,11 +74,20 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
         return q.getResultList();
     }
 
+    /**
+     * Find just one DeliveryRegistry by id
+     * @param id
+     * @return 
+     */
     @Override
     public Optional<DeliveryRegistry> findOne(Long id) {
         return matchOne("e.id=id",id,id);
     }
 
+    /**
+     * Counts DeliveryRegistry records
+     * @return 
+     */
     @Override
     public long count() {
        
