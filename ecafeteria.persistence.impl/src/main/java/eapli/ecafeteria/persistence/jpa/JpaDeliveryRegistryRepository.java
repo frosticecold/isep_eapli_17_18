@@ -5,6 +5,7 @@ import eapli.ecafeteria.persistence.DeliveryRegistryRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Optional;
+import javax.persistence.Query;
 
 /**
  *
@@ -14,32 +15,53 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
 
     @Override
     public void delete(DeliveryRegistry entity) throws DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        entityManager().remove(entity);
     }
 
     @Override
     public void delete(Long entityId) throws DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String query = "SELECT DeliveryRegistry.*"
+                    + "FROM DeliveryRegistry"
+                    + "WHERE e.id = id";
+
+        final Query q = entityManager().createQuery(query,this.entityClass);
+
+        q.setParameter("id",entityId);
+
+        DeliveryRegistry entity = (DeliveryRegistry) q.getSingleResult();
+
+        entityManager().remove(entity);
     }
 
     @Override
     public DeliveryRegistry save(DeliveryRegistry entity) throws DataConcurrencyException, DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+       entityManager().persist(entity);
+
+       return entity;
     }
 
     @Override
     public Iterable<DeliveryRegistry> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String query = "SELECT DeliveryRegistry.*"
+                        + "FROM DeliveryRegistry registry";
+
+        final Query q = entityManager().createQuery(query,this.entityClass);
+
+        return q.getResultList();
     }
 
     @Override
     public Optional<DeliveryRegistry> findOne(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return matchOne("e.id=id",id,id);
     }
 
     @Override
     public long count() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        return 0;
     }
     
 }
