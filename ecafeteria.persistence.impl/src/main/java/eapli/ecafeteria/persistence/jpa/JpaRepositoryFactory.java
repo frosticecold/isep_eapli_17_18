@@ -152,5 +152,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaMenuPlanItemRepository();
     }
 
+    /**
+     * Return JpaDeliveryRegistryRepository
+     * @return 
+     */
+    @Override
+    public DeliveryRegistryRepository deliveryRegistryRepository() {
+        return new JpaDeliveryRegistryRepository();
+    }
+
 
 }

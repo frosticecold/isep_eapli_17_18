@@ -3,14 +3,14 @@ package eapli.ecafeteria.application.pos;
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
 
 /**
@@ -56,7 +56,6 @@ public class RegisterMealDeliveryController implements Controller {
         
         //persist this Registry
         
-                
         //code to fetch the BookingsRepository on the PersistenceContext
         
         //changeState(idBooking, bookingsRepo); //will change the state of the booking delivered
@@ -79,5 +78,14 @@ public class RegisterMealDeliveryController implements Controller {
         Calendar ca = session.date();
 
         return new AvailableMealsStatistics(ca, sessionType);
+    }
+    
+    /**
+     * Persist this registry on the database
+     * @param registry 
+     */
+    private void recordNewMealDelivery(DeliveryRegistry registry) throws DataConcurrencyException, DataIntegrityViolationException {
+        
+        PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
     }
 }
