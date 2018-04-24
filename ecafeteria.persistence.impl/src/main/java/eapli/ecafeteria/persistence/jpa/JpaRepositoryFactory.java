@@ -152,6 +152,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaMenuPlanItemRepository();
     }
 
+    @Override
+    public AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx) {
+        return new JpaAutoTxBookingRepository(autoTx);
+    }
+
+    @Override
+    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
+        return new JpaAutoTxTransactionRepository(autoTx);
+    }
     /**
      * Return JpaDeliveryRegistryRepository
      * @return 

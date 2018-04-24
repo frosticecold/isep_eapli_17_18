@@ -27,6 +27,7 @@
     <class>eapli.ecafeteria.domain.pos.DeliveryRegistry</class>
     <class>eapli.ecafeteria.domain.pos.DeliveryMealSession</class>
     <class>eapli.ecafeteria.domain.menuplan.MenuPlanItem</class>
+    <class>eapli.ecafeteria.domain.CreditTransaction.CancelationBooking</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ecafeteria"/>
       <!--
