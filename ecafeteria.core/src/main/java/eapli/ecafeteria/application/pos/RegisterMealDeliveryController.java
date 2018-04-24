@@ -37,7 +37,7 @@ public class RegisterMealDeliveryController implements Controller {
      * @param idBooking Booking which will be delivered
      * @return 
      */    
-    public boolean registerNewMealDelivery(String idClient, long idBooking) {
+    public boolean registerNewMealDelivery(String idClient, long idBooking) throws DataConcurrencyException, DataIntegrityViolationException {
         
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
@@ -55,6 +55,8 @@ public class RegisterMealDeliveryController implements Controller {
         DeliveryRegistry registry = new DeliveryRegistry(session, client, booking);
         
         //persist this Registry
+        
+         PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
         
         //code to fetch the BookingsRepository on the PersistenceContext
         
@@ -80,12 +82,4 @@ public class RegisterMealDeliveryController implements Controller {
         return new AvailableMealsStatistics(ca, sessionType);
     }
     
-    /**
-     * Persist this registry on the database
-     * @param registry 
-     */
-    private void recordNewMealDelivery(DeliveryRegistry registry) throws DataConcurrencyException, DataIntegrityViolationException {
-        
-        PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
-    }
 }
