@@ -7,6 +7,7 @@ package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.ExecutionRepository;
 import java.util.Calendar;
@@ -46,6 +47,18 @@ public class JpaExecutionRepository extends CafeteriaJpaRepositoryBase<Execution
         q.setParameter("dt", dt);
  
         return (Long) q.getSingleResult();
+    }
+
+    @Override
+    public Execution findExecutionByMeal(Meal meal) {
+        
+        Query q = entityManager().
+                createQuery("SELECT execution FROM Execution execution "
+                        + "WHERE meal=:meal", Execution.class);
+
+        q.setParameter("meal", meal);
+        return (Execution) q.getSingleResult();
+   
     }
 
 }
