@@ -65,7 +65,8 @@ public class CancelBookingUI extends AbstractUI{
                                     + "booking. Try again.");
                         }
                     } catch (Exception e) {
-                        System.out.println("Error while saving. Please check your connection.");
+                        System.out.println("Error while saving. Please check your connection.\n" 
+                                + e.getMessage());
                     }
                 }
             }else{

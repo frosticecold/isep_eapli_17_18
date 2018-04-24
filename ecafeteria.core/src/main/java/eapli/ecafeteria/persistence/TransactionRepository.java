@@ -5,18 +5,19 @@
  */
 package eapli.ecafeteria.persistence;
 
-import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.persistence.repositories.DataRepository;
 
 /**
  *
  * @author MarioDias
  */
-public interface TransactionRepository extends DataRepository<Transaction, Long> {
-
+public interface TransactionRepository 
+        extends DataRepository<Transaction, Long> {  
+    
     /**
      * returns the Transaction , debit or credit
      *
@@ -27,7 +28,7 @@ public interface TransactionRepository extends DataRepository<Transaction, Long>
 
     public Iterable<Transaction> findAllActive();
 
-      public Balance getBalanceOfUser(MecanographicNumber user);
-      
-  
+    public Balance getBalanceOfUser(MecanographicNumber user);
+    
+   
 }

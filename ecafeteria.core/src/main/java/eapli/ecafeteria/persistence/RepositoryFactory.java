@@ -132,4 +132,8 @@ public interface RepositoryFactory {
      * @return 
      */
     MealMaterialRepository mealMaterial();
+    
+    AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
+    
+    AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
 }
