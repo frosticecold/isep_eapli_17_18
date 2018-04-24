@@ -22,10 +22,34 @@ public interface BookingReportingRepository extends ReportingRepository {
 
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState);
     
+         /**
+     * Report booking by input date.
+     *
+     * @param Calendar iDate - Pretended date
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */
     public Iterable<BookingPerOption> showReportByDay(Calendar date);
-     
+    
+     /**
+     * Report booking by dishType.
+     *
+     * @param String dish - Dish type by user input
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */ 
     public Iterable<BookingPerOption> showReportByDish(String dish);
     
+    /**
+     * Report booking by dishType.
+     *
+     * @param MealType meal - Mealtype by user input
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */
     public Iterable<BookingPerOption> showReportByMeal(MealType meal);
     
    
