@@ -5,13 +5,19 @@
  */
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.domain.menuplan.MenuPlanItem;
 import eapli.ecafeteria.persistence.MenuPlanItemRepository;
+import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
  * @author pedro
  */
 public class JpaMenuPlanItemRepository extends CafeteriaJpaRepositoryBase<MenuPlanItem,Long> implements MenuPlanItemRepository {
+
+   
+
     
 }

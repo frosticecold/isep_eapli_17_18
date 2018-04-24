@@ -5,15 +5,13 @@
  */
 package eapli.ecafeteria.persistence;
 
-import eapli.ecafeteria.domain.menuplan.MenuPlan;
-import eapli.ecafeteria.domain.menuplan.MenuPlanItem;
+import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.framework.persistence.repositories.DataRepository;
-import java.util.List;
 
 /**
  *
- * @author pedro
+ * @author Peter
  */
-public interface MenuPlanItemRepository extends DataRepository<MenuPlanItem,Long> {
+public interface DeliveryRegistryRepository extends DataRepository<DeliveryRegistry, Long>{
     
 }

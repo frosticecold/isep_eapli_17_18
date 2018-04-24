@@ -1,9 +1,15 @@
 package eapli.ecafeteria.application.pos;
 
+import eapli.ecafeteria.domain.authz.SystemUser;
+import eapli.ecafeteria.domain.authz.Username;
+import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
-import eapli.ecafeteria.domain.pos.DeliverySessionDate;
+import eapli.ecafeteria.domain.pos.DeliveryRegistry;
+import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 import java.util.Calendar;
 
@@ -15,24 +21,42 @@ public class RegisterMealDeliveryController implements Controller {
         
     /** Construtor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
     
-    private ListAvailableMealsService list; //Listing Services
+    private final ListAvailableMealsService list; //Listing Services
+    private final DeliveryMealSession session;
     
-    public RegisterMealDeliveryController() {
+    public RegisterMealDeliveryController(DeliveryMealSession session) {
         
         this.list = new ListAvailableMealsService();
+        this.session = session;
     }
     
     /**
-     * Method that will focus on regiter a meal delivery
-     * given by in the delivery Registry of the pos session given by the UI
+     * Method that will focus on recording a new meal delivery on persistence
+     * saving the booking which will be delivered, the client who made the booking and the POS where it was delivered
      * @param idClient
      * @param idBooking Booking which will be delivered
      * @return 
      */    
-    public boolean registerNewMealDelivery(long idClient, long idBooking) {
+    public boolean registerNewMealDelivery(String idClient, long idBooking) {
         
-        //code to register new delivery on DeliveryMealSession
-          
+        //obtain the booking
+        Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
+        
+        //transform string into Username
+        
+        Username username = new Username(idClient);
+
+        //obtain the client
+        
+        SystemUser client = PersistenceContext.repositories().users().findOne(username).get();
+        
+        //add new record of the delivery just made on DeliveryRegistry
+        
+        DeliveryRegistry registry = new DeliveryRegistry(session, client, booking);
+        
+        //persist this Registry
+        
+                
         //code to fetch the BookingsRepository on the PersistenceContext
         
         //changeState(idBooking, bookingsRepo); //will change the state of the booking delivered
