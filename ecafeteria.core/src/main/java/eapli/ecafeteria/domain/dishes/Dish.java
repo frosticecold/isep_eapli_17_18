@@ -212,6 +212,6 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
     }
     
     public List<Alergen> alergenInDish(){
-        return alergens;
+        return alergens;    
     }
 }
