@@ -1,8 +1,10 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting;
 
 import eapli.ecafeteria.application.reporting.booking.BookingReportingController;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.presentation.console.AbstractListUI;
+import eapli.framework.util.Console;
 import eapli.framework.visitor.Visitor;
 
 /**
@@ -18,12 +20,15 @@ public class ReportBookingPerMealUI extends AbstractListUI<BookingPerOption>{
 
     @Override
     protected Iterable<BookingPerOption> elements() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        MealType mealType = askForMeal();
+        
+        return thisController.reportDishesPerMeal(mealType);
     }
 
     @Override
     protected Visitor<BookingPerOption> elementPrinter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return new BookingPerMealPrinter();
     }
 
     @Override
@@ -34,6 +39,14 @@ public class ReportBookingPerMealUI extends AbstractListUI<BookingPerOption>{
     @Override
     protected String listHeader() {
         return BOOKING_PER_MEAL_LH;
+    }
+
+    private MealType askForMeal() {
+        
+        int option = Console.readInteger("Choose a Meal Type:\n\n   1- LUNCH\n   2- DINNER\n\n");
+        
+        
+        return ( (option == 1) ? MealType.LUNCH : MealType.DINNER );
     }
     
     

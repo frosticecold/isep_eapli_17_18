@@ -21,5 +21,7 @@ public final class ECafeteriaUserApp {
         System.out.println("=====================================");
 
         new FrontMenu().show();
+        System.exit(0);
     }
+    
 }

@@ -8,16 +8,15 @@ package eapli.ecafeteria.application.booking;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.application.menus.MenuService;
+import eapli.ecafeteria.domain.CreditTransaction.Debit;
 import eapli.ecafeteria.domain.authz.ActionRight;
-import static eapli.ecafeteria.domain.authz.ActionRight.SELECT_MEAL;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.dishes.NutricionalInfo;
-import eapli.ecafeteria.domain.menu.*;
 import eapli.ecafeteria.domain.meal.*;
-import eapli.ecafeteria.domain.CreditTransaction.DebitBooking;
+import eapli.ecafeteria.domain.CreditTransaction.Transaction;
+import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.*;
 import eapli.framework.date.DateEAPLI;
@@ -25,7 +24,6 @@ import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +37,9 @@ public class BookingMealController implements Controller {
     private final CafeteriaUserService userService = new CafeteriaUserService();
 
     private final BookingRepository repository = PersistenceContext.repositories().booking();
+    private Transaction t;
+
+    private final TransactionRepository trepo = PersistenceContext.repositories().transactioRepository();
 
     /**
      *
@@ -50,15 +51,36 @@ public class BookingMealController implements Controller {
         return MenuService.getMealsPublishedByDay(date, mealType);
     }
 
-    public boolean doTransaction(Username id, Meal meal) {
+    public boolean doTransaction(Username id, Meal meal) throws DataConcurrencyException, DataIntegrityViolationException {
         Money mealPrice = meal.dish().currentPrice();
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
-        if (user.get().hasEnoughCredits(mealPrice)) {
-            DebitBooking db = new DebitBooking(user.get(), user.get().currentBalance().currentBalance());
-            db.movement(user.get(), mealPrice);
+        if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
+
+            Balance userBalance = userService.getBalanceOfUser(user.get().mecanographicNumber());
+            Money money = userBalance.currentBalance().subtract(mealPrice);
+            Balance newBalance = new Balance(money);
+
+            user.get().setCurrentBalance(newBalance);
+            userService.save(user.get());
+            this.t= new Debit(user.get(), mealPrice);
+            saveTransaction(t);
+            
             return true;
+        } else {
+            System.out.println("USER HASN'T ENOUGH MONEY");
+            return false;
         }
-        return false;
+
+    }
+
+    private void saveTransaction(Transaction t) {
+        try {
+            this.trepo.save(this.t);
+        } catch (DataConcurrencyException ex) {
+            Logger.getLogger(BookingMealController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DataIntegrityViolationException ex) {
+            Logger.getLogger(BookingMealController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Booking persistBooking(final Username cafeteriaUser, final Calendar date,
@@ -73,13 +95,8 @@ public class BookingMealController implements Controller {
         return this.repository.saveBooking(newBooking);
     }
 
-    public void showNutricionalInfo(Meal meal) {
-        meal.dish().nutricionalInfo().toString();
-
-    }
-
     public void showAlergen(Meal meal) {
-        // meal.dish().alergenInDish();
+//         meal.dish().alergenInDish();
     }
 
     public boolean is24hBefore(Calendar date) {

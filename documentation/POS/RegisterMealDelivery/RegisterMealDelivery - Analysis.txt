@@ -12,15 +12,13 @@ __________________
 REGRAS DE NEGÒCIO
 __________________
 
-* Antes da entrega, tem que haver verificação das refeiçõe disponiveis para entregar.
+* Antes da entrega, tem que haver verificação das refeições disponiveis para entregar.
 
-* Cada entrega é registado na session de uma dada refeição (Almoço ou Jantar) de um certo dia, guardando a reserva, o cliente e o operador de caixa.
+* Cada entrega é registado na session de uma dada refeição (Almoço ou Jantar) de um certo dia, guardando a reserva da refeição entregue, o cliente a que foi entregue e o operador de caixa que entregou a mesma.
 
 * Ao momento da entrega de refeição, tem que alterar o estado da reserva que foi entregue. 
 
 * Atualizar quantidade de pratos para um certo tipo de refeição, referente a dia da sessão atual.
-
-* Verificar se a refeição a ser entregue tem um menu associado
 
 TESTE UNITÀRIOS
 _______________

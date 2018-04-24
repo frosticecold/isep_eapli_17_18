@@ -13,6 +13,7 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.domain.menuplan.MenuPlanItem;
 import eapli.ecafeteria.domain.menuplan.Quantity;
+import eapli.ecafeteria.persistence.MenuPlanItemRepository;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
@@ -27,54 +28,77 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
-
 public class CreateMenuPlanController implements Controller {
-    
-    
-     private final MenuPlanRepository mpr=PersistenceContext.repositories().menuPlan();
-     
-     private Menu m;
-     
-     private MenuPlan menuplan;
-     
-     private MenuPlanItem mpi;
-     
-     private Quantity q;
-         
-     //metodo que vai buscar menus da semana atual
-     public Menu getCurrentMenu(){
-         m=MenuService.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()+1), endOfWeek(Calendar.YEAR,currentWeekNumber()+1)).get();
-        return m;
-        
-     }
 
-     //metodo que vai a cada refeicao preencher com o numero de pratos
-    public MenuPlan setNumberDishesForMeal(int quantity){
-        
-        List<MenuPlanItem> list=new ArrayList<>();
-        
-        Calendar bDay = DateTime.beginningOfWeek(Calendar.YEAR, currentWeekNumber());
-        for(int i=0; i<7;i++){
-            Iterable<Meal> meals = MenuService.getMealsFromMenuByGivenDay(m, bDay);
-            for(Meal currentMeal : meals){
-               q.setQuantity(quantity);
-               mpi=new MenuPlanItem(currentMeal,q);  
-               list.add(mpi);
-            }
-            
-            bDay.add(Calendar.DAY_OF_MONTH, 1);
-        
-        }
-        
-        menuplan=new MenuPlan(list, m);
-        
-        return menuplan;
+    private final MenuPlanRepository mpr = PersistenceContext.repositories().menuPlan();
+
+    private final MenuPlanItemRepository mpir = PersistenceContext.repositories().menuPlanItem();
+
+    private Menu m;
+
+    private MenuPlan menuplan;
+
+    private MenuPlanItem mpi;
+
+    private Quantity q;
+
+    public Menu getCurrentMenu() {
+
+        m = MenuService.findLatestMenu().get();
+        return m;
     }
     
-     //metodo que poe isso na base de dados
-    public void save(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException{
-      
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);      
+    public MenuPlan getMenuPlanFromMenu(Menu m){
+     
+        return mpr.getMenuPlanFromMenu(m);
+    }
+
+    public Iterable<Meal> mealsFromMenuByDay(Calendar bDay, Menu me) {
+        return MenuService.getMealsFromMenuByGivenDay(me, bDay);
+    }
+
+    public Quantity insertQuantity(int quantity) {
+        q = new Quantity(quantity);
+        return q;
+    }
+
+    public MenuPlanItem createMenuPlanItem(Meal currentMeal, Quantity q) {
+        mpi = new MenuPlanItem(currentMeal, q);
+        return mpi;
+
+    }
+
+    public MenuPlan createMenuPlan(List<MenuPlanItem> lista, Menu m) {
+
+        menuplan = new MenuPlan(lista, m);
+
+        return menuplan;
+    }
+
+//    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
+//        mpir.save(mpi);
+//    }
+
+    public void saveMenuPlan(MenuPlan mp,List<MenuPlanItem>list) throws DataConcurrencyException, DataIntegrityViolationException {
+        System.out.println("quantidade de MenuPlanItem: "+list.size());
+        
+        for (MenuPlanItem mpi:list) {
+            System.out.println("menu plan item guardado: "+mpir.save(mpi));
+        }
+        
         mpr.save(mp);
+    }
+    
+    public MenuPlan getActiveMenuPlan(){
+        return mpr.getActiveMenuPlan();
+    }
+    
+  
+
+    public void editMenuPlan(int quantity, MenuPlanItem menu_plan_item) {
+        
+
+        menu_plan_item.getQuantityNumber().setQuantity(quantity);
+
     }
 }

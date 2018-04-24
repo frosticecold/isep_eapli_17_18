@@ -230,4 +230,22 @@ public class DeliverySessionDate implements ValueObject{
     public int Seconds() {
         return this.second;
     }
+    
+    /**
+     * Returns this date as a Calendar Java Type Object
+     * @return 
+     */
+    public Calendar calendar() {
+        
+        Calendar ca = Calendar.getInstance(); 
+        
+        ca.set(Calendar.SECOND, this.Seconds());
+        ca.set(Calendar.MINUTE, this.Minutes());
+        ca.set(Calendar.HOUR, this.Hour());
+        ca.set(Calendar.MONTH, this.Month());
+        ca.set(Calendar.DAY_OF_MONTH, this.Day());
+        ca.set(Calendar.YEAR,this.Year());
+        
+        return ca;
+    }
 }

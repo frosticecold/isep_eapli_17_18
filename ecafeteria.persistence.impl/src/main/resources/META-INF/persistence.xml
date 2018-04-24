@@ -21,12 +21,12 @@
     <class>eapli.ecafeteria.domain.booking.Booking</class>
     <class>eapli.ecafeteria.domain.meal.Execution</class>
     <class>eapli.ecafeteria.domain.menuplan.MenuPlan</class>
-    <class>eapli.ecafeteria.domain.menuplan.MenuPlanItem</class>
-    <class>eapli.ecafeteria.domain.menuplan.Quantity</class>
     <class>eapli.ecafeteria.domain.CreditTransaction.CreditRecharge</class>
+    <class>eapli.ecafeteria.domain.CreditTransaction.Debit</class>
     <class>eapli.ecafeteria.domain.CreditTransaction.Transaction</class>
     <class>eapli.ecafeteria.domain.pos.DeliveryRegistry</class>
     <class>eapli.ecafeteria.domain.pos.DeliveryMealSession</class>
+    <class>eapli.ecafeteria.domain.menuplan.MenuPlanItem</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ecafeteria"/>
       <!--

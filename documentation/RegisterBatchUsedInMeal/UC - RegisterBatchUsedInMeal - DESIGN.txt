@@ -12,48 +12,51 @@
     Diagrama de Sequência - websequencediagrams.com source
         title  Register Batch Used In Meal
 
-        participant ":User" as user
-        participant ":MenuRastreabilidade" as menu
-        participant ":Console" as ui
-        participant ":UsedBatchRegisterController" as controller
-        participant ":MaterialRepo" as matr
-        participant ":MealRepo" as mr
-        participant ":MealMaterialRepo" as mmr
-        participant ":HistoryRepo" as hr
+                participant ":User" as user
+                participant ":MainMenu" as menu
+                participant ":TraceabilityMenu" as tmenu
+                participant ":UsedBatchRegisterUI" as ui
+                participant ":UsedBatchRegisterController" as controller
+                participant ":MaterialRepo" as matr
+                participant ":MealRepo" as mr
+                participant ":MealMaterialRepo" as mmr
+                participant ":BatchRepo" as br
 
-        user -> menu: registerUsedBatch()
-        menu -> controller: new RegistertUsedBatchController()
-        controller -> mr: getApprovedMeals()
-        controller -> ui: showApprovedMeals()
-        controller --> user: Asks what meal to refer
-        user -> controller: code = insert meal code (date + type)
-        controller --> controller: mealCode = getsMeal(code)
+                user -> menu: logs in
+                user -> menu: invokes traceability menu
+                menu -> tmenu: new KitchenMenu()
+                user -> tmenu: choose to register batch used in meal
+                tmenu -> ui: new RegistertUsedBatchUI()
+                ui -> controller: new RegisterBatchController()
+                controller -> mr: getMeals()
 
-        loop while (stat != 1)
-            loop while(op != -1)
-                controller -> matr: showMaterialList()
+                controller -> ui: request meal type
+                user -> controller: inserts meal type
 
-                controller --> ui: request food code
-                user -> controller: foodCode = introduz codigo do alimento
+                controller -> ui: request date
+                user -> controller: inserts date
 
-                controller --> ui: request quantity
-                user -> controller: quantity = inserts quantity
+                controller -> ui: request dish code type
+                user -> controller: inserts dish code type
 
-                controller --> ui: requests batch code
-                user -> controller: batchCode = inserts batch code
+                loop while (foodCode != exit)
+                        controller -> matr: showMaterialList()
 
-                controller -> mmr: addMaterial(mealCode, foodCode, quantity, batchCode)
-                controller -> ui: Procceed?(0) Terminate(-1)
+                        controller --> ui: request material code
+                        user -> controller: foodCode = inserts material code
 
-                user -> controller: op = option
-            end
+                        controller --> ui: show batches for material
+                        controller --> ui: request batch id
+                        user -> controller: insert batch id
 
-            controller -> ui: display meal information
-            controller -> ui: display in use batches
-            controller -> ui: request confirmation
+                        controller --> ui: request quantity
+                        user -> controller: quantity = inserts quantity
 
-            controller -> ui: Terminate?(0) Continue adding?(1)
-            user -> controller: stat = option
-        end
+                        controller -> br: batch = getBatchFromRepo();
 
-        controller -> ui: Confirmation Message
+                        controller -> mmr: insertBatch(batch, quantity)
+
+                end
+                    controller -> ui: display used batched
+
+                controller -> ui: Confirmation Message

@@ -1,9 +1,9 @@
 package eapli.ecafeteria.persistence.jpa;
 
-import eapli.ecafeteria.*;
+import eapli.ecafeteria.Application;
 import eapli.ecafeteria.persistence.*;
-import eapli.framework.persistence.repositories.*;
-import eapli.framework.persistence.repositories.impl.jpa.*;
+import eapli.framework.persistence.repositories.TransactionalContext;
+import eapli.framework.persistence.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
  * Created by nuno on 21/03/16.
@@ -88,7 +88,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public MenuPlanRepository menuPlan() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new JpaMenuPlanRepository();
     }
 
     /**
@@ -101,9 +101,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaPOSRepository();
     }
 
-
     /**
-     * Returns a new DeliveryMealSession Repository when persistence is done on JPA
+     * Returns a new DeliveryMealSession Repository when persistence is done on
+     * JPA
      *
      * @return
      */
@@ -123,13 +123,18 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public MealMaterialRepository mealMaterial() {
+        return new JpaMealMaterialRepository();
+    }
+
+    @Override
     public ExecutionRepository executions() {
         return new JpaExecutionRepository();
     }
 
     @Override
     public AlergenRepository alergens() {
-       return new JpaAlergensRepository();
+        return new JpaAlergensRepository();
     }
 
     @Override
@@ -141,4 +146,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public RatingReportingRepository ratingsReporting() {
         return new JpaRatingReportingRepository();
     }
+
+    @Override
+    public MenuPlanItemRepository menuPlanItem() {
+        return new JpaMenuPlanItemRepository();
+    }
+
+
 }

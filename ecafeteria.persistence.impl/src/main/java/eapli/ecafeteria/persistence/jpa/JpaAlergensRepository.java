@@ -6,13 +6,15 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.framework.domain.Designation;
+import javax.persistence.Query;
 
 /**
  *
  * @author Car
  */
 public class JpaAlergensRepository extends CafeteriaJpaRepositoryBase<Alergen, Designation> implements AlergenRepository{
-    
+ 
 }

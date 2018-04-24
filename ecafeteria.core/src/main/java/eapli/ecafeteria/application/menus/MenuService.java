@@ -15,6 +15,7 @@ import eapli.ecafeteria.persistence.MealRepository;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 public class MenuService {
@@ -25,15 +26,15 @@ public class MenuService {
     public MenuService() {
     }
 
-    public static Optional<Menu> findMenuWithinPeriod(Calendar startDate, Calendar endDate) {
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
-        return menuRepository.findMenuWithinPeriod(startDate, endDate);
+    public static List<Meal> findMenuWithinPeriod() {
+        Calendar cal = Calendar.getInstance();
+        Menu menu =  menuRepository.findMenuOnDate(cal).get();
+        return mealRepository.findMealsByMenu(menu);
     }
 
     public static Iterable<Meal> getMealsPublishedByDay(Calendar date, MealType mealType) {
-
-        return mealRepository.listMealsPublishedByDayAndMealType(date, mealType);
-
+        
+        return mealRepository.listOfMealsByDateAndMealType(date, mealType);
     }
 
     public static Iterable<Calendar> getWorkingDaysOfMenu(Menu m) {
@@ -43,6 +44,10 @@ public class MenuService {
 
     public static Iterable<Meal> getMealsFromMenuByGivenDay(final Menu menu, final Calendar cal) {
         return mealRepository.listMealsFromMenuByGivenDay(menu, cal);
+    }
+    
+     public static Optional<Menu> findLatestMenu(){
+        return menuRepository.findLatestMenu();
     }
 
 }

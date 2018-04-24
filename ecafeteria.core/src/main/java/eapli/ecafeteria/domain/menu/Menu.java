@@ -137,6 +137,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
 
     /**
      * Methot that returns if a method is published
+     * @return 
      */
 
     public boolean isPublished() {

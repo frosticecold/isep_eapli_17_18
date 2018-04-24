@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.persistence.inmemory;
 
+import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
@@ -13,12 +14,12 @@ import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository
 public class InMemoryMenuPlanRepository extends InMemoryRepositoryWithLongPK<MenuPlan> implements MenuPlanRepository  {
 
     @Override
-    public MenuPlan saveMenuPlan(MenuPlan menuplan) {
+    public MenuPlan getActiveMenuPlan() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public MenuPlan getActiveMenuPlan() {
+    public MenuPlan getMenuPlanFromMenu(Menu m) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

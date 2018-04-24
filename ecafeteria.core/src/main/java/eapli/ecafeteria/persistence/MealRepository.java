@@ -5,7 +5,8 @@
  */
 package eapli.ecafeteria.persistence;
 
-import eapli.ecafeteria.domain.meal.*;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.domain.Designation;
 import eapli.framework.persistence.repositories.DataRepository;
@@ -14,18 +15,18 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *
  * @author MFerreira
  */
-public interface MealRepository extends DataRepository<Meal, Long>{
-    
+public interface MealRepository extends DataRepository<Meal, Long> {
+
     List<Meal> listOfMealsByDateAndMealType(Calendar date, MealType mealType);
-    
+
     Optional<Meal> findMealByDishID(Designation id);
-    
+
     Optional<Meal> findOne(Long id);
-    
+
     Iterable<Meal> listMealsFromMenuByGivenDay(final Menu menu, final Calendar day);
     
-    Iterable<Meal> listMealsPublishedByDayAndMealType(Calendar date, MealType mealType);
+    List<Meal> findMealsByMenu(Menu menu);
+
 }

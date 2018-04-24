@@ -54,8 +54,9 @@ public class InMemoryMealRepository extends InMemoryRepositoryWithLongPK<Meal> i
     }
 
     @Override
-    public Iterable<Meal> listMealsPublishedByDayAndMealType(Calendar date, MealType mealType) {
+    public List<Meal> findMealsByMenu(Menu menu) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }

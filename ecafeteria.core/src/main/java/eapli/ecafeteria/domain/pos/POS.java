@@ -37,6 +37,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
     public POS (CafeteriaUser posUser) {
         this.posUser = posUser;
         this.identification = 1;
+        this.open = false;
     }
 
     /**
@@ -74,7 +75,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
      * @return 
      */
     public boolean isClosed() {
-        return this.open == false;
+        return this.open;
     }
 
     /**

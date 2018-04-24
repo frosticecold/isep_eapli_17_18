@@ -28,12 +28,11 @@ public class ChargeCardController implements Controller {
     private final CafeteriaUserService service = new CafeteriaUserService();
     private final TransactionRepository tr = PersistenceContext.repositories().transactioRepository();
     private Transaction t;
-    private CafeteriaUser user;
+    
 
     public CafeteriaUser findCafeteriaUserByMecanographicNumber(String mecanographicNumber) {
         Optional<CafeteriaUser> user = service.findCafeteriaUserByMecNumber(mecanographicNumber);
         if (user.isPresent()) {
-            this.user = user.get();
             return user.get();
         }
         return null;

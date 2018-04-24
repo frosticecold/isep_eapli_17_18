@@ -5,7 +5,9 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.persistence.repositories.DataRepository;
 import java.util.Calendar;
@@ -15,5 +17,10 @@ import java.util.Calendar;
  * @author MFerreira
  */
 public interface ExecutionRepository extends DataRepository<Execution, Long>{
+    
+    public Execution findExecutionByMeal(Meal meal);
+    
     public Iterable<Execution> findMealExecutionByDate(Calendar cal, MealType mealType);
+    
+    public Long getMaxNumberOfServings(final DishType dt,final Calendar cal, final MealType mealType);
 }

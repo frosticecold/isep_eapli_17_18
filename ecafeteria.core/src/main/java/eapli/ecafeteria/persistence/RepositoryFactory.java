@@ -74,10 +74,12 @@ public interface RepositoryFactory {
     MenuRepository menus();
 
     MenuPlanRepository menuPlan();
+    
+    MenuPlanItemRepository menuPlanItem();
 
     RatingRepository rating();
 
-    /**
+    /*
      * ************************
      * reporting ************************
      */
@@ -106,18 +108,28 @@ public interface RepositoryFactory {
      * @return
      */
     DeliveryMealSessionRepository deliveryMealRepository();
+
     
+    
+
     /**
      * Ratings reporting repository
      * @return 
      */
     RatingReportingRepository ratingsReporting();
 
+
     MealRepository meals();
 
     ExecutionRepository executions();
 
-    public AlergenRepository alergens();
+    AlergenRepository alergens();
     
     TransactionRepository transactioRepository();
+
+        /**
+     * MealMaterialRepositorySession Repo
+     * @return 
+     */
+    MealMaterialRepository mealMaterial();
 }

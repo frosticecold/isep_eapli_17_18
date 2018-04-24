@@ -5,12 +5,14 @@
  */
 package eapli.ecafeteria.persistence.jpa;
 
-import eapli.ecafeteria.domain.meal.*;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
-import eapli.ecafeteria.persistence.*;
-import eapli.framework.domain.*;
+import eapli.ecafeteria.persistence.MealRepository;
+import eapli.framework.domain.Designation;
 import java.util.*;
-import javax.persistence.*;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  * @author Miguel Santos <1161386@isep.ipp.pt>
@@ -19,12 +21,12 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
 
     @Override
     public List<Meal> listOfMealsByDateAndMealType(Calendar date, MealType mealType) {
-        
+
         Query q = entityManager().
                 createQuery("SELECT meal FROM Meal meal "
                         + "WHERE meal.mealtype=:mealType "
                         + "AND meal.date=:date", Meal.class);
-        
+
         q.setParameter("date", date);
         q.setParameter("mealType", mealType);
         return q.getResultList();
@@ -44,6 +46,7 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         return matchOne("e.id=:id", params);
     }
 
+    @Override
     public List<Meal> findMealsByMenu(Menu m) {
         final Query q;
         q = entityManager().createQuery("SELECT e FROM Meal e WHERE :menu = e.menu", Meal.class);
@@ -58,31 +61,14 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         params.put("day", day);
         return match("e.menu=:menu AND e.date =:day", params);
     }
-    
-     public int findMealByMenuAndDate(Menu m) {
+
+    public int findMealByMenuAndDate(Menu m) {
         final Query q;
-        q = entityManager().createQuery("SELECT MIN(CURRENT_DATE-m.date) FROM Meal m WHERE m.menu:=menu  ", Meal.class);
+        q = entityManager().createQuery("SELECT MIN(CURRENT_DATE-m.date) FROM Meal m WHERE m.menu=:menu  ", Meal.class);
         q.setParameter("menu", m);
         return q.getFirstResult();
     }
-     
-     
-    @Override
-    public Iterable<Meal> listMealsPublishedByDayAndMealType(Calendar date, MealType mealType) {
-        final Query q = entityManager().
-                createQuery("SELECT meal"
-                        //+ " FROM Menu menu, Meal meal"
-                          + " FROM Meal meal"
-                        //+ " WHERE menu.menuState=:state"
-                          + " WHERE meal.date = :date"
-                       // + " WHERE menu.period.startingDate <= :date AND menu.period.endingDate >= :date"
-                        + " AND meal.mealtype = :mealtype", Meal.class);
 
-          q.setParameter("date", date, TemporalType.DATE);
-        // q.setParameter("state", MenuState.PUBLISHED);
-        q.setParameter("mealtype", mealType);
 
-        return q.getResultList();
-    }
-    
+
 }

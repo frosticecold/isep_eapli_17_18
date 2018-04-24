@@ -1,7 +1,12 @@
 package eapli.ecafeteria.persistence;
 
-import eapli.ecafeteria.domain.kitchen.*;
-import eapli.framework.persistence.repositories.*;
+import eapli.ecafeteria.domain.kitchen.Batch;
+import eapli.ecafeteria.domain.kitchen.MealMaterial;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.framework.persistence.repositories.DataRepository;
+import java.util.List;
 
 public interface MealMaterialRepository extends DataRepository<MealMaterial, Long> {
+ public List<Meal> getMealsByBatchID(Batch b);
+
 }

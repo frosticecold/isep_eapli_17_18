@@ -6,21 +6,20 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.application.menus.MenuService;
-import eapli.ecafeteria.domain.menu.Menu;
-import static eapli.framework.util.DateTime.beginningOfWeek;
-import static eapli.framework.util.DateTime.currentWeekNumber;
-import static eapli.framework.util.DateTime.endOfWeek;
-import java.util.Calendar;
-import java.util.Optional;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.framework.application.Controller;
+import java.util.List;
 
 /**
  *
  * @author Telmo
  */
-public class ListMenuController {
+public class ListMenuController implements Controller{
+    public ListMenuController(){
+        
+    }
     
-    public Optional<Menu> listMenuCurrentWeek(){
-        //PersistenceContext.repositories().menus().findMenuWithinPeriod(startDate, endDate);
-        return MenuService.findMenuWithinPeriod(beginningOfWeek(Calendar.YEAR,currentWeekNumber()), endOfWeek(Calendar.YEAR,currentWeekNumber()));
+    public List<Meal> listMenuCurrentWeek(){
+        return MenuService.findMenuWithinPeriod();
     }
 }

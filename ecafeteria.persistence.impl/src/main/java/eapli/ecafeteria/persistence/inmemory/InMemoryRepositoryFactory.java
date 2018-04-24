@@ -1,8 +1,8 @@
 package eapli.ecafeteria.persistence.inmemory;
 
-import eapli.ecafeteria.bootstrapers.*;
+import eapli.ecafeteria.bootstrapers.ECafeteriaBootstrapper;
 import eapli.ecafeteria.persistence.*;
-import eapli.framework.persistence.repositories.*;
+import eapli.framework.persistence.repositories.TransactionalContext;
 
 /**
  * Created by nuno on 20/03/16.
@@ -142,7 +142,19 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public MealMaterialRepository mealMaterial() {
+        return new InMemoryMealMaterialRepository();
+    }
+
+    @Override
     public RatingReportingRepository ratingsReporting() {
         return new InMemoryRatingReportingRepository();
     }
+
+    @Override
+    public MenuPlanItemRepository menuPlanItem() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 }

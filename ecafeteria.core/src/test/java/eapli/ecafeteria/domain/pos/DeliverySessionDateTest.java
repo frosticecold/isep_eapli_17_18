@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,9 +41,9 @@ public class DeliverySessionDateTest {
     @Before
     public void setUp() throws Exception {
 
-        ca = DateTime.now();
+        this.ca = DateTime.now();
 
-        instance = new DeliverySessionDate(ca);
+        this.instance = new DeliverySessionDate(ca);
     }
 
     /**
@@ -51,46 +52,52 @@ public class DeliverySessionDateTest {
     @After
     public void tearDown() throws Exception {
     }
-    
+   
     @Test
     public void ensureHourIsValidated() {
 
-        int expected = ca.HOUR_OF_DAY;
+        int expected = this.ca.HOUR_OF_DAY;
         assertEquals(expected,instance.Hour(),0);
     }
 
     @Test
     public void ensureMinutesAreValidated() {
 
-        int expected = ca.MINUTE;
+        int expected = this.ca.MINUTE;
         assertEquals(expected, instance.Minutes(),0);
     }
 
     @Test
     public void ensureSecondsAreValidated() {
 
-        int expected = ca.SECOND;
+        int expected = this.ca.SECOND;
         assertEquals(expected, instance.Seconds(),0);
     }
 
     @Test
     public void ensureYearIsValidated() {
 
-        int expected = ca.YEAR;
+        int expected = this.ca.YEAR;
         assertEquals(expected, instance.Year(),0);
     }
 
     @Test
     public void ensureMonthIsValidated() {
 
-        int expected = ca.MONTH;
+        int expected = this.ca.MONTH;
         assertEquals(expected, instance.Month(), 0);
     }
 
     @Test
     public void ensureDayIsValidated() {
 
-        int expected = ca.DAY_OF_MONTH;
+        int expected = this.ca.DAY_OF_MONTH;
         assertEquals(expected, instance.Day(), 0);
+    }
+
+    @Test
+    public void ensureCalendarIsReturned() {
+
+        assertNotNull(this.instance.calendar());
     }
 }
