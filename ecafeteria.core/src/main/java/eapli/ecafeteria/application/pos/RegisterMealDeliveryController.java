@@ -56,11 +56,11 @@ public class RegisterMealDeliveryController implements Controller {
         
         //persist this Registry
         
-         PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
+        PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
         
-        //code to fetch the BookingsRepository on the PersistenceContext
+        //change state of the booking just recorded - to served
         
-        //changeState(idBooking, bookingsRepo); //will change the state of the booking delivered
+        PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();
         
         return true;
     }
@@ -70,14 +70,14 @@ public class RegisterMealDeliveryController implements Controller {
      * @param session
      * @return 
      */
-    public AvailableMealsStatistics showCurrentStatics(DeliveryMealSession session) {
+    public AvailableMealsStatistics showCurrentStatics() {
         
         MealType sessionType;
         
-        if(session.isLunch()) sessionType = MealType.LUNCH;
+        if(this.session.isLunch()) sessionType = MealType.LUNCH;
         else sessionType = MealType.DINNER;
         
-        Calendar ca = session.date();
+        Calendar ca = this.session.date();
 
         return new AvailableMealsStatistics(ca, sessionType);
     }
