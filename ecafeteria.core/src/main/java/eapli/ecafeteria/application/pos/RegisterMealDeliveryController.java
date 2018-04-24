@@ -3,6 +3,7 @@ package eapli.ecafeteria.application.pos;
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
@@ -35,9 +36,8 @@ public class RegisterMealDeliveryController implements Controller {
      * saving the booking which will be delivered, the client who made the booking and the POS where it was delivered
      * @param idClient
      * @param idBooking Booking which will be delivered
-     * @return 
      */    
-    public boolean registerNewMealDelivery(String idClient, long idBooking) throws DataConcurrencyException, DataIntegrityViolationException {
+    public void registerNewMealDelivery(String idClient, long idBooking) {
         
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
@@ -56,13 +56,18 @@ public class RegisterMealDeliveryController implements Controller {
         
         //persist this Registry
         
-        PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
+        //PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
         
         //change state of the booking just recorded - to served
         
         PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();
         
-        return true;
+        //get id the meal associated  to the booking
+        Meal meal = PersistenceContext.repositories().booking().findOne(idBooking).get().getMeal();
+        
+        //update dish quantity of execution
+        
+        PersistenceContext.repositories().executions().findExecutionByMeal(meal);
     }
     
     /**
