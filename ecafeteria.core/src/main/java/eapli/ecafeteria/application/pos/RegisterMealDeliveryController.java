@@ -3,7 +3,6 @@ package eapli.ecafeteria.application.pos;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
@@ -60,8 +59,7 @@ public class RegisterMealDeliveryController implements Controller {
         
         //change state of the booking just recorded - to served
         
-        PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();
-        
+        PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();     
     }
     
     /**
