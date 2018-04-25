@@ -147,5 +147,10 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaRatingReportingRepository();
     }
 
+    @Override
+    public BalanceRepository balance() {
+       return new JPAUserBalance();
+    }
+
 
 }
