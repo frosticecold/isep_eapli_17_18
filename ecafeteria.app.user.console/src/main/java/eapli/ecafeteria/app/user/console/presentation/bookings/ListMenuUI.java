@@ -22,13 +22,14 @@ import java.util.logging.Logger;
  *
  * @author Telmo
  */
-public class ListMenuUI extends AbstractUI {
+public class ListMenuUI extends AbstractUI implements ViewNextBookingInterface{
 
     private final ListMenuController controller = new ListMenuController();
 
     @Override
     protected boolean doShow() {
         try {
+            showNextBooking();
             List<Meal> menuOfCurrentWeek = controller.listMenuCurrentWeek();
             for(Meal m : menuOfCurrentWeek){
                 System.out.println(m.toString());

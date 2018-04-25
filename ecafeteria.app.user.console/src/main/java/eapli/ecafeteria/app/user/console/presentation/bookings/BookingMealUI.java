@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class BookingMealUI extends AbstractUI {
+public class BookingMealUI extends AbstractUI implements ViewNextBookingInterface {
 
     private final BookingMealController controller = new BookingMealController();
 
@@ -35,6 +35,8 @@ public class BookingMealUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
+        showNextBooking();
+        
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
 

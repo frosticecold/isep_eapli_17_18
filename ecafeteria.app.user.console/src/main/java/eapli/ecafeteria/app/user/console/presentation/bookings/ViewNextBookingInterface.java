@@ -17,7 +17,7 @@ public interface ViewNextBookingInterface {
     default void showNextBooking(){
         ViewNextBookingController controller = new ViewNextBookingController();
         Booking nextBooking = controller.getNextBooking();
-        System.out.println("+===============================================+\n");
+        System.out.println("+===============================================+");
         if(nextBooking == null){
             System.out.println("NO BOOKINGS WHERE FOUND \n");
         }

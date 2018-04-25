@@ -19,7 +19,7 @@ import javax.persistence.NoResultException;
  *
  * @author Rui Almeida <1160818>
  */
-public class ViewRatingsUI extends ViewNextBookingUI {
+public class ViewRatingsUI extends AbstractUI  implements ViewNextBookingInterface {
 
     private ViewRatingsController controller = null;
 
@@ -28,7 +28,7 @@ public class ViewRatingsUI extends ViewNextBookingUI {
 
         try {
             controller = new ViewRatingsController();
-            super.doShow();
+            
             int option = -1;
             ArrayList<Rating> ratings = (ArrayList<Rating>) controller.ratings();
 
