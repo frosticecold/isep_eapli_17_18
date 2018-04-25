@@ -137,9 +137,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaAlergensRepository();
     }
 
+//    @Override
+//    public JpaTransactionRepository transactioRepository(TransactionalContext autoTx) {
+//        return new JpaTransactionRepository(autoTx);
+//    }
+
     @Override
-    public TransactionRepository transactioRepository() {
-        return new JpaTransactionRepository();
+    public JpaTransactionRepository transactioRepository() {
+        return new JpaTransactionRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
@@ -161,17 +166,19 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
         return new JpaAutoTxTransactionRepository(autoTx);
     }
+
     /**
      * Return JpaDeliveryRegistryRepository
-     * @return 
+     *
+     * @return
      */
     @Override
     public DeliveryRegistryRepository deliveryRegistryRepository() {
         return new JpaDeliveryRegistryRepository();
     }
-    
+
     @Override
     public BalanceRepository balance() {
-       return new JPAUserBalance();
+        return new JPAUserBalance();
     }
 }
