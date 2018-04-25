@@ -1,5 +1,6 @@
 package eapli.ecafeteria.domain.pos;
 
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
@@ -22,7 +23,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
     
     @OneToOne
     @JoinColumn(name ="POSUser")
-    private CafeteriaUser posUser;
+    private SystemUser posUser;
     
     @Transient
     private long identification;
@@ -34,7 +35,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
         //for ORM only
     }
     
-    public POS (CafeteriaUser posUser) {
+    public POS (SystemUser posUser) {
         this.posUser = posUser;
         this.identification = 1;
         this.open = false;
