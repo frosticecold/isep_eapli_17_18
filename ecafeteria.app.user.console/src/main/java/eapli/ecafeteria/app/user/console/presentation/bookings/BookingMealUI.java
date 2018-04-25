@@ -47,16 +47,16 @@ public class BookingMealUI extends AbstractUI {
         Iterable<Meal> mealList = null;
         int option = 0;
 
-        System.out.println("Choose Meal Type:\n0-Lunch\n1-Dinner");
+        System.out.println("Choose Meal Type:\n1-Lunch\n2-Dinner");
 
         option = Console.readInteger("");
 
         switch (option) {
-            case 0:
+            case 1:
                 mealList = controller.listMeals(cal, MealType.LUNCH);
                 break;
 
-            case 1:
+            case 2:
                 mealList = controller.listMeals(cal, MealType.DINNER);
                 break;
         }
