@@ -7,7 +7,9 @@ package eapli.ecafeteria.domain.pos;
 
 import eapli.framework.domain.ddd.ValueObject;
 import eapli.framework.util.DateTime;
+import java.io.Serializable;
 import java.util.Calendar;
+import javax.persistence.Embeddable;
 
 
 /**
@@ -16,7 +18,8 @@ import java.util.Calendar;
  */
 
 //Value Object 
-public class DeliverySessionDate implements ValueObject{
+@Embeddable
+public class DeliverySessionDate implements ValueObject, Serializable {
     
     /** current hour of the session **/
     private int hour;
@@ -30,6 +33,11 @@ public class DeliverySessionDate implements ValueObject{
     private int month;
     /** current year of the session **/
     private int year;
+
+    protected DeliverySessionDate() {
+        
+        //for ORM only
+    }
     
     public DeliverySessionDate(Calendar ca) {
        this.validateHour(ca.HOUR_OF_DAY);

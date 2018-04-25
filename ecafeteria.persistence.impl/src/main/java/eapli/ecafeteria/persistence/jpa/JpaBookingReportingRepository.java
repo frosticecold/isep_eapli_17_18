@@ -7,24 +7,18 @@ package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
+import eapli.ecafeteria.domain.booking.BookingState.BookingStates;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.dishes.Dish;
-import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.reporting.booking.BookingPerOption;
-import eapli.ecafeteria.reporting.dishes.DishesPerDishType;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -103,120 +97,89 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
         return query.getResultList();
     }
 
+     /**
+     * Report booking by input date.
+     *
+     * @param Calendar iDate - Pretended date
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */
     @Override
-    public Iterable<BookingPerOption> showReportByDay(Calendar date) {
-             
-        Calendar c = new GregorianCalendar(2018,04,19);
-        
-        
-        System.out.println("DATE DO SQL: " + date + "\n");
+    public Iterable<BookingPerOption> showReportByDay(Calendar iDate) {
         
         final Query q = entityManager().
         createQuery("SELECT booking "
                         + "FROM Booking booking "
-                        + "WHERE booking.date = :date ");
+                        + "WHERE booking.date = :idate ", Booking.class);
         
-       q.setParameter("date", c);
+       q.setParameter("idate", iDate);
+       List<Booking> bookingList = q.getResultList();
        
-        List<BookingPerOption> l = new ArrayList<>();
+       List<BookingPerOption> BPOList = new LinkedList<>();
+       
+       for( Booking b : bookingList){
         
-        
-        System.out.println("RESULTADO QUERY: " + q.getResultList() + "\n");
-        
-        
-        
-        
-        for (Iterator it = q.getResultList().iterator(); it.hasNext();) {
-            System.out.println(it.next());
-            Object b =  it.next();
-            
-            if( b instanceof Booking){
-                Booking booking = (Booking) b;
-                
-                BookingPerOption b1 = new BookingPerOption(booking.getMeal().toString(), null, "mealDishName", "userName");
-                l.add(b1);
-                
-            }
-                
-        }
-    
-   
-
-        return l;
-
-          /* ^QUERY */
-          
-          
-//          List<BookingPerOption> l = new ArrayList<>();
-//          l.add(new BookingPerOption("mealType", new Date(), "mealDishName", "userName"));
-//          l.add(new BookingPerOption("mealType2", new Date(), "mealDishName4", "userName12"));
-//          l.add(new BookingPerOption("mealType3", new Date(), "mealDishName33", "userName4"));
-          
-          
-          
-       //   return l;
+           BPOList.add(BookingPerOption.fromBookingToDTO(b));
+       
+       }
+       
+       
+       return BPOList;
     }
 
+    /**
+     * Report booking by dishType.
+     *
+     * @param String dish - Dish type by user input
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */
     @Override
     public Iterable<BookingPerOption> showReportByDish(String dish) {
+
+        
         
          List<BookingPerOption> l = new ArrayList<>();
-        /*
-        
-            SELECT b.* FROM BOOKING b, Meal m, Dish d, Dishtype dt
-            WHERE b.meal_id = m.id
-            AND m.dishid = d.name AND d.dishtype_pk = dt.pk AND dt.acronym = 'vegie';
-        
-        */
-        System.out.println("OLA: " + dish);
+
        
           final Query q = entityManager().
-        createQuery("SELECT booking.idBooking "
-                        + "FROM Booking booking, Meal m, Dish d, DishType dt "
-                        + "WHERE booking.meal = m "
-                        + "AND m.dish = d "
-                        + "AND d.dishType = dt "
-                        + "AND dt.acronym = :tp");
-         /* 
-        createQuery("SELECT booking "
+            createQuery("SELECT booking "
                         + "FROM Booking booking "
                         + "JOIN booking.meal m "
                         + "JOIN m.dish d "
                         + "JOIN d.dishType dt "
-                        + "WHERE dt.acronym = :tp");
-          
-          */
+                        + "WHERE dt.acronym = :tp", Booking.class);
         
         q.setParameter("tp", dish);
         
-        System.out.println("RESULTADO::: \n" + q.getResultList() + "\n");
+
+       List<Booking> bookingList = q.getResultList();
+       
+       List<BookingPerOption> BPOList = new LinkedList<>();
+       
+       for( Booking b : bookingList){ // TRANSFORM BOOKING OBJECT TO DTO
         
-        
-            for (Iterator it = q.getResultList().iterator(); it.hasNext();) {
-            System.out.println(it.next());
-            Object b =  it.next();
-            
-            if( b instanceof Booking){
-                Booking booking = (Booking) b;
-                
-                BookingPerOption b1 = new BookingPerOption(booking.getMeal().toString(), null, "mealDishName", "userName");
-                l.add(b1);
-                
-            }
-                
-        }
-    
-   
+           BPOList.add(BookingPerOption.fromBookingToDTO(b));
+       
+       }
        
        
-       return q.getResultList();
+       return BPOList;
     }
 
+    /**
+     * Report booking by dishType.
+     *
+     * @param MealType meal - Mealtype by user input
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */
     @Override
     public Iterable<BookingPerOption> showReportByMeal(MealType meal) {
-         List<BookingPerOption> l = new ArrayList<>();
-        System.out.println("ANTES DA QERYYY!");
-        
+
         /*
             SELECT b.* FROM BOOKING b, Meal m
             WHERE b.meal_id = m.id
@@ -225,35 +188,25 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
 
  
          final Query q = entityManager().
-               createQuery("SELECT  b.idBooking "
+               createQuery("SELECT b "
                         + "FROM Booking b "
                         + "JOIN b.meal m "
-                        + "WHERE m.mealtype > -1");
+                        + "WHERE m.mealtype = :q", Booking.class);
          
+        q.setParameter("q", meal);
 
-
-      // q.setParameter("mealt", 0);
+       List<Booking> bookingList = q.getResultList();
        
+       List<BookingPerOption> BPOList = new LinkedList<>();
        
-        System.out.println("\n\nQUERY RESULT:" + q.getResultList() + "\n");
+       for( Booking b : bookingList){
         
-            for (Iterator it = q.getResultList().iterator(); it.hasNext();) {
-            System.out.println(it.next());
-            Object b =  it.next();
-            
-            if( b instanceof Booking){
-                Booking booking = (Booking) b;
-                
-                BookingPerOption b1 = new BookingPerOption(booking.getMeal().toString(), null, "mealDishName", "userName");
-                l.add(b1);
-                
-            }
-                
-        }
-    
-   
+           BPOList.add(BookingPerOption.fromBookingToDTO(b));
        
-       return l;
+       }
+       
+       
+       return BPOList;
     }
 
  

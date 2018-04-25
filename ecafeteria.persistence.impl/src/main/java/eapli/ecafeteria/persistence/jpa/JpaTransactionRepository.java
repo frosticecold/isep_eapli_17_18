@@ -24,15 +24,6 @@ public class JpaTransactionRepository extends CafeteriaJpaRepositoryBase<Transac
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Balance getBalanceOfUser(MecanographicNumber user) {
-        Query q = entityManager().
-                createQuery("SELECT currentBalance FROM CafeteriaUser"
-                        + " WHERE mecanographicNumber=:user", Balance.class);
-
-        q.setParameter("user", user);
-        return (Balance) q.getSingleResult();
-    }
 
     @Override
     public Iterable<Transaction> findAllTransactionsByCafeteriaUserAndType(CafeteriaUser user, String transactionType) {

@@ -156,5 +156,29 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * Returns a inMemory DeliveryRegistryRepository
+     *
+     * @return
+     */
+    @Override
+    public DeliveryRegistryRepository deliveryRegistryRepository() {
+        return new InMemoryDeliveryRegistryRepository();
+    }
+
+    @Override
+    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public BalanceRepository balance() {
+        return new InMemoryBalanceRepository();
+    }
 
 }

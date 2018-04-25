@@ -22,7 +22,7 @@ public class InMemoryBookingRepository implements BookingRepository {
 
     @Override
     public Booking saveBooking(Booking entity) throws DataConcurrencyException, DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override

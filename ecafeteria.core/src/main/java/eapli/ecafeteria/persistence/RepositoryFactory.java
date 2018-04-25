@@ -48,6 +48,13 @@ public interface RepositoryFactory {
      * @return
      */
     CafeteriaUserRepository cafeteriaUsers();
+    
+     /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    BalanceRepository balance();
 
     /**
      *
@@ -109,8 +116,10 @@ public interface RepositoryFactory {
      */
     DeliveryMealSessionRepository deliveryMealRepository();
 
-    
-    
+    /**
+     * DeliveryRegistry Repo
+     */
+    DeliveryRegistryRepository deliveryRegistryRepository();
 
     /**
      * Ratings reporting repository
@@ -132,4 +141,8 @@ public interface RepositoryFactory {
      * @return 
      */
     MealMaterialRepository mealMaterial();
+    
+    AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
+    
+    AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
 }

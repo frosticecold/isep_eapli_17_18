@@ -13,10 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import javax.persistence.OneToOne;
 
 /**
@@ -35,7 +31,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
-  //  @OneToOneToOne(cascade = CascadeType.ALL)
+
     private CafeteriaUser user;
     @OneToOne(cascade = CascadeType.ALL)
     private Meal meal;
@@ -45,18 +41,6 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         //for ORM 
     }
 
-
-    public Rating(Booking booking, int rating, String comment) {
-        if (booking == null || rating < 0 || rating > 5 || comment == null) {
-            throw new IllegalArgumentException("Invalid. Please check.");
-        }
-        this.rating = rating;
-        this.booking = booking;
-        this.comment = comment;
-        this.reply = "No reply yet.";
-    }
-
-
     /**
      * Constructor
      *
@@ -64,15 +48,12 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param rating
      * @param comment
      */
-    public Rating(CafeteriaUser user, Booking booking, int rating, String comment) {
-
-        if (booking == null || rating < 0 || rating > 5 || comment == null) {
-            System.out.println("Invalid. Please check.");
-        }
-        this.user = user;
-        this.booking = booking;
+    public Rating(Meal meal,Booking booking, int rating, String comment) {
+        this.meal = meal;
         this.rating = rating;
+        this.booking = booking;
         this.comment = comment;
+        this.reply = "No reply yet.";
     }
 
     @Override
@@ -157,7 +138,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
             str.append("*");
         }
         str.append("\n Comment: ").append(this.comment).append("\n Reply:   ").append(this.reply);
-        
+
         return str.toString();
     }
 }

@@ -1,6 +1,5 @@
 package eapli.ecafeteria.domain.pos;
 
-import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.util.DateTime;
@@ -62,17 +61,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public Long id() {
         return this.idSession;
     }
-
-    /**
-     * creates a new register of a delivery made
-     * @param idUser
-     * @param idBooking 
-     */
-    public void addNewDelivery(MecanographicNumber idUser, long idBooking) {
-        
-        
-    }
-    
+   
     /**
      * Define the type of the session
      */
@@ -133,5 +122,14 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public Calendar date() {
        
         return this.sessionDate.calendar();
+    }
+    
+    /**
+     * Returns the current pos of this session
+     * @return 
+     */
+    public POS pos(){
+        
+        return this.pos;
     }
 }
