@@ -104,10 +104,9 @@ public class MainMenu extends AbstractUI {
     private static final int REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION = 3;
 
     //BOOKING REPORTING
-    private static final int REPORTING_BOOKING_PER_DATE = 1;
-    private static final int REPORTING_BOOKING_PER_MEALTYPE = 2;
-    private static final int REPORTING_BOOKING_PER_PLATE = 3;
-    private static final int REPORTING_BOOKING_PER_MEAL = 4;
+    private static final int REPORTING_BOOKING_PER_DATE = 8;
+    private static final int REPORTING_BOOKING_PER_PLATE = 9;
+    private static final int REPORTING_BOOKING_PER_MEAL = 10;
 
     // MENU
     private static final int MENU_EDIT_CREATE_OPTION = 1;
@@ -285,6 +284,15 @@ public class MainMenu extends AbstractUI {
         
         menu.add(new MenuItem(KITCHEN_CLOSE_MENU_PLAN, "Close menuplan", new CloseMenuPlanAction()));
 
+        menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
+                () -> new ReportBookingPerDateUI().show()));
+        menu.add(new MenuItem(REPORTING_BOOKING_PER_PLATE, "Booking per Plate",
+                () -> new ReportBookingPerDishUI().show()));
+        menu.add(new MenuItem(REPORTING_BOOKING_PER_MEAL, "Booking per Meal",
+                () -> new ReportBookingPerMealUI().show()));
+        
+  
+        
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;

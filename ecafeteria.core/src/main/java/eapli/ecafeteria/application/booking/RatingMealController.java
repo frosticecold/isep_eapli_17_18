@@ -10,6 +10,7 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RatingRepository;
@@ -49,9 +50,11 @@ public class RatingMealController {
      * List with all bookings of the user
      */
     private List<Booking> bookings = null;
-
-    private int rate;
-    private String comment;
+    /**
+     * Rating
+     */
+    private int rating;
+    private Meal meal;
 
     /**
      * Constructor
@@ -72,26 +75,19 @@ public class RatingMealController {
     /**
      * Method to add a rating on a booking of the meal
      *
+     * @param meal
      * @param booking
-     * @param rating rate of the meal
      * @param comment description about booking of the meal
      * @return rateMeal
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
-    public Rating addRating(Booking booking, String comment)
+    public Rating addRating(Meal meal, Booking booking, String comment)
             throws DataConcurrencyException, DataIntegrityViolationException {
         if (booking == null || comment == null) {
             System.out.println("Invalid. Please check.");
-            //throw new IllegalArgumentException("Invalid. Please check.");
         }
-        // System.out.println("Username: " + user.user().id().toString());
-//        try {
-//            addRating(null, 0, null);
-//        } catch (IllegalArgumentException e) {
-//            System.out.println("Invalid!");
-//        }
-        Rating rateMeal = new Rating(booking, rate, comment);
+        Rating rateMeal = new Rating(meal, booking, rating, comment);
         rateMeal = ratingRepository.saveRating(rateMeal);
         return rateMeal;
     }
@@ -105,15 +101,26 @@ public class RatingMealController {
         return bookings;
     }
 
+    /**
+     * Method for check if rating is valid
+     *
+     * @param rating
+     * @return
+     */
     public boolean readRating(int rating) {
         if (rating < 0 || rating > 5) {
             System.out.println("Rating Invalid. Check!");
             return false;
         }
-        this.rate = rating;
+        this.rating = rating;
         return true;
     }
 
+    /**
+     * Method for accept if wish leave a comment or not
+     *
+     * @return
+     */
     public boolean readComment() {
         String answer = "";
         do {
