@@ -57,13 +57,17 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            batches.put(b, quantity);
-            System.out.println("Batch successfully saved!\n");
+            if (quantity > 0) {
+                batches.put(b, quantity);
+                System.out.println("Batch successfully saved!\n");
+            }
         }
 
-        System.out.println("--- BATCHES REGISTERED ON MEAL ---");
-        for (Entry<Batch, Double> b : batches.entrySet()) {
-            System.out.printf("Material: %s, Batch Code: %s, Used Quantity: %f Expiration Date: %s\n", b.getKey().material().description(), b.getKey().barcode(), b.getValue(), b.getKey().useByDate().getTime());
+        if (batches.size() > 0) {
+            System.out.println("--- BATCHES REGISTERED ON MEAL ---");
+            for (Entry<Batch, Double> b : batches.entrySet()) {
+                System.out.printf("Material: %s, Batch Code: %s, Used Quantity: %f Expiration Date: %s\n", b.getKey().material().description(), b.getKey().barcode(), b.getValue(), b.getKey().useByDate().getTime());
+            }
         }
 
         return false;
