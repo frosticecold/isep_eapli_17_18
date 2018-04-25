@@ -72,7 +72,7 @@ public class ElaborateOrEditMenuController implements Controller {
      * @param finalDate String with final Date
      * @return Menu if exists or create a new one
      */
-    public Menu createOrFindMenu(final Calendar initialDate, final Calendar finalDate) {
+    public Menu createOrFindMenu(final Calendar initialDate, final Calendar finalDate) throws DataIntegrityViolationException, DataConcurrencyException {
         if (initialDate == null || finalDate == null) {
             throw new IllegalArgumentException("Dates must not be null.");
         }
@@ -80,6 +80,7 @@ public class ElaborateOrEditMenuController implements Controller {
         if (m == null) {
             try {
                 m_menu = new Menu(initialDate, finalDate);
+                m_menu = saveMenu(m_menu);
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(ElaborateOrEditMenuController.class.getName()).log(Level.SEVERE, null, ex);
                 return null;
