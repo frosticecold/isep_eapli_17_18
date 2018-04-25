@@ -2,6 +2,7 @@ package eapli.ecafeteria.app.pos.console.presentation;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.RegisterMealDeliveryController;
+import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.framework.presentation.console.AbstractUI;
 
 /**
@@ -10,18 +11,20 @@ import eapli.framework.presentation.console.AbstractUI;
  */
 public class RegisterMealDeliveryUI extends AbstractUI {
     
-    private RegisterMealDeliveryController ctrl;
+    private final RegisterMealDeliveryController ctrl;
+    private final DeliveryMealSession session;
 
-    /** Construtor that shall receive the entity of the open session of a certain POS **/
-    public RegisterMealDeliveryUI() {
-        
+    /** Construtor that shall receive the entity of the open session of a certain POS
+     * @param session **/
+    public RegisterMealDeliveryUI(DeliveryMealSession session) {
+         this.session = session;
         //create controller
-        this.ctrl = new RegisterMealDeliveryController();
+        this.ctrl = new RegisterMealDeliveryController(session); 
     }
     
-    public void recordNewMealDelivery() {
+    public void recordNewMealDelivery(String idClient, long booking) {
 
-        //recordNewMealDelivery(pos, idBooking); //records the new delivery on the delivery registry of this session 
+        //this.ctrl.registerNewMealDelivery(idClient, booking);
     }
     
     /**

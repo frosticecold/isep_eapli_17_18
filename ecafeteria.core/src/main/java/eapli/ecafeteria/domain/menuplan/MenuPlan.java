@@ -12,11 +12,13 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
 @Entity
@@ -30,9 +32,11 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
     @Version
     private Long version;
     
+    
     @OneToMany(cascade = CascadeType.ALL)
     private List<MenuPlanItem> menuPlanItemList;
     
+    @OneToOne
     private Menu selectedMenu;
     
     private boolean closed;

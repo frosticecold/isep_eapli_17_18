@@ -13,8 +13,9 @@ import eapli.framework.persistence.repositories.DataRepository;
  *
  * @author MarioDias
  */
-public interface TransactionRepository extends DataRepository<Transaction, Long> {
-
+public interface TransactionRepository 
+        extends DataRepository<Transaction, Long> {  
+    
     /**
      * returns the Transaction , debit or credit
      *
@@ -24,7 +25,6 @@ public interface TransactionRepository extends DataRepository<Transaction, Long>
     Iterable<Transaction> findAllTransactionsByCafeteriaUserAndType(CafeteriaUser user, String transactionType);
 
     public Iterable<Transaction> findAllActive();
-
-      
-  
+    
+   
 }

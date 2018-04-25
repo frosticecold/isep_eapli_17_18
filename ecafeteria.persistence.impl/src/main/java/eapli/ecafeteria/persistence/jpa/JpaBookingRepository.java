@@ -21,7 +21,9 @@ import javax.persistence.TemporalType;
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Long> implements BookingRepository {
+public class JpaBookingRepository 
+        extends CafeteriaJpaRepositoryBase<Booking, Long> 
+        implements BookingRepository {
 
     public Booking saveBooking(Booking entity) throws DataConcurrencyException,
             DataIntegrityViolationException {

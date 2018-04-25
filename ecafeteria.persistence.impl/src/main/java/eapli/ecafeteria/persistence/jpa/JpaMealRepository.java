@@ -46,6 +46,7 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         return matchOne("e.id=:id", params);
     }
 
+    @Override
     public List<Meal> findMealsByMenu(Menu m) {
         final Query q;
         q = entityManager().createQuery("SELECT e FROM Meal e WHERE :menu = e.menu", Meal.class);

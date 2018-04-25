@@ -148,9 +148,30 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public MenuPlanItemRepository menuPlanItem() {
+        return new JpaMenuPlanItemRepository();
+    }
+
+    @Override
+    public AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx) {
+        return new JpaAutoTxBookingRepository(autoTx);
+    }
+
+    @Override
+    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
+        return new JpaAutoTxTransactionRepository(autoTx);
+    }
+    /**
+     * Return JpaDeliveryRegistryRepository
+     * @return 
+     */
+    @Override
+    public DeliveryRegistryRepository deliveryRegistryRepository() {
+        return new JpaDeliveryRegistryRepository();
+    }
+    
+    @Override
     public BalanceRepository balance() {
        return new JPAUserBalance();
     }
-
-
 }

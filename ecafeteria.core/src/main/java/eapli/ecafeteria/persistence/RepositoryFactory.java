@@ -81,6 +81,8 @@ public interface RepositoryFactory {
     MenuRepository menus();
 
     MenuPlanRepository menuPlan();
+    
+    MenuPlanItemRepository menuPlanItem();
 
     RatingRepository rating();
 
@@ -114,8 +116,10 @@ public interface RepositoryFactory {
      */
     DeliveryMealSessionRepository deliveryMealRepository();
 
-    
-    
+    /**
+     * DeliveryRegistry Repo
+     */
+    DeliveryRegistryRepository deliveryRegistryRepository();
 
     /**
      * Ratings reporting repository
@@ -137,4 +141,8 @@ public interface RepositoryFactory {
      * @return 
      */
     MealMaterialRepository mealMaterial();
+    
+    AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
+    
+    AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
 }
