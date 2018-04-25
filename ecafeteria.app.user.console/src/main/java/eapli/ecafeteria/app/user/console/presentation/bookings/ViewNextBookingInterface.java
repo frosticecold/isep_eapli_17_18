@@ -19,10 +19,10 @@ public interface ViewNextBookingInterface {
         Booking nextBooking = controller.getNextBooking();
         System.out.println("+===============================================+");
         if(nextBooking == null){
-            System.out.println("NO BOOKINGS WHERE FOUND \n");
+            System.out.println("No bookings were found!\n");
         }
         else{
-            System.out.println("NEXT BOOKING: \n" +  nextBooking);
+            System.out.println("Next booking: \n" +  nextBooking);
         }
         System.out.println("+===============================================+\n");
     }
