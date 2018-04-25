@@ -169,6 +169,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public DeliveryRegistryRepository deliveryRegistryRepository() {
         return new JpaDeliveryRegistryRepository();
     }
-
-
+    
+    @Override
+    public BalanceRepository balance() {
+       return new JPAUserBalance();
+    }
 }

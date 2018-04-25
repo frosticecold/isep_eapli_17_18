@@ -28,9 +28,14 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
         mealT = MealType.getMealTypeById(mT).name();
 
         Calendar date;
+        int meals;
         do {
             date = Console.readCalendar("Insert date (DD-MM-YYYY):");
-        } while ((this.theController.showMeals(mealT, date) == -1));
+            meals = this.theController.showMeals(mealT, date);
+            if (meals == -1) {
+                System.out.println("There are no meals for the specified date!\n");
+            }
+        } while ((meals == -1));
 
         int state;
         do {
@@ -44,7 +49,7 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
 
             matAcro = Console.readLine("Input material acronym or exit:");
 
-            if (matAcro.compareTo("exit") == 0) {
+            if (matAcro != null && matAcro.compareTo("exit") == 0) {
                 break;
             }
 
@@ -57,13 +62,17 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            batches.put(b, quantity);
-            System.out.println("Batch successfully saved!\n");
+            if (quantity > 0) {
+                batches.put(b, quantity);
+                System.out.println("Batch successfully saved!\n");
+            }
         }
 
-        System.out.println("--- BATCHES REGISTERED ON MEAL ---");
-        for (Entry<Batch, Double> b : batches.entrySet()) {
-            System.out.printf("Material: %s, Batch Code: %s, Used Quantity: %f Expiration Date: %s\n", b.getKey().material().description(), b.getKey().barcode(), b.getValue(), b.getKey().useByDate().getTime());
+        if (batches.size() > 0) {
+            System.out.println("--- BATCHES REGISTERED ON MEAL ---");
+            for (Entry<Batch, Double> b : batches.entrySet()) {
+                System.out.printf("Material: %s, Batch Code: %s, Used Quantity: %f Expiration Date: %s\n", b.getKey().material().description(), b.getKey().barcode(), b.getValue(), b.getKey().useByDate().getTime());
+            }
         }
 
         return false;

@@ -6,9 +6,7 @@
 package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
-import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.persistence.repositories.DataRepository;
 
 /**
@@ -27,8 +25,6 @@ public interface TransactionRepository
     Iterable<Transaction> findAllTransactionsByCafeteriaUserAndType(CafeteriaUser user, String transactionType);
 
     public Iterable<Transaction> findAllActive();
-
-    public Balance getBalanceOfUser(MecanographicNumber user);
     
    
 }
