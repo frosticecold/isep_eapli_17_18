@@ -24,8 +24,7 @@ public class InMemoryRatingReportingRepository extends InMemoryRepositoryWithLon
      */
     @Override
     public Iterable<Rating> findRatingsByUser(CafeteriaUser user) {
-//        return match(e -> e.user().equals(user));
-        return null;
+        return match(e -> e.user().equals(user));
     }
 
 }
