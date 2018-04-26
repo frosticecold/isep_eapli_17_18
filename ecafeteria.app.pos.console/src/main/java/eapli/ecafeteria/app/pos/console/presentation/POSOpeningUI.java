@@ -1,5 +1,6 @@
 package eapli.ecafeteria.app.pos.console.presentation;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.POSOpeningController;
 
 import eapli.framework.persistence.DataConcurrencyException;
