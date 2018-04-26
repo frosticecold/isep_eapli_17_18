@@ -3,11 +3,7 @@ package eapli.ecafeteria.domain.kitchen;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.util.Strings;
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 /**
  * @FIXME javadoc
@@ -82,7 +78,8 @@ public class Material implements AggregateRoot<String>, Serializable {
     public int hashCode() {
         return this.acronym.hashCode();
     }
-    public String acronym(){
+
+    public String acronym() {
         return acronym;
     }
 }
