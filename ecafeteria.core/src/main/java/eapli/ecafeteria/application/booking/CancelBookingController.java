@@ -14,6 +14,7 @@ import eapli.ecafeteria.persistence.AutoTxBookingRepository;
 import eapli.ecafeteria.persistence.AutoTxTransactionRepository;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.BookingRepository;
+import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.domain.money.Money;
@@ -148,7 +149,9 @@ public class CancelBookingController {
                 PersistenceContext.repositories().autoTxTransactionRepository(TxCtx);
         final AutoTxBookingRepository atbr = 
                 PersistenceContext.repositories().autoTxBookingRepository(TxCtx);
-        
+        final CafeteriaUserRepository cafer = 
+                PersistenceContext.repositories().cafeteriaUsers(TxCtx);
+
         TxCtx.beginTransaction();
         
         /* persist here */
@@ -158,6 +161,7 @@ public class CancelBookingController {
         else
             attr.saveTransaction(
                     new CancelationBooking(user, new Money(0, refund.currency())));
+        cafer.save(user);
         TxCtx.commit();
         
         return true;
