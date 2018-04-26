@@ -156,7 +156,8 @@ public class CancelBookingController {
         if(refund != null)
             attr.saveTransaction(cb);
         else
-            attr.saveTransaction(cb);
+            attr.saveTransaction(
+                    new CancelationBooking(user, new Money(0, refund.currency())));
         TxCtx.commit();
         
         return true;
