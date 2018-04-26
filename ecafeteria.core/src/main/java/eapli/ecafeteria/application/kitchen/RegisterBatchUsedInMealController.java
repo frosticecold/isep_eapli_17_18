@@ -33,8 +33,10 @@ public class RegisterBatchUsedInMealController implements Controller {
         MealMaterial m = new MealMaterial(batch.material(), meal, batch, quantity);
 
         try {
-            mealMaterialRepository.save(m);
-            batchRepository.removeUsedBatch(batch, quantity);
+            if (quantity > 0) {
+                mealMaterialRepository.save(m);
+                batchRepository.removeUsedBatch(batch, quantity);
+            }
         } catch (DataConcurrencyException | DataIntegrityViolationException e) {
             e.getCause();
         }
@@ -95,7 +97,7 @@ public class RegisterBatchUsedInMealController implements Controller {
     }
 
     public Batch getSelectedBatch(int id) {
-        List<Batch> list = (List<Batch>) batchRepository.findAll();
+        List<Batch> list = batchRepository.findAll();
         for (Batch b : list) {
             if ((int) b.pk() == id) {
                 return b;

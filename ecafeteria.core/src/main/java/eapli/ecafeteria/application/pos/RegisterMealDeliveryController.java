@@ -1,17 +1,16 @@
 package eapli.ecafeteria.application.pos;
 
-import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
 
 /**
@@ -26,7 +25,6 @@ public class RegisterMealDeliveryController implements Controller {
     private final DeliveryMealSession session;
     
     public RegisterMealDeliveryController(DeliveryMealSession session) {
-        
         this.list = new ListAvailableMealsService();
         this.session = session;
     }
@@ -37,7 +35,7 @@ public class RegisterMealDeliveryController implements Controller {
      * @param idClient
      * @param idBooking Booking which will be delivered
      */    
-    public void registerNewMealDelivery(String number, long idBooking) {
+    public void registerNewMealDelivery(String number, long idBooking) throws DataIntegrityViolationException, DataConcurrencyException {
         
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
@@ -56,17 +54,11 @@ public class RegisterMealDeliveryController implements Controller {
         
         //persist this Registry
         
-        //PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
+        PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
         
         //change state of the booking just recorded - to served
         
-        PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();
-        
-        //get id the meal associated  to the booking
-        Meal meal = PersistenceContext.repositories().booking().findOne(idBooking).get().getMeal();
-        
-        //update dish quantity of execution - maybe?
-        
+        PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();     
     }
     
     /**
@@ -86,4 +78,31 @@ public class RegisterMealDeliveryController implements Controller {
         return new AvailableMealsStatistics(ca, sessionType);
     }
     
+    /**
+     * Validates booking by searching on the repository
+     */
+    public boolean validatesBooking(long idBooking) {
+        
+        boolean flag = false;
+        
+        //get booking by id
+        
+        if(PersistenceContext.repositories().booking().findOne(idBooking).isPresent()) flag = true;
+        
+        return flag;
+    }
+    
+    /**
+     * Validate existince of user
+     */
+    public boolean validateClient(String number)  {
+        
+        boolean flag = false;
+        
+        MecanographicNumber mNumber = new MecanographicNumber(number);
+        
+        if(PersistenceContext.repositories().cafeteriaUsers().findOne(mNumber).isPresent()) flag = true;
+        
+        return flag;
+    }
 }

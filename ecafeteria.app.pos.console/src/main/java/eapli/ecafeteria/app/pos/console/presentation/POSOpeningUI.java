@@ -8,6 +8,8 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.pos.POS;
 import eapli.framework.application.Controller;
 import eapli.framework.domain.money.Money;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 import java.util.Currency;
@@ -18,10 +20,10 @@ import java.util.Currency;
  */
 public class POSOpeningUI extends AbstractUI {
 
-    private final POSOpeningController theController = new POSOpeningController();
+    private final POSOpeningController theController;
 
-    public POSOpeningUI() {
-
+    public POSOpeningUI() throws DataConcurrencyException, DataIntegrityViolationException {
+        this.theController = new POSOpeningController();
     }
 
     @Override

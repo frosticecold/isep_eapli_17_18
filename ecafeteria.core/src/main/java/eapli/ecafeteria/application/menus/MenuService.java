@@ -46,8 +46,8 @@ public class MenuService {
         return mealRepository.listMealsFromMenuByGivenDay(menu, cal);
     }
     
-     public static Optional<Menu> findLatestMenu(){
-        return menuRepository.findLatestMenu();
+     public static List<Menu> findLatestMenus(){
+        return menuRepository.findLatestMenus();
     }
 
 }

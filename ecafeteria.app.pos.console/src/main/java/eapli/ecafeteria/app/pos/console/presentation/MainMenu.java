@@ -9,7 +9,10 @@ import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.Application;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
+import eapli.ecafeteria.domain.pos.POS;
 import eapli.framework.actions.ReturnAction;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.HorizontalMenuRenderer;
@@ -23,6 +26,8 @@ import eapli.framework.presentation.console.VerticalSeparator;
 import eapli.framework.util.Console;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * TODO split this class in more specialized classes for each menu
@@ -35,17 +40,20 @@ public class MainMenu extends AbstractUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
-
+    
+    // POS OPEN
+    private static final int OPEN_POS_OPTION = 2;
+    private static final int OPEN_POS_SUBMENU_OPTION = 1;
     //DELIVERY
-    private static final int DELIVER_MEAL_OPTION = 2;
+    private static final int DELIVER_MEAL_OPTION = 3;
     private static final int DELIVER_MEAL_SUBMENU_OPTION = 1;
 
     //CHARGE
-    private static final int CHARGE_CARD_OPTION = 3;
+    private static final int CHARGE_CARD_OPTION = 4;
     private static final int CHARGE_CARD_SUBMENU_OPTION = 1;
 
     //CLOSE POS
-    private static final int CLOSE_POS_OPTION = 4;
+    private static final int CLOSE_POS_OPTION = 5;
     private static final int CLOSE_POS_SUBMENU_OPTION = 1;
 
     @Override
@@ -86,7 +94,18 @@ public class MainMenu extends AbstractUI {
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.add(VerticalSeparator.separator());
         }
-
+        
+        //==========================Open POS=====================
+        if (date.get(Calendar.HOUR_OF_DAY) <= 12 && date.get(Calendar.HOUR_OF_DAY) >= 23 || debug == true) {
+            if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
+                final Menu openPOSMenu = buildOpenPOS();
+                mainMenu.add(new SubMenu(OPEN_POS_OPTION, openPOSMenu,
+                        new ShowVerticalSubMenuAction(openPOSMenu)));
+            }
+        } else {
+            System.out.println("Can't open POS menu. Try another time!");
+        }
+        
         //==========================Delivery MENU==================
         if (date.get(Calendar.HOUR_OF_DAY) <= 12 && date.get(Calendar.HOUR_OF_DAY) >= 23 || debug == true) {
             if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
@@ -132,9 +151,9 @@ public class MainMenu extends AbstractUI {
     private Menu buildDeliveryMenu() {
         final Menu menu = new Menu("Deliveries >");
 
-        new ViewAvailableMealsUI().doShow();
-        //menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().doShow()));
-        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
+//        new ViewAvailableMealsUI().doShow();
+//        //menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().doShow()));
+//        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
 
         return menu;
     }
@@ -152,6 +171,22 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Close POS >");
 
         menu.add(new MenuItem(CLOSE_POS_SUBMENU_OPTION, "Close", () -> new ClosePOSUI().show()));
+        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
+
+        return menu;
+    }
+    
+    private Menu buildOpenPOS() {
+        final Menu menu = new Menu("Open POS >");
+
+        menu.add(new MenuItem(OPEN_POS_SUBMENU_OPTION, "Open", () -> {
+            try {
+                new POSOpeningUI().show();
+            } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
+                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return false;
+        }));
         menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
 
         return menu;

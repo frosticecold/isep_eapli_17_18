@@ -32,10 +32,9 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
 
-    private CafeteriaUser user;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Meal meal;
     private String reply;
+    @OneToOne
+    private CafeteriaUser user;
 
     protected Rating() {
         //for ORM 
@@ -48,8 +47,11 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param rating
      * @param comment
      */
-    public Rating(Meal meal,Booking booking, int rating, String comment) {
-        this.meal = meal;
+    public Rating(CafeteriaUser user, Booking booking, int rating, String comment) {
+        if (booking == null || rating < 0 || rating > 5 || comment == null) {
+            throw new IllegalArgumentException();
+        }
+        this.user = user;
         this.rating = rating;
         this.booking = booking;
         this.comment = comment;
@@ -118,14 +120,13 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      *
      * @return
      */
-    public Meal meal() {
-        return this.meal;
-    }
-
+//    public Meal meal() {
+//        return this.meal;
+//    }
+    
     /**
-     * Returns the cafeteria user
-     *
-     * @return
+     * Returns the cafeteria user associated with the rating
+     * @return 
      */
     public CafeteriaUser user() {
         return this.user;
@@ -134,10 +135,13 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
+        str.append("\nDish: ").append(booking.getMeal().dish().id())
+                .append("\nType: " + booking.getMeal().mealtype());
+        str.append("\nRating: ");
         for (int i = 0; i < this.rating; i++) {
             str.append("*");
         }
-        str.append("\n Comment: ").append(this.comment).append("\n Reply:   ").append(this.reply);
+        str.append("\n\tComment: ").append(this.comment).append("\n\tReply:   ").append(this.reply);
 
         return str.toString();
     }

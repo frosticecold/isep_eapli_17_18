@@ -48,6 +48,13 @@ public interface RepositoryFactory {
      * @return
      */
     CafeteriaUserRepository cafeteriaUsers();
+    
+     /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    BalanceRepository balance();
 
     /**
      *

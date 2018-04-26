@@ -1,8 +1,9 @@
 package eapli.ecafeteria.domain.pos;
 
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import java.util.Optional;
 import javax.persistence.*;
 
 /**
@@ -19,23 +20,22 @@ public class POS implements AggregateRoot<Long>, Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="IDPOS")
     private long idPOS; 
-    
-    @OneToOne
-    @JoinColumn(name ="POSUser")
-    private CafeteriaUser posUser;
-    
+        
     @Transient
     private long identification;
     
     @Transient
     private boolean open;
+    
+    @Transient
+    private SystemUser cashier;
 
     protected POS () {
         //for ORM only
     }
     
-    public POS (CafeteriaUser posUser) {
-        this.posUser = posUser;
+    public POS (SystemUser posUser) {
+        if(posUser != null) this.cashier = posUser;
         this.identification = 1;
         this.open = false;
     }
@@ -83,5 +83,13 @@ public class POS implements AggregateRoot<Long>, Serializable{
      */
     public void changeState() {
         this.open = !this.open;
+    }
+        
+    /**
+     * Return the cashier
+     */    
+    public SystemUser cashier() {
+        
+        return this.cashier;
     }
  }

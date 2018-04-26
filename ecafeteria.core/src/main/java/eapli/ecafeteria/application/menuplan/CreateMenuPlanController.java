@@ -34,7 +34,7 @@ public class CreateMenuPlanController implements Controller {
 
     private final MenuPlanItemRepository mpir = PersistenceContext.repositories().menuPlanItem();
 
-    private Menu m;
+    private List<Menu> lm;
 
     private MenuPlan menuplan;
 
@@ -42,14 +42,14 @@ public class CreateMenuPlanController implements Controller {
 
     private Quantity q;
 
-    public Menu getCurrentMenu() {
+    public List<Menu> getCurrentMenus() {
 
-        m = MenuService.findLatestMenu().get();
-        return m;
+        lm = MenuService.findLatestMenus();
+        return lm;
     }
-    
-    public MenuPlan getMenuPlanFromMenu(Menu m){
-     
+
+    public MenuPlan getMenuPlanFromMenu(Menu m) {
+
         return mpr.getMenuPlanFromMenu(m);
     }
 
@@ -75,28 +75,23 @@ public class CreateMenuPlanController implements Controller {
         return menuplan;
     }
 
-//    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
-//        mpir.save(mpi);
-//    }
+    public MenuPlanItem saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        MenuPlanItem menupi=mpir.save(mpi);
+        return menupi;
+    }
 
-    public void saveMenuPlan(MenuPlan mp,List<MenuPlanItem>list) throws DataConcurrencyException, DataIntegrityViolationException {
-        System.out.println("quantidade de MenuPlanItem: "+list.size());
-        
-        for (MenuPlanItem mpi:list) {
-            System.out.println("menu plan item guardado: "+mpir.save(mpi));
-        }
-        
-        mpr.save(mp);
+    public MenuPlan saveMenuPlan(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException {
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        MenuPlan save = mpr.save(mp);
+        return save;
     }
-    
-    public MenuPlan getActiveMenuPlan(){
-        return mpr.getActiveMenuPlan();
+
+    public List<MenuPlan> getActiveMenuPlans() {
+        return mpr.getActiveMenuPlans();
     }
-    
-  
 
     public void editMenuPlan(int quantity, MenuPlanItem menu_plan_item) {
-        
 
         menu_plan_item.getQuantityNumber().setQuantity(quantity);
 

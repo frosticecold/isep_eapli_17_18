@@ -29,9 +29,10 @@ public class SearchBatchUsageController {
     }
 
     public Batch getBatchById(int id) {
-        return batchRepo.findById(id + "").get();
+        return batchRepo.findByPk(id);
     }
-    public List<Meal> getMealsFromBatch(Batch b){
+
+    public List<Meal> getMealsFromBatch(Batch b) {
         return mealRepo.getMealsByBatchID(b);
     }
 

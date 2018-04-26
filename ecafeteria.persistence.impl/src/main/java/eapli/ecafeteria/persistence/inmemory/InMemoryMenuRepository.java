@@ -11,6 +11,7 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,7 +31,7 @@ public class InMemoryMenuRepository extends InMemoryRepositoryWithLongPK<Menu> i
     }
 
     @Override
-    public Optional<Menu> findLatestMenu() {
+    public List<Menu> findLatestMenus() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

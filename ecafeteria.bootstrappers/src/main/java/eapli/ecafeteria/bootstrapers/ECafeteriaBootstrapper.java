@@ -14,8 +14,7 @@ public class ECafeteriaBootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = {new MasterUsersBootstrapper(), new BackofficeUsersBootstrapper(), new DishTypesBootstrapper(),
-                new CafeteriaUserBootstrapper(), new DishBootstrapper(), new MaterialsBootstrapper(), new MenuBootstrapper(), new MealBootstrapper(), new BatchesBootstrapper()};
+        final Action[] actions = {new MasterUsersBootstrapper(), new BackofficeUsersBootstrapper(), new DishTypesBootstrapper(),new CafeteriaUserBootstrapper(), new DishBootstrapper(), new MaterialsBootstrapper(), new MenuBootstrapper(), new MealBootstrapper(), new BatchesBootstrapper(), };
 
         authenticateSuperUser();
 

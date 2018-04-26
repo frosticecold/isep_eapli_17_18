@@ -10,10 +10,9 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,10 +29,9 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
     private Long id;
     
     @Version
-    private Long version;
+    private Long version;  
     
-    
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<MenuPlanItem> menuPlanItemList;
     
     @OneToOne
@@ -57,6 +55,10 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
 
     public Menu getSelectedMenu() {
         return selectedMenu;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 
     @Override

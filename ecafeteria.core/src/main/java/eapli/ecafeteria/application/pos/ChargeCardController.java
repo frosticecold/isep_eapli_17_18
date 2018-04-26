@@ -15,9 +15,8 @@ import eapli.framework.application.Controller;
 import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.Currency;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -28,33 +27,34 @@ public class ChargeCardController implements Controller {
     private final CafeteriaUserService service = new CafeteriaUserService();
     private final TransactionRepository tr = PersistenceContext.repositories().transactioRepository();
     private Transaction t;
-    
+    private CafeteriaUser user;
 
-    public CafeteriaUser findCafeteriaUserByMecanographicNumber(String mecanographicNumber) {
+    public String findCafeteriaUserByMecanographicNumber(String mecanographicNumber) {
         Optional<CafeteriaUser> user = service.findCafeteriaUserByMecNumber(mecanographicNumber);
-        if (user.isPresent()) {
-            return user.get();
+        this.user = user.get();
+        return this.user.cafeteriaUserNameAndCurrentBalance();
+    }
+
+    public boolean chargeCafeteriaUserCard(double tempCredits) {
+        Money credits = new Money(tempCredits, Currency.getInstance("EUR"));
+        this.t = new CreditRecharge(this.user, credits);
+        if (!this.user.addCredits(credits)) {
+            throw new IllegalArgumentException("Error adding credits");
         }
-        return null;
+        return true;
     }
 
-    public boolean chargeCafeteriaUserCard(CafeteriaUser user, Money creditToCharge) {
-        this.t = new CreditRecharge(user, creditToCharge);
-        saveTransaction(t);
-        return user.addCredits(creditToCharge);
+    public String saveCafeteriaUser() {
+        CafeteriaUser tempuser = service.save(this.user);
+        if (tempuser == null) {
+            throw new IllegalStateException("Error Updating cafeteria user");
+        }
+        return tempuser.cafeteriaUserNameAndCurrentBalance();
     }
 
-    public CafeteriaUser saveCafeteriaUser(CafeteriaUser user) {
-        return service.save(user);
-    }
-
-    private void saveTransaction(Transaction t) {
-        try {
-            this.tr.save(this.t);
-        } catch (DataConcurrencyException ex) {
-            Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DataIntegrityViolationException ex) {
-            Logger.getLogger(ChargeCardController.class.getName()).log(Level.SEVERE, null, ex);
+    public  void saveTransaction() throws DataConcurrencyException, DataIntegrityViolationException {
+        if (this.tr.save(this.t) == null) {
+            throw new IllegalArgumentException("Error Saving transaction");
         }
     }
 
