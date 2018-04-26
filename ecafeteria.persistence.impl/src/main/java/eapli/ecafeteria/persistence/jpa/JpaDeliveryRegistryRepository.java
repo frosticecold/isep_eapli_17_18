@@ -5,6 +5,7 @@ import eapli.ecafeteria.persistence.DeliveryRegistryRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Optional;
+import javax.persistence.Query;
 
 /**
  *
@@ -12,34 +13,85 @@ import java.util.Optional;
  */
 public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<DeliveryRegistry, Long> implements DeliveryRegistryRepository{
 
+    /**
+     * Delete certain entity of DeliveryRegistry
+     * @param entity
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public void delete(DeliveryRegistry entity) throws DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        entityManager().remove(entity);
     }
 
+    /**
+     * Delete DeliveryRegistry by id
+     * @param entityId
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public void delete(Long entityId) throws DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String query = "SELECT DeliveryRegistry.*"
+                    + "FROM DeliveryRegistry"
+                    + "WHERE e.id = id";
+
+        final Query q = entityManager().createQuery(query,this.entityClass);
+
+        q.setParameter("id",entityId);
+
+        DeliveryRegistry entity = (DeliveryRegistry) q.getSingleResult();
+
+        entityManager().remove(entity);
     }
 
+    /**
+     * Persists a deliveryregistry entity
+     * @param entity
+     * @return
+     * @throws DataConcurrencyException
+     * @throws DataIntegrityViolationException 
+     */
     @Override
     public DeliveryRegistry save(DeliveryRegistry entity) throws DataConcurrencyException, DataIntegrityViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+       entityManager().persist(entity);
+
+       return entity;
     }
 
+    /**
+     * Returns a list of all DeliveryRegistry
+     * @return 
+     */
     @Override
     public Iterable<DeliveryRegistry> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String query = "SELECT DeliveryRegistry.*"
+                        + "FROM DeliveryRegistry registry";
+
+        final Query q = entityManager().createQuery(query,this.entityClass);
+
+        return q.getResultList();
     }
 
+    /**
+     * Find just one DeliveryRegistry by id
+     * @param id
+     * @return 
+     */
     @Override
     public Optional<DeliveryRegistry> findOne(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return matchOne("e.id=id",id,id);
     }
 
+    /**
+     * Counts DeliveryRegistry records
+     * @return 
+     */
     @Override
     public long count() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        return 0;
     }
     
 }

@@ -111,12 +111,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public DeliveryMealSessionRepository deliveryMealRepository() {
         return new JpaDeliveryMealSessionRepository();
     }
-    
-    @Override
-    public DeliveryRegistryRepository deliveryRegistryRepository(){
-        return new JpaDeliveryRegistryRepository();
-    }
-
 
     @Override
     public RatingRepository rating() {
@@ -143,9 +137,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaAlergensRepository();
     }
 
+//    @Override
+//    public JpaTransactionRepository transactioRepository(TransactionalContext autoTx) {
+//        return new JpaTransactionRepository(autoTx);
+//    }
+
     @Override
-    public TransactionRepository transactioRepository() {
-        return new JpaTransactionRepository();
+    public JpaTransactionRepository transactioRepository() {
+        return new JpaTransactionRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
@@ -158,5 +157,28 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaMenuPlanItemRepository();
     }
 
+    @Override
+    public AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx) {
+        return new JpaAutoTxBookingRepository(autoTx);
+    }
 
+    @Override
+    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
+        return new JpaAutoTxTransactionRepository(autoTx);
+    }
+
+    /**
+     * Return JpaDeliveryRegistryRepository
+     *
+     * @return
+     */
+    @Override
+    public DeliveryRegistryRepository deliveryRegistryRepository() {
+        return new JpaDeliveryRegistryRepository();
+    }
+
+    @Override
+    public BalanceRepository balance() {
+        return new JPAUserBalance();
+    }
 }

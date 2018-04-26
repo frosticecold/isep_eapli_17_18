@@ -19,6 +19,7 @@ import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -108,18 +109,14 @@ public class Booking implements Serializable {
      */
     public Money refundForCancelation(){
         if (isBookingCancelable()) {
-            HashMap<Boolean, Money> information = new HashMap<>();
             final int limit_hour_day_before_no_cost = 10;
             final int dinner_limit_hour_day_before_no_cost = 16;
         
             Calendar actual = Calendar.getInstance();
-            // * * * TOFIX * * *
-            Calendar shouldBeChanged = Calendar.getInstance();
-            // * * *   * * * 
             
-            if(actual.compareTo(shouldBeChanged) > 0){
-                double hours_diff = (actual.getTimeInMillis() - shouldBeChanged.getTimeInMillis()) 
-                        / (60.0 * 1000.0);
+            if(actual.compareTo(date) < 0){
+                int hours_diff = (int) Math.abs((actual.getTimeInMillis() - date.getTimeInMillis()) 
+                        / (60 * 60.0 * 1000.0));
                 if(MealType.DINNER == meal.mealtype()){
                     if(hours_diff >= dinner_limit_hour_day_before_no_cost){
                         return meal.dish().currentPrice();
@@ -154,7 +151,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
-        return "Booking:";
+        return "Booking: " + meal;
     }
 
     

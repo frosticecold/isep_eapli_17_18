@@ -54,7 +54,7 @@ public class EndShiftController implements Controller{
         }
         
         //CALCULA ENTREGUES 
-        int entregues = numberOfDeliveredMeals(data, mealType);
+        Long entregues = numberOfDeliveredMeals(data, mealType);
         
         System.out.println("The number of meals made but not sold on " + dia +"/" + DateTime.currentMonth() + "/" + DateTime.currentYear() + " at " + mealType.toString() + " is : " + (executados-entregues) + "\n");
     }
@@ -64,10 +64,17 @@ public class EndShiftController implements Controller{
         for (DeliveryMealSession session : repository1.findAll()){
             if(session.sessionDate().Day()==dia || session.sessionDate().Month()==data.get(data.MONTH)|| session.sessionDate().Year()==data.get(data.YEAR)){
                 if ((session.isDinner() && mealType.equals(MealType.DINNER)) || (session.isLunch() && mealType.equals(MealType.LUNCH))) {
-                  //  session.
+                    session.closeSession();
+                    try {
+                        repository1.save(session);
+                    } catch (Exception e) {
+                        System.out.println("Erro"+e.getMessage());
+                    }
+
                 }
             }
         }
+        
         System.out.println("HIOKLLKA");
     }
     
@@ -78,14 +85,10 @@ public class EndShiftController implements Controller{
      * @param mt
      * @return 
      */
-    public int numberOfDeliveredMeals(Calendar cal, MealType mt) {
-        int total2 = 0;
-        Map<DishType, Long> calcDeliveredStatistics = availableMealsService.calcDeliveredStatistics(cal, mt);
+    public Long numberOfDeliveredMeals(Calendar cal, MealType mt) {
+        System.out.println(cal.toString());
+        Long calcDeliveredStatistics = availableMealsService.calcDeliveredTotal(cal,mt);
         
-        for (Long entregues : calcDeliveredStatistics.values()) {
-            total2 += entregues;
-        }
-        
-        return total2;
+        return calcDeliveredStatistics;
     }
 }

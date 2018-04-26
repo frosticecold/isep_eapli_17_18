@@ -21,7 +21,9 @@ import javax.persistence.TemporalType;
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Long> implements BookingRepository {
+public class JpaBookingRepository 
+        extends CafeteriaJpaRepositoryBase<Booking, Long> 
+        implements BookingRepository {
 
     public Booking saveBooking(Booking entity) throws DataConcurrencyException,
             DataIntegrityViolationException {
@@ -57,11 +59,27 @@ public class JpaBookingRepository extends CafeteriaJpaRepositoryBase<Booking, Lo
                 + "AND e.meal.dish.dishType=:dt "
                 + "AND e.bookingState.actualBookingState=:bs1 ",
                 Long.class);
-
         q.setParameter("date", cal, TemporalType.DATE);
         q.setParameter("mealType", mealType);
-        q.setParameter("dt", dishType);
-        q.setParameter("bs1", BookingStates.SERVED);
+        q.setParameter("dt", dishType);       
+        q.setParameter("bs1", BookingStates.SERVED); 
+
+
+        return (Long) q.getSingleResult();
+    }
+    
+    @Override
+    public Long getNumberOfDeliveredMealsByDayAndMealType(final Calendar cal, final MealType mealType) {
+        final Query q;
+        q = entityManager().createQuery("SELECT COUNT(e) FROM Booking e "
+                + "WHERE e.meal.mealtype=:mealType "
+                + "AND e.meal.date=:date "
+                + "AND e.bookingState.actualBookingState=:bs1 ",
+                Long.class);
+        q.setParameter("date", cal, TemporalType.DATE);
+        q.setParameter("mealType", mealType);    
+        q.setParameter("bs1", BookingStates.SERVED); 
+
 
         return (Long) q.getSingleResult();
     }

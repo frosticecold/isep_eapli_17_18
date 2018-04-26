@@ -11,7 +11,9 @@ import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menu.MenuState;
 import eapli.ecafeteria.persistence.MenuRepository;
+import eapli.framework.util.DateTime;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -56,11 +58,12 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
     }
 
     @Override
-    public Optional<Menu> findLatestMenu() {
+    public List<Menu> findLatestMenus() {
         final Query q1;        
-        q1 = entityManager().createQuery("SELECT m FROM Menu m ORDER BY m.period.startingDate");
+        q1 = entityManager().createQuery("SELECT m FROM Menu m WHERE m.period.startingDate>=:date");
+        q1.setParameter("date",DateTime.now(),TemporalType.DATE);
              
-        return  q1.getResultList().stream().findFirst();
+        return  q1.getResultList();
     }
     
 

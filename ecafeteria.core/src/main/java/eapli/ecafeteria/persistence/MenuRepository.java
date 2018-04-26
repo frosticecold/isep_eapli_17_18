@@ -10,6 +10,7 @@ import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.persistence.repositories.DataRepository;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,7 +31,7 @@ public interface MenuRepository extends DataRepository<Menu, Long> {
      */
     Optional<Menu> findMenuWithinPeriod(final Calendar startDate, final Calendar endDate);
     
-    Optional<Menu> findLatestMenu();
+    List<Menu> findLatestMenus();
     
     Optional<Menu> findMenuOnDate(Calendar cal);
 

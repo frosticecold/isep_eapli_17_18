@@ -11,6 +11,7 @@ import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
+import eapli.ecafeteria.persistence.BalanceRepository;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.TransactionRepository;
@@ -27,8 +28,7 @@ import java.util.logging.Logger;
 public class CafeteriaUserService {
 
     private final CafeteriaUserRepository repo = PersistenceContext.repositories().cafeteriaUsers();
-
-    private final TransactionRepository trepo= PersistenceContext.repositories().transactioRepository();
+    private final BalanceRepository brepo = PersistenceContext.repositories().balance();
 
 
     public Optional<CafeteriaUser> findCafeteriaUserByMecNumber(String mecNumber) {
@@ -53,11 +53,11 @@ public class CafeteriaUserService {
    
     
       public Balance getBalanceOfUser(MecanographicNumber user) {
-           return trepo.getBalanceOfUser(user);
+           return brepo.getBalanceOfUser(user);
        }
 
     public boolean hasEnoughtMoney(CafeteriaUser user, Money money) {
-        Balance userBalance = trepo.getBalanceOfUser(user.mecanographicNumber());
+        Balance userBalance = brepo.getBalanceOfUser(user.mecanographicNumber());
         if (money.lessThanOrEqual(userBalance.currentBalance())) {
                 System.out.println("USER HAS ENOUGH MONEY");
             return true;

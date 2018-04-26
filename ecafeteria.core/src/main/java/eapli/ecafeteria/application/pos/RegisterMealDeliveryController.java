@@ -1,7 +1,5 @@
 package eapli.ecafeteria.application.pos;
 
-import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
@@ -11,6 +9,8 @@ import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
 
 /**
@@ -25,7 +25,6 @@ public class RegisterMealDeliveryController implements Controller {
     private final DeliveryMealSession session;
     
     public RegisterMealDeliveryController(DeliveryMealSession session) {
-        
         this.list = new ListAvailableMealsService();
         this.session = session;
     }
@@ -35,33 +34,31 @@ public class RegisterMealDeliveryController implements Controller {
      * saving the booking which will be delivered, the client who made the booking and the POS where it was delivered
      * @param idClient
      * @param idBooking Booking which will be delivered
-     * @return 
      */    
-    public boolean registerNewMealDelivery(String idClient, long idBooking) {
+    public void registerNewMealDelivery(String number, long idBooking) throws DataIntegrityViolationException, DataConcurrencyException {
         
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
         
-        //transform string into Username
-        
-        Username username = new Username(idClient);
+        //transform string into MecanographicNumber
+            
+        MecanographicNumber mNumber = new MecanographicNumber(number);
 
         //obtain the client
         
-        SystemUser client = PersistenceContext.repositories().users().findOne(username).get();
-        
+        CafeteriaUser client = PersistenceContext.repositories().cafeteriaUsers().findByMecanographicNumber(mNumber).get();
+                
         //add new record of the delivery just made on DeliveryRegistry
         
         DeliveryRegistry registry = new DeliveryRegistry(session, client, booking);
         
         //persist this Registry
         
-                
-        //code to fetch the BookingsRepository on the PersistenceContext
+        PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
         
-        //changeState(idBooking, bookingsRepo); //will change the state of the booking delivered
+        //change state of the booking just recorded - to served
         
-        return true;
+        PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();     
     }
     
     /**
@@ -69,15 +66,43 @@ public class RegisterMealDeliveryController implements Controller {
      * @param session
      * @return 
      */
-    public AvailableMealsStatistics showCurrentStatics(DeliveryMealSession session) {
+    public AvailableMealsStatistics showCurrentStatics() {
         
         MealType sessionType;
         
-        if(session.isLunch()) sessionType = MealType.LUNCH;
+        if(this.session.isLunch()) sessionType = MealType.LUNCH;
         else sessionType = MealType.DINNER;
         
-        Calendar ca = session.date();
+        Calendar ca = this.session.date();
 
         return new AvailableMealsStatistics(ca, sessionType);
+    }
+    
+    /**
+     * Validates booking by searching on the repository
+     */
+    public boolean validatesBooking(long idBooking) {
+        
+        boolean flag = false;
+        
+        //get booking by id
+        
+        if(PersistenceContext.repositories().booking().findOne(idBooking).isPresent()) flag = true;
+        
+        return flag;
+    }
+    
+    /**
+     * Validate existince of user
+     */
+    public boolean validateClient(String number)  {
+        
+        boolean flag = false;
+        
+        MecanographicNumber mNumber = new MecanographicNumber(number);
+        
+        if(PersistenceContext.repositories().cafeteriaUsers().findOne(mNumber).isPresent()) flag = true;
+        
+        return flag;
     }
 }

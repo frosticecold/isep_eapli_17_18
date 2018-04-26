@@ -6,7 +6,6 @@ import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.util.Console;
 import eapli.framework.visitor.Visitor;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ReportBookingPerDateUI extends AbstractListUI<BookingPerOption>{
     

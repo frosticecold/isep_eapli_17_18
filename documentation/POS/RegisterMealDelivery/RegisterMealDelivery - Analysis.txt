@@ -14,11 +14,9 @@ __________________
 
 * Antes da entrega, tem que haver verificação das refeições disponiveis para entregar.
 
-* Cada entrega é registado na session de uma dada refeição (Almoço ou Jantar) de um certo dia, guardando a reserva da refeição entregue, o cliente a que foi entregue e o operador de caixa que entregou a mesma.
+* Um registo de entrega fica guardada com o cliente que a recebeu, a reserva e a sessão em que foi entregue.
 
 * Ao momento da entrega de refeição, tem que alterar o estado da reserva que foi entregue. 
-
-* Atualizar quantidade de pratos para um certo tipo de refeição, referente a dia da sessão atual.
 
 TESTE UNITÀRIOS
 _______________

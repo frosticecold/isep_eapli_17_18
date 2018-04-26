@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
 /**
  *
  * @author David Camelo <1161294@isep.ipp.pt>
@@ -140,8 +139,4 @@ public class BookingState implements ValueObject, Serializable {
         BookingState bookingState = (BookingState) other;
         return actualBookingState.equals(bookingState.getActualBookingState());
     }
-
-    
-    
-    
 }

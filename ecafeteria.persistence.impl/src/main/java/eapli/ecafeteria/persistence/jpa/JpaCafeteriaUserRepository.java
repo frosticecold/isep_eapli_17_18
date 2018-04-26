@@ -2,6 +2,7 @@ package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.Application;
 import eapli.ecafeteria.domain.authz.Username;
+import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
@@ -10,6 +11,7 @@ import eapli.framework.persistence.repositories.impl.jpa.JpaAutoTxRepository;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import javax.persistence.Query;
 
 /**
  *

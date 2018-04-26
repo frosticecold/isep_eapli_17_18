@@ -1,4 +1,3 @@
-
 package eapli.ecafeteria.domain.pos;
 
 import eapli.framework.util.DateTime;

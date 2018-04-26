@@ -51,4 +51,12 @@ public class ListAvailableMealsService {
         }
         return map;
     }
+    
+    public Long calcDeliveredTotal(Calendar cal, MealType mealtype) {
+        Long total;
+
+        total = bookingRepo.getNumberOfDeliveredMealsByDayAndMealType(cal, mealtype);
+
+        return total;
+    }
 }

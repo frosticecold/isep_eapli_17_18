@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.persistence;
 
-import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
-import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.persistence.repositories.DataRepository;
 
@@ -27,7 +20,4 @@ public interface TransactionRepository extends DataRepository<Transaction, Long>
 
     public Iterable<Transaction> findAllActive();
 
-      public Balance getBalanceOfUser(MecanographicNumber user);
-      
-  
 }

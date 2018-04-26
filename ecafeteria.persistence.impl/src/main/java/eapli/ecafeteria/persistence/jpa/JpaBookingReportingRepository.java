@@ -97,6 +97,14 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
         return query.getResultList();
     }
 
+     /**
+     * Report booking by input date.
+     *
+     * @param Calendar iDate - Pretended date
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */
     @Override
     public Iterable<BookingPerOption> showReportByDay(Calendar iDate) {
         
@@ -120,6 +128,14 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
        return BPOList;
     }
 
+    /**
+     * Report booking by dishType.
+     *
+     * @param String dish - Dish type by user input
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */
     @Override
     public Iterable<BookingPerOption> showReportByDish(String dish) {
 
@@ -135,15 +151,6 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
                         + "JOIN m.dish d "
                         + "JOIN d.dishType dt "
                         + "WHERE dt.acronym = :tp", Booking.class);
-         /* 
-        createQuery("SELECT booking "
-                        + "FROM Booking booking "
-                        + "JOIN booking.meal m "
-                        + "JOIN m.dish d "
-                        + "JOIN d.dishType dt "
-                        + "WHERE dt.acronym = :tp");
-          
-          */
         
         q.setParameter("tp", dish);
         
@@ -152,7 +159,7 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
        
        List<BookingPerOption> BPOList = new LinkedList<>();
        
-       for( Booking b : bookingList){
+       for( Booking b : bookingList){ // TRANSFORM BOOKING OBJECT TO DTO
         
            BPOList.add(BookingPerOption.fromBookingToDTO(b));
        
@@ -160,24 +167,23 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
        
        
        return BPOList;
-
-
-
-       
-       
     }
 
+    /**
+     * Report booking by dishType.
+     *
+     * @param MealType meal - Mealtype by user input
+     * @author David Blanquett  <1161018@isep.ipp.pt>
+     * 
+     * @return list with bookingsDTO
+     */
     @Override
     public Iterable<BookingPerOption> showReportByMeal(MealType meal) {
-        
-        
-        System.out.println("REPORT BY MEAL\n");
- 
-        
+
         /*
             SELECT b.* FROM BOOKING b, Meal m
             WHERE b.meal_id = m.id
-            AND m.mealtype = 0;
+            AND m.mealtype = meal;
         */
 
  
