@@ -120,15 +120,8 @@ public class BookingState implements ValueObject, Serializable {
         
         return false;
     }
-
-    public BookingStates getActualBookingState() {
-        return actualBookingState;
-    }
-
-    public void setActualBookingState(BookingStates actualBookingState) {
-        this.actualBookingState = actualBookingState;
-    }
-
+    
+    @Override
     public final boolean equals(Object other) {
         if (this == other) {
             return true;
@@ -137,6 +130,6 @@ public class BookingState implements ValueObject, Serializable {
             return false;
         }
         BookingState bookingState = (BookingState) other;
-        return actualBookingState.equals(bookingState.getActualBookingState());
+        return actualBookingState.equals(bookingState.actualState());
     }
 }

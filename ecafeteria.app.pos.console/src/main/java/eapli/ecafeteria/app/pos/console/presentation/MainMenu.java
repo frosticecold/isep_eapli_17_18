@@ -151,9 +151,9 @@ public class MainMenu extends AbstractUI {
     private Menu buildDeliveryMenu() {
         final Menu menu = new Menu("Deliveries >");
 
-        new ViewAvailableMealsUI().doShow();
-        //menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().doShow()));
-        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
+//        new ViewAvailableMealsUI().doShow();
+//        //menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().doShow()));
+//        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
 
         return menu;
     }

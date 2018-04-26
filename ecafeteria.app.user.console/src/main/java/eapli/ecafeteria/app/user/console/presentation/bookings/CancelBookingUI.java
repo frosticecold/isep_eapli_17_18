@@ -39,9 +39,13 @@ public class CancelBookingUI extends AbstractUI implements ViewNextBookingInterf
             selectWidget.show();
             // Select booking
             try {
-                controller.selectBooking(selectWidget.selectedOption() -1);
+                int index = selectWidget.selectedOption() -1;
+                if(index == -1)     return false;
+                
+                controller.selectBooking(index);
             } catch (IllegalArgumentException e) {
-                System.out.println("Index not valid!");
+                System.out.println(e.getMessage());
+                return false;
             }
             
 
