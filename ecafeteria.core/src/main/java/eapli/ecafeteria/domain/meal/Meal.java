@@ -55,11 +55,6 @@ public class Meal implements Serializable {
      */
     @Temporal(TemporalType.DATE)
     private Calendar date;
-    /*
-    * Ratings of the meal
-     */
-    @OneToMany()
-    private List<Rating> ratings;
 
     /**
      * Menu that a meal belongs to
@@ -121,7 +116,7 @@ public class Meal implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.dish);
         hash = 59 * hash + Objects.hashCode(this.mealtype);
         hash = 59 * hash + Objects.hashCode(this.date);
-        hash = 59 * hash + Objects.hashCode(this.ratings);
+
         return hash;
     }
 
@@ -164,16 +159,7 @@ public class Meal implements Serializable {
     @Override
     public String toString() {
         String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
-        return "Meal: "+id+", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
-    }
-
-    /**
-     * Returns the ratings given on said meal
-     *
-     * @return
-     */
-    public Iterable<Rating> ratings() {
-        return this.ratings;
+        return "Meal: " + id + ", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
     }
 
     public MealType mealtype() {
