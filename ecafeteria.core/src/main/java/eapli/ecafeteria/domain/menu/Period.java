@@ -166,9 +166,7 @@ public class Period implements Serializable {
         if (DateTime.isAfterNow(start)) {
             throw new IllegalArgumentException("Can't put a working date before present. You can't time travel... ");
         }
-        if (DateTime.isAfterNow(end)) {
-            throw new IllegalArgumentException("Can't put a working date before present. You can't time travel... ");
-        }
+         
         if (DateTime.isBefore(end, start)) {
             throw new IllegalArgumentException("Can't put a endingDate before the startingDate.");
         }

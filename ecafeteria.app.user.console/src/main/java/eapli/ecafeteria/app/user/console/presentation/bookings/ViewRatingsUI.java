@@ -7,13 +7,9 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.ViewRatingsController;
-import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.Rating;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.presentation.console.AbstractUI;
-import eapli.framework.util.Console;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.persistence.NoResultException;
 
 /**
@@ -29,27 +25,25 @@ public class ViewRatingsUI extends AbstractUI implements ViewNextBookingInterfac
 
         try {
             controller = new ViewRatingsController();
-
-            int option = -1;
             ArrayList<Rating> ratings = (ArrayList<Rating>) controller.ratings();
 
             if (ratings.isEmpty()) {
                 System.out.println("»» An error has occurreed!\n There are no ratings!\n");
+                return false;
             } else {
                 for (Rating rating : ratings) {
                     System.out.println("---------------------------------------------");
-                    System.out.println("Meal » " + rating.meal().mealtype().toString() + " \nDish » " + rating.meal().dish().name().toString());
-                    System.out.println("Rating: " + rating.toString());
-
+                    System.out.println(rating.toString());
                     System.out.print("---------------------------------------------\n");
                 }
             }
 
         } catch (NoResultException ex) {
-            System.out.println("\n»» An internal error has occurreed!\n There are no ratings, specified user has an invalid ID\n");
+            System.out.println("\n»» An internal error has occurreed!\n There are no ratings, specified user has an invalid ID.\n");
             return false;
         } catch (NullPointerException ex) {
-            System.out.println("\n»» An internal error has occurreed!\n There are no meals associated with this rating! \n");
+            System.out.println("\n»» An internal error has occurreed! Ratings are null.\n");
+            return false;
         }
 
         return true;

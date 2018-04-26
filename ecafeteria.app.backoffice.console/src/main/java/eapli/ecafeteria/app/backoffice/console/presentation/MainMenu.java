@@ -110,9 +110,10 @@ public class MainMenu extends AbstractUI {
     private static final int REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION = 3;
 
     //BOOKING REPORTING
-    private static final int REPORTING_BOOKING_PER_DATE = 8;
-    private static final int REPORTING_BOOKING_PER_PLATE = 9;
-    private static final int REPORTING_BOOKING_PER_MEAL = 10;
+    private static final int REPORTING_BOOKING_SUB_MENU = 8;
+    private static final int REPORTING_BOOKING_PER_DATE = 1;
+    private static final int REPORTING_BOOKING_PER_PLATE = 2;
+    private static final int REPORTING_BOOKING_PER_MEAL = 3;
 
     // MENU
     private static final int MENU_EDIT_CREATE_OPTION = 1;
@@ -204,9 +205,6 @@ public class MainMenu extends AbstractUI {
             mainMenu.add(new SubMenu(REPORTING_DISHES_OPTION, reportingDishesMenu,
                     new ShowVerticalSubMenuAction(reportingDishesMenu)));
 
-            final Menu reportingBookingMenu = buildReportingBookingMenu();
-            mainMenu.add(new SubMenu(REPORTING_BOOKING_OPTION, reportingBookingMenu,
-                    new ShowVerticalSubMenuAction(reportingBookingMenu)));
 
         }
 
@@ -302,13 +300,11 @@ public class MainMenu extends AbstractUI {
         menu.add(new MenuItem(KITCHEN_CREATE_OR_EDIT_MENUPLAN, "Create or edit menuplan", new CreateMenuPlanAction()));
         
         menu.add(new MenuItem(KITCHEN_CLOSE_MENU_PLAN, "Close menuplan", new CloseMenuPlanAction()));
+       
+        final Menu kitchenReportMenu = buildBookingReportingMenu();
+        menu.add(new SubMenu(REPORTING_BOOKING_SUB_MENU, kitchenReportMenu, new ShowVerticalSubMenuAction(kitchenReportMenu)));
+        
 
-        menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
-                () -> new ReportBookingPerDateUI().show()));
-        menu.add(new MenuItem(REPORTING_BOOKING_PER_PLATE, "Booking per Plate",
-                () -> new ReportBookingPerDishUI().show()));
-        menu.add(new MenuItem(REPORTING_BOOKING_PER_MEAL, "Booking per Meal",
-                () -> new ReportBookingPerMealUI().show()));
         
   
         
@@ -350,21 +346,6 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
-    private Menu buildReportingBookingMenu() {
-
-        final Menu menu = new Menu("Reporting Booking >");
-
-        menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
-                () -> new ReportBookingPerDateUI().show()));
-        menu.add(new MenuItem(REPORTING_BOOKING_PER_PLATE, "Booking per Plate",
-                () -> new ReportBookingPerDishUI().show()));
-        menu.add(new MenuItem(REPORTING_BOOKING_PER_MEAL, "Booking per Meal",
-                () -> new ReportBookingPerMealUI().show()));
-        //   menu.add(new MenuItem(REPORTING_BOOKING_PER_MEALTYPE, "Booking per MealType",
-        //          () -> new ReportBookingPer().show()));
-
-        return menu;
-    }
 
     private Menu buildMenuOfMenus() {
         final Menu menu = new Menu("Menus >");
@@ -373,6 +354,25 @@ public class MainMenu extends AbstractUI {
         menu.add(new MenuItem(MENU_PUBLISH_OPTION, "Publish Menus", () -> new PublishMenuUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
+        return menu;
+    }
+
+    private Menu buildBookingReportingMenu() {
+         final Menu menu = new Menu("Booking Reporting Menu ");
+        
+                menu.add(new MenuItem(REPORTING_BOOKING_PER_DATE, "Booking per Date",
+                () -> new ReportBookingPerDateUI().show()));
+        menu.add(new MenuItem(REPORTING_BOOKING_PER_PLATE, "Booking per Plate",
+                () -> new ReportBookingPerDishUI().show()));
+        menu.add(new MenuItem(REPORTING_BOOKING_PER_MEAL, "Booking per Meal",
+                () -> new ReportBookingPerMealUI().show()));
+        
+        
+        
+        
+        
+        
+        
         return menu;
     }
 }

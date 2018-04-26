@@ -112,7 +112,7 @@ public class CreateMenuPlanUI extends AbstractUI {
 
                     try {
 
-                        controller.saveMenuPlan(mp, mp.getMenuPlanItemList());
+                        controller.saveMenuPlan(mp);
 
                         System.out.println("GUARDOU O MENUPLAN");
 
@@ -152,7 +152,7 @@ public class CreateMenuPlanUI extends AbstractUI {
 
                 try {
 
-                    controller.saveMenuPlan(mplan, list);
+                    controller.saveMenuPlan(mplan);
 
                 } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
                     System.out.println("Unable to add this Execution");
