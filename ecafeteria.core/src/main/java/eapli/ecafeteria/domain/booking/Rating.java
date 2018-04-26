@@ -5,7 +5,6 @@
  */
 package eapli.ecafeteria.domain.booking;
 
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
@@ -32,8 +31,8 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Meal meal;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Meal meal;
     private String reply;
 
     protected Rating() {
@@ -47,8 +46,10 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param rating
      * @param comment
      */
-    public Rating(Meal meal,Booking booking, int rating, String comment) {
-        this.meal = meal;
+    public Rating(Booking booking, int rating, String comment) {
+        if (booking == null || rating < 0 || rating > 5 || comment == null) {
+            throw new IllegalArgumentException();
+        }
         this.rating = rating;
         this.booking = booking;
         this.comment = comment;
@@ -117,9 +118,9 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      *
      * @return
      */
-    public Meal meal() {
-        return this.meal;
-    }
+//    public Meal meal() {
+//        return this.meal;
+//    }
 
     @Override
     public String toString() {

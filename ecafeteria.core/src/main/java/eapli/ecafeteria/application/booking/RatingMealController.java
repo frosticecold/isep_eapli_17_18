@@ -87,7 +87,7 @@ public class RatingMealController {
         if (booking == null || comment == null) {
             System.out.println("Invalid. Please check.");
         }
-        Rating rateMeal = new Rating(meal, booking, rating, comment);
+        Rating rateMeal = new Rating(booking, rating, comment);
         rateMeal = ratingRepository.saveRating(rateMeal);
         return rateMeal;
     }
