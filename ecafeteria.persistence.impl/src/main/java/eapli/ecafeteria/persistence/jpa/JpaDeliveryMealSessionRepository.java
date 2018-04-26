@@ -38,7 +38,7 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         
         String query = "SELECT DeliveryMealSession.*"
                     + "FROM DeliverMealSession"
-                    + "WHERE e.id = id";
+                    + "WHERE e.IDDELIVERYEALSESSION = id";
                      
         final Query q = entityManager().createQuery(query, this.entityClass);
         
@@ -85,7 +85,7 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
      */
     @Override
     public Optional<DeliveryMealSession> findOne(Long id) {
-        return matchOne("e.id=id","id",id);
+        return matchOne("e.IDDELIVERYEALSESSION=id","id",id);
     }
 
     /**
@@ -106,7 +106,7 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         
         String query = "SELECT DeliveryRegistry.*"
                     + "FROM DeliveryRegistry dr"
-                    + "WHERE dr.SESSION = sessionid"
+                    + "WHERE dr.IDDELIVERYEALSESSION = sessionid"
                     + "ORDER BY DELIVERY ASC";
         
         final Query q = entityManager().createQuery(query, this.entityClass);
