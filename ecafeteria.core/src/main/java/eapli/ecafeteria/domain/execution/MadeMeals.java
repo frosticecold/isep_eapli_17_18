@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.domain.meal;
+package eapli.ecafeteria.domain.execution;
 
 import eapli.framework.domain.ddd.ValueObject;
 import java.io.Serializable;
