@@ -20,7 +20,7 @@ import javax.persistence.NoResultException;
  */
 public class ViewNextBookingController implements Controller {
 
-    private ShowNextBookingService service = new ShowNextBookingService();
+    private ViewNextBookingService service = new ViewNextBookingService();
     private RepositoryFactory repositories;
     private CafeteriaUser user;
 
