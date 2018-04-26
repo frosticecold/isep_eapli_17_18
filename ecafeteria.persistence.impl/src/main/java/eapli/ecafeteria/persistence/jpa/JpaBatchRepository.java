@@ -52,8 +52,8 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String
     @Override
     public Batch findByPk(int id) {
         final Query q;
-        q = entityManager().createQuery("SELECT b FROM Batch b WHERE b.id WHERE b.pk=:id ");
-        q.setParameter("pk", id);
+        q = entityManager().createQuery("SELECT b FROM Batch b WHERE b.pk =:id ");
+        q.setParameter("id", id);
         return (Batch) q.getSingleResult();
     }
 

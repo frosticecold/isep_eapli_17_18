@@ -47,9 +47,9 @@ public class CreateMenuPlanController implements Controller {
         lm = MenuService.findLatestMenus();
         return lm;
     }
-    
-    public MenuPlan getMenuPlanFromMenu(Menu m){
-     
+
+    public MenuPlan getMenuPlanFromMenu(Menu m) {
+
         return mpr.getMenuPlanFromMenu(m);
     }
 
@@ -75,23 +75,23 @@ public class CreateMenuPlanController implements Controller {
         return menuplan;
     }
 
-    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
-        mpir.save(mpi);
+    public MenuPlanItem saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        MenuPlanItem menupi=mpir.save(mpi);
+        return menupi;
     }
 
-    public void saveMenuPlan(MenuPlan mp,List<MenuPlanItem>list) throws DataConcurrencyException, DataIntegrityViolationException {
-    
-        mpr.save(mp);
+    public MenuPlan saveMenuPlan(MenuPlan mp) throws DataConcurrencyException, DataIntegrityViolationException {
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        MenuPlan save = mpr.save(mp);
+        return save;
     }
-    
-    public List<MenuPlan> getActiveMenuPlans(){
+
+    public List<MenuPlan> getActiveMenuPlans() {
         return mpr.getActiveMenuPlans();
     }
-    
-  
 
     public void editMenuPlan(int quantity, MenuPlanItem menu_plan_item) {
-        
 
         menu_plan_item.getQuantityNumber().setQuantity(quantity);
 
