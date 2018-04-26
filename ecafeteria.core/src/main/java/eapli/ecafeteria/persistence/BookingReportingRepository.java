@@ -18,8 +18,6 @@ public interface BookingReportingRepository extends ReportingRepository {
 
     public Iterable<Booking> findBookingByState(BookingState bookingState);
 
-    public Booking findNextBooking(CafeteriaUser user);
-
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState);
     
          /**

@@ -35,11 +35,6 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
     }
 
     @Override
-    public Booking findNextBooking(CafeteriaUser user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Iterable<BookingPerOption> showReportByDay(java.util.Calendar date) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
