@@ -111,6 +111,12 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public DeliveryMealSessionRepository deliveryMealRepository() {
         return new JpaDeliveryMealSessionRepository();
     }
+    
+    @Override
+    public DeliveryRegistryRepository deliveryRegistryRepository(){
+        return new JpaDeliveryRegistryRepository();
+    }
+
 
     @Override
     public RatingRepository rating() {

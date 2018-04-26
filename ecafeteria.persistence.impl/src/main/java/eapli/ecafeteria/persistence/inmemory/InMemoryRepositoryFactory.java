@@ -115,6 +115,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public DeliveryMealSessionRepository deliveryMealRepository() {
         return new InMemoryDeliveryMealSessionRepository();
     }
+    
+    @Override
+    public DeliveryRegistryRepository deliveryRegistryRepository() {
+        return new InMemoryDeliveryRegistryRepository();
+    }
 
     @Override
     public RatingRepository rating() {

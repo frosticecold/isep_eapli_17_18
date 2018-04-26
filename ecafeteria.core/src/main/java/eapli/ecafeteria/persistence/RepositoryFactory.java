@@ -108,8 +108,12 @@ public interface RepositoryFactory {
      * @return
      */
     DeliveryMealSessionRepository deliveryMealRepository();
-
-    
+  
+    /**
+    * DeliveryRegistry Repo
+    * @return 
+    */
+    DeliveryRegistryRepository deliveryRegistryRepository();
     
 
     /**
