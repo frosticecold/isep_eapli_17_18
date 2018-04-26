@@ -4,6 +4,7 @@ import eapli.ecafeteria.domain.kitchen.Batch;
 import eapli.ecafeteria.persistence.BatchRepository;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.Query;
 
 public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String> implements BatchRepository {
 
@@ -46,6 +47,14 @@ public class JpaBatchRepository extends CafeteriaJpaRepositoryBase<Batch, String
         entityManager().getTransaction().begin();
         b.updatePercentageUsed(quantity);
         entityManager().getTransaction().commit();
+    }
+
+    @Override
+    public Batch findByPk(int id) {
+        final Query q;
+        q = entityManager().createQuery("SELECT b FROM Batch b WHERE b.pk =:id ");
+        q.setParameter("id", id);
+        return (Batch) q.getSingleResult();
     }
 
 }

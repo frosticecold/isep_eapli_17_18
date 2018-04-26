@@ -1,9 +1,9 @@
 package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import java.util.Optional;
 import javax.persistence.*;
 
 /**
@@ -35,8 +35,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
     }
     
     public POS (SystemUser posUser) {
-        this.cashier = posUser;
-        this.createNewSession(this.cashier());
+        if(posUser != null) this.cashier = posUser;
         this.identification = 1;
         this.open = false;
     }
@@ -85,15 +84,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
     public void changeState() {
         this.open = !this.open;
     }
-    
-    /**
-     * Creates a new session when entity is created , session represents a users login on this POS
-     */
-    private void createNewSession(SystemUser user) {
         
-        DeliveryMealSession session = new DeliveryMealSession(this);
-    }
-    
     /**
      * Return the cashier
      */    

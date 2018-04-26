@@ -197,4 +197,9 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         return Objects.equals(this.period, other.period);
     }
 
+    @Override
+    public String toString() {
+        return "Menu{" + "id=" + id + ", menuState=" + menuState + ", period=" + period + '}';
+    }
+
 }
