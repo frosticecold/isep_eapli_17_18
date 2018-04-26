@@ -8,6 +8,7 @@ package eapli.ecafeteria.domain.dishes;
 import eapli.framework.domain.Designation;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,12 +19,9 @@ import javax.persistence.Id;
  * @author Car
  */
 @Entity
-public class Alergen  implements AggregateRoot<Long>, Serializable  {
+public class Alergen  implements AggregateRoot<Designation>, Serializable  {
 
-    @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
+    @EmbeddedId
     private Designation name;
     
     
@@ -55,17 +53,9 @@ public class Alergen  implements AggregateRoot<Long>, Serializable  {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
-    public Long id() {
-        return id;
+    public Designation id() {
+        return name;
     }
     
 }
