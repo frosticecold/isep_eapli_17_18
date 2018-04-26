@@ -82,12 +82,13 @@ public class RatingMealController {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
-    public Rating addRating(Meal meal, Booking booking, String comment)
+    public Rating addRating(Booking booking, String comment)
             throws DataConcurrencyException, DataIntegrityViolationException {
         if (booking == null || comment == null) {
             System.out.println("Invalid. Please check.");
         }
-        Rating rateMeal = new Rating(meal, booking, rating, comment);
+        Rating rateMeal = new Rating(user, booking, rating, comment);
+        System.out.println("User:" + user.user());
         rateMeal = ratingRepository.saveRating(rateMeal);
         return rateMeal;
     }

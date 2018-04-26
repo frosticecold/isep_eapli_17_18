@@ -24,10 +24,9 @@ public class JpaRatingReportingRepository extends CafeteriaJpaRepositoryBase imp
     @Override
     public Iterable<Rating> findRatingsByUser(CafeteriaUser user) {
         return entityManager().createQuery("SELECT rating "
-                + "FROM Rating rating, Booking booking "
-                + "WHERE rating.booking = booking.idBooking "
-                + "AND booking.cafeteriaUser.mecanographicNumber = :user")
-                .setParameter("user", user.id())
+                + "FROM Rating rating "
+                + "WHERE rating.user = :user")
+                .setParameter("user", user)
                 .getResultList();
     }
 }

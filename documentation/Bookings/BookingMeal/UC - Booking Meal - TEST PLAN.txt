@@ -1,0 +1,14 @@
+	
+
+	TEST PLAN
+
+	_______________________________
+	CASO #1: Booking Meal
+	_______________________________
+
+	1. Fazer o login como user 900330 e Password: Password1
+	2. Escolher a opção Reservation Meal
+	3. Escolher dia 10-05-2018 e almoço
+	4. Escolher a meal 55
+	5. Apresenta 475 calorias, 2 sal , 3,99 EUR 
+	6. User fica com menos 3,99 , é adicionada uma transaçao 

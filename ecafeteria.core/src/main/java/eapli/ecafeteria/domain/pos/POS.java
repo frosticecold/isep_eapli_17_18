@@ -36,7 +36,6 @@ public class POS implements AggregateRoot<Long>, Serializable{
     
     public POS (SystemUser posUser) {
         this.cashier = posUser;
-        this.createNewSession(this.cashier());
         this.identification = 1;
         this.open = false;
     }
@@ -84,6 +83,9 @@ public class POS implements AggregateRoot<Long>, Serializable{
      */
     public void changeState() {
         this.open = !this.open;
+        if(!this.isClosed()) {
+            if(this.cashier() != null)this.createNewSession(this.cashier());
+        }
     }
     
     /**
@@ -91,7 +93,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
      */
     private void createNewSession(SystemUser user) {
         
-        DeliveryMealSession session = new DeliveryMealSession(this);
+        DeliveryMealSession session = new DeliveryMealSession(this);    
     }
     
     /**

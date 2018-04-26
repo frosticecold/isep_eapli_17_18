@@ -31,6 +31,9 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name="CASHIER")
     private SystemUser cashier;
     
+    @Column (name="ACTIVE")
+    private boolean active;
+    
     private MealType typeSession;
     
     protected DeliveryMealSession() {
@@ -44,6 +47,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
         this.cashier = this.pos.cashier();
         this.sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
         this.defineSessionType();
+        this.active = true;
     }
     
     @Override
@@ -137,5 +141,13 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public POS pos(){
         
         return this.pos;
+    }
+    
+    /**
+     * Closes session
+     */
+    public void closeSession() {
+        if(this.active) this.active = false;
+        this.pos.changeState();
     }
 }
