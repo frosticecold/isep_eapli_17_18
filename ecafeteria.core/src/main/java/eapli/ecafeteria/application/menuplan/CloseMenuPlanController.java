@@ -9,6 +9,7 @@ import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.domain.menuplan.MenuPlanItem;
+import eapli.ecafeteria.persistence.MenuPlanItemRepository;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -23,6 +24,8 @@ public class CloseMenuPlanController {
     
     private final MenuPlanRepository mpr=PersistenceContext.repositories().menuPlan();
     
+    private final MenuPlanItemRepository mpir=PersistenceContext.repositories().menuPlanItem();
+    
     public List<MenuPlan> getMenuPlans(){
         lmp=mpr.getActiveMenuPlans();
         return lmp;
@@ -30,9 +33,9 @@ public class CloseMenuPlanController {
     
     public boolean validate(MenuPlan mp){
         
-        List<MenuPlanItem> lista = mp.getMenuPlanItemList();
+        List<MenuPlanItem> lista = mpir.getMenuPlanItemFromMenuPlan(mp);
         for (MenuPlanItem mpi: lista) {
-            if(mpi.getQuantityNumber()==null){
+            if(mpi.getQuantityNumber().getQuantity()<0){
                 return false;
             }else{
                 if(mp.getSelectedMenu().period().getWorkingDays().get(0).getTimeInMillis()-(DateTime.now().getTimeInMillis())<=172800000){

@@ -20,7 +20,7 @@ import eapli.framework.actions.Action;
 import eapli.framework.domain.Designation;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.Optional;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -45,14 +45,18 @@ public class DishBootstrapper implements Action {
         final Dish tofu = dishRepo.findByName(Designation.valueOf(TestDataConstants.DISH_NAME_TOFU_GRELHADO)).get();
         final Dish lentilhas = dishRepo.findByName(Designation.valueOf(TestDataConstants.DISH_NAME_LENTILHAS_SALTEADAS)).get();
         final Dish bacalhau = dishRepo.findByName(Designation.valueOf(TestDataConstants.DISH_NAME_BACALHAU_A_BRAZ)).get();
-        /*final AlergenRepository alergenRepository=PersistenceContext.repositories().alergens();
-        final Alergen soja = alergenRepository.findOne(Designation.valueOf(TestDataConstants.ALLERGEN_SOJA)).get();
-        final Alergen molusco = alergenRepository.findOne(Designation.valueOf(TestDataConstants.ALLERGEN_MOLUSCO)).get();
-        final Alergen peixe = alergenRepository.findOne(Designation.valueOf(TestDataConstants.ALLERGEN_PEIXES)).get();
+        final AlergenRepository alergenRepository=PersistenceContext.repositories().alergens();
+        try{
+        final Alergen soja = alergenRepository.findByName(Designation.valueOf(TestDataConstants.ALLERGEN_SOJA)).get();
+        final Alergen molusco = alergenRepository.findByName(Designation.valueOf(TestDataConstants.ALLERGEN_MOLUSCO)).get();
+        final Alergen peixe = alergenRepository.findByName(Designation.valueOf(TestDataConstants.ALLERGEN_PEIXES)).get();
         addAlergen(tofu,soja);
         addAlergen(lentilhas,molusco);
         addAlergen(bacalhau,peixe);
-        */
+        }
+        catch(NoResultException nre){
+            //Ignore this because as per your logic this is ok!
+        }
         return true;
     }
 

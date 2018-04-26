@@ -40,38 +40,6 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
     }
 
     /**
-     * Finds the users next booking in the booked state
-     * @param user
-     * @author Joao Rocha 1161838
-     * @return 
-     */
-    @Override
-    public Booking findNextBooking(CafeteriaUser user) {
-        Booking nextBooking = null;
-        BookingState state = new BookingState();
-
-        for (Booking booking : findBookingsByCafeteriaUser(user, state)) {
-
-            long bookingDate1 = booking.getMeal().getMealDate().getTimeInMillis(); 
-            long bookingDate2;
-            
-            if(nextBooking == null){
-                bookingDate2 = Long.MAX_VALUE;
-            }
-            
-            else{
-                bookingDate2 = nextBooking.getMeal().getMealDate().getTimeInMillis();
-            }
-            
-            if (bookingDate1 < bookingDate2) {
-                nextBooking = booking;
-            }
-        }
-
-        return nextBooking;
-    }
-
-    /**
      * Find booking by cafeteria user that are in a specific state
      *
      * @param user user of the cafeteria

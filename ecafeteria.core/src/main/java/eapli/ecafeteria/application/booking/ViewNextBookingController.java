@@ -20,16 +20,19 @@ import javax.persistence.NoResultException;
  */
 public class ViewNextBookingController implements Controller {
 
-    private BookingReportingRepository bookingRepo;
+    private ShowNextBookingService service = new ShowNextBookingService();
     private RepositoryFactory repositories;
     private CafeteriaUser user;
 
     public ViewNextBookingController() {
         this.repositories = PersistenceContext.repositories();
         this.user = getCurrentUser();
-        this.bookingRepo = repositories.bookingReporting();
     }
 
+    /**
+     * Gets the current user logged in the system
+     * @return 
+     */
     public CafeteriaUser getCurrentUser() {
         try {
             return repositories.cafeteriaUsers().findByUsername(
@@ -48,7 +51,7 @@ public class ViewNextBookingController implements Controller {
      */
     public Booking getNextBooking() throws NoResultException {
         try {
-            return bookingRepo.findNextBooking(user);
+            return service.findNextBooking(user);
         } catch (NoResultException ex) {
             throw new NoResultException();
         }

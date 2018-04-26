@@ -8,7 +8,8 @@ package eapli.ecafeteria.application.pos;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.MealType;
-import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
+import eapli.ecafeteria.domain.pos.DeliveryMealSession;
+import eapli.ecafeteria.domain.pos.POS;
 import eapli.framework.application.Controller;
 import java.util.Calendar;
 import java.util.Map;
@@ -20,9 +21,22 @@ import java.util.Map;
 public class ClosePOSController implements Controller {
 
     private final ListAvailableMealsService availableMealsService = new ListAvailableMealsService();
+    private final POS p = new POS(AuthorizationService.session().authenticatedUser());
+    private final DeliveryMealSession d = new DeliveryMealSession(p);
 
     public void closeSession() {
         AuthorizationService.clearSession();
+    }
+
+    public MealType checkMealype() {
+        if (d.isDinner()) {
+            return MealType.DINNER;
+        }
+        return MealType.LUNCH;
+    }
+
+    public String checkDate() {
+        return d.date().toString();
     }
 
     public Map<DishType, Long> listDeliveredMeals(Calendar cal, MealType mt) {

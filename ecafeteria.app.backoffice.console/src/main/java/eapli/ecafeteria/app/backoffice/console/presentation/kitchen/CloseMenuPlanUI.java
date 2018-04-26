@@ -42,7 +42,7 @@ public class CloseMenuPlanUI extends AbstractUI {
             MenuPlan mp = lmp.get(y - 1);
 
             validar = controller.validate(mp);
-            System.out.println("ISTOOOOOOO->->->" + validar);
+            
             if (validar == false) {
                 System.out.println("It was not possible to close the menu plan.");
             } else {
