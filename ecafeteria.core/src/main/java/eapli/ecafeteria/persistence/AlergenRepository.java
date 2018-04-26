@@ -6,10 +6,9 @@
 package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.domain.Designation;
 import eapli.framework.persistence.repositories.DataRepository;
-import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -17,5 +16,5 @@ import java.util.List;
  */
 public interface AlergenRepository extends DataRepository<Alergen, Designation>{
  
-    
+    Optional<Alergen> findByName(Designation name);
 }

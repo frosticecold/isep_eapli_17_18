@@ -57,5 +57,9 @@ public class Alergen  implements AggregateRoot<Designation>, Serializable  {
     public Designation id() {
         return name;
     }
+
+    public Object name() {
+        return name;
+    }
     
 }

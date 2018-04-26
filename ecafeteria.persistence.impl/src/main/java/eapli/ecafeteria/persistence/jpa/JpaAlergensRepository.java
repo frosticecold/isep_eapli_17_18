@@ -6,15 +6,25 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.framework.domain.Designation;
-import javax.persistence.Query;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  *
  * @author Car
  */
 public class JpaAlergensRepository extends CafeteriaJpaRepositoryBase<Alergen, Designation> implements AlergenRepository{
+
+    @Override
+    public Optional<Alergen> findByName(Designation name) {
+        
+	final Map<String, Object> params = new HashMap<>();
+	params.put("name", name);
+	return matchOne("e.name=:name", params);
+	
+    }
  
 }
