@@ -4,6 +4,7 @@ import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.Calendar;
 import java.util.Optional;
 import javax.persistence.Query;
 
@@ -114,5 +115,15 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         q.setParameter("sessionid", sessionID);
         
         return q.getResultList();
-    }     
+    } 
+    
+    /**
+     * Returns a days respective session which is active
+     * @param day
+     * @return 
+     */
+    public Optional<DeliveryMealSession> findYourSession(int day) {
+        
+        return matchOne("e.DAY=day AND ACTIVE=true","day",day);
+    }
 }

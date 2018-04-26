@@ -1,10 +1,8 @@
 package eapli.ecafeteria.bootstrapers;
 
-import eapli.ecafeteria.domain.authz.RoleType;
 import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.authz.SystemUserBuilder;
+import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.pos.POS;
-import eapli.ecafeteria.persistence.POSRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -21,33 +19,15 @@ public class POSBootstrapper implements Action {
     @Override
     public boolean execute() {
        
-        final SystemUserBuilder builder = new SystemUserBuilder();
+       Username username = new Username("cashier");
         
-        builder.withRole(RoleType.CASHIER);
-        
-        final SystemUser cashier1 = builder.build();
-        
-        final POS pos1 = new POS(cashier1);
-        
-        register(pos1);
-        
-        builder.withRole(RoleType.CASHIER);
-        
-        final SystemUser cashier2 = builder.build();
-        
-        final POS pos2 = new POS(cashier1);
-        
-        register(pos2);
-        
-        builder.withRole(RoleType.CASHIER);
-        
-        final SystemUser cashier3 = builder.build();
-        
-        final POS pos3 = new POS(cashier3);
-        
-        register(pos3);
+       SystemUser cashier1 = PersistenceContext.repositories().users().findOne(username).get();
+               
+       POS pos = new POS(cashier1);
+
+       this.register(pos);
            
-        return true;
+       return true;
     }
     
     /**

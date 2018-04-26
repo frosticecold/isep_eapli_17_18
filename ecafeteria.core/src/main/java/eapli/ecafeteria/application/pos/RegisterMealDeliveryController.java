@@ -1,16 +1,17 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
+import eapli.ecafeteria.domain.pos.DeliverySessionDate;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.util.DateTime;
 import java.util.Calendar;
 
 /**
@@ -24,9 +25,15 @@ public class RegisterMealDeliveryController implements Controller {
     private final ListAvailableMealsService list; //Listing Services
     private final DeliveryMealSession session;
     
-    public RegisterMealDeliveryController(DeliveryMealSession session) {
+    public RegisterMealDeliveryController() {
         this.list = new ListAvailableMealsService();
-        this.session = session;
+              
+        Calendar ca = DateTime.now();
+        DeliverySessionDate date = new DeliverySessionDate(ca);
+        
+        //obtain the correct session 
+        
+        this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(date.Day()).get();
     }
     
     /**
@@ -35,8 +42,8 @@ public class RegisterMealDeliveryController implements Controller {
      * @param idClient
      * @param idBooking Booking which will be delivered
      */    
-    public void registerNewMealDelivery(String number, long idBooking) throws DataIntegrityViolationException, DataConcurrencyException {
-        
+    public void registerNewMealDelivery(String number, long idBooking)  {
+
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
         
@@ -53,9 +60,12 @@ public class RegisterMealDeliveryController implements Controller {
         DeliveryRegistry registry = new DeliveryRegistry(session, client, booking);
         
         //persist this Registry
-        
-        PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
-        
+        try{
+            PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
+        }
+        catch (Exception e) {
+            
+        }
         //change state of the booking just recorded - to served
         
         PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();     
@@ -80,6 +90,8 @@ public class RegisterMealDeliveryController implements Controller {
     
     /**
      * Validates booking by searching on the repository
+     * @param idBooking
+     * @return 
      */
     public boolean validatesBooking(long idBooking) {
         
@@ -93,7 +105,9 @@ public class RegisterMealDeliveryController implements Controller {
     }
     
     /**
-     * Validate existince of user
+     * Validate if user exists
+     * @param number
+     * @return 
      */
     public boolean validateClient(String number)  {
         
@@ -102,6 +116,22 @@ public class RegisterMealDeliveryController implements Controller {
         MecanographicNumber mNumber = new MecanographicNumber(number);
         
         if(PersistenceContext.repositories().cafeteriaUsers().findOne(mNumber).isPresent()) flag = true;
+        
+        return flag;
+    }
+    
+    /**
+     * Check if booking is already delivered
+     * @param idBooking
+     * @return 
+     */
+    public boolean canServeBooking(long idBooking) {
+        
+        boolean flag = false;
+        
+        Booking b = PersistenceContext.repositories().booking().findOne(idBooking).get();
+        
+        if(b.getBookingState().actualState().compareTo(BookingState.BookingStates.NOT_SERVED) == 0) flag = true;
         
         return flag;
     }
