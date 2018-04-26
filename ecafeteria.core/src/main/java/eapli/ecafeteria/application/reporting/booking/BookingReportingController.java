@@ -1,6 +1,8 @@
 package eapli.ecafeteria.application.reporting.booking;
 
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
@@ -26,7 +28,9 @@ public class BookingReportingController implements Controller {
      */
     public Iterable<BookingPerOption> reportDishesPerDate(Calendar c) {
 
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
 
+        
         Iterable<BookingPerOption> it = repo.showReportByDay(c);
         
         
@@ -42,6 +46,7 @@ public class BookingReportingController implements Controller {
      */
     public Iterable<BookingPerOption> reportDishesPerMeal(MealType mealType) {
 
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
 
         Iterable<BookingPerOption> it = repo.showReportByMeal(mealType);
         
@@ -57,6 +62,8 @@ public class BookingReportingController implements Controller {
      * @return
      */
     public Iterable<BookingPerOption> reportDishesPerDishType(String dishType) {
+
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
 
     
         Iterable<BookingPerOption> it = repo.showReportByDish(dishType);

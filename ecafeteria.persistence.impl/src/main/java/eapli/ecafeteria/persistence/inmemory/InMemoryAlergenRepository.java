@@ -19,7 +19,8 @@ public class InMemoryAlergenRepository extends InMemoryRepository<Alergen, Desig
 
     @Override
     protected Designation newKeyFor(Alergen entity) {
-       return entity.id();
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }

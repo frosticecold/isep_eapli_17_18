@@ -40,6 +40,7 @@ public class ChargeCardUI extends AbstractUI {
                 return false;
             }
             currentBalanceAndUser = theController.saveCafeteriaUser();
+            theController. saveTransaction();
             System.out.println(currentBalanceAndUser);
         } catch (Exception e) {
             System.out.println(e.getMessage());

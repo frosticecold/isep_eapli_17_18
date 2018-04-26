@@ -13,12 +13,14 @@ import eapli.framework.domain.money.Money;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -43,13 +45,14 @@ public class Booking implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private CafeteriaUser cafeteriaUser;
     
-    private Calendar date;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar calendar;
 
     public Booking(Meal meal, BookingState bookingState, CafeteriaUser cafeteriaUser, Calendar date) {
         this.meal = meal;
         this.bookingState = bookingState;
         this.cafeteriaUser = cafeteriaUser;
-        this.date = date;
+        this.calendar = date;
     }
     
 
@@ -73,7 +76,7 @@ public class Booking implements Serializable {
         }
 
         final Booking other = (Booking) o;
-        return getIdBooking() == other.getIdBooking();
+        return Objects.equals(getIdBooking(), other.getIdBooking());
     }
 
     public Long getIdBooking() {
@@ -93,8 +96,10 @@ public class Booking implements Serializable {
     }
 
     /**
+     * Informs if it is possible to cancel the booking
      * 
      * @return true if possible
+     * @author David Camelo <1161294@isep.ipp.pt>
      */
     public boolean isBookingCancelable(){
         return bookingState.isBookingStateCancelable();
@@ -105,6 +110,7 @@ public class Booking implements Serializable {
      * Return null if no cancelation is possible
      * 
      * @return Money - if refund possible | null if refund is not possible
+     * @author David Camelo <1161294@isep.ipp.pt>
      */
     public Money refundForCancelation(){
         if (isBookingCancelable()) {
@@ -113,8 +119,8 @@ public class Booking implements Serializable {
         
             Calendar actual = Calendar.getInstance();
             
-            if(actual.compareTo(date) < 0){
-                int hours_diff = (int) Math.abs((actual.getTimeInMillis() - date.getTimeInMillis()) 
+            if(actual.compareTo(calendar) < 0){
+                int hours_diff = (int) Math.abs((actual.getTimeInMillis() - calendar.getTimeInMillis()) 
                         / (60 * 60.0 * 1000.0));
                 if(MealType.DINNER == meal.mealtype()){
                     if(hours_diff >= dinner_limit_hour_day_before_no_cost){
