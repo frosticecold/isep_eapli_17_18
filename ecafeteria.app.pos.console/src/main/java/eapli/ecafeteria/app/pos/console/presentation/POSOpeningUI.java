@@ -39,6 +39,6 @@ public class POSOpeningUI extends AbstractUI {
 
     @Override
     public String headline() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
 }
