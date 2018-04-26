@@ -38,7 +38,7 @@ public class ViewRatingsUI extends AbstractUI implements ViewNextBookingInterfac
             } else {
                 for (Rating rating : ratings) {
                     System.out.println("---------------------------------------------");
-                    System.out.println("Meal » " + rating.meal().mealtype().toString() + " \nDish » " + rating.meal().dish().name().toString());
+                    //System.out.println("Meal » " + rating.meal().mealtype().toString() + " \nDish » " + rating.meal().dish().name().toString());
                     System.out.println("Rating: " + rating.toString());
 
                     System.out.print("---------------------------------------------\n");
