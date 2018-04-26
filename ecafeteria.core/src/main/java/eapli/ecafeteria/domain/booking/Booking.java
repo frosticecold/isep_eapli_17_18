@@ -19,6 +19,7 @@ import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Type;
 
 /**
  *
