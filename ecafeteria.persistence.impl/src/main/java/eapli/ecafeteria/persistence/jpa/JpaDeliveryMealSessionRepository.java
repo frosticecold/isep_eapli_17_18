@@ -87,15 +87,15 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
      * @return 
      */
     @Override
-    public Iterable<DeliveryMealSession> findYourSession(SystemUser cashier) {
+    public Optional<DeliveryMealSession> findYourSession(SystemUser cashier) {
         
-        String query = "SELECT e from DELIVERYMEALSESSION dr, POS p "
-                + "where dr.cashier = cashier and dr.cashier=p.cashier";
+        String query = "SELECT e FROM DeliveryMealSession e "
+                + "WHERE e.cashier=:cashier";
         
         final Query q = entityManager().createQuery(query, this.entityClass);
         
         q.setParameter("cashier",cashier);
 
-        return q.getResultList();
+        return (Optional) q.getSingleResult();
     }
 }

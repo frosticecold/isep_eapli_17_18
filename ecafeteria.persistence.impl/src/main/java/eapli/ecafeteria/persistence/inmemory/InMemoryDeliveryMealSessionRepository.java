@@ -44,7 +44,7 @@ public class InMemoryDeliveryMealSessionRepository implements DeliveryMealSessio
     }
 
     @Override
-    public Iterable<DeliveryMealSession> findYourSession(SystemUser cashier) {
+    public Optional<DeliveryMealSession> findYourSession(SystemUser cashier) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -97,7 +97,7 @@ public class MainMenu extends AbstractUI {
         }
         
         //==========================Open POS=====================
-        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == false) {
+        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == true) {
             if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
                 final Menu openPOSMenu = buildOpenPOS();
                 mainMenu.add(new SubMenu(OPEN_POS_OPTION, openPOSMenu,
@@ -108,7 +108,7 @@ public class MainMenu extends AbstractUI {
         }
         
         //==========================Delivery MENU==================
-        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == false) {
+        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == true) {
             if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
                 final Menu deliveryMenu = buildDeliveryMenu();
                 mainMenu.add(new SubMenu(DELIVER_MEAL_OPTION, deliveryMenu,
@@ -130,7 +130,7 @@ public class MainMenu extends AbstractUI {
         }
 
         //==========================Close MENU=================
-        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == false) {
+        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == true) {
             if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
                 final Menu closeMenu = buildCloseMenu();
                 mainMenu.add(new SubMenu(CLOSE_POS_OPTION, closeMenu,
