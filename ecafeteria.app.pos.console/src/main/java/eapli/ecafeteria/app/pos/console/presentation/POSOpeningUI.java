@@ -22,7 +22,7 @@ public class POSOpeningUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         System.out.println(String.format("Creating Delivery Meal Session...\n", (Object) null));
-        if (theController.checkPoSState()) {
+        if (!theController.checkPoSState()) {
             theController.createDeliveryMealSession();
             return true;
         }
