@@ -22,9 +22,20 @@ public class RegisterMealDeliveryUI extends AbstractUI {
         this.ctrl = new RegisterMealDeliveryController(session); 
     }
     
-    public void recordNewMealDelivery(String idClient, long booking) {
+    /**
+     * 
+     * @param mecNumber - MecanographicNumber of the client
+     * @param booking - id of the booking to register
+     */
+    public void recordNewMealDelivery(String mecNumber, long booking) {
 
-        //this.ctrl.registerNewMealDelivery(idClient, booking);
+        //verifies if user is viable or active
+        if(!this.ctrl.validateClient(mecNumber)) {
+            System.out.println("User doesnt exists!MecanographicNumber doesnt exist!");
+        }
+        else if(!this.ctrl.validatesBooking(booking)) System.out.println("This booking");
+            
+        
     }
     
     /**

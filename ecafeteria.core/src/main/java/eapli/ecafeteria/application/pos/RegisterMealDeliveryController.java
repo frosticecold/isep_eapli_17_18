@@ -25,7 +25,6 @@ public class RegisterMealDeliveryController implements Controller {
     private final DeliveryMealSession session;
     
     public RegisterMealDeliveryController(DeliveryMealSession session) {
-        
         this.list = new ListAvailableMealsService();
         this.session = session;
     }
@@ -79,4 +78,31 @@ public class RegisterMealDeliveryController implements Controller {
         return new AvailableMealsStatistics(ca, sessionType);
     }
     
+    /**
+     * Validates booking by searching on the repository
+     */
+    public boolean validatesBooking(long idBooking) {
+        
+        boolean flag = false;
+        
+        //get booking by id
+        
+        if(PersistenceContext.repositories().booking().findOne(idBooking).isPresent()) flag = true;
+        
+        return flag;
+    }
+    
+    /**
+     * Validate existince of user
+     */
+    public boolean validateClient(String number)  {
+        
+        boolean flag = false;
+        
+        MecanographicNumber mNumber = new MecanographicNumber(number);
+        
+        if(PersistenceContext.repositories().cafeteriaUsers().findOne(mNumber).isPresent()) flag = true;
+        
+        return flag;
+    }
 }
