@@ -136,8 +136,8 @@ public class Menu implements AggregateRoot<Period>, Serializable {
     }
 
     /**
-     * Methot that returns if a method is published
-     * @return 
+     * Methot that returns if a menu is published
+     * @return true if is published, false if it isn't
      */
 
     public boolean isPublished() {
@@ -194,10 +194,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
             return false;
         }
         final Menu other = (Menu) obj;
-        if (!Objects.equals(this.period, other.period)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.period, other.period);
     }
 
 }
