@@ -5,22 +5,17 @@
  */
 package eapli.ecafeteria.domain.meal;
 
-import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -55,11 +50,6 @@ public class Meal implements Serializable {
      */
     @Temporal(TemporalType.DATE)
     private Calendar date;
-    /*
-    * Ratings of the meal
-     */
-    @OneToMany()
-    private List<Rating> ratings;
 
     /**
      * Menu that a meal belongs to
@@ -120,7 +110,6 @@ public class Meal implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.dish);
         hash = 59 * hash + Objects.hashCode(this.mealtype);
         hash = 59 * hash + Objects.hashCode(this.date);
-        hash = 59 * hash + Objects.hashCode(this.ratings);
         return hash;
     }
 
@@ -164,15 +153,6 @@ public class Meal implements Serializable {
     public String toString() {
         String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
         return "Meal: "+id+", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
-    }
-
-    /**
-     * Returns the ratings given on said meal
-     *
-     * @return
-     */
-    public Iterable<Rating> ratings() {
-        return this.ratings;
     }
 
     public MealType mealtype() {

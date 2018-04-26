@@ -24,7 +24,7 @@ class JpaPOSRepository extends CafeteriaJpaRepositoryBase<POS, Long> implements 
        
         String query = "SELECT POS.*" +
                     "FROM POS" +
-                    "WHERE e.id = id";
+                    "WHERE e.IDPOS = id";
         
         final Query q = entityManager().createQuery(query, this.entityClass);
         
@@ -54,7 +54,7 @@ class JpaPOSRepository extends CafeteriaJpaRepositoryBase<POS, Long> implements 
 
     @Override
     public Optional<POS> findOne(Long id) {
-        return matchOne("e.id=id","id",id);
+        return matchOne("e.IDPOS=id","id",id);
     }
 
     @Override
