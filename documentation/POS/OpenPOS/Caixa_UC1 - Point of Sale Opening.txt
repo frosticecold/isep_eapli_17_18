@@ -1,0 +1,39 @@
+    title  Caixa: UC1 - Point of Sale Opening
+    
+    participant ":User" as user
+    participant ":MainMenu" as menu
+    participant ":POSOpeningUI" as ui
+    participant ":POSOpeningController" as controller
+    participant ":PercistenceContext" as pc
+    participant ":RepositoryFactory" as factory
+    participant ":DeliveryMealSessionRepository" as dmsrep
+    participant ":POSRepository" as posrep
+    participant ":POS" as POS
+    participant ":DeliveryMealSession" as session
+    
+    user->menu:Introduces login information
+    note over user, menu: Authentication Process
+    menu-->*ui:create()
+    
+    
+    ui-->*controller:create()
+    controller-->* pc:create()
+    pc-->*factory:create()
+    pc->factory: repositories()
+    factory-->*dmsrep: create()
+    factory-->*posrep: create()
+    controller-->*POS: POS pointofsale = create()
+    controller->posrep: save(pointofsale)
+    
+    menu->+ui:openPointOfSale()
+    
+    ui->+controller: DeliveryMealSession dms = createDeliveryMealSession()
+    controller-->*session: create()
+    controller->dmsrep: save(dms)
+    ui->controller:checkPOSState()
+    controller->POS: isClosed()
+    alt if(true)
+    controller->POS: changeState()
+    end
+    controller-->-ui: returns success
+    ui-->-user: Informs success of authentication

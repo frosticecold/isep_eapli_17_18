@@ -5,8 +5,13 @@
  */
 package eapli.ecafeteria.domain.booking;
 
+import eapli.ecafeteria.domain.authz.RoleType;
+
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+
 import eapli.ecafeteria.domain.meal.Meal;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,6 +26,7 @@ public class RatingTest {
 
     private CafeteriaUser user;
     private Meal meal;
+    final Set<RoleType> roles = new HashSet<>();
 
     public RatingTest() {
     }
@@ -42,18 +48,18 @@ public class RatingTest {
     public void tearDown() {
     }
 
-//    @Test(expected = IllegalArgumentException.class)
-//    public void makeSureRatingAlwaysHasAValidBooking() {
-//        new Rating(null, 4, "Good meal");
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void sureRatingHasValidRating() {
-//        new Rating(new Booking(), 10, "Good meal");
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void sureRatingHasValidComment() {
-//        new Rating(new Booking(), 3, null);
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void makeSureRatingAlwaysHasAValidBooking() {
+        new Rating(null, 4, "Good meal");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void sureRatingHasValidRating() {
+        new Rating(new Booking(), 10, "Good meal");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void sureRatingHasValidComment() {
+        new Rating(new Booking(), 3, null);
+    }
 }

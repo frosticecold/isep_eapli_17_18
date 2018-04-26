@@ -7,10 +7,17 @@ package eapli.ecafeteria.bootstrapers;
 
 import eapli.ecafeteria.application.cafeteriauser.AcceptRefuseSignupRequestController;
 import eapli.ecafeteria.application.cafeteriauser.SignupController;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.cafeteriauser.SignupRequest;
+import eapli.ecafeteria.persistence.CafeteriaUserRepository;
+import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
+import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.Currency;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**

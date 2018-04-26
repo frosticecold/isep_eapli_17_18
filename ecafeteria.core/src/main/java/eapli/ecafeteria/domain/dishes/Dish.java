@@ -18,6 +18,7 @@ import eapli.framework.domain.money.Money;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
+import javax.persistence.ManyToMany;
 
 /**
  * A Dish
@@ -43,11 +44,24 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
      */
     @ManyToOne()
     private DishType dishType;
+    
+    /**
+     * NutricinalInfo of a Dish
+     */
     private NutricionalInfo nutricionalInfo;
+    /**
+     * Cost of a given dish
+     */
     private Money price;
 
+    /**
+     * If a dish belongs to the active pool or not
+     */
     private boolean active;
-    @ElementCollection(targetClass=Integer.class)
+    /**
+     * 
+     */
+    @ManyToMany
     private List<Alergen> alergens=new ArrayList<>();
     public Dish(final DishType dishType, final Designation name,
                 final NutricionalInfo nutricionalInfo, Money price) {
