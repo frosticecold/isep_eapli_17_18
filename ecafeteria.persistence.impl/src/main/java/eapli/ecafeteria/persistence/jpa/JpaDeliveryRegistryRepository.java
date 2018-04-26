@@ -34,7 +34,7 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
         
         String query = "SELECT DeliveryRegistry.*"
                     + "FROM DeliveryRegistry"
-                    + "WHERE e.id = id";
+                    + "WHERE e.DELIVERY = id";
 
         final Query q = entityManager().createQuery(query,this.entityClass);
 
@@ -81,7 +81,7 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
      */
     @Override
     public Optional<DeliveryRegistry> findOne(Long id) {
-        return matchOne("e.id=id",id,id);
+        return matchOne("e.DELIVERY=id",id,id);
     }
 
     /**

@@ -31,13 +31,13 @@ public class ChargeCardController implements Controller {
 
     public String findCafeteriaUserByMecanographicNumber(String mecanographicNumber) {
         Optional<CafeteriaUser> user = service.findCafeteriaUserByMecNumber(mecanographicNumber);
+        this.user = user.get();
         return this.user.cafeteriaUserNameAndCurrentBalance();
     }
 
-    public boolean chargeCafeteriaUserCard(double tempCredits) throws DataConcurrencyException, DataIntegrityViolationException {
+    public boolean chargeCafeteriaUserCard(double tempCredits) {
         Money credits = new Money(tempCredits, Currency.getInstance("EUR"));
         this.t = new CreditRecharge(this.user, credits);
-        saveTransaction(t);
         if (!this.user.addCredits(credits)) {
             throw new IllegalArgumentException("Error adding credits");
         }
@@ -52,8 +52,8 @@ public class ChargeCardController implements Controller {
         return tempuser.cafeteriaUserNameAndCurrentBalance();
     }
 
-    private void saveTransaction(Transaction t) throws DataConcurrencyException, DataIntegrityViolationException {
-        if (this.tr.save(t) == null) {
+    public  void saveTransaction() throws DataConcurrencyException, DataIntegrityViolationException {
+        if (this.tr.save(this.t) == null) {
             throw new IllegalArgumentException("Error Saving transaction");
         }
     }
