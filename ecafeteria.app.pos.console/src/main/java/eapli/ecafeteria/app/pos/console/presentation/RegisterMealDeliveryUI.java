@@ -2,8 +2,8 @@ package eapli.ecafeteria.app.pos.console.presentation;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.RegisterMealDeliveryController;
-import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.util.Console;
 
 /**
  *
@@ -25,7 +25,7 @@ public class RegisterMealDeliveryUI extends AbstractUI {
      * @param mecNumber - MecanographicNumber of the client
      * @param booking - id of the booking to register
      */
-    public void recordNewMealDelivery(String mecNumber, long booking)  {
+    private void recordNewMealDelivery(String mecNumber, long booking)  {
 
         //verifies if user is viable or active
         if(!this.ctrl.validateClient(mecNumber)) {
@@ -47,18 +47,26 @@ public class RegisterMealDeliveryUI extends AbstractUI {
                 }
             }
     }
-    
-    /**
-     * headline menu
-     * @return 
-     */
-    @Override
-    public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
-    }
 
     @Override
     protected boolean doShow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        try { 
+            final String mecaNumber = Console.readLine("Insert Mecanographic Number of client:");
+            final long idBooking = Console.readLong("Insert number of booking:");
+        
+            this.recordNewMealDelivery(mecaNumber, idBooking);
+        }
+        catch (Exception e) {
+            
+            return false;
+        }
+        
+        return true;
+    }
+
+    @Override
+    public String headline() {
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
 }
