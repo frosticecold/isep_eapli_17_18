@@ -5,21 +5,17 @@
  */
 package eapli.ecafeteria.domain.meal;
 
-import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -40,8 +36,7 @@ public class Meal implements Serializable {
     /**
      * Dish of a meal
      */
-    @OneToOne()
-    @JoinColumn()
+    @ManyToOne
     private Dish dish;
 
     /**
@@ -59,8 +54,7 @@ public class Meal implements Serializable {
     /**
      * Menu that a meal belongs to
      */
-    @OneToOne()
-    @JoinColumn()
+    @ManyToOne
     private Menu menu;
 
     /**
@@ -159,7 +153,9 @@ public class Meal implements Serializable {
     @Override
     public String toString() {
         String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
+
         return "Meal: " + id + ", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
+
     }
 
     public MealType mealtype() {

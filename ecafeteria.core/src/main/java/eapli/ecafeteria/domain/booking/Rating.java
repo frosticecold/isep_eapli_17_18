@@ -131,6 +131,11 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         return this.id.equals(id);
     }
 
+    /**
+     * Returns the cafeteria user associated with the rating
+     *
+     * @return
+     */
     public CafeteriaUser user() {
         return this.user;
     }
@@ -138,10 +143,13 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
+        str.append("\nDish: ").append(booking.getMeal().dish().id())
+                .append("\nType: " + booking.getMeal().mealtype());
+        str.append("\nRating: ");
         for (int i = 0; i < this.rating; i++) {
             str.append("*");
         }
-        str.append("\n Comment: ").append(this.comment).append("\n Reply:   ").append(this.reply);
+        str.append("\n\tComment: ").append(this.comment).append("\n\tReply:   ").append(this.reply);
 
         return str.toString();
     }

@@ -62,7 +62,7 @@ public class BookingMealController implements Controller {
             Money money = userBalance.currentBalance().subtract(mealPrice);
             Balance newBalance = new Balance(money);
 
-            user.get().setCurrentBalance(newBalance);
+            user.get().updateUserBalance(newBalance);
             userService.save(user.get());
             this.t = new Debit(user.get(), mealPrice);
             saveTransaction(t);

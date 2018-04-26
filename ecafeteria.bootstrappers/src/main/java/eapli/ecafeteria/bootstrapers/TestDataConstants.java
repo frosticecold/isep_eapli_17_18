@@ -6,9 +6,20 @@ public final class TestDataConstants {
     public static final String DISH_TYPE_FISH = "fish";
     public static final String DISH_TYPE_VEGIE = "vegie";
 
+    public static final String ALLERGEN_SOJA = "soja";
     public static final String ALLERGEN_CRUSTACEOS = "crustaceos";
+    public static final String ALLERGEN_OVOS = "ovos";
     public static final String ALLERGEN_PEIXES = "peixes";
+    public static final String ALLERGEN_AMENDOINS = "amendoins";
     public static final String ALLERGEN_GLUTEN = "gluten";
+    public static final String ALLERGEN_LEITE = "leite";
+    public static final String ALLERGEN_FRUTOS_SECOS = "frutos secos";
+    public static final String ALLERGEN_AIPO = "aipo";
+    public static final String ALLERGEN_MOSTARDA = "mostarda";
+    public static final String ALLERGEN_SESAMO = "Sementes de sésamo";
+    public static final String ALLERGEN_ENXOFRE = "Dióxido de enxofre ";
+    public static final String ALLERGEN_TREMOCO = "Tremoço ";
+    public static final String ALLERGEN_MOLUSCO = "Moluscos ";
 
     public static final String DISH_NAME_COSTELETA_A_SALSICHEIRO = "costeleta à salsicheiro";
     public static final String DISH_NAME_PICANHA = "picanha";
