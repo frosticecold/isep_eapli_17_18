@@ -3,7 +3,6 @@ package eapli.ecafeteria.domain.cafeteriauser;
 import eapli.framework.domain.ddd.ValueObject;
 import eapli.framework.domain.money.Money;
 import java.io.Serializable;
-import java.util.Currency;
 import javax.persistence.Embeddable;
 
 /**
@@ -37,7 +36,7 @@ public class Balance implements ValueObject, Serializable{
      */
     public boolean addCredits(Money credits) {
         this.currentBalance = this.currentBalance.add(credits);
-        return false;
+        return true;
     }
     
      /**
@@ -57,7 +56,7 @@ public class Balance implements ValueObject, Serializable{
      */
     public boolean removeCredits(Money credits) {
         this.currentBalance = this.currentBalance.subtract(credits);
-        return false;
+        return true;
     }
 
     public Money currentBalance() {

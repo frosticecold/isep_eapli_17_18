@@ -151,7 +151,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
-        return "Booking:";
+        return "Booking: " + meal;
     }
 
     

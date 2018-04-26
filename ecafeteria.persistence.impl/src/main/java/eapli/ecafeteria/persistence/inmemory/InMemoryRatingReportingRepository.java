@@ -14,16 +14,18 @@ import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository
  *
  * @author ruial
  */
-public class InMemoryRatingReportingRepository extends InMemoryRepositoryWithLongPK<Rating> implements RatingReportingRepository  {
-    
+public class InMemoryRatingReportingRepository extends InMemoryRepositoryWithLongPK<Rating> implements RatingReportingRepository {
+
     /**
      * Returns all the ratings stored in the repository
+     *
      * @param user
-     * @return 
+     * @return
      */
     @Override
     public Iterable<Rating> findRatingsByUser(CafeteriaUser user) {
-        return match(e -> e.user().equals(user));
+//        return match(e -> e.user().equals(user));
+        return null;
     }
-    
+
 }

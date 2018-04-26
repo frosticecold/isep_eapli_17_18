@@ -21,10 +21,6 @@ public enum MealType {
         return this.id;
     }
 
-    public static int getId(MealType mealType) {
-        return mealType.id;
-    }
-
     public static MealType getMealTypeById(int id) {
         switch (id) {
             case 0:

@@ -7,6 +7,6 @@ public class CloseMenuPlanAction implements Action{
     
     @Override
     public boolean execute() {
-        return new CreateMenuPlanUI().doShow();
+        return new CloseMenuPlanUI().doShow();
     }
 }

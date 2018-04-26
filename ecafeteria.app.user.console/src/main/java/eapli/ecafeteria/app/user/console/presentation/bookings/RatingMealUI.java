@@ -8,11 +8,11 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.booking.RatingMealController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
-
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.util.Console;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Joana Oliveira <1161261@isep.ipp.pt>
  */
-public class RatingMealUI extends CafeteriaUserBaseUI {
+public class RatingMealUI extends CafeteriaUserBaseUI implements ViewNextBookingInterface{
 
     private final RatingMealController controller = new RatingMealController();
 
@@ -29,6 +29,8 @@ public class RatingMealUI extends CafeteriaUserBaseUI {
     protected boolean doShow() {
         final List<Booking> bookings = controller.showBookings();
 
+        showNextBooking();
+        
         if (!bookings.iterator().hasNext()) {
             System.out.println("There are no registered consumed bookings");
             return false;
@@ -46,10 +48,8 @@ public class RatingMealUI extends CafeteriaUserBaseUI {
             return false;
         }
 
-        int rating = 0;
-        rRating();
-        String comment = rComme();
-        //String comment = Console.readLine("Leave a reply (optional) :");
+        readRating();
+        String comment = readComment();
 
         // add Rating
         try {
@@ -66,19 +66,27 @@ public class RatingMealUI extends CafeteriaUserBaseUI {
         return "*** Rating of the meal ***";
     }
 
-    public void rRating() {
+    /**
+     * Method for read rating
+     */
+    public void readRating() {
         int rating = Console.readInteger("Rate the meal from 1 to 5 :");
         if (!controller.readRating(rating)) {
-            rRating();
+            readRating();
         }
 
     }
 
-    public String rComme() {
+    /**
+     * Method for read comment
+     *
+     * @return comment
+     */
+    public String readComment() {
         String comment = "";
         if (controller.readComment()) {
             do {
-                comment = Console.readLine("Please leave your comment");
+                comment = Console.readLine("Please leave your comment :");
             } while (comment == null);
         }
         return comment;

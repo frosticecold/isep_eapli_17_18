@@ -1,5 +1,6 @@
 package eapli.ecafeteria.domain.pos;
 
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.util.DateTime;
@@ -16,7 +17,7 @@ import javax.persistence.*;
 public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="IDDELIVERYEALSESSION")
     private Long idSession;
         
@@ -25,6 +26,13 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     
     @Transient
     private POS pos; //it wont be persisted on database
+    
+    @OneToOne
+    @JoinColumn(name="CASHIER")
+    private SystemUser cashier;
+    
+    @Column (name="ACTIVE")
+    private boolean active;
     
     private MealType typeSession;
     
@@ -36,8 +44,10 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
 
     public DeliveryMealSession(POS pos) {
         this.pos = pos;
+        this.cashier = this.pos.cashier();
         this.sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
         this.defineSessionType();
+        this.active = true;
     }
     
     @Override
@@ -131,5 +141,13 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public POS pos(){
         
         return this.pos;
+    }
+    
+    /**
+     * Closes session
+     */
+    public void closeSession() {
+        if(this.active) this.active = false;
+        this.pos.changeState();
     }
 }

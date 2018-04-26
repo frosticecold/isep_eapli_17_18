@@ -13,10 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import javax.persistence.OneToOne;
 
 /**
@@ -35,44 +31,33 @@ public class Rating implements AggregateRoot<Long>, Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
-    //  @OneToOneToOne(cascade = CascadeType.ALL)
-    private CafeteriaUser user;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Meal meal;
+
     private String reply;
+    @OneToOne
+    private CafeteriaUser user;
 
     protected Rating() {
         //for ORM 
     }
 
-    public Rating(Booking booking, int rating, String comment) {
-//        if (booking == null || rating < 0 || rating > 5 || comment == null) {
-//            throw new IllegalArgumentException("Invalid. Please check.");
-//        }
-
+    /**
+     * Constructor
+     *
+     * @param booking
+     * @param rating
+     * @param comment
+     */
+    public Rating(CafeteriaUser user, Booking booking, int rating, String comment) {
+        if (booking == null || rating < 0 || rating > 5 || comment == null) {
+            throw new IllegalArgumentException();
+        }
+        this.user = user;
         this.rating = rating;
         this.booking = booking;
         this.comment = comment;
         this.reply = "No reply yet.";
     }
 
-//    /**
-//     * Constructor
-//     *
-//     * @param booking
-//     * @param rating
-//     * @param comment
-//     */
-//    public Rating(CafeteriaUser user, Booking booking, int rating, String comment) {
-//
-//        if (booking == null || rating < 0 || rating > 5 || comment == null) {
-//            System.out.println("Invalid. Please check.");
-//        }
-//        this.user = user;
-//        this.booking = booking;
-//        this.rating = rating;
-//        this.comment = comment;
-//    }
     @Override
     public boolean equals(Object obj
     ) {
@@ -135,15 +120,9 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      *
      * @return
      */
-    public Meal meal() {
-        return this.meal;
-    }
-
-    /**
-     * Returns the cafeteria user
-     *
-     * @return
-     */
+//    public Meal meal() {
+//        return this.meal;
+//    }
     public CafeteriaUser user() {
         return this.user;
     }

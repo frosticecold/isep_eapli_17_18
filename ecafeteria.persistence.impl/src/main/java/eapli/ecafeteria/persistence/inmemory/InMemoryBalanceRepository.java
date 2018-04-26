@@ -5,22 +5,24 @@
  */
 package eapli.ecafeteria.persistence.inmemory;
 
-import eapli.ecafeteria.domain.menu.Menu;
-import eapli.ecafeteria.domain.menuplan.MenuPlan;
-import eapli.ecafeteria.persistence.MenuPlanRepository;
-import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
-import java.util.List;
+import eapli.ecafeteria.domain.cafeteriauser.Balance;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
+import eapli.ecafeteria.persistence.BalanceRepository;
+import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository;
 
-
-public class InMemoryMenuPlanRepository extends InMemoryRepositoryWithLongPK<MenuPlan> implements MenuPlanRepository  {
+/**
+ *
+ * @author Beatriz Ferreira <1160701@isep.ipp.pt>
+ */
+public class InMemoryBalanceRepository extends InMemoryRepository<Balance, Long> implements BalanceRepository{
 
     @Override
-    public List<MenuPlan> getActiveMenuPlans() {
+    protected Long newKeyFor(Balance entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public MenuPlan getMenuPlanFromMenu(Menu m) {
+    public Balance getBalanceOfUser(MecanographicNumber user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

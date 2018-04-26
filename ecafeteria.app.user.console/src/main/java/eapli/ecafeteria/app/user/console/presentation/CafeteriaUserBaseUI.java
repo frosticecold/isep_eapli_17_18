@@ -23,14 +23,14 @@ public abstract class CafeteriaUserBaseUI extends AbstractUI {
 
     protected abstract CafeteriaUserBaseController controller();
 
-    private final TransactionRepository repo = PersistenceContext.repositories().transactioRepository();
     private final CafeteriaUserService userService = new CafeteriaUserService();
 
     Username username = AuthorizationService.session().authenticatedUser().id();
     Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(username);
+    
 
     public String showBalance() {
-        return "CURRENT BALANCE OF YOUR USERCARD: " + repo.getBalanceOfUser(user.get().mecanographicNumber());
+        return "CURRENT BALANCE OF YOUR USERCARD: " + userService.getBalanceOfUser(user.get().mecanographicNumber());
     }
 
     @Override
