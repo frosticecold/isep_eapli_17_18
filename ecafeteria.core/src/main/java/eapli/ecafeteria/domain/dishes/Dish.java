@@ -63,6 +63,8 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
      */
     @ManyToMany
     private List<Alergen> alergens=new ArrayList<>();
+    
+    
     public Dish(final DishType dishType, final Designation name,
                 final NutricionalInfo nutricionalInfo, Money price) {
         if (dishType == null || name == null || nutricionalInfo == null) {

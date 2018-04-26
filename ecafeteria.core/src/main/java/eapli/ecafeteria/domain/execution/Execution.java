@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.domain.meal;
+package eapli.ecafeteria.domain.execution;
 
 import eapli.ecafeteria.domain.*;
 import eapli.ecafeteria.domain.booking.Rating;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -43,6 +44,10 @@ public class Execution implements AggregateRoot<Long>, Serializable {
     
     protected Execution() {
     }
+    
+    public MadeMeals madeMeals(){
+        return this.madeMeals;
+    }
 
     @Override
     public boolean sameAs(Object other) {
@@ -76,6 +81,6 @@ public class Execution implements AggregateRoot<Long>, Serializable {
         return "Meal=" + meal.dish().toString()
                 + "\n" + madeMeals.toString();
     }
-
+    
     
 }

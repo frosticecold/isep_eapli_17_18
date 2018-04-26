@@ -7,8 +7,8 @@ package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.kitchen.RegisterMadeMealsController;
-import eapli.ecafeteria.domain.meal.Execution;
-import eapli.ecafeteria.domain.meal.MadeMeals;
+import eapli.ecafeteria.domain.execution.Execution;
+import eapli.ecafeteria.domain.execution.MadeMeals;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.persistence.DataConcurrencyException;

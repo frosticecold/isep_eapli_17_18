@@ -25,4 +25,6 @@ public interface BookingRepository extends DataRepository<Booking, Long>{
     public Long countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType);
     
     public Long getNumberOfDeliveredMealsByDishTypeByDayAndMealType(final Calendar cal, final MealType mealType, final DishType dishType);
+
+    public Long getNumberOfDeliveredMealsByDayAndMealType(Calendar cal, MealType mealtype);
 }

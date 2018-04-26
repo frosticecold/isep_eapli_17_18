@@ -5,6 +5,8 @@
  */
 package eapli.ecafeteria.application.kitchen;
 
+import eapli.ecafeteria.domain.execution.MadeMeals;
+import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.dishes.Dish;
@@ -39,11 +41,10 @@ public class RegisterMadeMealsController implements Controller {
         return new Execution(meal, madeMeals);
     }
 
-    public boolean addExecution(Execution e) throws DataConcurrencyException, DataIntegrityViolationException {
+    public void addExecution(Execution e) throws DataConcurrencyException, DataIntegrityViolationException {
+        
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        
         execRepo.save(e);
-        
-        System.out.println(e);
-        
-        return true;
     }
 }

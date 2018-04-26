@@ -1,7 +1,7 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.persistence.BookingRepository;
@@ -50,5 +50,13 @@ public class ListAvailableMealsService {
             map.put(dt, delivered);
         }
         return map;
+    }
+    
+    public Long calcDeliveredTotal(Calendar cal, MealType mealtype) {
+        Long total;
+
+        total = bookingRepo.getNumberOfDeliveredMealsByDayAndMealType(cal, mealtype);
+
+        return total;
     }
 }
