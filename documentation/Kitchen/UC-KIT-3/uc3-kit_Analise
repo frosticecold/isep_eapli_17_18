@@ -1,0 +1,11 @@
+Reunião com o cliente:
+
+*O gestor tem de inserir uma data e um tipo de refeição.
+
+_______________________________________________________
+
+Regras de Negócio:
+
+*Quem começa o processo é o Gestor de Cozinha.
+*Um registo da execução fica guardado após o gestor confirmar os pratos confecionadas para aquela refeição.
+
