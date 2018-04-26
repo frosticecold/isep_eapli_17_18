@@ -6,15 +6,8 @@
 package eapli.ecafeteria.bootstrapers;
 
 import eapli.ecafeteria.application.menus.ElaborateOrEditMenuController;
-import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.menu.Menu;
-import eapli.ecafeteria.persistence.DishTypeRepository;
-import eapli.ecafeteria.persistence.MealRepository;
-import eapli.ecafeteria.persistence.MenuRepository;
-import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
-import eapli.framework.domain.Designation;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.DateTime;
@@ -36,6 +29,7 @@ public class MenuBootstrapper implements Action {
         start = DateTime.parseDate("06-05-2018");
         end = DateTime.parseDate("12-05-2018");
         menu = new Menu(start, end);
+        menu.publish();
         register(menu);
         return true;
     }
