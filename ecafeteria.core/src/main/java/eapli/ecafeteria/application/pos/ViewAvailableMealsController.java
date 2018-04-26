@@ -5,12 +5,15 @@
  */
 package eapli.ecafeteria.application.pos;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
+import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
+import eapli.framework.util.DateTime;
 import java.util.Calendar;
 
 /**
@@ -20,13 +23,17 @@ import java.util.Calendar;
 public class ViewAvailableMealsController implements Controller {
 
     private final ListAvailableMealsService availableMealsService = new ListAvailableMealsService();
-    private final BookingRepository bookingRepo = PersistenceContext.repositories().booking();
+    private DeliveryMealSession session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(AuthorizationService.session().authenticatedUser()).get();
 
-    public AvailableMealsStatistics findAvailableMealsPerDay(Calendar cal, MealType mealtype) {
-        return availableMealsService.calcStatistics(cal, mealtype);
+    public AvailableMealsStatistics findAvailableMealsPerDay() {
+        MealType mealType = checkMealType();
+        return availableMealsService.calcStatistics(DateTime.now(), mealType);
     }
 
-    public void showNotDeliveredBookedMeals() {
-        
+    public MealType checkMealType() {
+        if (session.isDinner()) {
+            return MealType.DINNER;
+        }
+        return MealType.LUNCH;
     }
 }

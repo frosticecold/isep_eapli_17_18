@@ -15,7 +15,7 @@ public interface DeliveryMealSessionRepository extends DataRepository<DeliveryMe
     
     public DeliveryMealSession save(DeliveryMealSession entity) throws DataConcurrencyException, DataIntegrityViolationException;
     
-    public Iterable<DeliveryMealSession> findYourSession(SystemUser cashier);
+    public Optional<DeliveryMealSession> findYourSession(SystemUser cashier);
 
     public Iterable<DeliveryMealSession> findAllActiveDeliverySessions();
 }
