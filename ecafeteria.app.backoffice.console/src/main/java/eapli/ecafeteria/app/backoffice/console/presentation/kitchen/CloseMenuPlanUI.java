@@ -8,6 +8,8 @@ package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 import eapli.ecafeteria.application.menuplan.CloseMenuPlanController;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.util.Console;
+import java.util.List;
 import javax.persistence.NoResultException;
 
 public class CloseMenuPlanUI extends AbstractUI {
@@ -17,16 +19,31 @@ public class CloseMenuPlanUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         boolean validar;
-        try {
-            MenuPlan mp = controller.getMenuPlan();
+
+        List<MenuPlan> lmp = controller.getMenuPlans();
+
+        if (lmp.isEmpty()) {
+            System.out.println("There are no open menuPlans");
+        } else {
+            
+            for (int i = 0; i < lmp.size(); i++) {
+                System.out.println((i + 1) + "- " + lmp.get(i).toString());
+            }
+
+            int y;
+            do {
+                y = Console.readInteger("Choose the menuPlan you want to edit:");
+            } while (y < 0 || y > lmp.size());
+            
+            MenuPlan mp=lmp.get(y-1);
+
             validar = controller.validate(mp);
             if (validar == false) {
                 System.out.println("It was not possible to close the menu plan.");
             } else {
                 System.out.println("The menu plan was closed successfully. ");
             }
-        } catch (NoResultException e) {
-            System.out.println("There are no open menu plans.");
+
         }
         return true;
     }
