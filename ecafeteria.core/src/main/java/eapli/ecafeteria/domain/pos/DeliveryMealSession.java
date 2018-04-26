@@ -147,7 +147,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
      * Closes session
      */
     public void closeSession() {
-        
-        this.active = false;
+        if(this.active) this.active = false;
+        this.pos.changeState();
     }
 }
