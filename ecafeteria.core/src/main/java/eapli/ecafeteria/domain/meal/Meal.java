@@ -18,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -40,6 +41,7 @@ public class Meal implements Serializable {
     /**
      * Dish of a meal
      */
+    @ManyToOne
     private Dish dish;
 
     /**
@@ -62,6 +64,7 @@ public class Meal implements Serializable {
     /**
      * Menu that a meal belongs to
      */
+    @ManyToOne
     private Menu menu;
 
     /**
