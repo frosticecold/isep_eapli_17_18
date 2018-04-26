@@ -17,6 +17,11 @@ import java.util.List;
  */
 public class InMemoryMenuPlanItemRepository extends InMemoryRepositoryWithLongPK<MenuPlanItem> implements MenuPlanItemRepository {
 
+    @Override
+    public List<MenuPlanItem> getMenuPlanItemFromMenuPlan(MenuPlan mp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
    
     
 }
