@@ -14,6 +14,9 @@ import eapli.ecafeteria.domain.booking.Booking;
  */
 public interface ViewNextBookingInterface {
     
+    /**
+     * Show next booking output
+     */
     default void showNextBooking(){
         ViewNextBookingController controller = new ViewNextBookingController();
         Booking nextBooking = controller.getNextBooking();

@@ -119,8 +119,8 @@ public class Booking implements Serializable {
         
             Calendar actual = Calendar.getInstance();
             
-            if(actual.compareTo(calendar) < 0){
-                int hours_diff = (int) Math.abs((actual.getTimeInMillis() - calendar.getTimeInMillis()) 
+            if(actual.compareTo(meal.getMealDate()) < 0){
+                int hours_diff = (int) Math.abs((actual.getTimeInMillis() - meal.getMealDate().getTimeInMillis()) 
                         / (60 * 60.0 * 1000.0));
                 if(MealType.DINNER == meal.mealtype()){
                     if(hours_diff >= dinner_limit_hour_day_before_no_cost){
@@ -156,7 +156,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
-        return "Booking: " + meal;
+        return "Booking: \n" + meal;
     }
 
     

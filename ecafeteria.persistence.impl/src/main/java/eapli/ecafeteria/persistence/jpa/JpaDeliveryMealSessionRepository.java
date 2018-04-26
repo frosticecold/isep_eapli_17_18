@@ -1,5 +1,6 @@
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -15,38 +16,6 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
     
     public JpaDeliveryMealSessionRepository() {
         
-    }
-
-    /**
-     * Deletes a certain DeliveryMealSession from persistence
-     * @param entity
-     * @throws DataIntegrityViolationException 
-     */
-    @Override
-    public void delete(DeliveryMealSession entity) throws DataIntegrityViolationException {
-        
-        entityManager().remove(entity); 
-    }
-
-    /**
-     * Deletes a DeliveryMealSession from persistence that has a certain ID
-     * @param entityId
-     * @throws DataIntegrityViolationException 
-     */
-    @Override
-    public void delete(Long entityId) throws DataIntegrityViolationException {
-        
-        String query = "SELECT DeliveryMealSession.*"
-                    + "FROM DeliverMealSession"
-                    + "WHERE e.IDDELIVERYEALSESSION = id";
-                     
-        final Query q = entityManager().createQuery(query, this.entityClass);
-        
-        q.setParameter("id",entityId);
-        
-        DeliveryMealSession entity = (DeliveryMealSession) q.getSingleResult();
-        
-        entityManager().remove(entity);
     }
 
     /**
@@ -110,23 +79,15 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
     public long count() {
         return 0;
     }
-    
+      
     /**
-     * Returns a List of all DeliveryRegistrys of a certain session
-     * @param sessionID
+     * Returns a days respective session which is active
+     * @param cashier
      * @return 
      */
-    public Iterable<DeliveryMealSession> findAllOfSession(Long sessionID) {
-        
-        String query = "SELECT DeliveryRegistry.*"
-                    + "FROM DeliveryRegistry dr"
-                    + "WHERE dr.IDDELIVERYEALSESSION = sessionid"
-                    + "ORDER BY DELIVERY ASC";
-        
-        final Query q = entityManager().createQuery(query, this.entityClass);
-        
-        q.setParameter("sessionid", sessionID);
-        
-        return q.getResultList();
-    }   
+    @Override
+    public Optional<DeliveryMealSession> findYourSession(SystemUser cashier) {
+
+        return matchOne("e.CASHIER=cashier","cashier",cashier);
+    }
 }

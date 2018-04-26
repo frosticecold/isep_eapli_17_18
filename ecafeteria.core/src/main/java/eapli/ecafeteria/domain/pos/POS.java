@@ -82,7 +82,8 @@ public class POS implements AggregateRoot<Long>, Serializable{
      * change state of POS
      */
     public void changeState() {
-        this.open = !this.open;
+        if(this.open)this.open = false;
+        else this.open = true;
     }
         
     /**

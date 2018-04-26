@@ -1,7 +1,7 @@
 package eapli.ecafeteria.application.kitchen;
 
 import eapli.ecafeteria.application.pos.ListAvailableMealsService;
-import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;

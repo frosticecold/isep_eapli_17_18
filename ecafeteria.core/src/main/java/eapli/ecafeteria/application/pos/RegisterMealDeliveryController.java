@@ -1,6 +1,9 @@
 package eapli.ecafeteria.application.pos;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.meal.MealType;
@@ -9,8 +12,6 @@ import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
 
 /**
@@ -21,12 +22,12 @@ public class RegisterMealDeliveryController implements Controller {
         
     /** Construtor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
     
-    private final ListAvailableMealsService list; //Listing Services
-    private final DeliveryMealSession session;
+    private DeliveryMealSession session;
+    private SystemUser cashier;
     
-    public RegisterMealDeliveryController(DeliveryMealSession session) {
-        this.list = new ListAvailableMealsService();
-        this.session = session;
+    public RegisterMealDeliveryController() {
+        this.session = null;
+        this.cashier = AuthorizationService.session().authenticatedUser();
     }
     
     /**
@@ -35,8 +36,10 @@ public class RegisterMealDeliveryController implements Controller {
      * @param idClient
      * @param idBooking Booking which will be delivered
      */    
-    public void registerNewMealDelivery(String number, long idBooking) throws DataIntegrityViolationException, DataConcurrencyException {
+    public void registerNewMealDelivery(String number, long idBooking)  {
         
+        this.useSession();
+
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
         
@@ -53,33 +56,21 @@ public class RegisterMealDeliveryController implements Controller {
         DeliveryRegistry registry = new DeliveryRegistry(session, client, booking);
         
         //persist this Registry
-        
-        PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
-        
+        try{
+            PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
+        }
+        catch (Exception e) {
+            
+        }
         //change state of the booking just recorded - to served
         
         PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();     
     }
-    
-    /**
-     * Returns all AvaliableMealStatics of this certain session to list on UI
-     * @param session
-     * @return 
-     */
-    public AvailableMealsStatistics showCurrentStatics() {
-        
-        MealType sessionType;
-        
-        if(this.session.isLunch()) sessionType = MealType.LUNCH;
-        else sessionType = MealType.DINNER;
-        
-        Calendar ca = this.session.date();
-
-        return new AvailableMealsStatistics(ca, sessionType);
-    }
-    
+   
     /**
      * Validates booking by searching on the repository
+     * @param idBooking
+     * @return 
      */
     public boolean validatesBooking(long idBooking) {
         
@@ -93,7 +84,9 @@ public class RegisterMealDeliveryController implements Controller {
     }
     
     /**
-     * Validate existince of user
+     * Validate if user exists
+     * @param number
+     * @return 
      */
     public boolean validateClient(String number)  {
         
@@ -104,5 +97,30 @@ public class RegisterMealDeliveryController implements Controller {
         if(PersistenceContext.repositories().cafeteriaUsers().findOne(mNumber).isPresent()) flag = true;
         
         return flag;
+    }
+    
+    /**
+     * Check if booking is already delivered
+     * @param idBooking
+     * @return 
+     */
+    public boolean canServeBooking(long idBooking) {
+        
+        boolean flag = false;
+        
+        Booking b = PersistenceContext.repositories().booking().findOne(idBooking).get();
+        
+        if(b.getBookingState().actualState().compareTo(BookingState.BookingStates.NOT_SERVED) == 0) flag = true;
+        
+        return flag;
+    }
+    
+    /**
+     * References the correct session to proceed
+     * @param cashier 
+     */
+    private void useSession(){
+        
+        this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(this.cashier).get();
     }
 }

@@ -10,9 +10,6 @@ import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  *
@@ -24,6 +21,7 @@ public class Alergen  implements AggregateRoot<Designation>, Serializable  {
     @EmbeddedId
     private Designation name;
     
+    protected Alergen(){}
     
     public Alergen (Designation name){
         this.name=name;
@@ -55,6 +53,10 @@ public class Alergen  implements AggregateRoot<Designation>, Serializable  {
 
     @Override
     public Designation id() {
+        return name;
+    }
+
+    public Object name() {
         return name;
     }
     

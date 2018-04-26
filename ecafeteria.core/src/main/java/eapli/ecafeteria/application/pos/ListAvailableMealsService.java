@@ -1,7 +1,7 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.persistence.BookingRepository;

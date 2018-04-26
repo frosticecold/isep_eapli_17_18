@@ -6,7 +6,7 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.meal.Execution;
+import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.ExecutionRepository;

@@ -24,6 +24,7 @@ public class ViewRatingsUI extends AbstractUI implements ViewNextBookingInterfac
     protected boolean doShow() {
 
         try {
+            showNextBooking();
             controller = new ViewRatingsController();
             ArrayList<Rating> ratings = (ArrayList<Rating>) controller.ratings();
 

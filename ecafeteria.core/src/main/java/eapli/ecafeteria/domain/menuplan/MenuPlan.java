@@ -31,9 +31,6 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
     @Version
     private Long version;  
     
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<MenuPlanItem> menuPlanItemList;
-    
     @OneToOne
     private Menu selectedMenu;
     
@@ -43,14 +40,9 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
     
     }
 
-    public MenuPlan(List<MenuPlanItem> menuPlanItemList, Menu menu) {
-        this.menuPlanItemList = menuPlanItemList;
+    public MenuPlan(Menu menu) {
         this.selectedMenu = menu;
         closed=false;
-    }
-
-    public List<MenuPlanItem> getMenuPlanItemList() {
-        return menuPlanItemList;
     }
 
     public Menu getSelectedMenu() {
@@ -79,10 +71,12 @@ public class MenuPlan implements AggregateRoot<Long>,Serializable {
     public Long id() {
         return id;
     }
-    
+
     @Override
     public String toString() {
-        return "MenuPlan{" + "menuPlanItemList=" + menuPlanItemList + ", selectedMenu=" + selectedMenu + ", closed=" + closed + '}';
+        return "MenuPlan{" + "id=" + id + ", version=" + version + ", selectedMenu=" + selectedMenu + ", closed=" + closed + '}';
     }
+    
+   
    
 }

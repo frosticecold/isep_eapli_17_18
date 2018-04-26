@@ -21,10 +21,10 @@ public class CancelationBooking extends Transaction {
     public CancelationBooking(CafeteriaUser user, Money k) {
         super(user, k);
         this.transactionType = "Cancel";
+        movement(user, k);
     }
 
     protected CancelationBooking() {
-        this.transactionType = "Cancel";
         // for ORM only
     }
     
