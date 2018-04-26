@@ -4,7 +4,6 @@ import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.Calendar;
 import java.util.Optional;
 import javax.persistence.Query;
 
@@ -16,38 +15,6 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
     
     public JpaDeliveryMealSessionRepository() {
         
-    }
-
-    /**
-     * Deletes a certain DeliveryMealSession from persistence
-     * @param entity
-     * @throws DataIntegrityViolationException 
-     */
-    @Override
-    public void delete(DeliveryMealSession entity) throws DataIntegrityViolationException {
-        
-        entityManager().remove(entity); 
-    }
-
-    /**
-     * Deletes a DeliveryMealSession from persistence that has a certain ID
-     * @param entityId
-     * @throws DataIntegrityViolationException 
-     */
-    @Override
-    public void delete(Long entityId) throws DataIntegrityViolationException {
-        
-        String query = "SELECT DeliveryMealSession.*"
-                    + "FROM DeliverMealSession"
-                    + "WHERE e.IDDELIVERYEALSESSION = id";
-                     
-        final Query q = entityManager().createQuery(query, this.entityClass);
-        
-        q.setParameter("id",entityId);
-        
-        DeliveryMealSession entity = (DeliveryMealSession) q.getSingleResult();
-        
-        entityManager().remove(entity);
     }
 
     /**

@@ -30,17 +30,18 @@ public class ChargeCardUI extends AbstractUI {
             final String mecanographicNumber = Console.readLine("Enter Mecanographic Number:");
 
             String currentBalanceAndUser = theController.findCafeteriaUserByMecanographicNumber(mecanographicNumber);
-            
+
             System.out.println("Before Transaction: " + currentBalanceAndUser);
             final double tempCredits = Console.readDouble("Please enter the amount of Credits to charge:");
 
             boolean resultOfOperation = theController.chargeCafeteriaUserCard(tempCredits);
-            if(!resultOfOperation){
+            if (!resultOfOperation) {
                 System.out.println("Error has ocurred");
                 return false;
             }
-            currentBalanceAndUser = theController.saveCafeteriaUser();
-            theController. saveTransaction();
+//            currentBalanceAndUser = theController.saveCafeteriaUser();
+            theController.saveTransaction();
+            currentBalanceAndUser = theController.findCafeteriaUserByMecanographicNumber(mecanographicNumber);
             System.out.println(currentBalanceAndUser);
         } catch (Exception e) {
             System.out.println(e.getMessage());
