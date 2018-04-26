@@ -137,10 +137,10 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaAlergensRepository();
     }
 
-//    @Override
-//    public JpaTransactionRepository transactioRepository(TransactionalContext autoTx) {
-//        return new JpaTransactionRepository(autoTx);
-//    }
+    @Override
+    public JpaTransactionRepository transactioRepository(TransactionalContext autoTx) {
+        return new JpaTransactionRepository(autoTx);
+    }
 
     @Override
     public JpaTransactionRepository transactioRepository() {

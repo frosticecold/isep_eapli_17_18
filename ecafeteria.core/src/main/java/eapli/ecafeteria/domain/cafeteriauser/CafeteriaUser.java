@@ -4,6 +4,7 @@ import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.domain.money.Money;
 import java.io.Serializable;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -40,6 +41,7 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     @OneToOne()
     private SystemUser systemUser;
 
+    @Embedded
     private Balance currentBalance;
 
     public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber) {

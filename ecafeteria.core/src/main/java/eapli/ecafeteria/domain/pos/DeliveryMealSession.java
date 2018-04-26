@@ -161,4 +161,12 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
         if(this.active) this.active = false;
         this.pos.changeState();
     }
+    
+    /**
+     * check if session is active
+     */
+    public boolean isActive() {
+        
+        return this.active;
+    }
 }

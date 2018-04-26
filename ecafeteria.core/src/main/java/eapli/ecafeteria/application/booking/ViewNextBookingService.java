@@ -15,12 +15,12 @@ import eapli.ecafeteria.persistence.PersistenceContext;
  *
  * @author Joao Rocha 1161838
  */
-public class ShowNextBookingService {
+public class ViewNextBookingService {
 
     private static final BookingReportingRepository bookingReportingRepo = PersistenceContext
             .repositories().bookingReporting();
 
-    public ShowNextBookingService(){
+    public ViewNextBookingService(){
         
     }
     /**
