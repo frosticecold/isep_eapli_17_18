@@ -55,7 +55,7 @@ public class EndShiftController implements Controller{
      * Closes Sessions
      */
     public void closeSessions(){
-        for (DeliveryMealSession session : repository1.findAllActiveDeliverySessions()){
+        for (DeliveryMealSession session : repository1.findAll()){
             if(session.sessionDate().Day()==dia || session.sessionDate().Month()==data.get(data.MONTH)|| session.sessionDate().Year()==data.get(data.YEAR)){
                 if ((session.isDinner() && mealType.equals(MealType.DINNER)) || (session.isLunch() && mealType.equals(MealType.LUNCH))) {
                     session.closeSession();

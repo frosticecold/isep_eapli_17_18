@@ -18,4 +18,6 @@ public interface DeliveryMealSessionRepository extends DataRepository<DeliveryMe
     public Optional<DeliveryMealSession> findYourSession(SystemUser cashier);
 
     public Iterable<DeliveryMealSession> findAllActiveDeliverySessions();
+    
+    public Iterable<DeliveryMealSession> findAll();
 }
