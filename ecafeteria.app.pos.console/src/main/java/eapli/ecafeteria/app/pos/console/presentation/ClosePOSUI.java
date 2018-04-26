@@ -9,8 +9,6 @@ import eapli.cafeteria.app.common.console.presentation.authz.LoginAction;
 import eapli.ecafeteria.application.pos.ClosePOSController;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.meal.MealType;
-import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.DateTime;
@@ -32,7 +30,7 @@ public class ClosePOSUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         controller.closeSession();
-        Map<DishType, Long> map = controller.listDeliveredMeals(DateTime.parseDate("08-05-2018"), MealType.LUNCH);
+        Map<DishType, Long> map = controller.listDeliveredMeals(DateTime.now(), controller.checkMealype());
 
         String output = "";
         for (Entry<DishType, Long> e : map.entrySet()) {
