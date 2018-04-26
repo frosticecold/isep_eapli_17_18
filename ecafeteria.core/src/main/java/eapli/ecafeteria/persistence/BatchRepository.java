@@ -9,7 +9,7 @@ public interface BatchRepository extends DataRepository<Batch, String> {
 
     Optional<Batch> findById(String id);
 
-   
+    Batch findByPk(int id);
 
     List<Batch> findAllBatches(String id);
 
