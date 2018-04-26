@@ -1,10 +1,13 @@
 package eapli.ecafeteria.bootstrapers;
 
-import eapli.ecafeteria.application.authz.*;
-import eapli.ecafeteria.domain.authz.*;
-import eapli.framework.actions.*;
-import eapli.framework.util.*;
-import java.util.*;
+import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.domain.authz.RoleType;
+import eapli.ecafeteria.domain.authz.SystemUser;
+import eapli.ecafeteria.domain.authz.UserSession;
+import eapli.framework.actions.Action;
+import eapli.framework.util.Strings;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * eCafeteria Bootstrapping data app
@@ -14,7 +17,7 @@ public class ECafeteriaBootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = {new MasterUsersBootstrapper(), new BackofficeUsersBootstrapper(), new DishTypesBootstrapper(),new CafeteriaUserBootstrapper(), new DishBootstrapper(), new MaterialsBootstrapper(), new MenuBootstrapper(), new MealBootstrapper(), new BatchesBootstrapper(),};
+        final Action[] actions = {new MasterUsersBootstrapper(), new BackofficeUsersBootstrapper(), new DishTypesBootstrapper(), new CafeteriaUserBootstrapper(), new DishBootstrapper(), new MaterialsBootstrapper(), new MenuBootstrapper(), new MealBootstrapper(), new BatchesBootstrapper(), new MealMaterialBootstrapper()};
 
         authenticateSuperUser();
 

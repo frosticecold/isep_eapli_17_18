@@ -10,6 +10,7 @@ import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.List;
 
 public class MealMaterialBootstrapper implements Action {
     @Override
@@ -19,10 +20,10 @@ public class MealMaterialBootstrapper implements Action {
         BatchRepository batchRepository = PersistenceContext.repositories().batch();
         MealMaterialRepository mealMaterialRepository = PersistenceContext.repositories().mealMaterial();
 
-        Batch b1 = batchRepository.findById("5601252106554").get();
-        Meal m1 = mealRepository.findOne((long) 27).get();
+        Batch b1 = batchRepository.findAll().get(0);
+        Meal m1 = ((List<Meal>) mealRepository.findAll()).get(0);
 
-        MealMaterial mm = new MealMaterial(b1.material(), m1, b1, 5);
+        MealMaterial mm = new MealMaterial(b1.material(), m1, b1, b1.availableQuantity());
 
         try {
             mealMaterialRepository.save(mm);
