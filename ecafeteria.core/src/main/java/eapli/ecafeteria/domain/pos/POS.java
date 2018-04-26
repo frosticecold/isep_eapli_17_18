@@ -91,7 +91,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
      */
     private void createNewSession(SystemUser user) {
         
-        DeliveryMealSession session = new DeliveryMealSession(this);
+        DeliveryMealSession session = new DeliveryMealSession(this);    
     }
     
     /**
