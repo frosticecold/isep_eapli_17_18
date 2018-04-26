@@ -32,9 +32,9 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Meal meal;
     private String reply;
+    @OneToOne
+    private CafeteriaUser user;
 
     protected Rating() {
         //for ORM 
@@ -47,8 +47,11 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param rating
      * @param comment
      */
-    public Rating(Meal meal,Booking booking, int rating, String comment) {
-        this.meal = meal;
+    public Rating(CafeteriaUser user, Booking booking, int rating, String comment) {
+        if (booking == null || rating < 0 || rating > 5 || comment == null) {
+            throw new IllegalArgumentException();
+        }
+        this.user = user;
         this.rating = rating;
         this.booking = booking;
         this.comment = comment;
@@ -117,8 +120,11 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      *
      * @return
      */
-    public Meal meal() {
-        return this.meal;
+//    public Meal meal() {
+//        return this.meal;
+//    }
+    public CafeteriaUser user() {
+        return this.user;
     }
 
     @Override

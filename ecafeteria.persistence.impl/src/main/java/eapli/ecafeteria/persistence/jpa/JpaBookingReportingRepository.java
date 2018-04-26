@@ -183,7 +183,7 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
         /*
             SELECT b.* FROM BOOKING b, Meal m
             WHERE b.meal_id = m.id
-            AND m.mealtype = 0;
+            AND m.mealtype = meal;
         */
 
  

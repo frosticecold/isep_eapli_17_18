@@ -45,4 +45,9 @@ public class InMemoryBatchRepository extends InMemoryRepository<Batch, String> i
     public List<Batch> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Batch findByPk(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
