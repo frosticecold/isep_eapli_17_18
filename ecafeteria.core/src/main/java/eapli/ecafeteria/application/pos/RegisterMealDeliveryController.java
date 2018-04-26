@@ -120,6 +120,6 @@ public class RegisterMealDeliveryController implements Controller {
      */
     private void useSession(){
         
-        this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(this.cashier.id()).get();
+        this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(this.cashier).get();
     }
 }
