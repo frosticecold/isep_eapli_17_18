@@ -29,6 +29,7 @@
     <class>eapli.ecafeteria.domain.meal.Meal</class>
     <class>eapli.ecafeteria.domain.dishes.Alergen</class>
     <class>eapli.ecafeteria.domain.execution.Execution</class>
+    <class>eapli.ecafeteria.domain.pos.POS</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ecafeteria"/>
       <!--
