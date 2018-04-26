@@ -9,6 +9,7 @@ import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.booking.RatingMealController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -23,7 +24,6 @@ import java.util.List;
 public class RatingMealUI extends CafeteriaUserBaseUI implements ViewNextBookingInterface{
 
     private final RatingMealController controller = new RatingMealController();
-    Meal meal;
 
     @Override
     protected boolean doShow() {
@@ -53,7 +53,7 @@ public class RatingMealUI extends CafeteriaUserBaseUI implements ViewNextBooking
 
         // add Rating
         try {
-            controller.addRating(meal,selectedBooking, comment);
+            controller.addRating(selectedBooking, comment);
             System.out.println("Booking successfully rated \n");
         } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
             System.out.println("Unable to register rating. Try again later");
