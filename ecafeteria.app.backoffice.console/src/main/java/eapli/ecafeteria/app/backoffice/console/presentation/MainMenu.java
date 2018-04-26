@@ -104,7 +104,7 @@ public class MainMenu extends AbstractUI {
     private static final int KITCHEN_LIST_MEALS_BY_BATCH_OPTION = 5;
     private static final int KITCHEN_CREATE_OR_EDIT_MENUPLAN = 6;
     private static final int KITCHEN_CLOSE_MENU_PLAN = 7;
-    private static final int KITCHEN_END_SHIFT = 8;
+    private static final int KITCHEN_END_SHIFT = 9;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
@@ -305,13 +305,9 @@ public class MainMenu extends AbstractUI {
        
         final Menu kitchenReportMenu = buildBookingReportingMenu();
         menu.add(new SubMenu(REPORTING_BOOKING_SUB_MENU, kitchenReportMenu, new ShowVerticalSubMenuAction(kitchenReportMenu)));
-        
 
-        
-  
-        
         menu.add(new MenuItem(KITCHEN_END_SHIFT, "End Shift", new EndShiftAction()));
-
+        
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
