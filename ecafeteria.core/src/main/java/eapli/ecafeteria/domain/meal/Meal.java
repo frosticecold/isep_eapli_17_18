@@ -41,7 +41,6 @@ public class Meal implements Serializable {
      * Dish of a meal
      */
     @OneToOne()
-    @JoinColumn()
     private Dish dish;
 
     /**
@@ -64,7 +63,6 @@ public class Meal implements Serializable {
     /**
      * Menu that a meal belongs to
      */
-    @OneToOne()
     @JoinColumn()
     private Menu menu;
 
