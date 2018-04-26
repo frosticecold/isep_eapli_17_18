@@ -1,0 +1,25 @@
+	___________
+
+	ANÁLISE 
+	____________
+
+
+	Reunião com o cliente
+	
+	* Um plano é realizado de um menu
+	*Pode-se fazer um plano e edita-lo até 42 horas antes da primeira refeição
+	
+	* Foi considerado que se trata de ementas à semana, nunca com datas superior ou inferior a 7 dias
+	
+	
+
+	______________________
+
+	REGRAS DE NEGÓCIO
+	_____________________
+	
+	* Quem inicia o processo é o "Gestor de Ementas"
+	* MenuPlan tem um menu
+	* Um menuPlanItem pertence a um Menu e tem uma quantidade
+	* Um plano pode ser editado até ser fechado
+	
