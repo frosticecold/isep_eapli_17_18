@@ -2,6 +2,7 @@ package eapli.ecafeteria.app.pos.console.presentation;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.RegisterMealDeliveryController;
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 
@@ -15,8 +16,7 @@ public class RegisterMealDeliveryUI extends AbstractUI {
 
     /** Construtor that shall receive the entity of the open session of a certain POS
      * @param session **/
-    public RegisterMealDeliveryUI() {
-        //create controller 
+    public RegisterMealDeliveryUI() { 
         this.ctrl = new RegisterMealDeliveryController();
     }
     

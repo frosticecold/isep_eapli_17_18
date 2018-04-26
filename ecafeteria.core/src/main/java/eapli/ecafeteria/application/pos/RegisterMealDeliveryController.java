@@ -1,5 +1,7 @@
 package eapli.ecafeteria.application.pos;
 
+import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
@@ -8,10 +10,8 @@ import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
-import eapli.ecafeteria.domain.pos.DeliverySessionDate;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import eapli.framework.util.DateTime;
 import java.util.Calendar;
 
 /**
@@ -22,18 +22,12 @@ public class RegisterMealDeliveryController implements Controller {
         
     /** Construtor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
     
-    private final ListAvailableMealsService list; //Listing Services
-    private final DeliveryMealSession session;
+    private DeliveryMealSession session;
+    private SystemUser cashier;
     
     public RegisterMealDeliveryController() {
-        this.list = new ListAvailableMealsService();
-              
-        Calendar ca = DateTime.now();
-        DeliverySessionDate date = new DeliverySessionDate(ca);
-        
-        //obtain the correct session 
-        
-        this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(date.Day()).get();
+        this.session = null;
+        this.cashier = AuthorizationService.session().authenticatedUser();
     }
     
     /**
@@ -43,6 +37,8 @@ public class RegisterMealDeliveryController implements Controller {
      * @param idBooking Booking which will be delivered
      */    
     public void registerNewMealDelivery(String number, long idBooking)  {
+        
+        this.useSession();
 
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
@@ -70,24 +66,7 @@ public class RegisterMealDeliveryController implements Controller {
         
         PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();     
     }
-    
-    /**
-     * Returns all AvaliableMealStatics of this certain session to list on UI
-     * @param session
-     * @return 
-     */
-    public AvailableMealsStatistics showCurrentStatics() {
-        
-        MealType sessionType;
-        
-        if(this.session.isLunch()) sessionType = MealType.LUNCH;
-        else sessionType = MealType.DINNER;
-        
-        Calendar ca = this.session.date();
-
-        return new AvailableMealsStatistics(ca, sessionType);
-    }
-    
+   
     /**
      * Validates booking by searching on the repository
      * @param idBooking
@@ -134,5 +113,14 @@ public class RegisterMealDeliveryController implements Controller {
         if(b.getBookingState().actualState().compareTo(BookingState.BookingStates.NOT_SERVED) == 0) flag = true;
         
         return flag;
+    }
+    
+    /**
+     * References the correct session to proceed
+     * @param cashier 
+     */
+    private void useSession(){
+        
+        this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(this.cashier).get();
     }
 }
