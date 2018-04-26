@@ -8,8 +8,10 @@ import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
+import eapli.ecafeteria.domain.pos.DeliverySessionDate;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
+import eapli.framework.util.DateTime;
 import java.util.Calendar;
 
 /**
@@ -23,9 +25,15 @@ public class RegisterMealDeliveryController implements Controller {
     private final ListAvailableMealsService list; //Listing Services
     private final DeliveryMealSession session;
     
-    public RegisterMealDeliveryController(DeliveryMealSession session) {
+    public RegisterMealDeliveryController() {
         this.list = new ListAvailableMealsService();
-        this.session = session;
+              
+        Calendar ca = DateTime.now();
+        DeliverySessionDate date = new DeliverySessionDate(ca);
+        
+        //obtain the correct session 
+        
+        this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(date.Day()).get();
     }
     
     /**
@@ -35,7 +43,7 @@ public class RegisterMealDeliveryController implements Controller {
      * @param idBooking Booking which will be delivered
      */    
     public void registerNewMealDelivery(String number, long idBooking)  {
-        
+
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
         

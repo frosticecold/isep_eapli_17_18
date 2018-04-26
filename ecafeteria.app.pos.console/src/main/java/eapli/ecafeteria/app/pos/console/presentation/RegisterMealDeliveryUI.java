@@ -12,14 +12,12 @@ import eapli.framework.presentation.console.AbstractUI;
 public class RegisterMealDeliveryUI extends AbstractUI {
     
     private final RegisterMealDeliveryController ctrl;
-    private final DeliveryMealSession session;
 
     /** Construtor that shall receive the entity of the open session of a certain POS
      * @param session **/
-    public RegisterMealDeliveryUI(DeliveryMealSession session) {
-         this.session = session;
-        //create controller
-        this.ctrl = new RegisterMealDeliveryController(session); 
+    public RegisterMealDeliveryUI() {
+        //create controller 
+        this.ctrl = new RegisterMealDeliveryController();
     }
     
     /**
