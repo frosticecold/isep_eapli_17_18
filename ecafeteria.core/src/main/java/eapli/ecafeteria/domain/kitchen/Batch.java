@@ -22,16 +22,13 @@ public class Batch implements Serializable {
      * 1 - Used
      */
     private int status = 0;
-
     private double quantity;
     private double availableQuantitity;
-
     /**
      * Data de validade
      */
     @Temporal(TemporalType.DATE)
     private Calendar date;
-
     @OneToOne
     private Material material;
 
@@ -86,8 +83,9 @@ public class Batch implements Serializable {
             used();
         }
     }
-    public String info(){
+
+    public String info() {
         return this.pk + " " + this.material.acronym();
     }
-   
+
 }

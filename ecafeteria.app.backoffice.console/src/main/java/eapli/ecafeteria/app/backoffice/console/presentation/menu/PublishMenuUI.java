@@ -49,8 +49,19 @@ public class PublishMenuUI extends AbstractUI {
             notCritMenuList.add(notCriticalMenu.toString());
         }
         
+        /**
+         * Print the critical menus in a List Widget
+         */
         ListWidget<String> critListMenus = new ListWidget<>("Critical Menus", critMenuList);
+        /**
+         * Print the not critical menus in a List Widget
+         */
         ListWidget<String> notCritListMenus = new ListWidget<>("Not Critical Menus", notCritMenuList);
+        /**
+         * Prints the options to select
+         * 1. Publish Critical Menus
+         * 2. Publish Not Critical Menus
+         */
         SelectWidget<String> widget = new SelectWidget<>("Showing Options", optionsList);
         
         do {
@@ -79,11 +90,22 @@ public class PublishMenuUI extends AbstractUI {
     public String headline() {
         return "Publish Menus";
     }
-
+    
+    /**
+     * Publishes the critical menus and prints the number of published menus
+     * 
+     * @throws DataConcurrencyException
+     * @throws DataIntegrityViolationException 
+     */
     private void publishCriticalMenus() throws DataConcurrencyException, DataIntegrityViolationException {
         System.out.println(controller.publishCriticalMenus());
     }
-
+    
+    /**
+     * Publishes the not critical menus and prints the number of published menus
+     * @throws DataConcurrencyException
+     * @throws DataIntegrityViolationException 
+     */
     private void publishNotCriticalMenus() throws DataConcurrencyException, DataIntegrityViolationException {
         System.out.println(controller.publishNotCriticalMenus());
     }

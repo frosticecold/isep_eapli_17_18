@@ -31,6 +31,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.ListDis
 import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.RegisterDishViaDTOUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.CloseMenuPlanAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.CreateMenuPlanAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.EndShiftAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterBatchUsedInMealAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMadeMealsAction;
@@ -103,6 +104,7 @@ public class MainMenu extends AbstractUI {
     private static final int KITCHEN_LIST_MEALS_BY_BATCH_OPTION = 5;
     private static final int KITCHEN_CREATE_OR_EDIT_MENUPLAN = 6;
     private static final int KITCHEN_CLOSE_MENU_PLAN = 7;
+    private static final int KITCHEN_END_SHIFT = 8;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
@@ -308,6 +310,8 @@ public class MainMenu extends AbstractUI {
         
   
         
+        menu.add(new MenuItem(KITCHEN_END_SHIFT, "End Shift", new EndShiftAction()));
+
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;

@@ -110,6 +110,7 @@ public class Meal implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.dish);
         hash = 59 * hash + Objects.hashCode(this.mealtype);
         hash = 59 * hash + Objects.hashCode(this.date);
+
         return hash;
     }
 
@@ -152,7 +153,9 @@ public class Meal implements Serializable {
     @Override
     public String toString() {
         String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
-        return "Meal: "+id+", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
+
+        return "Meal: " + id + ", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
+
     }
 
     public MealType mealtype() {
