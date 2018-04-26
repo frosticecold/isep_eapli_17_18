@@ -62,15 +62,15 @@ public class CreateMenuPlanController implements Controller {
         return q;
     }
 
-    public MenuPlanItem createMenuPlanItem(Meal currentMeal, Quantity q) {
-        mpi = new MenuPlanItem(currentMeal, q);
+    public MenuPlanItem createMenuPlanItem(MenuPlan mp,Meal currentMeal, Quantity q) {
+        mpi = new MenuPlanItem(mp,currentMeal, q);
         return mpi;
 
     }
 
-    public MenuPlan createMenuPlan(List<MenuPlanItem> lista, Menu m) {
+    public MenuPlan createMenuPlan(Menu m) {
 
-        menuplan = new MenuPlan(lista, m);
+        menuplan = new MenuPlan(m);
 
         return menuplan;
     }
@@ -90,6 +90,12 @@ public class CreateMenuPlanController implements Controller {
     public List<MenuPlan> getActiveMenuPlans() {
         return mpr.getActiveMenuPlans();
     }
+    
+    public List<MenuPlanItem> getMenuPlanItemsFromMenuPlan(MenuPlan mp){
+         return mpir.getMenuPlanItemFromMenuPlan(mp);
+    }
+           
+    
 
     public void editMenuPlan(int quantity, MenuPlanItem menu_plan_item) {
 

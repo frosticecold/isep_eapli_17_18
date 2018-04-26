@@ -30,7 +30,10 @@ public class MenuPlanItem implements AggregateRoot<Long>,Serializable {
     
     @OneToOne
     private Meal currentMeal;
-   
+    
+    @OneToOne
+    private MenuPlan menuplan;
+    
     @Embedded
     private Quantity quantityNumber;
     
@@ -42,7 +45,8 @@ public class MenuPlanItem implements AggregateRoot<Long>,Serializable {
         return quantityNumber;
     }
 
-    public MenuPlanItem(Meal currentMeal, Quantity quantity) {
+    public MenuPlanItem(MenuPlan mp,Meal currentMeal, Quantity quantity) {
+        this.menuplan=mp;
         this.currentMeal = currentMeal;
         this.quantityNumber = quantity;
     }
@@ -68,6 +72,11 @@ public class MenuPlanItem implements AggregateRoot<Long>,Serializable {
 
     public Meal getCurrentMeal() {
         return currentMeal;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuPlanItem{" + "id=" + id + ", version=" + version + ", currentMeal=" + currentMeal + ", menuplan=" + menuplan + ", quantityNumber=" + quantityNumber + '}';
     }
   
 }

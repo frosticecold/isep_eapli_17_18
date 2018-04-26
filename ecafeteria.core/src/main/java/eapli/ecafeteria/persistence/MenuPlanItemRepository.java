@@ -16,4 +16,6 @@ import java.util.List;
  */
 public interface MenuPlanItemRepository extends DataRepository<MenuPlanItem,Long> {
     
+    public List<MenuPlanItem> getMenuPlanItemFromMenuPlan(MenuPlan mp);
+    
 }
