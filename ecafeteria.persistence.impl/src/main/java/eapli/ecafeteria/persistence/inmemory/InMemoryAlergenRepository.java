@@ -6,10 +6,10 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.framework.domain.Designation;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository;
+import java.util.Optional;
 
 /**
  *
@@ -19,7 +19,12 @@ public class InMemoryAlergenRepository extends InMemoryRepository<Alergen, Desig
 
     @Override
     protected Designation newKeyFor(Alergen entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return entity.id();
+    }
+
+    @Override
+    public Optional<Alergen> findByName(Designation name) {
+        return matchOne(e -> e.name().equals(name));
     }
 
 
