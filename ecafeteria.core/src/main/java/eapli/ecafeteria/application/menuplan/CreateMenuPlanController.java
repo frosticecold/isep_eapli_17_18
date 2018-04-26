@@ -34,7 +34,7 @@ public class CreateMenuPlanController implements Controller {
 
     private final MenuPlanItemRepository mpir = PersistenceContext.repositories().menuPlanItem();
 
-    private Menu m;
+    private List<Menu> lm;
 
     private MenuPlan menuplan;
 
@@ -42,10 +42,10 @@ public class CreateMenuPlanController implements Controller {
 
     private Quantity q;
 
-    public Menu getCurrentMenu() {
+    public List<Menu> getCurrentMenus() {
 
-        m = MenuService.findLatestMenu().get();
-        return m;
+        lm = MenuService.findLatestMenus();
+        return lm;
     }
     
     public MenuPlan getMenuPlanFromMenu(Menu m){
@@ -75,22 +75,17 @@ public class CreateMenuPlanController implements Controller {
         return menuplan;
     }
 
-//    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
-//        mpir.save(mpi);
-//    }
+    public void saveMenuPlanItem(MenuPlanItem mpi) throws DataConcurrencyException, DataIntegrityViolationException {
+        mpir.save(mpi);
+    }
 
     public void saveMenuPlan(MenuPlan mp,List<MenuPlanItem>list) throws DataConcurrencyException, DataIntegrityViolationException {
-        System.out.println("quantidade de MenuPlanItem: "+list.size());
-        
-        for (MenuPlanItem mpi:list) {
-            System.out.println("menu plan item guardado: "+mpir.save(mpi));
-        }
-        
+    
         mpr.save(mp);
     }
     
-    public MenuPlan getActiveMenuPlan(){
-        return mpr.getActiveMenuPlan();
+    public List<MenuPlan> getActiveMenuPlans(){
+        return mpr.getActiveMenuPlans();
     }
     
   

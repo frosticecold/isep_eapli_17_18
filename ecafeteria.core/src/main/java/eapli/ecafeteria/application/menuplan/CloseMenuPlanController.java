@@ -15,13 +15,14 @@ import java.util.List;
 
 public class CloseMenuPlanController {
     
-    private MenuPlan mp;
+    private List<MenuPlan> lmp;
+   
     
     private final MenuPlanRepository mpr=PersistenceContext.repositories().menuPlan();
     
-    public MenuPlan getMenuPlan(){
-        mp=mpr.getActiveMenuPlan();
-        return mp;
+    public List<MenuPlan> getMenuPlans(){
+        lmp=mpr.getActiveMenuPlans();
+        return lmp;
     }
     
     public boolean validate(MenuPlan mp){

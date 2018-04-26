@@ -9,12 +9,13 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
+import java.util.List;
 
 
 public class InMemoryMenuPlanRepository extends InMemoryRepositoryWithLongPK<MenuPlan> implements MenuPlanRepository  {
 
     @Override
-    public MenuPlan getActiveMenuPlan() {
+    public List<MenuPlan> getActiveMenuPlans() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
