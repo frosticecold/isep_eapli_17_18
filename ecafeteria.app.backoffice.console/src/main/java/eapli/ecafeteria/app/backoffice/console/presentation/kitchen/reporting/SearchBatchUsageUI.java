@@ -33,6 +33,7 @@ public class SearchBatchUsageUI extends AbstractUI {
         for (Meal c : controller.getMealsFromBatch(e)) {
             System.out.println(c.toString());
         }
+        
         return false;
     }
 
