@@ -3,6 +3,8 @@ package eapli.ecafeteria.app.pos.console.presentation;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.RegisterMealDeliveryController;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
 
 /**
@@ -27,15 +29,25 @@ public class RegisterMealDeliveryUI extends AbstractUI {
      * @param mecNumber - MecanographicNumber of the client
      * @param booking - id of the booking to register
      */
-    public void recordNewMealDelivery(String mecNumber, long booking) {
+    public void recordNewMealDelivery(String mecNumber, long booking)  {
 
         //verifies if user is viable or active
         if(!this.ctrl.validateClient(mecNumber)) {
             System.out.println("User doesnt exists!MecanographicNumber doesnt exist!");
         }
-        else if(!this.ctrl.validatesBooking(booking)) System.out.println("This booking");
-            
-        
+        else {
+                if(!this.ctrl.validatesBooking(booking)) System.out.println("This booking");
+                else  {
+                    //if theres isnt any issue is the validation of entities
+                    try{
+                        this.ctrl.registerNewMealDelivery(mecNumber, booking);
+                        System.out.println("Register done");
+                    }
+                    catch (Exception e) {
+                        System.out.println("Database error");
+                    }
+                }
+            }
     }
     
     /**
