@@ -1,5 +1,6 @@
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -64,33 +65,15 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
     public long count() {
         return 0;
     }
-    
-    /**
-     * Returns a List of all DeliveryRegistrys of a certain session
-     * @param sessionID
-     * @return 
-     */
-    public Iterable<DeliveryMealSession> findAllOfSession(Long sessionID) {
-        
-        String query = "SELECT DeliveryRegistry.*"
-                    + "FROM DeliveryRegistry dr"
-                    + "WHERE dr.IDDELIVERYEALSESSION = sessionid"
-                    + "ORDER BY DELIVERY ASC";
-        
-        final Query q = entityManager().createQuery(query, this.entityClass);
-        
-        q.setParameter("sessionid", sessionID);
-        
-        return q.getResultList();
-    } 
-    
+      
     /**
      * Returns a days respective session which is active
-     * @param day
+     * @param cashier
      * @return 
      */
-    public Optional<DeliveryMealSession> findYourSession(int day) {
-        
-        return matchOne("e.DAY=day AND ACTIVE=true","day",day);
+    @Override
+    public Optional<DeliveryMealSession> findYourSession(SystemUser cashier) {
+
+        return matchOne("e.CASHIER=cashier","cashier",cashier);
     }
 }

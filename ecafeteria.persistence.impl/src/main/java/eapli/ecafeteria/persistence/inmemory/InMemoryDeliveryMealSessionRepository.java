@@ -1,5 +1,6 @@
 package eapli.ecafeteria.persistence.inmemory;
 
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -43,7 +44,7 @@ public class InMemoryDeliveryMealSessionRepository implements DeliveryMealSessio
     }
 
     @Override
-    public Optional<DeliveryMealSession> findYourSession(int day) {
+    public Optional<DeliveryMealSession> findYourSession(SystemUser cashier) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
