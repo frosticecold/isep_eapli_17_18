@@ -31,6 +31,6 @@ public class POSOpeningUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Open POS";
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
 }
