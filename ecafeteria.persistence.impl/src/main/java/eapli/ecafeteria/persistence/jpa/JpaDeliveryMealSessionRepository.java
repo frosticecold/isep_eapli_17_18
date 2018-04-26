@@ -72,12 +72,26 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
     public Iterable<DeliveryMealSession> findAll() {
         String query = "SELECT DeliveryMealSession.*"
                         + "FROM DeliveryMealSession delivery";
-        
+
         final Query q = entityManager().createQuery(query, this.entityClass);
-        
+
         return q.getResultList();
     }
+    
+    /**
+     * Returns a List of all registered DeliveryMealSession that are active
+     * @return 
+     */
+    @Override
+    public Iterable<DeliveryMealSession> findAllActiveDeliverySessions() {
+        String query = "SELECT delivery "
+                        + "FROM DeliveryMealSession delivery";
 
+        final Query q = entityManager().createQuery(query, this.entityClass);
+
+        return q.getResultList();
+    }
+        
     /**
      * Find one DeliveryMealSession by using the id
      * @param id
@@ -114,5 +128,5 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         q.setParameter("sessionid", sessionID);
         
         return q.getResultList();
-    }     
+    }   
 }

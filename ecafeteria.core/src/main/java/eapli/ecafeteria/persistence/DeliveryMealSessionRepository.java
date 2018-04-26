@@ -12,5 +12,6 @@ import eapli.framework.persistence.repositories.DataRepository;
 public interface DeliveryMealSessionRepository extends DataRepository<DeliveryMealSession, Long> {
     
     public DeliveryMealSession save(DeliveryMealSession entity) throws DataConcurrencyException, DataIntegrityViolationException;
-    
+
+    public Iterable<DeliveryMealSession> findAllActiveDeliverySessions();
 }

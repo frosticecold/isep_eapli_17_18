@@ -42,4 +42,8 @@ public class InMemoryDeliveryMealSessionRepository implements DeliveryMealSessio
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
+    public Iterable<DeliveryMealSession> findAllActiveDeliverySessions() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
