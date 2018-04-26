@@ -181,4 +181,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return new InMemoryBalanceRepository();
     }
 
+    @Override
+    public TransactionRepository transactioRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

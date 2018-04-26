@@ -9,6 +9,7 @@ import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.Application;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
+import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.POS;
 import eapli.framework.actions.ReturnAction;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -96,7 +97,7 @@ public class MainMenu extends AbstractUI {
         }
         
         //==========================Open POS=====================
-        if (date.get(Calendar.HOUR_OF_DAY) <= 12 && date.get(Calendar.HOUR_OF_DAY) >= 23 || debug == true) {
+        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == false) {
             if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
                 final Menu openPOSMenu = buildOpenPOS();
                 mainMenu.add(new SubMenu(OPEN_POS_OPTION, openPOSMenu,
@@ -107,7 +108,7 @@ public class MainMenu extends AbstractUI {
         }
         
         //==========================Delivery MENU==================
-        if (date.get(Calendar.HOUR_OF_DAY) <= 12 && date.get(Calendar.HOUR_OF_DAY) >= 23 || debug == true) {
+        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == false) {
             if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
                 final Menu deliveryMenu = buildDeliveryMenu();
                 mainMenu.add(new SubMenu(DELIVER_MEAL_OPTION, deliveryMenu,
@@ -118,7 +119,7 @@ public class MainMenu extends AbstractUI {
         }
 
         //==========================Card MENU==================
-        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == true) {
+        if (date.get(Calendar.HOUR_OF_DAY) <= 12 && date.get(Calendar.HOUR_OF_DAY) >= 23 || debug == true) {
             if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
                 final Menu cardMenu = buildChargeMenu();
                 mainMenu.add(new SubMenu(CHARGE_CARD_OPTION, cardMenu,
@@ -129,7 +130,7 @@ public class MainMenu extends AbstractUI {
         }
 
         //==========================Close MENU=================
-        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == true) {
+        if (date.get(Calendar.HOUR_OF_DAY) >= 12 && date.get(Calendar.HOUR_OF_DAY) <= 23 || debug == false) {
             if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
                 final Menu closeMenu = buildCloseMenu();
                 mainMenu.add(new SubMenu(CLOSE_POS_OPTION, closeMenu,
@@ -151,9 +152,9 @@ public class MainMenu extends AbstractUI {
     private Menu buildDeliveryMenu() {
         final Menu menu = new Menu("Deliveries >");
 
-//        new ViewAvailableMealsUI().doShow();
-//        //menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().doShow()));
-//        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
+        new ViewAvailableMealsUI();
+        menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().doShow()));
+        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
 
         return menu;
     }

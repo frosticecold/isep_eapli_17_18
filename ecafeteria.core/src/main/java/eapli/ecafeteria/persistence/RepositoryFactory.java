@@ -136,6 +136,7 @@ public interface RepositoryFactory {
     
     TransactionRepository transactioRepository();
 
+    TransactionRepository transactioRepository(TransactionalContext autoTx);
         /**
      * MealMaterialRepositorySession Repo
      * @return 
