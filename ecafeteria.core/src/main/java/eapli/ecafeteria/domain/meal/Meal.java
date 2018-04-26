@@ -41,7 +41,7 @@ public class Meal implements Serializable {
      * Dish of a meal
      */
     @OneToOne()
-    @JoinColumn(name = "dishid")
+    @JoinColumn()
     private Dish dish;
 
     /**
@@ -65,7 +65,7 @@ public class Meal implements Serializable {
      * Menu that a meal belongs to
      */
     @OneToOne()
-    @JoinColumn(name = "menuid")
+    @JoinColumn()
     private Menu menu;
 
     /**
@@ -164,7 +164,7 @@ public class Meal implements Serializable {
     @Override
     public String toString() {
         String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
-        return "Meal{" + "id= " + id + ", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
+        return "Meal: "+id+", dish=" + dish + ", mealtype=" + mealtype + ", date=" + strDate + '}';
     }
 
     /**

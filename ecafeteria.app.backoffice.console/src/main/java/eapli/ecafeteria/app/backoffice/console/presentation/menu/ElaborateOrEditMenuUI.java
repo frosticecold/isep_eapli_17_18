@@ -50,7 +50,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
                 Calendar calendar = askAndSelectWorkingDay(menu);
                 if (calendar != null) {
                     menuAddOrRemoveMeals(menu, calendar);
-                    askForConfirmation(menu);
+                    //askForConfirmation(menu);
                     editing = Console.readBoolean("Keep editing? Y/N");
                 } else {
                     editing = false;
@@ -75,7 +75,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
      * @author Raúl Correia
      * @return
      */
-    private Menu askForWorkingPeriod() {
+    private Menu askForWorkingPeriod() throws DataIntegrityViolationException, DataConcurrencyException {
         /**
          * Ask initial date and end date
          */

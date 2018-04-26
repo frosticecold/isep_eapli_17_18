@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author David Camelo 1161294@isep.ipp.pt
  */
-public class CancelBookingUI extends AbstractUI{
+public class CancelBookingUI extends AbstractUI implements ViewNextBookingInterface{
 
     /**
      * Controller !missing user!
@@ -26,6 +26,9 @@ public class CancelBookingUI extends AbstractUI{
     
     @Override
     protected boolean doShow() {
+        
+        showNextBooking();
+        
         // Show list with bookings
         if(controller.showBookings() == null || controller.showBookings().isEmpty()){
             System.out.println("No data found!");

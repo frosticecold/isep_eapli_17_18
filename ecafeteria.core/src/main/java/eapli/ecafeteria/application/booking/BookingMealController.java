@@ -17,6 +17,7 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.Balance;
+import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.*;
 import eapli.framework.date.DateEAPLI;
@@ -24,6 +25,7 @@ import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,9 +64,9 @@ public class BookingMealController implements Controller {
 
             user.get().setCurrentBalance(newBalance);
             userService.save(user.get());
-            this.t= new Debit(user.get(), mealPrice);
+            this.t = new Debit(user.get(), mealPrice);
             saveTransaction(t);
-            
+
             return true;
         } else {
             System.out.println("USER HASN'T ENOUGH MONEY");
@@ -96,7 +98,14 @@ public class BookingMealController implements Controller {
     }
 
     public void showAlergen(Meal meal) {
-//         meal.dish().alergenInDish();
+        List<Alergen> alergenList = meal.dish().alergenInDish();
+        if (alergenList.isEmpty()) {
+            System.out.println("Dish doesn't have alergens.\n");
+        } else {
+            for (Alergen alergen : alergenList) {
+                System.out.println(alergen);
+            }
+        }
     }
 
     public boolean is24hBefore(Calendar date) {

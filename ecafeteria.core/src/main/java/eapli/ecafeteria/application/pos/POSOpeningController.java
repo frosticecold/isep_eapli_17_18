@@ -1,8 +1,7 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.POS;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
@@ -19,13 +18,12 @@ import java.util.logging.Logger;
  */
 public class POSOpeningController {
     
-    private final CafeteriaUserService service = new CafeteriaUserService();
     private final DeliveryMealSessionRepository jpaDMS = PersistenceContext.repositories().deliveryMealRepository();
     private POS pointofsale;
-    private final Optional<CafeteriaUser> user;
+    private final Optional<SystemUser> user;
     
     public POSOpeningController(){
-            user = service.findCafeteriaUserByUsername(AuthorizationService.session().authenticatedUser().username());
+            user = PersistenceContext.repositories().users().findOne(AuthorizationService.session().authenticatedUser().username());
             if(!user.isPresent()) return;
             pointofsale = new POS(user.get());
     }

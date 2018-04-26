@@ -32,7 +32,6 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
 
-    private CafeteriaUser user;
     @OneToOne(cascade = CascadeType.ALL)
     private Meal meal;
     private String reply;
@@ -120,15 +119,6 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      */
     public Meal meal() {
         return this.meal;
-    }
-
-    /**
-     * Returns the cafeteria user
-     *
-     * @return
-     */
-    public CafeteriaUser user() {
-        return this.user;
     }
 
     @Override

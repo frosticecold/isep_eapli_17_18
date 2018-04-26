@@ -160,9 +160,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     /**
      * Returns a inMemory DeliveryRegistryRepository
-     * @return 
+     *
+     * @return
      */
     @Override
     public DeliveryRegistryRepository deliveryRegistryRepository() {
@@ -174,5 +176,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public BalanceRepository balance() {
+        return new InMemoryBalanceRepository();
+    }
 
 }

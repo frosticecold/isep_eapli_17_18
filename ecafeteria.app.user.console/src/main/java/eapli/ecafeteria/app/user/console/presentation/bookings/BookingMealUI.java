@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class BookingMealUI extends AbstractUI {
+public class BookingMealUI extends AbstractUI implements ViewNextBookingInterface {
 
     private final BookingMealController controller = new BookingMealController();
 
@@ -35,6 +35,8 @@ public class BookingMealUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
+        showNextBooking();
+        
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
 
@@ -47,18 +49,23 @@ public class BookingMealUI extends AbstractUI {
         Iterable<Meal> mealList = null;
         int option = 0;
 
-        System.out.println("Choose Meal Type:\n0-Lunch\n1-Dinner");
+        System.out.println("Choose Meal Type:\n1-Lunch\n2-Dinner");
 
         option = Console.readInteger("");
 
         switch (option) {
-            case 0:
+            case 1:
                 mealList = controller.listMeals(cal, MealType.LUNCH);
                 break;
 
-            case 1:
+            case 2:
                 mealList = controller.listMeals(cal, MealType.DINNER);
                 break;
+
+            default:
+                System.out.println("Invalid Option");
+                return false;
+
         }
 
         if (!mealList.iterator().hasNext()) {
@@ -69,11 +76,11 @@ public class BookingMealUI extends AbstractUI {
         for (Meal meal : mealList) {
             if (meal.menu().isPublished()) {
                 System.out.println(meal.toString());
-            }else{
+            } else {
                 System.out.println("\nThere are no meals published.\n");
                 return false;
             }
-            
+
         }
 
         //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
@@ -96,8 +103,8 @@ public class BookingMealUI extends AbstractUI {
         System.out.println(choosedMeal.toString());
 
         //===================================SHOW ALERGEN AND CALORICS==================================
-//        System.out.println("Alergen Info:\n");
-//        controller.showAlergen(choosedMeal);
+        System.out.println("\nAlergen Info:\n");
+        controller.showAlergen(choosedMeal);
         //===================================Paymemnt==================================
         System.out.println("Do you want to continue?\n1-Yes\n2-No\n");
 
@@ -120,6 +127,10 @@ public class BookingMealUI extends AbstractUI {
             case 2:
                 System.out.println("Operation closed.");
                 break;
+
+            default:
+                System.out.println("Invalid Option");
+                return false;
 
         }
 
