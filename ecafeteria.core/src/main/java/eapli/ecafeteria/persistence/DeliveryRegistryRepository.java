@@ -13,5 +13,5 @@ import eapli.framework.persistence.repositories.DataRepository;
  * @author Peter
  */
 public interface DeliveryRegistryRepository extends DataRepository<DeliveryRegistry, Long>{
-    
+
 }

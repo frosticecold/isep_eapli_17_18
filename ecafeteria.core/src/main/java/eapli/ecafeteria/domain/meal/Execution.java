@@ -43,6 +43,10 @@ public class Execution implements AggregateRoot<Long>, Serializable {
     
     protected Execution() {
     }
+    
+    public MadeMeals madeMeals(){
+        return this.madeMeals;
+    }
 
     @Override
     public boolean sameAs(Object other) {
@@ -76,6 +80,6 @@ public class Execution implements AggregateRoot<Long>, Serializable {
         return "Meal=" + meal.dish().toString()
                 + "\n" + madeMeals.toString();
     }
-
+    
     
 }
