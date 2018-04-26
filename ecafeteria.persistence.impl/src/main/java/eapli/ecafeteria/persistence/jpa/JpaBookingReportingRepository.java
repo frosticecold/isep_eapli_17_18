@@ -77,7 +77,7 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
                 final Query q = entityManager().
                 createQuery("SELECT booking "
                                 + "FROM Booking booking "
-                                + "WHERE booking.date = :idate ", Booking.class);
+                                + "WHERE booking.calendar = :idate ", Booking.class);
 
                 q.setParameter("idate", iDate);
                 List<Booking> bookingList = q.getResultList();
@@ -94,7 +94,6 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
                
         }catch( Exception e){
            
-
             return new ArrayList<BookingPerOption>();
        }
     }
