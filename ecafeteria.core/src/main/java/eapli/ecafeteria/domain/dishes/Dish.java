@@ -59,7 +59,7 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
      */
     private boolean active;
     /**
-     * 
+     *  Lst of alergens in dish
      */
     @ManyToMany
     private List<Alergen> alergens=new ArrayList<>();
@@ -222,11 +222,15 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
         return "Dish: " + name + "\n Dish Type: " + dishType +  "\n" + nutricionalInfo + "\n Price: " + price;
     }
     
-    
+    /*
+    Adds an alergen to the List
+    */
     public void addAlergen(Alergen a){
         alergens.add(a);
     }
-    
+    /*
+    returns tthe list of alergens
+    */
     public List<Alergen> alergenInDish(){
         return alergens;    
     }

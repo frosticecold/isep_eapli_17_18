@@ -21,6 +21,7 @@ public class AddAlergenUI extends AbstractUI {
 
     private final ChangeDishController theController = new ChangeDishController();
     private final AlergenController theC = new AlergenController();
+
     protected Controller controller() {
         return this.theController;
     }
@@ -30,20 +31,18 @@ public class AddAlergenUI extends AbstractUI {
         final Iterable<Dish> allDishes = this.theController.allDishes();
         if (!allDishes.iterator().hasNext()) {
             System.out.println("There are no registered Dishes");
-        }
-        else {
+        } else {
             final SelectWidget<Dish> selector = new SelectWidget<>("Dishes:", allDishes, new DishPrinter());
             selector.show();
             final Dish selectedDish = selector.selectedElement();
             final Iterable<Alergen> allAlergens = this.theC.allAlergens();
             if (!allAlergens.iterator().hasNext()) {
                 System.out.println("There are no registered Alergens");
-            }
-            else {
-            final SelectWidget<Alergen> selectorA = new SelectWidget<>("Alergens:", allAlergens, new AlergenPrinter());
-            selector.show();
-            final Alergen selectedAlegen = selectorA.selectedElement();
-            selectedDish.addAlergen(selectedAlegen);
+            } else {
+                final SelectWidget<Alergen> selectorA = new SelectWidget<>("Alergens:", allAlergens, new AlergenPrinter());
+                selectorA.show();
+                final Alergen selectedAlegen = selectorA.selectedElement();
+                selectedDish.addAlergen(selectedAlegen);
             }
         }
         return true;
@@ -51,7 +50,7 @@ public class AddAlergenUI extends AbstractUI {
 
     @Override
     public String headline() {
-         return "Add Alergen";
+        return "Add Alergen";
     }
 
 }
