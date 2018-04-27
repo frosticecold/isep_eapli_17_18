@@ -11,6 +11,7 @@ import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.visitor.Visitor;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -23,17 +24,24 @@ public class SearchBatchUsageUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        System.out.println("Pick one of the batches");
+        System.out.println("Pick one of the batches:");
         for (Batch e : controller.getAllBatches()) {
             System.out.println(e.info());
         }
+        System.out.print("Selected Batch:");
         Scanner ler = new Scanner(System.in);
         int op = ler.nextInt();
         Batch e = controller.getBatchById(op);
-        for (Meal c : controller.getMealsFromBatch(e)) {
-            System.out.println(c.toString());
-        }
+        List<Meal> m = controller.getMealsFromBatch(e);
         
+        System.out.println("\n----------------MEALS FROM THE BATCH-------------------- \n");
+        if (m.isEmpty()) {
+            System.out.println("There are no Meals using this batch");
+        }
+        for (Meal c : controller.getMealsFromBatch(e)) {
+            System.out.println(c.info());
+        }
+
         return false;
     }
 

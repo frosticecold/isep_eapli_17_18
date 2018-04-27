@@ -39,7 +39,7 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
      */
     @Override
     public Iterable<DeliveryMealSession> findAll() {
-        String query = "SELECT DeliveryMealSession.*"
+        String query = "SELECT delivery "
                         + "FROM DeliveryMealSession delivery";
 
         final Query q = entityManager().createQuery(query, this.entityClass);

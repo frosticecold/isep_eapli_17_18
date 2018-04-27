@@ -161,5 +161,11 @@ public class Meal implements Serializable {
     public MealType mealtype() {
         return mealtype;
     }
+    
+    //simplified information about the meal
+    public String info() {
+        String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
+        return dish.name() + " from  " + strDate + " at " + mealtype;
+    }
 
 }
