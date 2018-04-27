@@ -1,7 +1,6 @@
 package eapli.ecafeteria.domain.pos;
 
 import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
@@ -21,11 +20,11 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @Column(name="IDDELIVERYMEALSESSION")
     private Long idSession;
         
-    //@Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     private DeliverySessionDate sessionDate;
     
-//    @OneToOne
-//    @JoinColumn(name="POS")
+    @OneToOne
+    @JoinColumn(name="POS")
     private POS pos;
     
     @OneToOne
@@ -43,10 +42,9 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     }
     
     //real constructor
-
     public DeliveryMealSession(POS pos) {
         this.pos = pos;
-        this.cashier = this.pos.cashier();
+        this.cashier = pos.cashier();
         this.sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
         this.defineSessionType();
         this.active = true;

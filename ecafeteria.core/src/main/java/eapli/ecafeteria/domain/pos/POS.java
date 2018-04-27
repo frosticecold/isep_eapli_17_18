@@ -19,15 +19,11 @@ public class POS implements AggregateRoot<Long>, Serializable{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="IDPOS")
-    private long idPOS; 
-        
-    @Transient
-    private long identification;
+    private long idPOS;  
     
-    @Transient
     private boolean open;
     
-    @Transient
+    @OneToOne
     private SystemUser cashier;
 
     protected POS () {
@@ -36,7 +32,6 @@ public class POS implements AggregateRoot<Long>, Serializable{
     
     public POS (SystemUser posUser) {
         if(posUser != null) this.cashier = posUser;
-        this.identification = 1;
         this.open = false;
     }
 
@@ -88,9 +83,9 @@ public class POS implements AggregateRoot<Long>, Serializable{
         
     /**
      * Return the cashier
+     * @return 
      */    
     public SystemUser cashier() {
-        
         return this.cashier;
     }
  }

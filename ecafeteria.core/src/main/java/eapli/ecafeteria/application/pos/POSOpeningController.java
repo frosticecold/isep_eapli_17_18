@@ -6,12 +6,9 @@ import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.POS;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.ecafeteria.persistence.POSRepository;
-import java.util.Optional;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,31 +21,28 @@ public class POSOpeningController {
     private POS pointofsale;
     private final SystemUser user;
     
-    public POSOpeningController() throws DataConcurrencyException, DataIntegrityViolationException{
+    public POSOpeningController(){
             user = AuthorizationService.session().authenticatedUser();
-            pointofsale = createPOS();
+            pointofsale = new POS(user);
     }
     
     public boolean checkPoSState(){
         return pointofsale.isClosed();
     }
-    
-    private POS createPOS() throws DataConcurrencyException, DataIntegrityViolationException{
-        POS temp = new POS(user); 
-        jpaPOS.save(temp);
-        return temp;
-    }
-
-    public void createDeliveryMealSession() {
+    public boolean createDeliveryMealSession() {
+        
         try {
-            DeliveryMealSession dms = new DeliveryMealSession(pointofsale);
-            if(!user.isActive()) return;    
+            POS jpa = jpaPOS.save(pointofsale);
+            DeliveryMealSession dms = new DeliveryMealSession(jpa);    
             jpaDMS.save(dms);
-            
-        } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
-            Logger.getLogger(POSOpeningController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Delivery meal session created successfully.");
+            return true;
+        } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
+            System.out.println("Error inserting into database.: " + ex.getMessage());
         }
+        return false;
     }
     
  
 }
+

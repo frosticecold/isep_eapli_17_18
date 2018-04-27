@@ -9,8 +9,6 @@ import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.Application;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
-import eapli.ecafeteria.domain.pos.DeliveryMealSession;
-import eapli.ecafeteria.domain.pos.POS;
 import eapli.framework.actions.ReturnAction;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -24,7 +22,6 @@ import eapli.framework.presentation.console.ShowVerticalSubMenuAction;
 import eapli.framework.presentation.console.SubMenu;
 import eapli.framework.presentation.console.VerticalMenuRenderer;
 import eapli.framework.presentation.console.VerticalSeparator;
-import eapli.framework.util.Console;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -180,14 +177,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildOpenPOS() {
         final Menu menu = new Menu("Open POS >");
 
-        menu.add(new MenuItem(OPEN_POS_SUBMENU_OPTION, "Open", () -> {
-            try {
-                new POSOpeningUI().show();
-            } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return false;
-        }));
+        menu.add(new MenuItem(OPEN_POS_SUBMENU_OPTION, "Open", () -> new POSOpeningUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
 
         return menu;
