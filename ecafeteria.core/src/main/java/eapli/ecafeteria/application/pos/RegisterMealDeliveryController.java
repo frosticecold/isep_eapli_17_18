@@ -27,7 +27,6 @@ public class RegisterMealDeliveryController implements Controller {
     
     public RegisterMealDeliveryController() {
         this.cashier = AuthorizationService.session().authenticatedUser();
-        this.useSession();
     }
     
     /**
@@ -37,7 +36,7 @@ public class RegisterMealDeliveryController implements Controller {
      * @param idBooking Booking which will be delivered
      */    
     public void registerNewMealDelivery(String number, long idBooking)  {
-
+        useSession();
 
         //obtain the booking
         Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
@@ -119,7 +118,10 @@ public class RegisterMealDeliveryController implements Controller {
      * @param cashier 
      */
     private void useSession(){
-        
         this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(this.cashier).get();
+    }
+    
+    public SystemUser user(){
+        return this.cashier;
     }
 }

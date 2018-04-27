@@ -23,17 +23,19 @@ import java.util.Calendar;
 public class ViewAvailableMealsController implements Controller {
 
     private final ListAvailableMealsService availableMealsService = new ListAvailableMealsService();
-    private DeliveryMealSession session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(AuthorizationService.session().authenticatedUser()).get();
-
+    private static final int LUNCH_START = 12;
+    private static final int LUNCH_END = 16;
+    
     public AvailableMealsStatistics findAvailableMealsPerDay() {
         MealType mealType = checkMealType();
         return availableMealsService.calcStatistics(DateTime.now(), mealType);
     }
 
     public MealType checkMealType() {
-        if (session.isDinner()) {
-            return MealType.DINNER;
+        Calendar time = DateTime.now();
+        if (time.get(Calendar.HOUR_OF_DAY) >=LUNCH_START && time.get(Calendar.HOUR_OF_DAY) <= LUNCH_END) {
+            return MealType.LUNCH;
         }
-        return MealType.LUNCH;
+        return MealType.DINNER;
     }
 }

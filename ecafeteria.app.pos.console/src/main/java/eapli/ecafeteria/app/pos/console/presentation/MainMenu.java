@@ -70,6 +70,7 @@ public class MainMenu extends AbstractUI {
     public boolean doShow() {
         final Menu menu = buildMainMenu();
         final MenuRenderer renderer;
+        new ViewAvailableMealsUI().doShow();
         if (Application.settings().isMenuLayoutHorizontal()) {
             renderer = new HorizontalMenuRenderer(menu);
         } else {
@@ -152,7 +153,6 @@ public class MainMenu extends AbstractUI {
     private Menu buildDeliveryMenu() {
         final Menu menu = new Menu("Deliveries >");
 
-        new ViewAvailableMealsUI();
         menu.add(new MenuItem(DELIVER_MEAL_SUBMENU_OPTION, "Deliver Meal", () -> new RegisterMealDeliveryUI().doShow()));
         menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
 
