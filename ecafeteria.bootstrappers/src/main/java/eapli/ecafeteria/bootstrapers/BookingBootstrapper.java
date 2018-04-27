@@ -55,6 +55,7 @@ public class BookingBootstrapper implements Action  {
         notServed.changeToNotServed();
         final BookingState cancelled = new BookingState();
         cancelled.changeToCanceled();
+        final BookingState reserved = new BookingState();
         /*
         Meals
         */
@@ -63,6 +64,10 @@ public class BookingBootstrapper implements Action  {
         final Optional<Meal> meal3 = mealRepo.findOne(new Long(30));
         final Optional<Meal> meal4 = mealRepo.findOne(new Long(31));
         final Optional<Meal> meal5 = mealRepo.findOne(new Long(31));
+        final Optional<Meal> meal6 = mealRepo.findOne(new Long(33));
+        final Optional<Meal> meal7 = mealRepo.findOne(new Long(34));
+        final Optional<Meal> meal8 = mealRepo.findOne(new Long(35));
+        final Optional<Meal> meal9 = mealRepo.findOne(new Long(37));
         
         /*
         Register bookings
@@ -72,6 +77,11 @@ public class BookingBootstrapper implements Action  {
         register(notServed, DateTime.parseDate("07-05-20188"), user1.get().user().username(), meal3.get());
         register(cancelled, DateTime.parseDate("07-05-2018"), user2.get().user().username(), meal4.get());
         register(served, DateTime.parseDate("07-05-2018"), user1.get().user().username(), meal5.get());
+        register(reserved, DateTime.parseDate("07-05-2018"), user1.get().user().username(), meal6.get());
+        register(reserved, DateTime.parseDate("07-05-2018"), user2.get().user().username(), meal6.get());
+        register(reserved, DateTime.parseDate("07-05-2018"), user1.get().user().username(), meal7.get());
+        register(reserved, DateTime.parseDate("07-05-2018"), user2.get().user().username(), meal8.get());
+        register(reserved, DateTime.parseDate("07-05-2018"), user1.get().user().username(), meal9.get());
         
         return true;
     }
