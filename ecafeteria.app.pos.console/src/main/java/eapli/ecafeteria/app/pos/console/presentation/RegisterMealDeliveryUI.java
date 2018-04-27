@@ -24,25 +24,26 @@ public class RegisterMealDeliveryUI extends AbstractUI {
      * @param mecNumber - MecanographicNumber of the client
      * @param booking - id of the booking to register
      */
-    private void recordNewMealDelivery(String mecNumber, long booking)  {
+    private void recordNewMealDelivery(String mecNumber, long idBooking)  {
 
         //verifies if user is viable or active
         if(!this.ctrl.validateClient(mecNumber)) {
             System.out.println("User doesnt exists!MecanographicNumber doesnt exist!");
             return;
         }
-            if(!this.ctrl.validatesBooking(booking)) System.out.println("This booking doesnt exist!");
+            if(!this.ctrl.validatesBooking(idBooking)) System.out.println("This booking doesnt exist!");
             else  {
-                if(!this.ctrl.canServeBooking(booking)) {
+                if(!this.ctrl.canServeBooking(idBooking)) {
                     //if theres isnt any issue is the validation of entities
                     try{
-                        this.ctrl.registerNewMealDelivery(mecNumber, booking);
+                        this.ctrl.registerNewMealDelivery(mecNumber, idBooking);
                         System.out.println("Register done");
                     }
                     catch (Exception e) {
                         System.out.println("Database error");
                    }
                 }
+                else System.out.println("Booking already served!");
             }
     }
 

@@ -6,13 +6,10 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
-import eapli.ecafeteria.domain.meal.MealType;
-import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import java.util.Calendar;
 
 /**
  *
@@ -27,6 +24,7 @@ public class RegisterMealDeliveryController implements Controller {
     
     public RegisterMealDeliveryController() {
         this.cashier = AuthorizationService.session().authenticatedUser();
+        session = null;
     }
     
     /**
@@ -36,10 +34,8 @@ public class RegisterMealDeliveryController implements Controller {
      * @param idBooking Booking which will be delivered
      */    
     public void registerNewMealDelivery(String number, long idBooking)  {
-        useSession();
-
-        //obtain the booking
-        Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
+        
+        this.useSession();
         
         //transform string into MecanographicNumber
             
@@ -48,10 +44,14 @@ public class RegisterMealDeliveryController implements Controller {
         //obtain the client
         
         CafeteriaUser client = PersistenceContext.repositories().cafeteriaUsers().findByMecanographicNumber(mNumber).get();
-                
+        
+        //get booking by the number of the user
+        
+        Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
+        
         //add new record of the delivery just made on DeliveryRegistry
         
-        DeliveryRegistry registry = new DeliveryRegistry(session, client, booking);
+        DeliveryRegistry registry = new DeliveryRegistry(this.session, client, booking);
         
         //persist this Registry
         try{
@@ -98,17 +98,26 @@ public class RegisterMealDeliveryController implements Controller {
     }
     
     /**
+     * Returns booking by finding the user who payed for it
+     */
+    public boolean getBooking(long idBooking) {
+        
+        Booking b = PersistenceContext.repositories().booking().findOne(idBooking).get(); 
+        
+        if(b == null) return false;
+        else return true;
+    }
+    
+    /**
      * Check if booking is already delivered
      * @param idBooking
      * @return 
      */
-    public boolean canServeBooking(long idBooking) {
+    public boolean canServeBooking(long booking) {
         
         boolean flag = false;
         
-        Booking b = PersistenceContext.repositories().booking().findOne(idBooking).get();
-        
-        if(b.getBookingState().actualState().compareTo(BookingState.BookingStates.NOT_SERVED) == 0) flag = true;
+        if(PersistenceContext.repositories().booking().findOne(booking).get().getBookingState().actualState().compareTo(BookingState.BookingStates.NOT_SERVED) == 0) flag = true;
         
         return flag;
     }
@@ -118,10 +127,9 @@ public class RegisterMealDeliveryController implements Controller {
      * @param cashier 
      */
     private void useSession(){
-        this.session = PersistenceContext.repositories().deliveryMealRepository().findYourSession(this.cashier).get();
-    }
-    
-    public SystemUser user(){
-        return this.cashier;
+        
+        DeliveryMealSession s = PersistenceContext.repositories().deliveryMealRepository().findYourSession(this.cashier).get();
+
+        if(s!= null) this.session = s;
     }
 }
