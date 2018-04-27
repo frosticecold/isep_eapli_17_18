@@ -1,7 +1,6 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
 import eapli.ecafeteria.persistence.BookingRepository;
@@ -37,6 +36,8 @@ public class ListAvailableMealsService {
             ams.addDishTypeQuantity(dt, maxNumberOfServings);
             Long countReservedMealsByDishType = bookingRepo.countReservedMealsByDishType(cal, dt, mealtype);
             ams.addDishTypeReservedQuantity(dt, countReservedMealsByDishType);
+            Long servedMealsQuantity = bookingRepo.getNumberOfDeliveredMealsByDishTypeByDayAndMealType(cal, mealtype, dt);
+            ams.addDishTypeServedQuantity(dt, servedMealsQuantity);
         }
         return ams;
     }
