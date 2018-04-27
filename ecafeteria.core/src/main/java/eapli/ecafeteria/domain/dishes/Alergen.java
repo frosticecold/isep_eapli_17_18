@@ -21,7 +21,9 @@ public class Alergen  implements AggregateRoot<Designation>, Serializable  {
     @EmbeddedId
     private Designation name;
     
-    protected Alergen(){}
+    protected Alergen(){
+        // for ORM only
+    }
     
     public Alergen (Designation name){
         this.name=name;

@@ -37,6 +37,10 @@ public class AlergenBootstrapper implements Action {
         return true;
         
     }
+    
+    /*
+    / Method to register alergens in the h2 repository
+    */
     private void register(String name){
         final AlergenController controller = new AlergenController();
         try {

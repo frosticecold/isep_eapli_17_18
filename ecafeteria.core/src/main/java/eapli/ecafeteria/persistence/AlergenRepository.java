@@ -15,6 +15,6 @@ import java.util.Optional;
  * @author Car
  */
 public interface AlergenRepository extends DataRepository<Alergen, Designation>{
- 
+    //method to search an alergen by name in the repository 
     Optional<Alergen> findByName(Designation name);
 }

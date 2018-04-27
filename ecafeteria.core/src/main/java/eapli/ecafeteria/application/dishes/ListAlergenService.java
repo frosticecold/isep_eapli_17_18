@@ -17,6 +17,7 @@ import eapli.ecafeteria.persistence.PersistenceContext;
  */
 public class ListAlergenService {
     private final AlergenRepository alergenRepository = PersistenceContext.repositories().alergens();
+    //Method to iterate all the alergens in the repository
     public Iterable<Alergen> allAlergens() {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
 
