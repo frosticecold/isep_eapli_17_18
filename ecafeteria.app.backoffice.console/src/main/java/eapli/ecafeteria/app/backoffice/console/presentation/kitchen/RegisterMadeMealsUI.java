@@ -67,7 +67,11 @@ public class RegisterMadeMealsUI extends AbstractUI{
                 exec = controller.checkIfExists(meals.get(x-1));
                 System.out.println("You are going to edit an existing Execution:");
                 
-                int numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
+                int numMadeMeals;
+                do{
+                    numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
+                }while(numMadeMeals<0);
+                
                 MadeMeals madeMeals = new MadeMeals(numMadeMeals);
                 exec.changeMadeMeals(madeMeals);
             
@@ -75,7 +79,11 @@ public class RegisterMadeMealsUI extends AbstractUI{
                 
             } catch (NoResultException e) {
 
-                int numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
+                int numMadeMeals;
+                do{
+                    numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
+                }while(numMadeMeals<0);
+                
                 MadeMeals madeMeals = new MadeMeals(numMadeMeals);
             
                 exec = controller.createExecution(meals.get(x-1), madeMeals);
