@@ -154,7 +154,7 @@ public class Meal implements Serializable {
     public String toString() {
         String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
 
-        return "Meal: " + id + "\n" + dish + "\n Meal Type:" + mealtype + "\n Date:" + strDate;
+        return "Meal: "+ "\n" + dish + "\n Meal Type:" + mealtype + "\n Date:" + strDate;
 
     }
 
