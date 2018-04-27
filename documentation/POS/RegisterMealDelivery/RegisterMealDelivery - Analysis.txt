@@ -12,7 +12,7 @@ __________________
 REGRAS DE NEGÒCIO
 __________________
 
-* Antes da entrega, tem que haver verificação das refeições disponiveis para entregar.
+* Entrega a reserva do utilizador especificada para o mesmo dia.
 
 * Um registo de entrega fica guardada com o cliente que a recebeu, a reserva e a sessão em que foi entregue.
 
