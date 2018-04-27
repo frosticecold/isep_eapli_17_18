@@ -5,7 +5,6 @@
  */
 package eapli.ecafeteria.bootstrapers;
 
-import eapli.ecafeteria.application.booking.RatingMealController;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.Rating;

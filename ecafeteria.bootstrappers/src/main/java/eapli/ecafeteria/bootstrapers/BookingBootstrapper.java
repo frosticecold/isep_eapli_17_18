@@ -12,7 +12,6 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
-import eapli.ecafeteria.persistence.MealReportRepository;
 import eapli.ecafeteria.persistence.MealRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;

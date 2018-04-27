@@ -7,7 +7,7 @@ ___
   >**A:** The program will display the rating value, the commentary of the said rating and the answers sent by the menu manager if available.
 
 * >**Q: How will the ratings be displayed?**
-  >**A:** The user will select a meal from a list of valid meals and the system will show all of the ratings relating to that meal.
+  >**A:** All of the ratings will be displayed at once in a list.
 
 * >**Q: Should the answers sent by the Menu Manager also be displayed with the ratings or on a separate menu?**
   >**A:** If the rating has an answer it should be displayed with the rating. _(Subject to change)_
