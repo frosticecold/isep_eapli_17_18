@@ -4,6 +4,7 @@ participant ":User" as user
 participant ":ChargeCardUI" as ccui
 participant ":ChargeCardController" as controller
 participant ":CafeteriaUserService" as srv
+participant ":TransactionalContext" as txctx
 participant ":TransactionRepository" as trp
 participant ":PersistenceContext" as pcontext
 participant ":RepositoryFactory" as fact
@@ -18,6 +19,8 @@ ccui->*controller : create()
 ccui -> controller : getCafeteriaUser(mechanographicNumber)
 controller->trp:create()
 controller -> srv: create()
+controller -> txctx: create()
+controller->controller:TxCtx = PersistenceContext.repositories().buildTransactionalContext()
 controller -> srv: user = findCafeteriaUserByMecNumber(mechanographicNumber)
 srv->pcontext:repositories()
 pcontext->fact:create()
@@ -36,8 +39,14 @@ controller->tr:transaction.movement(user , credit)
 tr->chrg:transaction.movement(user , credit)
 chrg-->tr:
 tr-->controller:
-controller-->ccui:
 trp->pcontext:repositories()
 pcontext->trrepo:transactionRepository()
+controller->txctx:beginTransaction()
+txctx->pcontext:beginTransaction()
+pcontext->trrepo:beginTransaction()
 pcontext->trrepo:save(transaction)
+controller->txctx:beginTransaction()
+txctx->pcontext:endTransaction()
+pcontext->trrepo:endTransaction()
+controller-->ccui:
 ccui-->user:Confirms the success of the operation and shows new balance
