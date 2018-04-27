@@ -23,8 +23,9 @@ public class POS implements AggregateRoot<Long>, Serializable{
         
     @Transient
     private long identification;
+
+    private DeliveryMealSession session;
     
-    @Transient
     private boolean open;
     
     @Transient

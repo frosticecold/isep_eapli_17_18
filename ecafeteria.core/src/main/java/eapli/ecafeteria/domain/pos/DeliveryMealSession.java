@@ -18,14 +18,14 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Column(name="IDDELIVERYMEALSESSION")
+    @Column(name="ID")
     private Long idSession;
         
     //@Temporal(TemporalType.DATE)
     private DeliverySessionDate sessionDate;
     
-//    @OneToOne
-//    @JoinColumn(name="POS")
+    @OneToOne
+    @JoinColumn(name="POS")
     private POS pos;
     
     @OneToOne
