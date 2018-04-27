@@ -8,6 +8,7 @@ package eapli.ecafeteria.app.user.console.presentation;
 import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.app.user.console.presentation.bookings.BookingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CancelBookingUI;
+import eapli.ecafeteria.app.user.console.presentation.bookings.CheckBookingsByUserUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ListMenuUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.RatingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ViewNextBookingInterface;
@@ -44,6 +45,7 @@ class MainMenu extends CafeteriaUserBaseUI implements ViewNextBookingInterface{
     private static final int RATE_MEAL_OPTION = 4;
     private static final int CANCEL_BOOKING = 5;
     private static final int LIST_MENU = 6;
+    private static final int CHECK_BOOKINGS = 7;
 
     // ACCOUNT MENU
     private static final int LIST_MOVEMENTS_OPTION = 1;
@@ -111,6 +113,7 @@ class MainMenu extends CafeteriaUserBaseUI implements ViewNextBookingInterface{
         menu.add(new MenuItem(RATE_MEAL_OPTION, "Rate meal", () -> new RatingMealUI().show()));
         menu.add(new MenuItem(CANCEL_BOOKING, "Cancel booking", () -> new CancelBookingUI().show()));
         menu.add(new MenuItem(LIST_MENU, "List Menu", () -> new ListMenuUI().show()));
+        menu.add(new MenuItem(CHECK_BOOKINGS, "Check Bookings of Current User", () -> new CheckBookingsByUserUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         return menu;
     }
