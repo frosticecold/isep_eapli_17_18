@@ -10,7 +10,6 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RatingRepository;
@@ -54,7 +53,6 @@ public class RatingMealController {
      * Rating
      */
     private int rating;
-    private Meal meal;
 
     /**
      * Constructor
@@ -75,7 +73,7 @@ public class RatingMealController {
     /**
      * Method to add a rating on a booking of the meal
      *
-     * @param meal
+     *
      * @param booking
      * @param comment description about booking of the meal
      * @return rateMeal
@@ -87,7 +85,7 @@ public class RatingMealController {
         if (booking == null || comment == null) {
             System.out.println("Invalid. Please check.");
         }
-        Rating rateMeal = new Rating(user,booking, rating, comment);
+        Rating rateMeal = new Rating(user, booking, rating, comment);
         rateMeal = ratingRepository.saveRating(rateMeal);
         return rateMeal;
     }
@@ -108,7 +106,7 @@ public class RatingMealController {
      * @return
      */
     public boolean readRating(int rating) {
-        if (rating < 0 || rating > 5) {
+        if (rating < 1 || rating > 5) {
             System.out.println("Rating Invalid. Check!");
             return false;
         }

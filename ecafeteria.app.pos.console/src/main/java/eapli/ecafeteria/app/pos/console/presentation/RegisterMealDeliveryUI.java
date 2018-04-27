@@ -2,8 +2,8 @@ package eapli.ecafeteria.app.pos.console.presentation;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.RegisterMealDeliveryController;
-import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.util.Console;
 
 /**
  *
@@ -15,8 +15,7 @@ public class RegisterMealDeliveryUI extends AbstractUI {
 
     /** Construtor that shall receive the entity of the open session of a certain POS
      * @param session **/
-    public RegisterMealDeliveryUI() {
-        //create controller 
+    public RegisterMealDeliveryUI() { 
         this.ctrl = new RegisterMealDeliveryController();
     }
     
@@ -25,40 +24,48 @@ public class RegisterMealDeliveryUI extends AbstractUI {
      * @param mecNumber - MecanographicNumber of the client
      * @param booking - id of the booking to register
      */
-    public void recordNewMealDelivery(String mecNumber, long booking)  {
+    private void recordNewMealDelivery(String mecNumber, long idBooking)  {
 
         //verifies if user is viable or active
         if(!this.ctrl.validateClient(mecNumber)) {
             System.out.println("User doesnt exists!MecanographicNumber doesnt exist!");
+            return;
         }
-        else {
-                if(!this.ctrl.validatesBooking(booking)) System.out.println("This booking doesnt exist!");
-                else  {
-                    if(!this.ctrl.canServeBooking(booking)) {
-                        //if theres isnt any issue is the validation of entities
-                        try{
-                            this.ctrl.registerNewMealDelivery(mecNumber, booking);
-                            System.out.println("Register done");
-                        }
-                        catch (Exception e) {
-                            System.out.println("Database error");
-                        }
+            if(!this.ctrl.validatesBooking(idBooking)) System.out.println("This booking doesnt exist!");
+            else  {
+                if(!this.ctrl.canServeBooking(idBooking)) {
+                    //if theres isnt any issue is the validation of entities
+                    try{
+                        this.ctrl.registerNewMealDelivery(mecNumber, idBooking);
+                        System.out.println("Register done");
                     }
+                    catch (Exception e) {
+                        System.out.println("Database error");
+                   }
                 }
+                else System.out.println("Booking already served!");
             }
-    }
-    
-    /**
-     * headline menu
-     * @return 
-     */
-    @Override
-    public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
 
     @Override
     protected boolean doShow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try { 
+            final String mecaNumber = Console.readLine("Insert Mecanographic Number of client:");
+            final long idBooking = Console.readLong("Insert number of booking:");
+        
+            this.recordNewMealDelivery(mecaNumber, idBooking);
+        }
+        catch (Exception e) {
+            
+            return false;
+        }
+        
+        return true;
+    }
+
+    @Override
+    public String headline() {
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
     }
 }

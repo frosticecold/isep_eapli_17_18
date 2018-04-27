@@ -12,6 +12,7 @@ import eapli.framework.domain.money.Money;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
 import java.util.Calendar;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +35,7 @@ public abstract class Transaction implements Serializable {
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     protected CafeteriaUser cafeteriaUser;
     protected Money k;
     protected String transactionType;

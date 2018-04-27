@@ -18,14 +18,15 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Column(name="IDDELIVERYEALSESSION")
+    @Column(name="IDDELIVERYMEALSESSION")
     private Long idSession;
         
     //@Temporal(TemporalType.DATE)
     private DeliverySessionDate sessionDate;
     
-    @Transient
-    private POS pos; //it wont be persisted on database
+//    @OneToOne
+//    @JoinColumn(name="POS")
+    private POS pos;
     
     @OneToOne
     @JoinColumn(name="CASHIER")
@@ -34,7 +35,8 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @Column (name="ACTIVE")
     private boolean active;
     
-    private MealType typeSession;
+    @Column (name="TYPESESSION")
+    private int typeSession;
     
     protected DeliveryMealSession() {
        //for ORM only
@@ -101,11 +103,14 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
         //change the type of session on previous conditions
         switch(type) {
             case 1:
-                this.typeSession = MealType.LUNCH;
+                this.typeSession = 1;
             break;
             
             case 2:
-                this.typeSession = MealType.DINNER;
+                this.typeSession = 2;
+            break;
+            default:
+                this.typeSession = 0;
             break;
         }
     }
@@ -118,7 +123,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
         
         boolean r = false;
         
-        if(this.typeSession == MealType.LUNCH) r = true;
+        if(this.typeSession == 1) r = true;
         
         return r;
     }
@@ -131,7 +136,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
         
         boolean r = false;
         
-        if(this.typeSession == MealType.DINNER) r = true;
+        if(this.typeSession == 2) r = true;
         
         return r;
     }

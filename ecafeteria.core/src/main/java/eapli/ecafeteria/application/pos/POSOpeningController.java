@@ -22,11 +22,10 @@ public class POSOpeningController {
     private final DeliveryMealSessionRepository jpaDMS = PersistenceContext.repositories().deliveryMealRepository();
     private final POSRepository jpaPOS = PersistenceContext.repositories().posRepository();
     private POS pointofsale;
-    private final Optional<SystemUser> user;
+    private final SystemUser user;
     
     public POSOpeningController() throws DataConcurrencyException, DataIntegrityViolationException{
-            user = PersistenceContext.repositories().users().findOne(AuthorizationService.session().authenticatedUser().username());
-            if(!user.isPresent()) return;
+            user = AuthorizationService.session().authenticatedUser();
             pointofsale = createPOS();
     }
     
@@ -35,7 +34,7 @@ public class POSOpeningController {
     }
     
     private POS createPOS() throws DataConcurrencyException, DataIntegrityViolationException{
-        POS temp = new POS(user.get()); 
+        POS temp = new POS(user); 
         jpaPOS.save(temp);
         return temp;
     }
@@ -43,7 +42,7 @@ public class POSOpeningController {
     public void createDeliveryMealSession() {
         try {
             DeliveryMealSession dms = new DeliveryMealSession(pointofsale);
-            if(!user.isPresent()) return;    
+            if(!user.isActive()) return;    
             jpaDMS.save(dms);
             
         } catch (DataConcurrencyException | DataIntegrityViolationException ex) {

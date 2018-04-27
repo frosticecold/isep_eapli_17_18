@@ -9,8 +9,6 @@ import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.booking.RatingMealController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.SelectWidget;
@@ -21,7 +19,7 @@ import java.util.List;
  *
  * @author Joana Oliveira <1161261@isep.ipp.pt>
  */
-public class RatingMealUI extends CafeteriaUserBaseUI implements ViewNextBookingInterface{
+public class RatingMealUI extends CafeteriaUserBaseUI implements ViewNextBookingInterface {
 
     private final RatingMealController controller = new RatingMealController();
 
@@ -30,7 +28,7 @@ public class RatingMealUI extends CafeteriaUserBaseUI implements ViewNextBooking
         final List<Booking> bookings = controller.showBookings();
 
         showNextBooking();
-        
+
         if (!bookings.iterator().hasNext()) {
             System.out.println("There are no registered consumed bookings");
             return false;

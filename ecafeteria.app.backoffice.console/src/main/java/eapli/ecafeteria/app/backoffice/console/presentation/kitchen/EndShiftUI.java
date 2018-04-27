@@ -19,7 +19,7 @@ public class EndShiftUI extends AbstractUI{
     @Override
     protected boolean doShow() {
         theController.presentMealsMadeNotSold();
-      //  theController.closeSessions();
+        theController.closeSessions();
         return true;
     }
 

@@ -1,10 +1,10 @@
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.Calendar;
 import java.util.Optional;
 import javax.persistence.Query;
 
@@ -16,38 +16,6 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
     
     public JpaDeliveryMealSessionRepository() {
         
-    }
-
-    /**
-     * Deletes a certain DeliveryMealSession from persistence
-     * @param entity
-     * @throws DataIntegrityViolationException 
-     */
-    @Override
-    public void delete(DeliveryMealSession entity) throws DataIntegrityViolationException {
-        
-        entityManager().remove(entity); 
-    }
-
-    /**
-     * Deletes a DeliveryMealSession from persistence that has a certain ID
-     * @param entityId
-     * @throws DataIntegrityViolationException 
-     */
-    @Override
-    public void delete(Long entityId) throws DataIntegrityViolationException {
-        
-        String query = "SELECT DeliveryMealSession.*"
-                    + "FROM DeliverMealSession"
-                    + "WHERE e.IDDELIVERYEALSESSION = id";
-                     
-        final Query q = entityManager().createQuery(query, this.entityClass);
-        
-        q.setParameter("id",entityId);
-        
-        DeliveryMealSession entity = (DeliveryMealSession) q.getSingleResult();
-        
-        entityManager().remove(entity);
     }
 
     /**
@@ -71,14 +39,29 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
      */
     @Override
     public Iterable<DeliveryMealSession> findAll() {
-        String query = "SELECT DeliveryMealSession.*"
+        String query = "SELECT delivery "
                         + "FROM DeliveryMealSession delivery";
-        
+
         final Query q = entityManager().createQuery(query, this.entityClass);
-        
+
         return q.getResultList();
     }
+    
+    /**
+     * Returns a List of all registered DeliveryMealSession that are active
+     * @return 
+     */
+    @Override
+    public Iterable<DeliveryMealSession> findAllActiveDeliverySessions() {
+        String query = "SELECT delivery "
+                        + "FROM DeliveryMealSession delivery"
+                        + "WHERE ACTIVE=TRUE";
 
+        final Query q = entityManager().createQuery(query, this.entityClass);
+
+        return q.getResultList();
+    }
+        
     /**
      * Find one DeliveryMealSession by using the id
      * @param id
@@ -97,33 +80,22 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
     public long count() {
         return 0;
     }
-    
+      
     /**
-     * Returns a List of all DeliveryRegistrys of a certain session
-     * @param sessionID
+     * Returns a days respective session which is active
+     * @param cashier
      * @return 
      */
-    public Iterable<DeliveryMealSession> findAllOfSession(Long sessionID) {
+    @Override
+    public Optional<DeliveryMealSession> findYourSession(SystemUser cashier) {
         
-        String query = "SELECT DeliveryRegistry.*"
-                    + "FROM DeliveryRegistry dr"
-                    + "WHERE dr.IDDELIVERYEALSESSION = sessionid"
-                    + "ORDER BY DELIVERY ASC";
+        String query = "SELECT e FROM DeliveryMealSession e "
+                + "WHERE e.cashier=:cashier";
         
         final Query q = entityManager().createQuery(query, this.entityClass);
         
-        q.setParameter("sessionid", sessionID);
-        
-        return q.getResultList();
-    } 
-    
-    /**
-     * Returns a days respective session which is active
-     * @param day
-     * @return 
-     */
-    public Optional<DeliveryMealSession> findYourSession(int day) {
-        
-        return matchOne("e.DAY=day AND ACTIVE=true","day",day);
+        q.setParameter("cashier",cashier);
+
+        return (Optional) q.getSingleResult();
     }
 }

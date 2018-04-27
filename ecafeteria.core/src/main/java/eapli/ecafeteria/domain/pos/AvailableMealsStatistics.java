@@ -45,14 +45,14 @@ public class AvailableMealsStatistics {
 
     public boolean addDishTypeQuantity(DishType dt, Long qt) {
         if (!mapDishtypeQuantity.containsKey(dt)) {
-            mapDishtypeQuantity.put(dt,(long) 0);
+            mapDishtypeQuantity.put(dt, (long) 0);
         }
         return addToMap(mapDishtypeQuantity, dt, qt);
     }
 
     public boolean addDishTypeReservedQuantity(DishType dt, Long qt) {
         if (!mapWithReservedQuantity.containsKey(dt)) {
-            mapWithReservedQuantity.put(dt,(long) 0);
+            mapWithReservedQuantity.put(dt, (long) 0);
         }
         return addToMap(mapWithReservedQuantity, dt, qt);
     }
@@ -66,7 +66,6 @@ public class AvailableMealsStatistics {
         mapWithRemaningQuantity = map;
         return map;
     }
-    
 
     @Override
     public String toString() {
@@ -74,13 +73,16 @@ public class AvailableMealsStatistics {
             calcRemainingDishes();
         }
         String output = "";
+        output += "========================================================\n";
         output += "Day: " + DateTime.dayNameFromCalendar(day);
-        output += "MealType: " + mealType;
+        output += " MealType: " + mealType + "\n";
+        output += "========================================================\n";
         for (DishType dt : mapDishtypeQuantity.keySet()) {
-            output += String.format(("DishType: %s\n Total:%d\nReserved:%d\nAvailable:%d"),
+            output += String.format(("DishType: %s\nTotal:%d\nReserved:%d\nAvailable:%d\n"),
                     dt, mapDishtypeQuantity.get(dt),
                     mapWithReservedQuantity.get(dt),
                     mapWithRemaningQuantity.get(dt));
+            output += "========================================================\n";
         }
         return output;
     }
