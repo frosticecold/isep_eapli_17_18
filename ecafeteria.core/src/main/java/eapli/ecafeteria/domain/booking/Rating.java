@@ -47,7 +47,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param comment
      */
     public Rating(CafeteriaUser user, Booking booking, int rating, String comment) {
-        if (booking == null || rating < 0 || rating > 5 || comment == null) {
+        if (booking == null || rating < 1 || rating > 5 || comment == null) {
             throw new IllegalArgumentException();
         }
         this.user = user;
@@ -65,7 +65,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param comment
      */
     public Rating(Booking booking, int rating, String comment) {
-        if (booking == null || rating < 0 || rating > 5 || comment == null) {
+        if (booking == null || rating < 1 || rating > 5 || comment == null) {
             throw new IllegalArgumentException();
         }
         this.rating = rating;
