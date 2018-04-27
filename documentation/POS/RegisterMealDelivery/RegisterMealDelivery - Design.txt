@@ -6,15 +6,13 @@
 
 * Utilizar a estrutura base standard da aplicação baseada em camadas
 
-	Classes do dominio : POS, DeliveryMealSession, Booking, CafeteriaUser
+	Classes do dominio :DeliveryMealSession, Booking, CafeteriaUser, DeliveryRegistry
 	Controlador : RegisterMealMealDeliveryController
 	UserInterface : RegisterMealDeliveryUI
-	Lista : DeliveryRegistry
-	Repositorios : BookingsRepository, CafeteriaUserRepositor, DeliveryMealSessionRepository
+	Repositorios : BookingsRepository, CafeteriaUserRepository, DeliveryMealSessionRepository, DeliveryRegistryRepository
 	PersistenceContext : RepositoryFactory
 
 - Sequence Diagram
-
 
 title SD Register Meal Delivery
 
@@ -31,4 +29,7 @@ title SD Register Meal Delivery
 ":PersistenceContext" -> ":RepositoryFactory" : deliveryMealSession()
 ":RegisterMealDeliveryController" -> ":DeliveryMealSessionRepository" : findSession()
 ":RegisterMealDeliveryController" -> ":DeliveryMealSession" : registerNewDelivery(user, booking)
+":RegisterMealDeliveryController" -> ":PersistenceContext" : repositories()
+":PersistenceContext" -> ":RepositoryFactory" : deliveryRegistryRepostiory()
+":RegisterMealDeliveryController" -> ":DeliveryRegistry" : create()
 ":RegisterMealDeliveryController" -> "Booking" : changeState()
