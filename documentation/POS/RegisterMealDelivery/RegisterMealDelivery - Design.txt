@@ -27,7 +27,7 @@ title SD Register Meal Delivery
 ":RegisterMealDeliveryController" -> ":PersistenceContext" : repositories()
 ":PersistenceContext" -> ":RepositoryFactory" : bookings()
 ":RegisterMealDeliveryController" -> ":BookingsRepository" : findBookingByUser(mNumber)
-":RegisterMealDeliveryController" -> ":PersitenceContext" : repositories()
+":RegisterMealDeliveryController" -> ":PersistenceContext" : repositories()
 ":PersistenceContext" -> ":RepositoryFactory" : deliveryMealSession()
 ":RegisterMealDeliveryController" -> ":DeliveryMealSessionRepository" : findSession()
 ":RegisterMealDeliveryController" -> ":DeliveryMealSession" : registerNewDelivery(user, booking)
