@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 
-import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.kitchen.RegisterMadeMealsController;
 import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.execution.MadeMeals;
@@ -23,81 +17,87 @@ import javax.persistence.NoResultException;
  *
  * @author MFerreira
  */
-public class RegisterMadeMealsUI extends AbstractUI{
+public class RegisterMadeMealsUI extends AbstractUI {
 
     private RegisterMadeMealsController controller = new RegisterMadeMealsController();
-    
+
     @Override
     protected boolean doShow() {
-        
-        System.out.println("Welcome, please insert the criteria:");
-        
-        Calendar date = Console.readCalendar("Insert date (DD-MM-YYYY):");
-        
-        int n;
-        do{
-            System.out.println("Choose the Meal Type:");
-            System.out.println("1-Lunch");
-            System.out.println("2-Dinner");
-            n = Console.readInteger("Choose:");
-        }while(n!=1 && n!=2);
-        
-        MealType mealType = null;
-        if(n==1){
-            mealType=MealType.LUNCH;
-        }else if(n==2){
-            mealType=MealType.DINNER;
-        }
-        List<Meal> meals = controller.getMealsList(date, mealType);
-        if(meals.isEmpty()){
-            System.out.println("There is no meals with that criteria.");
-        } else{
-            System.out.println("List of Meals with that criteria;");
-            for (int i = 0; i < meals.size(); i++) {
-                System.out.println((i+1) + "- " + meals.get(i).toString());
-            }
-            int x;
-            do{
-                x = Console.readInteger("Choose the meal:");
-            }while(x<0 || x>meals.size());
-            
-            
-            Execution exec;
-            try {
-                exec = controller.checkIfExists(meals.get(x-1));
-                System.out.println("You are going to edit an existing Execution:");
-                
-                int numMadeMeals;
-                do{
-                    numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
-                }while(numMadeMeals<0);
-                
-                MadeMeals madeMeals = new MadeMeals(numMadeMeals);
-                exec.changeMadeMeals(madeMeals);
-            
-                saveExecution(exec);
-                
-            } catch (NoResultException e) {
+        System.out.println("--------------------------");
+        System.out.println("Welcome, please insert the criteria:\n");
 
-                int numMadeMeals;
-                do{
-                    numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
-                }while(numMadeMeals<0);
-                
-                MadeMeals madeMeals = new MadeMeals(numMadeMeals);
-            
-                exec = controller.createExecution(meals.get(x-1), madeMeals);
-                
-                saveExecution(exec);
+        String answer = "";
+        do {
+            Calendar date = Console.readCalendar("Insert date (DD-MM-YYYY):");
+
+            System.out.println("--------------------------");
+            int n;
+            do {
+                System.out.println("Choose the Meal Type:\n");
+                System.out.println("1-Lunch");
+                System.out.println("2-Dinner\n");
+                n = Console.readInteger("Choose:");
+            } while (n != 1 && n != 2);
+
+            MealType mealType = null;
+            if (n == 1) {
+                mealType = MealType.LUNCH;
+            } else if (n == 2) {
+                mealType = MealType.DINNER;
             }
+            List<Meal> meals = controller.getMealsList(date, mealType);
+            if (meals.isEmpty()) {
+                System.out.println("There are no meals with that criteria.");
+            } else {
+                System.out.println("\nThere are " + meals.size() + " meals with that criteria.");
+                Console.readLine("Press enter to continue.");
+
+                for (int i = 0; i < meals.size(); i++) {
+                    System.out.println("--------------------------");
+                    System.out.println((i + 1) + "- " + meals.get(i).toString());
+                   System.out.println("--------------------------");
+
+                    Execution exec;
+                    try {
+                        exec = controller.checkIfExists(meals.get(i));
+                        System.out.println("You are going to edit an existing Execution.");
+
+                        MadeMeals madeMeals = numberOfMadeMeals();
+
+                        exec.changeMadeMeals(madeMeals);
+
+                        saveExecution(exec);
+
+                    } catch (NoResultException e) {
+
+                        MadeMeals madeMeals = numberOfMadeMeals();
+
+                        exec = controller.createExecution(meals.get(i), madeMeals);
+
+                        saveExecution(exec);
+                    }
+                }
+            }
+            do{
+                answer = Console.readLine("\nDo you want to edit more meals? (y/n)");
+            } while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n"));
             
-            
-        }
+        } while (answer.equalsIgnoreCase("y"));
+
         return true;
     }
-    
-    private void saveExecution(Execution exec){
-        
+
+    private MadeMeals numberOfMadeMeals() {
+        int numMadeMeals;
+        do {
+            numMadeMeals = Console.readInteger("How many Made Meals for this Meal?");
+        } while (numMadeMeals < 0);
+
+        return new MadeMeals(numMadeMeals);
+    }
+
+    private void saveExecution(Execution exec) {
+
         try {
             controller.addExecution(exec);
             System.out.println("Execution added!");
@@ -108,7 +108,7 @@ public class RegisterMadeMealsUI extends AbstractUI{
 
     @Override
     public String headline() {
-        return "Register the Number of Made Meals";
+        return "REGISTER THE NUMBER OF MADE MEALS";
     }
-    
+
 }
