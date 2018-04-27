@@ -25,11 +25,11 @@ public class ViewAvailableMealsController implements Controller {
     private final ListAvailableMealsService availableMealsService = new ListAvailableMealsService();
     private static final int LUNCH_START = 12;
     private static final int LUNCH_END = 16;
-    private Calendar day = DateTime.parseDate("08-05-2018");
+    private Calendar defaultDay = DateTime.parseDate("07-05-2018");
+    private MealType defaultMealType = MealType.LUNCH;
     
     public AvailableMealsStatistics findAvailableMealsPerDay() {
-        MealType mealType = checkMealType();
-        return availableMealsService.calcStatistics(day, mealType);
+        return availableMealsService.calcStatistics(defaultDay, defaultMealType);
     }
 
     public MealType checkMealType() {
