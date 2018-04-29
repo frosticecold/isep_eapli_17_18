@@ -13,16 +13,16 @@ import eapli.framework.presentation.console.AbstractUI;
  */
 public class POSOpeningUI extends AbstractUI {
 
-    private final POSOpeningController theController;
+    private POSOpeningController theController;
 
-    public POSOpeningUI() throws DataConcurrencyException, DataIntegrityViolationException {
+    public POSOpeningUI() {
         this.theController = new POSOpeningController();
     }
 
     @Override
     protected boolean doShow() {
-        System.out.println(String.format("Creating Delivery Meal Session...\n", (Object) null));
         if (!theController.checkPoSState()) {
+            System.out.println(String.format("Creating Delivery Meal Session...\n", (Object) null));
             theController.createDeliveryMealSession();
             return true;
         }

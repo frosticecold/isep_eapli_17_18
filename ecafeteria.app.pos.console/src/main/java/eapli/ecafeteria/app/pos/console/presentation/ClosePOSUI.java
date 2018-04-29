@@ -29,15 +29,14 @@ public class ClosePOSUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        controller.closeSession();
         Map<DishType, Long> map = controller.listDeliveredMeals(DateTime.now(), controller.checkMealype());
-
         String output = "";
         for (Entry<DishType, Long> e : map.entrySet()) {
             output += e.getKey() + " : " + e.getValue() + "\n";
         }
         System.out.println(output);
         new LoginAction(ActionRight.SALE).execute();
+        controller.closeSession();
         return true;
     }
 

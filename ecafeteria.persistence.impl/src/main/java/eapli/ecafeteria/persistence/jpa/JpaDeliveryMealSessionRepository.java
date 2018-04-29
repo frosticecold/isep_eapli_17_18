@@ -14,26 +14,7 @@ import javax.persistence.Query;
  */
 public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase<DeliveryMealSession, Long> implements DeliveryMealSessionRepository {
     
-    public JpaDeliveryMealSessionRepository() {
-        
-    }
-
-    /**
-     * Persists a DeliveryMealSession on persistence
-     * @param entity
-     * @return
-     * @throws DataConcurrencyException
-     * @throws DataIntegrityViolationException 
-     */
-    @Override
-    public DeliveryMealSession save(DeliveryMealSession entity) throws DataConcurrencyException, DataIntegrityViolationException {
-        
-        entityManager().persist(entity);
-        
-        return entity;
-    }
-
-    /**
+     /**
      * Returns a List of all registered DeliveryMealSession
      * @return 
      */
@@ -96,6 +77,6 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
         
         q.setParameter("cashier",cashier);
 
-        return (Optional) q.getSingleResult();
+        return q.getResultList().stream().findFirst();
     }
 }

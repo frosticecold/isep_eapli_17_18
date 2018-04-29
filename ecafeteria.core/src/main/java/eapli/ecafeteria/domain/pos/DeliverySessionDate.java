@@ -35,7 +35,6 @@ public class DeliverySessionDate implements ValueObject, Serializable {
     private int year;
 
     protected DeliverySessionDate() {
-        
         //for ORM only
     }
     

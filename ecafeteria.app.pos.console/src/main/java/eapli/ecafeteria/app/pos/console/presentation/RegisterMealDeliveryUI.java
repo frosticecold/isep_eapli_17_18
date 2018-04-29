@@ -40,7 +40,7 @@ public class RegisterMealDeliveryUI extends AbstractUI {
                         System.out.println("Register done");
                     }
                     catch (Exception e) {
-                        System.out.println("Database error");
+                        System.out.println("Database error:" + e.getMessage());
                    }
                 }
                 else System.out.println("Booking already served!");

@@ -23,11 +23,11 @@ public class AlergenController implements Controller{
     
     private final ListAlergenService svc = new ListAlergenService();
     private final AlergenRepository alergenRepository = PersistenceContext.repositories().alergens();
-    
+    //method that return an interable with all the alergens that exist in the reository
     public Iterable<Alergen> allAlergens() {
         return this.svc.allAlergens();
     }
-
+    
     public Alergen newAlergen(String name)throws DataIntegrityViolationException, DataConcurrencyException {
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);

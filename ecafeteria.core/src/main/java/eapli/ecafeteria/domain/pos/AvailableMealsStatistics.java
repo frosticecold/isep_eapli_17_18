@@ -26,12 +26,14 @@ public class AvailableMealsStatistics {
     private Map<DishType, Long> mapDishtypeQuantity;
     private Map<DishType, Long> mapWithReservedQuantity;
     private Map<DishType, Long> mapWithRemaningQuantity;
+    private Map<DishType, Long> mapServedQuantity;
 
     public AvailableMealsStatistics(Calendar day, MealType mealType) {
         this.day = day;
         this.mealType = mealType;
         this.mapDishtypeQuantity = new HashMap<>();
         this.mapWithReservedQuantity = new HashMap<>();
+        this.mapServedQuantity = new HashMap<>();
     }
 
     private boolean addToMap(Map<DishType, Long> map, DishType dishType, Long quantity) {
@@ -56,11 +58,18 @@ public class AvailableMealsStatistics {
         }
         return addToMap(mapWithReservedQuantity, dt, qt);
     }
+    
+    public boolean addDishTypeServedQuantity(DishType dt, Long qt){
+        if (!mapServedQuantity.containsKey(dt)) {
+            mapServedQuantity.put(dt, (long) 0);
+        }
+        return addToMap(mapServedQuantity, dt, qt);
+    }
 
-    public Map<DishType, Long> calcRemainingDishes() {
+    private Map<DishType, Long> calcRemainingDishes() {
         Map<DishType, Long> map = new LinkedHashMap<>();
         for (DishType dt : mapDishtypeQuantity.keySet()) {
-            Long dif = mapDishtypeQuantity.get(dt) - mapWithReservedQuantity.get(dt);
+            Long dif = mapDishtypeQuantity.get(dt) - mapServedQuantity.get(dt);
             map.put(dt, dif);
         }
         mapWithRemaningQuantity = map;

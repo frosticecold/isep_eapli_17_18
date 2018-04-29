@@ -51,7 +51,9 @@ public class ChangeDishController implements Controller {
 
         return this.dishRepository.save(dish);
     }
-    
+    /*
+    /controler for the method to add alergens to the alergen list in a dish
+    */
     public Dish addAlergen(Dish dish, Alergen alergen)throws DataConcurrencyException, DataIntegrityViolationException {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
         if (dish == null) {

@@ -15,8 +15,11 @@ import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.util.Console;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +39,7 @@ public class BookingMealUI extends AbstractUI implements ViewNextBookingInterfac
     protected boolean doShow() {
 
         showNextBooking();
-        
+
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
 
@@ -47,6 +50,9 @@ public class BookingMealUI extends AbstractUI implements ViewNextBookingInterfac
 
         //====================================lIST MEAL============================================
         Iterable<Meal> mealList = null;
+        List<Meal> listMeal = new ArrayList<Meal>();
+        Meal choosedMeal = null;
+
         int option = 0;
 
         System.out.println("Choose Meal Type:\n1-Lunch\n2-Dinner");
@@ -56,10 +62,73 @@ public class BookingMealUI extends AbstractUI implements ViewNextBookingInterfac
         switch (option) {
             case 1:
                 mealList = controller.listMeals(cal, MealType.LUNCH);
+                if (!mealList.iterator().hasNext()) {
+                    System.out.println("\nThere are no meals in that conditions.\n");
+                    return false;
+                }
+
+                for (Meal meal : mealList) {
+                    if (meal.menu().isPublished()) {
+                        listMeal.add(meal);
+                    }
+                }
+                if (listMeal.isEmpty()) {
+                    System.out.println("\nThere are no meals published.\n");
+                    return false;
+                }
+
+                SelectWidget<List<Meal>> selectWidget
+                        = new SelectWidget("Select a meal", listMeal);
+                selectWidget.show();
+                try {
+                    int index = selectWidget.selectedOption() - 1;
+                    if (index == -1) {
+                        return false;
+                    }
+
+                    choosedMeal = controller.selectMeal(index, listMeal);
+
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+
                 break;
 
             case 2:
                 mealList = controller.listMeals(cal, MealType.DINNER);
+                if (!mealList.iterator().hasNext()) {
+                    System.out.println("\nThere are no meals in that conditions.\n");
+
+                    return false;
+                }
+
+                for (Meal meal : mealList) {
+                    if (meal.menu().isPublished()) {
+                        listMeal.add(meal);
+                    }
+                }
+                if (listMeal.isEmpty()) {
+                    System.out.println("\nThere are no meals published.\n");
+                    return false;
+                }
+
+                SelectWidget<List<Meal>> selectWidget2
+                        = new SelectWidget("Select a meal", listMeal);
+                selectWidget2.show();
+                try {
+                    int index = selectWidget2.selectedOption() - 1;
+                    if (index == -1) {
+                        return false;
+                    }
+
+                    choosedMeal = controller.selectMeal(index, listMeal);
+
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+
                 break;
 
             default:
@@ -68,34 +137,16 @@ public class BookingMealUI extends AbstractUI implements ViewNextBookingInterfac
 
         }
 
-        if (!mealList.iterator().hasNext()) {
-            System.out.println("\nThere are no meals in that conditions\n");
-            return false;
-        }
-
-        for (Meal meal : mealList) {
-            if (meal.menu().isPublished()) {
-                System.out.println(meal.toString());
-            } else {
-                System.out.println("\nThere are no meals published.\n");
-                return false;
-            }
-
-        }
-
         //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
-        System.out.println("Choose one meal");
-        final Long id = Console.readLong("Insert the meal id:");
-
-        Meal choosedMeal = null;
-
-        for (Meal meal : mealList) {
-            if (meal.id().equals(id)) {
-                choosedMeal = meal;
-            }
-        }
+//        System.out.println("Choose one meal");
+//        final Long id = Console.readLong("Insert the meal id:");
+//        for (Meal meal : mealList) {
+//            if (meal.id().equals(id)) {
+//                choosedMeal = meal;
+//            }
+//        }
         if (choosedMeal == null) {
-            System.out.println("Invalid Id!");
+            System.out.println("Invalid meal choice!");
             return false;
         }
 
@@ -116,7 +167,7 @@ public class BookingMealUI extends AbstractUI implements ViewNextBookingInterfac
             case 1:
                 try {
                     if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal)) {
-                        System.out.println("Sucess, the transaction was done.");
+                        System.out.println("Success, the transaction was done.");
                     }
                 } catch (DataConcurrencyException ex) {
                     Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -154,15 +205,3 @@ public class BookingMealUI extends AbstractUI implements ViewNextBookingInterfac
     }
 
 }
-
-//    @Override
-//    public Iterable<Alergen> listAlergenOfMeal(Meal meal) {
-//    final Query q = entityManager().
-//                createQuery("SELECT al"
-//                          + " FROM Alergen al, Meal meal"
-//                          + " WHERE meal = :meal", Alergen.class);
-//        q.setParameter("meal", meal);
-//
-//        return q.getResultList();
-//
-//    }

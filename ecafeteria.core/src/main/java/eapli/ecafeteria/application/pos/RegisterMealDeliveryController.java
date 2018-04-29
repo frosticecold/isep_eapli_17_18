@@ -10,6 +10,10 @@ import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -62,7 +66,13 @@ public class RegisterMealDeliveryController implements Controller {
         }
         //change state of the booking just recorded - to served
         
-        PersistenceContext.repositories().booking().findOne(idBooking).get().getBookingState().changeToServed();     
+        booking.getBookingState().changeToServed();     
+        
+        try {
+            PersistenceContext.repositories().booking().save(booking);
+        } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
+            System.out.println("Error "+ ex.getMessage());
+        }
     }
    
     /**
