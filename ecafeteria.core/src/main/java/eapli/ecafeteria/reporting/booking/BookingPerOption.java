@@ -29,7 +29,7 @@ public class BookingPerOption implements DTO{
                 
                                     b.getIdBooking(),
                                     b.getMeal().getMealDate(),
-                                    b.getBookingState().toString(),
+                                    b.getBookingState().actualState().name(),
                                     b.getCafeteriauser().mecanographicNumber().toString(),
                                     b.getMeal().mealtype().toString()
                 
@@ -39,7 +39,7 @@ public class BookingPerOption implements DTO{
 
     @Override
     public String toString() {
-        return "BOOKING{" + "\n BOOKING ID= " + bookingId + "\n MEAL DATE= " + mealDate + "\n STATE= " + bookingState + "\n USER NUMBER= " + userMacGNumber + "\n Meal Type= " + mealType + "\n}\n\n";
+        return "BOOKING{" + "\n BOOKING ID= " + bookingId + "\n MEAL DATE= " + mealDate.getTime() + "\n STATE= " + bookingState + "\n USER NUMBER= " + userMacGNumber + "\n Meal Type= " + mealType + "\n}\n\n";
     }
     
     
