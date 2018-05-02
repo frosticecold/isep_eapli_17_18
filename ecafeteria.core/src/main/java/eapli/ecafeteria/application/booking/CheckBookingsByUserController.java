@@ -38,7 +38,9 @@ public class CheckBookingsByUserController implements Controller
     {
         try
         {
-            return repository.cafeteriaUsers().findByUsername(AuthorizationService.session().authenticatedUser().username()).get();
+            return repository.cafeteriaUsers().findByUsername(
+                    AuthorizationService.session().authenticatedUser().username())
+                    .get();
         } catch (NoResultException exception)
         {
             System.out.println("No users were found");
