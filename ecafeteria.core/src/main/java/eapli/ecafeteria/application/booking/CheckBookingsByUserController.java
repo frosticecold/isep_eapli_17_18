@@ -26,7 +26,6 @@ public class CheckBookingsByUserController implements Controller
     private BookingReportingRepository bookingRepository;
     private CafeteriaUser user;
     private RepositoryFactory repository;
-    private BookingState state;
 
     public CheckBookingsByUserController()
     {
@@ -47,11 +46,11 @@ public class CheckBookingsByUserController implements Controller
         }
     }
 
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState)
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState)
     {
         try
         {
-            return bookingRepository.findBookingsByCafeteriaUser(user, state);
+            return bookingRepository.findBookingsByCafeteriaUser(user, bookingState);
         } catch (NoResultException exception)
         {
             throw new NoResultException();

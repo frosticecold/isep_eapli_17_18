@@ -13,7 +13,7 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.presentation.console.AbstractUI;
 import java.util.ArrayList;
 import javax.persistence.NoResultException;
-
+import java.util.*;
 /**
  *
  * @author 1160911 <Rafael Teixeira>
@@ -21,7 +21,7 @@ import javax.persistence.NoResultException;
 public class CheckBookingsByUserUI extends AbstractUI
 {
 
-    private CheckBookingsByUserController controller = null;
+    private CheckBookingsByUserController controller = new CheckBookingsByUserController();
 
     @Override
     protected boolean doShow()
@@ -29,9 +29,8 @@ public class CheckBookingsByUserUI extends AbstractUI
         try
         {
 
-            controller = new CheckBookingsByUserController();
             CafeteriaUser user = controller.getCurrentUser();
-            ArrayList<Booking> bookings = (ArrayList<Booking>) controller.findBookingsByCafeteriaUser(user, BookingState.BookingStates.BOOKED);
+            List<Booking> bookings = controller.findBookingsByCafeteriaUser(user, new BookingState());
 
             if (bookings.isEmpty())
             {
