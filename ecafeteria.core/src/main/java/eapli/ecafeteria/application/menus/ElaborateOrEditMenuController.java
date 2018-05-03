@@ -165,6 +165,9 @@ public class ElaborateOrEditMenuController implements Controller {
             return false;
         }
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
+        if (menu.isPublished()) {
+            throw new IllegalStateException("Cannot save published menu.");
+        }
         return mealrepo.save(meal) != null;
     }
 
@@ -175,7 +178,7 @@ public class ElaborateOrEditMenuController implements Controller {
         }
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
         if (menu.isPublished()) {
-            return false;
+            throw new IllegalStateException("Cannot save published menu.");
         }
         mealrepo.delete(meal);
         return true;
@@ -187,7 +190,9 @@ public class ElaborateOrEditMenuController implements Controller {
         }
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
-
+        if (menu.isPublished()) {
+            throw new IllegalStateException("Cannot save published menu.");
+        }
         Menu savedMenu = menurepo.save(menu);
         return savedMenu;
     }
