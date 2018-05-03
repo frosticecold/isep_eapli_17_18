@@ -5,8 +5,6 @@
  */
 package eapli.ecafeteria.persistence;
 
-import eapli.ecafeteria.domain.meal.Meal;
-import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.persistence.repositories.DataRepository;
 import java.util.Calendar;
@@ -19,7 +17,7 @@ import java.util.Optional;
  */
 public interface MenuRepository extends DataRepository<Menu, Long> {
 
-    Iterable<Menu> listValidMenus();
+    Iterable<Menu> listUnpublishedMenus();
 
     /**
      * Method that returns if exists a menu within a given period
