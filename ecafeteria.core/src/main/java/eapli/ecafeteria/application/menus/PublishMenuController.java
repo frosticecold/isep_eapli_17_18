@@ -22,7 +22,7 @@ import eapli.framework.persistence.DataIntegrityViolationException;
 public class PublishMenuController implements Controller {
     
     private final MenuRepository menuRepository = PersistenceContext.repositories().menus();
-    private final ListUnpublishedMenus m_list = new ListUnpublishedMenus(menuRepository.listValidMenus());
+    private final ListUnpublishedMenus m_list = new ListUnpublishedMenus(MenuService.findValidMenus());
     
     /**
      * List of critical menus
