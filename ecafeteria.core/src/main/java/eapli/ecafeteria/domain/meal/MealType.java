@@ -17,7 +17,7 @@ public enum MealType {
         this.id = i;
     }
 
-    public int mealtype() {
+    public int mealType() {
         return this.id;
     }
 
