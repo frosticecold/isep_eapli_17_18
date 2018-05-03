@@ -127,7 +127,7 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
         
         boolean flag = false;
         
-        if(PersistenceContext.repositories().booking().findOne(booking).get().getBookingState().actualState().compareTo(BookingState.BookingStates.NOT_SERVED) == 0) flag = true;
+        if(PersistenceContext.repositories().booking().findOne(booking).get().getBookingState().actualState().compareTo(BookingState.BookingStates.BOOKED) == 0) flag = true;
         
         return flag;
     }

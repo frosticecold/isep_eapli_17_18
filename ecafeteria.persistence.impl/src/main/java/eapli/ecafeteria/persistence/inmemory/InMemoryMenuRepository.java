@@ -21,7 +21,7 @@ import java.util.Optional;
 public class InMemoryMenuRepository extends InMemoryRepositoryWithLongPK<Menu> implements MenuRepository {
 
     @Override
-    public Iterable<Menu> listValidMenus() {
+    public Iterable<Menu> listUnpublishedMenus() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

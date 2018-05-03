@@ -9,20 +9,18 @@ import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import eapli.framework.util.Console;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
 public class RegisterBatchUsedInMealController implements Controller {
 
-    MealRepository mealRepository = Objects.requireNonNull(PersistenceContext.repositories()).meals();
-    MaterialRepository materialRepository = Objects.requireNonNull(PersistenceContext.repositories()).materials();
-    BatchRepository batchRepository = Objects.requireNonNull(PersistenceContext.repositories()).batch();
-    MealMaterialRepository mealMaterialRepository = PersistenceContext.repositories().mealMaterial();
+    private MealRepository mealRepository = Objects.requireNonNull(PersistenceContext.repositories()).meals();
+    private MaterialRepository materialRepository = Objects.requireNonNull(PersistenceContext.repositories()).materials();
+    private BatchRepository batchRepository = Objects.requireNonNull(PersistenceContext.repositories()).batch();
+    private MealMaterialRepository mealMaterialRepository = Objects.requireNonNull(PersistenceContext.repositories()).mealMaterial();
 
     private Meal meal;
-    private List<Meal> mealList;
 
     public Meal meal() {
         return this.meal;
@@ -42,67 +40,29 @@ public class RegisterBatchUsedInMealController implements Controller {
         }
     }
 
-    public int setMeal() {
-        long code = Console.readLong("Insert dish code:");
-
-        if (code == -1) {
-            meal = null;
-            return -1;
-        }
-
-        for (Meal m : mealList) {
-            if (m.id() == code) {
-                meal = m;
-                return 0;
-            }
-        }
-        return -1;
+    public void setMeal(Meal meal) {
+        this.meal = meal;
     }
 
-    public int showMeals(String mealT, Calendar date) {
-        MealType mealType = MealType.valueOf(mealT);
-
-        mealList = mealRepository.listOfMealsByDateAndMealType(date, mealType);
-
-        if (mealList.size() != 0) {
-            for (Meal m : mealList) {
-                System.out.printf("Meal -> Dish Name:%s, Code: %d\n", m.dish().name(), m.id());
-            }
-        } else {
-            System.out.printf("The are no meals available on: %s!\n", date.getTime().toString());
-            return -1;
-        }
-        return 0;
+    public List<Material> materialList() {
+        return (List<Material>) materialRepository.findAll();
     }
 
-    public void showMaterial() {
-        List<Material> list = (List<Material>) materialRepository.findAll();
-
-        for (Material m : list) {
-            System.out.printf("%s, Acronym: %s\n", m.description(), m.id());
-        }
-    }
-
-    public void showAvailableBatches(String materialId) {
-        Calendar today = Calendar.getInstance();
-
-
-        Iterable<Batch> list = batchRepository.findAll();
-        for (Batch b : list) {
-            if (b.material().id().compareTo(materialId) == 0 && b.isAvailable() && b.useByDate().compareTo(today) > 0) {
-                System.out.printf("Id: %d Batch: %s, Quantity Available: %f Expiration: %s\n",
-                        b.pk(), b.barcode(), b.availableQuantity(), b.useByDate().getTime().toString());
-            }
-        }
+    public Iterable<Batch> batches() {
+        return batchRepository.findAll();
     }
 
     public Batch getSelectedBatch(int id) {
-        List<Batch> list = batchRepository.findAll();
+        List<Batch> list = (List<Batch>) batches();
         for (Batch b : list) {
-            if ((int) b.pk() == id) {
+            if (b.pk() == id) {
                 return b;
             }
         }
         return null;
+    }
+
+    public List<Meal> mealList(Calendar date, MealType mealType) {
+        return mealRepository.listOfMealsByDateAndMealType(date, mealType);
     }
 }

@@ -11,7 +11,6 @@ public class Batch implements Serializable {
     @Id
     @GeneratedValue
     private int pk;
-
     private String barCode;
     @Version
     private Long version;
@@ -55,11 +54,11 @@ public class Batch implements Serializable {
         return material;
     }
 
-    public void used() {
+    private void used() {
         status = 1;
     }
 
-    public Object pk() {
+    public int pk() {
         return pk;
     }
 
