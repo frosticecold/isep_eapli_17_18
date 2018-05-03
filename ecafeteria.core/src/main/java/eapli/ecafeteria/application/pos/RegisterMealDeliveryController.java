@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class RegisterMealDeliveryController implements Controller {
+public class RegisterMealDeliveryController extends ViewAvailableMealsController {
         
     /** Construtor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
     
