@@ -34,7 +34,7 @@ public class DeliveryRegistry implements  AggregateRoot<Long>, Serializable {
     @OneToOne
     @JoinColumn(name="CLIENT")
     private CafeteriaUser client;
-    
+
     @ManyToOne
     @JoinColumn(name="SESSION")
     private DeliveryMealSession session;
