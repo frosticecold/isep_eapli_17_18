@@ -37,18 +37,18 @@ public class PublishMenuUI extends AbstractUI {
         List<String> optionsList = new ArrayList<>();
         List<String> critMenuList = new ArrayList<>();
         List<String> notCritMenuList = new ArrayList<>();
-        
+
         optionsList.add("Publish Critical Menus");
         optionsList.add("Publish Not Critical Menus");
-        
+
         for (Menu criticalMenu : controller.criticalMenus()) {
             critMenuList.add(criticalMenu.toString());
         }
-        
+
         for (Menu notCriticalMenu : controller.notCriticalMenus()) {
             notCritMenuList.add(notCriticalMenu.toString());
         }
-        
+
         /**
          * Print the critical menus in a List Widget
          */
@@ -58,12 +58,11 @@ public class PublishMenuUI extends AbstractUI {
          */
         ListWidget<String> notCritListMenus = new ListWidget<>("Not Critical Menus", notCritMenuList);
         /**
-         * Prints the options to select
-         * 1. Publish Critical Menus
-         * 2. Publish Not Critical Menus
+         * Prints the options to select 1. Publish Critical Menus 2. Publish Not
+         * Critical Menus
          */
         SelectWidget<String> widget = new SelectWidget<>("Showing Options", optionsList);
-        
+
         do {
             try {
                 critListMenus.show();
@@ -90,21 +89,22 @@ public class PublishMenuUI extends AbstractUI {
     public String headline() {
         return "Publish Menus";
     }
-    
+
     /**
      * Publishes the critical menus and prints the number of published menus
-     * 
+     *
      * @throws DataConcurrencyException
-     * @throws DataIntegrityViolationException 
+     * @throws DataIntegrityViolationException
      */
     private void publishCriticalMenus() throws DataConcurrencyException, DataIntegrityViolationException {
         System.out.println(controller.publishCriticalMenus());
     }
-    
+
     /**
      * Publishes the not critical menus and prints the number of published menus
+     *
      * @throws DataConcurrencyException
-     * @throws DataIntegrityViolationException 
+     * @throws DataIntegrityViolationException
      */
     private void publishNotCriticalMenus() throws DataConcurrencyException, DataIntegrityViolationException {
         System.out.println(controller.publishNotCriticalMenus());
