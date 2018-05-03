@@ -19,7 +19,7 @@ import java.util.List;
 public class CancelBookingUI extends AbstractUI implements ViewNextBookingInterface {
 
     /**
-     * Controller !missing user!
+     * Controller
      */
     private CancelBookingController controller = new CancelBookingController();
 
