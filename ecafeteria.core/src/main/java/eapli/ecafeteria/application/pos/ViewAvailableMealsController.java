@@ -5,13 +5,8 @@
  */
 package eapli.ecafeteria.application.pos;
 
-import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.pos.AvailableMealsStatistics;
-import eapli.ecafeteria.domain.pos.DeliveryMealSession;
-import eapli.ecafeteria.persistence.BookingRepository;
-import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;

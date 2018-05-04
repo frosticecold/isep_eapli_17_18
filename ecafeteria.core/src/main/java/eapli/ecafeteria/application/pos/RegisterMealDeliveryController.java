@@ -25,9 +25,8 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
     
     private DeliveryMealSession session;
     private SystemUser cashier;
-//    private final TransactionalContext txCtx = PersistenceContext.repositories().buildTransactionalContext();
-//    private final DeliveryRegistryRepository deliveryRegistryRepo = PersistenceContext.repositories().deliveryRegistryRepository();
-//    //private final BookingRepository bookingsRepo = PersistenceContext.repositories().booking(txCtx);
+ private final DeliveryRegistryRepository deliveryRegistryRepo = PersistenceContext.repositories().deliveryRegistryRepository();
+private final BookingRepository bookingsRepo = PersistenceContext.repositories().booking();
     private final CafeteriaUserRepository cafeteriaUsersRepo = PersistenceContext.repositories().cafeteriaUsers(); //doesnt user transaction context because it wont change or persist any changes on database
     
     public RegisterMealDeliveryController() {
@@ -55,18 +54,23 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
         
         //get booking by the number of the user
         
-
+        Booking booking = this.bookingsRepo.findOne(idBooking).get();
         
         
         //add new record of the delivery just made on DeliveryRegistry
         
-        //DeliveryRegistry registry = new DeliveryRegistry(this.session, client, booking);
-        
+        DeliveryRegistry registry = new DeliveryRegistry(this.session, client, booking);
 
-        
         //change state of the booking just recorded - to served
         
+        try {
+            this.deliveryRegistryRepo.save(registry);
+        }
+        catch(Exception e) {
+            
+        }
         
+        this.bookingsRepo.findOne(idBooking).get().getBookingState().changeToServed();
 
     }
    
@@ -81,7 +85,7 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
         
         //get booking by id
         
-        if(PersistenceContext.repositories().booking().findOne(idBooking).isPresent()) flag = true;
+        if(this.bookingsRepo.findOne(idBooking).isPresent()) flag = true;
         
         return flag;
     }
@@ -97,7 +101,7 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
         
         MecanographicNumber mNumber = new MecanographicNumber(number);
         
-        if(PersistenceContext.repositories().cafeteriaUsers().findOne(mNumber).isPresent()) flag = true;
+        if(this.cafeteriaUsersRepo.findOne(mNumber).isPresent()) flag = true;
         
         return flag;
     }
@@ -107,7 +111,7 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
      */
     public boolean getBooking(long idBooking) {
         
-        Booking b = PersistenceContext.repositories().booking().findOne(idBooking).get(); 
+        Booking b = this.bookingsRepo.findOne(idBooking).get(); 
         
         if(b == null) return false;
         else return true;
@@ -122,7 +126,7 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
         
         boolean flag = false;
         
-        if(PersistenceContext.repositories().booking().findOne(booking).get().getBookingState().actualState().compareTo(BookingState.BookingStates.BOOKED) == 0) flag = true;
+        if(this.bookingsRepo.findOne(booking).get().getBookingState().actualState().compareTo(BookingState.BookingStates.BOOKED) == 0) flag = true;
         
         return flag;
     }
