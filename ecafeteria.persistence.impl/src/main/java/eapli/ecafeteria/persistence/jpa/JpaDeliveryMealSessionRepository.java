@@ -3,8 +3,6 @@ package eapli.ecafeteria.persistence.jpa;
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.persistence.DeliveryMealSessionRepository;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Optional;
 import javax.persistence.Query;
 
