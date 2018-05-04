@@ -10,7 +10,7 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RatingRepository;
 import eapli.ecafeteria.persistence.RepositoryFactory;
@@ -42,7 +42,7 @@ public class RatingMealController {
     /**
      * Booking Reporting Repository
      */
-    private BookingReportingRepository bookingRepository = PersistenceContext.repositories().bookingReporting();
+    private BookingRepository bookingRepository = PersistenceContext.repositories().booking();
 
     /**
      * Rating repository
@@ -68,7 +68,7 @@ public class RatingMealController {
                 .get();
 
         ratingRepository = factory.rating();
-        bookingRepository = factory.bookingReporting();
+        bookingRepository = factory.booking();
         BookingState served = new BookingState();
         served.changeToServed();
         bookings = bookingRepository.findBookingsByCafeteriaUser(user, served);

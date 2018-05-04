@@ -17,10 +17,8 @@ import java.util.List;
 public interface BookingReportingRepository extends ReportingRepository {
 
     public Iterable<Booking> findBookingByState(BookingState bookingState);
-
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState);
     
-         /**
+    /**
      * Report booking by input date.
      *
      * @param Calendar iDate - Pretended date

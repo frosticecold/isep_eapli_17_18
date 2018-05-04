@@ -8,7 +8,7 @@ package eapli.ecafeteria.application.booking;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 
 /**
@@ -17,8 +17,8 @@ import eapli.ecafeteria.persistence.PersistenceContext;
  */
 public class ViewNextBookingService {
 
-    private static final BookingReportingRepository bookingReportingRepo = PersistenceContext
-            .repositories().bookingReporting();
+    private static final BookingRepository bookingRepo = PersistenceContext
+            .repositories().booking();
 
     public ViewNextBookingService(){
         
@@ -34,7 +34,7 @@ public class ViewNextBookingService {
         Booking nextBooking = null;
         BookingState state = new BookingState();
 
-        for (Booking booking : bookingReportingRepo.findBookingsByCafeteriaUser(user, state)) {
+        for (Booking booking : bookingRepo.findBookingsByCafeteriaUser(user, state)) {
 
             long bookingDate1 = booking.getMeal().getMealDate().getTimeInMillis();
             long bookingDate2;
