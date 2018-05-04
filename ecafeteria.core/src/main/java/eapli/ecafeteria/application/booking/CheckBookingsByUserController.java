@@ -9,7 +9,7 @@ import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.persistence.BookingReportingRepository;
+import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.application.Controller;
@@ -24,7 +24,7 @@ public class CheckBookingsByUserController implements Controller
 {
 
     private RepositoryFactory repository = PersistenceContext.repositories();
-    private BookingReportingRepository bookingRepository = repository.bookingReporting();
+    private BookingRepository bookingRepository = repository.booking();
 
     public CheckBookingsByUserController()
     {

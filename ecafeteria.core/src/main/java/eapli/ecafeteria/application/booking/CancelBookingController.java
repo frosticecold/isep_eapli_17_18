@@ -37,7 +37,7 @@ public class CancelBookingController {
     /**
      * Bookings repository
      */
-    private BookingReportingRepository bookingReportingRepository = null;
+    private BookingRepository bookingReportingRepository = null;
     
     /**
      * Bookings reporting repository
@@ -76,10 +76,9 @@ public class CancelBookingController {
                 .get();
         
         bookingRepository = factory.booking();
-        bookingReportingRepository = factory.bookingReporting();
         
         BookingState booked = new BookingState();
-        bookings = bookingReportingRepository.
+        bookings = bookingRepository.
             findBookingsByCafeteriaUser(user, booked);
     }
     
