@@ -13,8 +13,6 @@ import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.DeliveryRegistryRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.persistence.repositories.TransactionalContext;
 
 /**
@@ -27,10 +25,10 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
     
     private DeliveryMealSession session;
     private SystemUser cashier;
-    private final TransactionalContext txCtx = PersistenceContext.repositories().buildTransactionalContext();
-    private final CafeteriaUserRepository usersRepo = PersistenceContext.repositories().cafeteriaUsers(txCtx);
-    private final BookingRepository bookingsRepo = PersistenceContext.repositories().booking(txCtx);
-    private final DeliveryRegistryRepository deliveryRegistry = PersistenceContext.repositories().deliveryRegistryRepository(txCtx);
+//    private final TransactionalContext txCtx = PersistenceContext.repositories().buildTransactionalContext();
+//    private final DeliveryRegistryRepository deliveryRegistryRepo = PersistenceContext.repositories().deliveryRegistryRepository();
+//    //private final BookingRepository bookingsRepo = PersistenceContext.repositories().booking(txCtx);
+    private final CafeteriaUserRepository cafeteriaUsersRepo = PersistenceContext.repositories().cafeteriaUsers(); //doesnt user transaction context because it wont change or persist any changes on database
     
     public RegisterMealDeliveryController() {
         this.cashier = AuthorizationService.session().authenticatedUser();
@@ -53,32 +51,23 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
 
         //obtain the client
         
-        CafeteriaUser client = PersistenceContext.repositories().cafeteriaUsers().findByMecanographicNumber(mNumber).get();
+        CafeteriaUser client = this.cafeteriaUsersRepo.findByMecanographicNumber(mNumber).get();
         
         //get booking by the number of the user
         
-        Booking booking = PersistenceContext.repositories().booking().findOne(idBooking).get();
+
+        
         
         //add new record of the delivery just made on DeliveryRegistry
         
-        DeliveryRegistry registry = new DeliveryRegistry(this.session, client, booking);
+        //DeliveryRegistry registry = new DeliveryRegistry(this.session, client, booking);
         
-        //persist this Registry
-        try{
-            PersistenceContext.repositories().deliveryRegistryRepository().save(registry);
-        }
-        catch (Exception e) {
-            
-        }
+
+        
         //change state of the booking just recorded - to served
         
-        booking.getBookingState().changeToServed();     
         
-        try {
-            PersistenceContext.repositories().booking().save(booking);
-        } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
-            System.out.println("Error "+ ex.getMessage());
-        }
+
     }
    
     /**
