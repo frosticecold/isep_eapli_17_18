@@ -23,35 +23,37 @@ import javax.persistence.NoResultException;
 public class CheckBookingsByUserController implements Controller
 {
 
-    private BookingReportingRepository bookingRepository;
-    private CafeteriaUser user;
-    private RepositoryFactory repository;
-    private BookingState state;
+    private RepositoryFactory repository = PersistenceContext.repositories();
+    private BookingReportingRepository bookingRepository = repository.bookingReporting();
 
     public CheckBookingsByUserController()
     {
-        this.user = getCurrentUser();
-        this.bookingRepository = repository.bookingReporting();
-        this.repository = PersistenceContext.repositories();
+
     }
 
     public CafeteriaUser getCurrentUser()
     {
         try
         {
-            return repository.cafeteriaUsers().findByUsername(AuthorizationService.session().authenticatedUser().username()).get();
+            return repository.cafeteriaUsers().findByUsername(
+                    AuthorizationService.session().authenticatedUser().username())
+                    .get();
         } catch (NoResultException exception)
         {
             System.out.println("No users were found");
             return null;
+        } catch (NullPointerException ex)
+        {
+            System.out.println("ERRO");
+            return null;
         }
     }
 
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState.BookingStates bookingState)
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState)
     {
         try
         {
-            return bookingRepository.findBookingsByCafeteriaUser(user, state);
+            return bookingRepository.findBookingsByCafeteriaUser(getCurrentUser(), bookingState);
         } catch (NoResultException exception)
         {
             throw new NoResultException();

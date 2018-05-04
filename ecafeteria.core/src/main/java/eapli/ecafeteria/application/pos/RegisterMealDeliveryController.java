@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class RegisterMealDeliveryController implements Controller {
+public class RegisterMealDeliveryController extends ViewAvailableMealsController {
         
     /** Construtor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
     
@@ -127,7 +127,7 @@ public class RegisterMealDeliveryController implements Controller {
         
         boolean flag = false;
         
-        if(PersistenceContext.repositories().booking().findOne(booking).get().getBookingState().actualState().compareTo(BookingState.BookingStates.NOT_SERVED) == 0) flag = true;
+        if(PersistenceContext.repositories().booking().findOne(booking).get().getBookingState().actualState().compareTo(BookingState.BookingStates.BOOKED) == 0) flag = true;
         
         return flag;
     }

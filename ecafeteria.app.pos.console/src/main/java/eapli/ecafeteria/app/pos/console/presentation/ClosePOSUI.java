@@ -29,7 +29,8 @@ public class ClosePOSUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        Map<DishType, Long> map = controller.listDeliveredMeals(DateTime.now(), controller.checkMealype());
+        Map<DishType, Long> map = controller.listDeliveredMeals(DateTime.
+                parseDate("07-05-2018"), controller.checkMealype());
         String output = "";
         for (Entry<DishType, Long> e : map.entrySet()) {
             output += e.getKey() + " : " + e.getValue() + "\n";

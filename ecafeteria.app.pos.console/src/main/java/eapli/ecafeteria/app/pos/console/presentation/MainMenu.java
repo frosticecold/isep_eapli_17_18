@@ -67,7 +67,7 @@ public class MainMenu extends AbstractUI {
     public boolean doShow() {
         final Menu menu = buildMainMenu();
         final MenuRenderer renderer;
-        new ViewAvailableMealsUI().doShow();
+        //new ViewAvailableMealsUI().doShow();
         if (Application.settings().isMenuLayoutHorizontal()) {
             renderer = new HorizontalMenuRenderer(menu);
         } else {

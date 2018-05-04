@@ -28,7 +28,8 @@ public class ViewAvailableMealsUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "] \n  "
+                + controller.findAvailableMealsPerDay();
     }
 
 }

@@ -9,7 +9,7 @@ import eapli.framework.util.Console;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class RegisterMealDeliveryUI extends AbstractUI {
+public class RegisterMealDeliveryUI extends ViewAvailableMealsUI {
     
     private final RegisterMealDeliveryController ctrl;
 
@@ -25,7 +25,6 @@ public class RegisterMealDeliveryUI extends AbstractUI {
      * @param booking - id of the booking to register
      */
     private void recordNewMealDelivery(String mecNumber, long idBooking)  {
-
         //verifies if user is viable or active
         if(!this.ctrl.validateClient(mecNumber)) {
             System.out.println("User doesnt exists!MecanographicNumber doesnt exist!");
@@ -49,7 +48,7 @@ public class RegisterMealDeliveryUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        
+        System.out.println(ctrl.findAvailableMealsPerDay());
         try { 
             final String mecaNumber = Console.readLine("Insert Mecanographic Number of client:");
             final long idBooking = Console.readLong("Insert number of booking:");
@@ -64,8 +63,9 @@ public class RegisterMealDeliveryUI extends AbstractUI {
         return true;
     }
 
-    @Override
-    public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
-    }
+//    @Override
+//    public String headline() {
+//        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]  \n "
+//               + ctrl.findAvailableMealsPerDay();
+//    }
 }

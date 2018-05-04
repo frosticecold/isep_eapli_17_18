@@ -26,7 +26,7 @@ import javax.persistence.TypedQuery;
 public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> implements MenuRepository {
 
     @Override
-    public Iterable<Menu> listValidMenus() {
+    public Iterable<Menu> listUnpublishedMenus() {
         final Query q;
         String where = "e.menuState=:mstate";
         q = entityManager().createQuery("SELECT e FROM Menu e WHERE " + where, this.entityClass);

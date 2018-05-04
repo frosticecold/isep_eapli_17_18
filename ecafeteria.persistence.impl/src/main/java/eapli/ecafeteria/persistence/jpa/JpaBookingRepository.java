@@ -30,7 +30,7 @@ public class JpaBookingRepository
 
         return save(entity);
     }
-
+    
     @Override
     public Long countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType) {
         final Query q;
