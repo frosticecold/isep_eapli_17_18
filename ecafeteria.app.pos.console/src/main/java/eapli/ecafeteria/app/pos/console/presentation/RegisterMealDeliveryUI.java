@@ -1,8 +1,7 @@
 package eapli.ecafeteria.app.pos.console.presentation;
 
-import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.RegisterMealDeliveryController;
-import eapli.framework.presentation.console.AbstractUI;
+import eapli.ecafeteria.application.pos.ViewAvailableMealsController;
 import eapli.framework.util.Console;
 
 /**
@@ -48,7 +47,6 @@ public class RegisterMealDeliveryUI extends ViewAvailableMealsUI {
 
     @Override
     protected boolean doShow() {
-        System.out.println(ctrl.findAvailableMealsPerDay());
         try { 
             final String mecaNumber = Console.readLine("Insert Mecanographic Number of client:");
             final long idBooking = Console.readLong("Insert number of booking:");
@@ -63,9 +61,9 @@ public class RegisterMealDeliveryUI extends ViewAvailableMealsUI {
         return true;
     }
 
-//    @Override
-//    public String headline() {
-//        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]  \n "
-//               + ctrl.findAvailableMealsPerDay();
-//    }
+    @Override
+    protected ViewAvailableMealsController controller() {
+        return new ViewAvailableMealsController();
+    }
+
 }

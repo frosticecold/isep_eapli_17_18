@@ -14,22 +14,33 @@ import eapli.framework.presentation.console.AbstractUI;
  *
  * @author Miguel Santos <1161386@isep.ipp.pt>
  */
-public class ViewAvailableMealsUI extends AbstractUI {
+public abstract class ViewAvailableMealsUI extends AbstractUI {
 
-    private final ViewAvailableMealsController controller = new ViewAvailableMealsController();
+    protected abstract ViewAvailableMealsController controller();
+    
+//    @Override
+//    protected boolean doShow() {
+//        System.out.println("Available Dishes:");
+//        AvailableMealsStatistics availableMeals = controller.findAvailableMealsPerDay();
+//        System.out.println(availableMeals);
+//        return true;
+//    }
 
-    @Override
-    protected boolean doShow() {
-        System.out.println("Available Dishes:");
-        AvailableMealsStatistics availableMeals = controller.findAvailableMealsPerDay();
-        System.out.println(availableMeals);
-        return true;
+    public String showStatistics(){
+        return controller().findAvailableMealsPerDay().toString();
     }
-
+    
     @Override
     public String headline() {
         return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "] \n  "
-                + controller.findAvailableMealsPerDay();
+                + showStatistics();
     }
 
+    @Override
+    protected void drawFormTitle(String title) {
+        // drawFormBorder();
+        final String titleBorder = BORDER.substring(0, 2) + " " + title;
+        System.out.println(titleBorder);
+        drawFormBorder();
+    }
 }
