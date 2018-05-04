@@ -40,6 +40,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.Re
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDishUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.SearchBatchUsageAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.CopyMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
@@ -351,6 +352,7 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Menus >");
 
         menu.add(new MenuItem(MENU_EDIT_CREATE_OPTION, "Edit/Create Menu", () -> new ElaborateOrEditMenuUI().show()));
+        menu.add(new MenuItem(MENU_COPY_OPTION, "Copy Menu", () -> new CopyMenuUI().show()));
         menu.add(new MenuItem(MENU_PUBLISH_OPTION, "Publish Menus", () -> new PublishMenuUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
