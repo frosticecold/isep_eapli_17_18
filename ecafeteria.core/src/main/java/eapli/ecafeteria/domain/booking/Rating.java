@@ -7,7 +7,10 @@ package eapli.ecafeteria.domain.booking;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.ddd.AggregateRoot;
+import eapli.framework.util.DateTime;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -147,9 +150,14 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     }
 
     @Override
-    public String toString() {
+    public String toString() {      
+        
+
         StringBuilder str = new StringBuilder();
-        str.append("\nDate: ").append(date.toString());
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(date.getTime());
+        
+        str.append("Date: ").append(formattedDate);
         str.append("\nDish: ").append(booking.getMeal().dish().id())
                 .append("\nType: " + booking.getMeal().mealtype());
         str.append("\nRating: ");
