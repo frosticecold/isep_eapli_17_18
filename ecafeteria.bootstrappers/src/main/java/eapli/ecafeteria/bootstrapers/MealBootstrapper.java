@@ -37,56 +37,56 @@ public class MealBootstrapper implements Action {
         final Dish dish6 = dishRepo.findByName(Designation.valueOf("lagosta suada")).get();
         
         final MenuRepository menuRepo = PersistenceContext.repositories().menus();
-        final Menu menu = menuRepo.findMenuWithinPeriod(DateTime.parseDate("06-05-2018"), DateTime.parseDate("12-05-2018")).get();
-        //06-05-2018
-        register(dish1, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
-        register(dish3, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
-        register(dish6, MealType.LUNCH, DateTime.parseDate("06-05-2018"), menu);
-        register(dish1, MealType.DINNER, DateTime.parseDate("06-05-2018"), menu);
-        register(dish3, MealType.DINNER, DateTime.parseDate("06-05-2018"), menu);
-        register(dish6, MealType.DINNER, DateTime.parseDate("06-05-2018"), menu);
-        //07-05-2018
-        register(dish1, MealType.LUNCH, DateTime.parseDate("07-05-2018"), menu);
-        register(dish3, MealType.LUNCH, DateTime.parseDate("07-05-2018"), menu);
-        register(dish6, MealType.LUNCH, DateTime.parseDate("07-05-2018"), menu);
-        register(dish1, MealType.DINNER, DateTime.parseDate("07-05-2018"), menu);
-        register(dish3, MealType.DINNER, DateTime.parseDate("07-05-2018"), menu);
-        register(dish6, MealType.DINNER, DateTime.parseDate("07-05-2018"), menu);
-        //08-05-2018
-        register(dish2, MealType.LUNCH, DateTime.parseDate("08-05-2018"), menu);
-        register(dish4, MealType.LUNCH, DateTime.parseDate("08-05-2018"), menu);
-        register(dish5, MealType.LUNCH, DateTime.parseDate("08-05-2018"), menu);
-        register(dish2, MealType.DINNER, DateTime.parseDate("08-05-2018"), menu);
-        register(dish4, MealType.DINNER, DateTime.parseDate("08-05-2018"), menu);
-        register(dish5, MealType.DINNER, DateTime.parseDate("08-05-2018"), menu);
-        //09-05-2018
-        register(dish2, MealType.LUNCH, DateTime.parseDate("09-05-2018"), menu);
-        register(dish4, MealType.LUNCH, DateTime.parseDate("09-05-2018"), menu);
-        register(dish5, MealType.LUNCH, DateTime.parseDate("09-05-2018"), menu);
-        register(dish2, MealType.DINNER, DateTime.parseDate("09-05-2018"), menu);
-        register(dish4, MealType.DINNER, DateTime.parseDate("09-05-2018"), menu);
-        register(dish5, MealType.DINNER, DateTime.parseDate("09-05-2018"), menu);
-        //10-05-2018
-        register(dish1, MealType.LUNCH, DateTime.parseDate("10-05-2018"), menu);
-        register(dish3, MealType.LUNCH, DateTime.parseDate("10-05-2018"), menu);
-        register(dish6, MealType.LUNCH, DateTime.parseDate("10-05-2018"), menu);
-        register(dish1, MealType.DINNER, DateTime.parseDate("10-05-2018"), menu);
-        register(dish3, MealType.DINNER, DateTime.parseDate("10-05-2018"), menu);
-        register(dish6, MealType.DINNER, DateTime.parseDate("10-05-2018"), menu);
-        //11-05-2018
-        register(dish1, MealType.LUNCH, DateTime.parseDate("11-05-2018"), menu);
-        register(dish3, MealType.LUNCH, DateTime.parseDate("11-05-2018"), menu);
-        register(dish6, MealType.LUNCH, DateTime.parseDate("11-05-2018"), menu);
-        register(dish1, MealType.DINNER, DateTime.parseDate("11-05-2018"), menu);
-        register(dish3, MealType.DINNER, DateTime.parseDate("11-05-2018"), menu);
-        register(dish6, MealType.DINNER, DateTime.parseDate("11-05-2018"), menu);
-        //12-05-2018
-        register(dish2, MealType.LUNCH, DateTime.parseDate("12-05-2018"), menu);
-        register(dish4, MealType.LUNCH, DateTime.parseDate("12-05-2018"), menu);
-        register(dish5, MealType.LUNCH, DateTime.parseDate("12-05-2018"), menu);
-        register(dish2, MealType.DINNER, DateTime.parseDate("12-05-2018"), menu);
-        register(dish4, MealType.DINNER, DateTime.parseDate("12-05-2018"), menu);
-        register(dish5, MealType.DINNER, DateTime.parseDate("12-05-2018"), menu);
+        final Menu menu = menuRepo.findMenuWithinPeriod(DateTime.parseDate("05-08-2018"), DateTime.parseDate("11-08-2018")).get();
+        //05-08-2018
+        register(dish1, MealType.LUNCH, DateTime.parseDate("05-08-2018"), menu);
+        register(dish3, MealType.LUNCH, DateTime.parseDate("05-08-2018"), menu);
+        register(dish6, MealType.LUNCH, DateTime.parseDate("05-08-2018"), menu);
+        register(dish1, MealType.DINNER, DateTime.parseDate("05-08-2018"), menu);
+        register(dish3, MealType.DINNER, DateTime.parseDate("05-08-2018"), menu);
+        register(dish6, MealType.DINNER, DateTime.parseDate("05-08-2018"), menu);
+        //06-08-2018
+        register(dish1, MealType.LUNCH, DateTime.parseDate("06-08-2018"), menu);
+        register(dish3, MealType.LUNCH, DateTime.parseDate("06-08-2018"), menu);
+        register(dish6, MealType.LUNCH, DateTime.parseDate("06-08-2018"), menu);
+        register(dish1, MealType.DINNER, DateTime.parseDate("06-08-2018"), menu);
+        register(dish3, MealType.DINNER, DateTime.parseDate("06-08-2018"), menu);
+        register(dish6, MealType.DINNER, DateTime.parseDate("06-08-2018"), menu);
+        //07-08-2018
+        register(dish2, MealType.LUNCH, DateTime.parseDate("07-08-2018"), menu);
+        register(dish4, MealType.LUNCH, DateTime.parseDate("07-08-2018"), menu);
+        register(dish5, MealType.LUNCH, DateTime.parseDate("07-08-2018"), menu);
+        register(dish2, MealType.DINNER, DateTime.parseDate("07-08-2018"), menu);
+        register(dish4, MealType.DINNER, DateTime.parseDate("07-08-2018"), menu);
+        register(dish5, MealType.DINNER, DateTime.parseDate("07-08-2018"), menu);
+        //08-08-2018
+        register(dish2, MealType.LUNCH, DateTime.parseDate("08-08-2018"), menu);
+        register(dish4, MealType.LUNCH, DateTime.parseDate("08-08-2018"), menu);
+        register(dish5, MealType.LUNCH, DateTime.parseDate("08-08-2018"), menu);
+        register(dish2, MealType.DINNER, DateTime.parseDate("08-08-2018"), menu);
+        register(dish4, MealType.DINNER, DateTime.parseDate("08-08-2018"), menu);
+        register(dish5, MealType.DINNER, DateTime.parseDate("08-08-2018"), menu);
+        //09-08-2018
+        register(dish1, MealType.LUNCH, DateTime.parseDate("09-08-2018"), menu);
+        register(dish3, MealType.LUNCH, DateTime.parseDate("09-08-2018"), menu);
+        register(dish6, MealType.LUNCH, DateTime.parseDate("09-08-2018"), menu);
+        register(dish1, MealType.DINNER, DateTime.parseDate("09-08-2018"), menu);
+        register(dish3, MealType.DINNER, DateTime.parseDate("09-08-2018"), menu);
+        register(dish6, MealType.DINNER, DateTime.parseDate("09-08-2018"), menu);
+        //10-08-2018
+        register(dish1, MealType.LUNCH, DateTime.parseDate("10-08-2018"), menu);
+        register(dish3, MealType.LUNCH, DateTime.parseDate("10-08-2018"), menu);
+        register(dish6, MealType.LUNCH, DateTime.parseDate("10-08-2018"), menu);
+        register(dish1, MealType.DINNER, DateTime.parseDate("10-08-2018"), menu);
+        register(dish3, MealType.DINNER, DateTime.parseDate("10-08-2018"), menu);
+        register(dish6, MealType.DINNER, DateTime.parseDate("10-08-2018"), menu);
+        //11-08-2018
+        register(dish2, MealType.LUNCH, DateTime.parseDate("11-08-2018"), menu);
+        register(dish4, MealType.LUNCH, DateTime.parseDate("11-08-2018"), menu);
+        register(dish5, MealType.LUNCH, DateTime.parseDate("11-08-2018"), menu);
+        register(dish2, MealType.DINNER, DateTime.parseDate("11-08-2018"), menu);
+        register(dish4, MealType.DINNER, DateTime.parseDate("11-08-2018"), menu);
+        register(dish5, MealType.DINNER, DateTime.parseDate("11-08-2018"), menu);
         return true;
     }
     

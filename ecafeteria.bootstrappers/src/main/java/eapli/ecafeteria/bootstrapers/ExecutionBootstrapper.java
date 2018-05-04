@@ -31,14 +31,14 @@ public class ExecutionBootstrapper implements Action {
         MealRepository mealRepo = PersistenceContext.repositories().meals();
 
         //Lunch
-        Meal meal1 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("07-05-2018"), MealType.LUNCH).get(0);
-        Meal meal2 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("07-05-2018"), MealType.LUNCH).get(1);
-        Meal meal3 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("07-05-2018"), MealType.LUNCH).get(2);
+        Meal meal1 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("05-08-2018"), MealType.LUNCH).get(0);
+        Meal meal2 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("05-08-2018"), MealType.LUNCH).get(1);
+        Meal meal3 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("05-08-2018"), MealType.LUNCH).get(2);
 
         //Dinner
-        Meal meal4 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("07-05-2018"), MealType.DINNER).get(0);
-        Meal meal5 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("07-05-2018"), MealType.DINNER).get(1);
-        Meal meal6 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("07-05-2018"), MealType.DINNER).get(2);
+        Meal meal4 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("05-08-2018"), MealType.DINNER).get(0);
+        Meal meal5 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("05-08-2018"), MealType.DINNER).get(1);
+        Meal meal6 = mealRepo.listOfMealsByDateAndMealType(DateTime.parseDate("05-08-2018"), MealType.DINNER).get(2);
 
         MadeMeals quantity1 = new MadeMeals(70);
         MadeMeals quantity2 = new MadeMeals(40);
