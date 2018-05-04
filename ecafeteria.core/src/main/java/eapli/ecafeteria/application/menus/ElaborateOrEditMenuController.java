@@ -190,9 +190,9 @@ public class ElaborateOrEditMenuController implements Controller {
         }
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
-        if (menu.isPublished()) {
-            throw new IllegalStateException("Cannot save published menu.");
-        }
+//        if (menu.isPublished()) {
+//            throw new IllegalStateException("Cannot save published menu.");
+//        }
         Menu savedMenu = menurepo.save(menu);
         return savedMenu;
     }
