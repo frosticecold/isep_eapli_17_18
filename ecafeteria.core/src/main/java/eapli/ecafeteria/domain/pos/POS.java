@@ -3,7 +3,6 @@ package eapli.ecafeteria.domain.pos;
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
-import java.util.Optional;
 import javax.persistence.*;
 
 /**

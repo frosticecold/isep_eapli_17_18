@@ -7,14 +7,10 @@ package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.dishes.Dish;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.reporting.booking.BookingPerOption;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepositoryWithLongPK;
-import java.util.List;
 
 /**
  *
@@ -47,12 +43,5 @@ public class InMemoryBookingReportingRepository extends InMemoryRepositoryWithLo
     @Override
     public Iterable<BookingPerOption> showReportByMeal(MealType meal) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-  
+    }  
 }
