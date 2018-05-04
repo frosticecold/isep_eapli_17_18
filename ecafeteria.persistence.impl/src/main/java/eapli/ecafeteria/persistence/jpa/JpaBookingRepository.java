@@ -8,12 +8,14 @@ package eapli.ecafeteria.persistence.jpa;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.BookingState.BookingStates;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
@@ -81,5 +83,28 @@ public class JpaBookingRepository
 
 
         return (Long) q.getSingleResult();
+    }
+    
+    /**
+     * Find booking by cafeteria user that are in a specific state
+     *
+     * @param user user of the cafeteria
+     * @param bookingState booking state
+     * @author David Camelo <1161294@isep.ipp.pt>
+     * 
+     * @return list with bookings
+     */
+    @Override
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, 
+            BookingState bookingState) {
+        Query query = entityManager().createQuery("SELECT booking "
+                        + "FROM Booking booking "
+                        + "WHERE booking.bookingState = :bookingState "
+                        + "AND booking.cafeteriaUser = :cafeteriaUser");
+        
+        query.setParameter("bookingState", bookingState);
+        query.setParameter("cafeteriaUser", user);
+        
+        return query.getResultList();
     }
 }
