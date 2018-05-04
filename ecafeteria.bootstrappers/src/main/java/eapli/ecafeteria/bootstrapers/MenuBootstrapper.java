@@ -26,8 +26,8 @@ public class MenuBootstrapper implements Action {
         Calendar end = DateTime.parseDate("07-07-2018");
         Menu menu = new Menu(start, end);
         register(menu);
-        start = DateTime.parseDate("06-05-2018");
-        end = DateTime.parseDate("12-05-2018");
+        start = DateTime.parseDate("05-08-2018");
+        end = DateTime.parseDate("11-08-2018");
         menu = new Menu(start, end);
         menu.publish();
         register(menu);

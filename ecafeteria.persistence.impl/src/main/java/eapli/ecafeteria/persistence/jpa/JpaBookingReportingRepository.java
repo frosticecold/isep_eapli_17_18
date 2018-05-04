@@ -39,29 +39,6 @@ public class JpaBookingReportingRepository extends CafeteriaJpaRepositoryBase im
                 .getResultList();
     }
 
-    /**
-     * Find booking by cafeteria user that are in a specific state
-     *
-     * @param user user of the cafeteria
-     * @param bookingState booking state
-     * @author David Camelo <1161294@isep.ipp.pt>
-     * 
-     * @return list with bookings
-     */
-    @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, 
-            BookingState bookingState) {
-        Query query = entityManager().createQuery("SELECT booking "
-                        + "FROM Booking booking "
-                        + "WHERE booking.bookingState = :bookingState "
-                        + "AND booking.cafeteriaUser = :cafeteriaUser");
-        
-        query.setParameter("bookingState", bookingState);
-        query.setParameter("cafeteriaUser", user);
-        
-        return query.getResultList();
-    }
-
      /**
      * Report booking by input date.
      *

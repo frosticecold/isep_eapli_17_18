@@ -13,7 +13,7 @@ import eapli.framework.presentation.console.AbstractUI;
  */
 public class POSOpeningUI extends AbstractUI {
 
-    private POSOpeningController theController;
+    private final POSOpeningController theController;
 
     public POSOpeningUI() {
         this.theController = new POSOpeningController();
@@ -23,7 +23,12 @@ public class POSOpeningUI extends AbstractUI {
     protected boolean doShow() {
         if (!theController.checkPoSState()) {
             System.out.println(String.format("Creating Delivery Meal Session...\n", (Object) null));
-            theController.createDeliveryMealSession();
+            try {
+                theController.createDeliveryMealSession();
+                System.out.println("Delivery Meal Session successfully created.");
+            } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
+                System.out.println("Error inserting into database.: " + ex.getMessage());
+            }
             return true;
         }
         System.out.println(String.format("Couldn't open point of sale as it was already opened."));
