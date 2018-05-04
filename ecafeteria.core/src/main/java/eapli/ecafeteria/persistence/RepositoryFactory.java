@@ -77,6 +77,8 @@ public interface RepositoryFactory {
     BatchRepository batch();
 
     BookingRepository booking();
+    
+    BookingRepository booking(TransactionalContext autoTx);
 
     MenuRepository menus();
 
@@ -108,6 +110,8 @@ public interface RepositoryFactory {
      * @return
      */
     POSRepository posRepository();
+    
+    POSRepository posRepository(TransactionalContext autoTx);
 
     /**
      * DeliveryMealSession Repo
@@ -120,6 +124,8 @@ public interface RepositoryFactory {
      * DeliveryRegistry Repo
      */
     DeliveryRegistryRepository deliveryRegistryRepository();
+    
+    DeliveryRegistryRepository deliveryRegistryRepository(TransactionalContext autoTx);
 
     /**
      * Ratings reporting repository

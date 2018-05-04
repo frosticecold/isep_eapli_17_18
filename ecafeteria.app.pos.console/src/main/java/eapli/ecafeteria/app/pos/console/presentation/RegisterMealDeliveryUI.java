@@ -1,8 +1,6 @@
 package eapli.ecafeteria.app.pos.console.presentation;
 
-import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.pos.RegisterMealDeliveryController;
-import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 
 /**

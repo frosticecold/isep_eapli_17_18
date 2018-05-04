@@ -8,23 +8,29 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.pos.DeliveryMealSession;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
+import eapli.ecafeteria.persistence.BookingRepository;
+import eapli.ecafeteria.persistence.CafeteriaUserRepository;
+import eapli.ecafeteria.persistence.DeliveryRegistryRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import eapli.framework.persistence.repositories.TransactionalContext;
 
 /**
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class RegisterMealDeliveryController extends ViewAvailableMealsController {
+public class RegisterMealDeliveryController extends ViewAvailableMealsController implements Controller {
         
-    /** Construtor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
+    /** Constructor which shall receive a entity of a open session of a certain pos from the UC User Interface **/
     
     private DeliveryMealSession session;
     private SystemUser cashier;
+    private final TransactionalContext txCtx = PersistenceContext.repositories().buildTransactionalContext();
+    private final CafeteriaUserRepository usersRepo = PersistenceContext.repositories().cafeteriaUsers(txCtx);
+    private final BookingRepository bookingsRepo = PersistenceContext.repositories().booking(txCtx);
+    private final DeliveryRegistryRepository deliveryRegistry = PersistenceContext.repositories().deliveryRegistryRepository(txCtx);
     
     public RegisterMealDeliveryController() {
         this.cashier = AuthorizationService.session().authenticatedUser();
