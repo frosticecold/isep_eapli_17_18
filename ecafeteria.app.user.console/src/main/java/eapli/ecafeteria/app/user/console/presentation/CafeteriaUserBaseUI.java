@@ -7,7 +7,6 @@ package eapli.ecafeteria.app.user.console.presentation;
 
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.application.booking.ViewNextBookingService;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
