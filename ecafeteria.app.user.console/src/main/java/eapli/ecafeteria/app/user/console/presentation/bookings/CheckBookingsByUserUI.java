@@ -5,8 +5,10 @@
  */
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
+import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.CheckBookingsByUserController;
+import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
@@ -18,7 +20,7 @@ import java.util.*;
  *
  * @author 1160911 <Rafael Teixeira>
  */
-public class CheckBookingsByUserUI extends AbstractUI
+public class CheckBookingsByUserUI extends CafeteriaUserBaseUI
 {
 
     private CheckBookingsByUserController controller = new CheckBookingsByUserController();
@@ -62,7 +64,12 @@ public class CheckBookingsByUserUI extends AbstractUI
     @Override
     public String headline()
     {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
+        return super.headline();
+    }
+
+    @Override
+    protected CafeteriaUserBaseController controller() {
+        return new CafeteriaUserBaseController();
     }
 
 }

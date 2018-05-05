@@ -11,7 +11,6 @@ import eapli.ecafeteria.app.user.console.presentation.bookings.CancelBookingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CheckBookingsByUserUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ListMenuUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.RatingMealUI;
-import eapli.ecafeteria.app.user.console.presentation.bookings.ViewNextBookingInterface;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ViewRatingsUI;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.framework.actions.ReturnAction;
@@ -28,7 +27,7 @@ import eapli.framework.presentation.console.VerticalSeparator;
 /**
  * @author Paulo Gandra Sousa
  */
-class MainMenu extends CafeteriaUserBaseUI implements ViewNextBookingInterface{
+class MainMenu extends CafeteriaUserBaseUI{
 
     private static final int EXIT_OPTION = 0;
 
@@ -56,7 +55,6 @@ class MainMenu extends CafeteriaUserBaseUI implements ViewNextBookingInterface{
     @Override
     public boolean show() {
         drawFormTitle();
-        showNextBooking();
         return doShow();
     }
 

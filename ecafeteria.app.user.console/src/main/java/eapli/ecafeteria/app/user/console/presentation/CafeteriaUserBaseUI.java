@@ -7,8 +7,10 @@ package eapli.ecafeteria.app.user.console.presentation;
 
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.application.booking.ViewNextBookingService;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.domain.authz.Username;
+import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.TransactionRepository;
@@ -24,7 +26,7 @@ public abstract class CafeteriaUserBaseUI extends AbstractUI {
     protected abstract CafeteriaUserBaseController controller();
 
     private final CafeteriaUserService userService = new CafeteriaUserService();
-
+    
     Username username = AuthorizationService.session().authenticatedUser().id();
     Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(username);
     
@@ -33,9 +35,21 @@ public abstract class CafeteriaUserBaseUI extends AbstractUI {
         return "CURRENT BALANCE OF YOUR USERCARD: " + userService.getBalanceOfUser(user.get().mecanographicNumber());
     }
 
+    /**
+     * Shows the current user next booking
+     * @return 
+     */
+    public String showNextBooking(){
+        Booking book = userService.findNextBooking(user.get());
+        if(book == null){
+            return "NO NEXT BOOKINGS";
+        }
+        return "NEXT BOOKING: " + book.toString();
+    }
+    
     @Override
     public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   " + showBalance();
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   " + showBalance() + "\n" + showNextBooking() + "\n";
     }
 
     @Override

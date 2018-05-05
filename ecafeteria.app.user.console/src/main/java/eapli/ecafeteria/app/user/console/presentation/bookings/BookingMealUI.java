@@ -5,8 +5,10 @@
  */
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
+import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
+import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.meal.Meal;
@@ -27,18 +29,16 @@ import java.util.logging.Logger;
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class BookingMealUI extends AbstractUI implements ViewNextBookingInterface {
+public class BookingMealUI extends CafeteriaUserBaseUI {
 
     private final BookingMealController controller = new BookingMealController();
-
-    protected Controller controller() {
-        return this.controller;
+    
+    protected CafeteriaUserBaseController controller(){
+        return new CafeteriaUserBaseController();
     }
 
     @Override
     protected boolean doShow() {
-
-        showNextBooking();
 
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
@@ -201,7 +201,7 @@ public class BookingMealUI extends AbstractUI implements ViewNextBookingInterfac
 
     @Override
     public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
+        return super.headline();
     }
 
 }
