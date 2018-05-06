@@ -10,6 +10,7 @@ import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.booking.BookingState.BookingStates;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.dishes.DishType;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -104,6 +105,19 @@ public class JpaBookingRepository
         
         query.setParameter("bookingState", bookingState);
         query.setParameter("cafeteriaUser", user);
+        
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Booking> getAllBookingsFromMealThatAreServed(Meal m) {
+        Query query = entityManager().createQuery("SELECT booking "
+                        + "FROM Booking booking "
+                        + "WHERE booking.bookingState = :bookingState "
+                        + "AND booking.meal = :m");
+        
+        query.setParameter("bookingState", BookingState.BookingStates.SERVED);
+        query.setParameter("cafeteriaUser", m);
         
         return query.getResultList();
     }

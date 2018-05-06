@@ -121,6 +121,18 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         this.reply = reply;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
+
     @Override
     public Long id() {
         return this.id;
