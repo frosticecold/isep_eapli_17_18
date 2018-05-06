@@ -30,7 +30,7 @@ public class ConsultMealRatingController implements Controller {
     
     private final RatingRepository ratingRepo = PersistenceContext.repositories().rating();
 
-    public Meal getMealByDate(Calendar cal) {
+    public List<Meal> getMealByDate(Calendar cal) {
 
         return mealRepo.getMealByDate(cal);
 
@@ -58,8 +58,12 @@ public class ConsultMealRatingController implements Controller {
         return sum/ratings.size();
     }
     
-    public String showComments(Rating r){
+    public String showComment(Rating r){
         return r.getComment();
+    }
+    
+    public void addComentToList(String comment,List<String> list){
+        list.add(comment);
     }
     
     public void replyComment(String response,Rating r){

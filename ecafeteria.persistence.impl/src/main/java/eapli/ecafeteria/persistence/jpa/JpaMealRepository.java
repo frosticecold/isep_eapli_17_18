@@ -72,11 +72,11 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
 
 
     @Override
-    public Meal getMealByDate(Calendar cal) {
+    public List<Meal> getMealByDate(Calendar cal) {
         TypedQuery<Meal> q;
         q = entityManager().createQuery("SELECT m FROM Meal m WHERE m.date=:cal", Meal.class);
         q.setParameter("cal", cal);
-        return q.getSingleResult();
+        return q.getResultList();
     }
 
 

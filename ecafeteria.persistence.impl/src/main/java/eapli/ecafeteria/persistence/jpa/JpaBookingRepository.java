@@ -111,13 +111,15 @@ public class JpaBookingRepository
 
     @Override
     public List<Booking> getAllBookingsFromMealThatAreServed(Meal m) {
+        BookingState s=new BookingState();
+        s.changeToServed();
         Query query = entityManager().createQuery("SELECT booking "
                         + "FROM Booking booking "
-                        + "WHERE booking.bookingState = :bookingState "
+                        + "WHERE booking.bookingState = :b "
                         + "AND booking.meal = :m");
         
-        query.setParameter("bookingState", BookingState.BookingStates.SERVED);
-        query.setParameter("cafeteriaUser", m);
+        query.setParameter("b",s);
+        query.setParameter("m", m);
         
         return query.getResultList();
     }

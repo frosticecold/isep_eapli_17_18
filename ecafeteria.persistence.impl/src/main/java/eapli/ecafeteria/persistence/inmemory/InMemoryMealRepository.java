@@ -59,7 +59,7 @@ public class InMemoryMealRepository extends InMemoryRepositoryWithLongPK<Meal> i
     }
 
     @Override
-    public Meal getMealByDate(Calendar cal) {
+    public List<Meal> getMealByDate(Calendar cal) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
