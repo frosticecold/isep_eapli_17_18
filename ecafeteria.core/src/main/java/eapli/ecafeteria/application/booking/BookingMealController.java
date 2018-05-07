@@ -24,6 +24,7 @@ import eapli.framework.date.DateEAPLI;
 import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -35,12 +36,12 @@ import java.util.logging.Logger;
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
 public class BookingMealController implements Controller {
-    
+
     private final CafeteriaUserService userService = new CafeteriaUserService();
-    
+
     private final BookingRepository repository = PersistenceContext.repositories().booking();
     private Transaction t;
-    
+
     private final TransactionRepository trepo = PersistenceContext.repositories().transactioRepository();
 
     /**
@@ -52,43 +53,70 @@ public class BookingMealController implements Controller {
     public Iterable<Meal> listMeals(Calendar date, MealType mealType) {
         return MenuService.getMealsPublishedByDay(date, mealType);
     }
-    
-    
+
+    public boolean mealListIsEmpty(Iterable<Meal> mealList) {
+
+        if (!mealList.iterator().hasNext()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<Meal> mealListIfMenuIsPublic(Iterable<Meal> mealList) {
+        List<Meal> listMeal = new ArrayList<Meal>();
+        for (Meal meal : mealList) {
+            if (meal.menu().isPublished()) {
+                listMeal.add(meal);
+            }
+        }
+        return listMeal;
+    }
+
+    public boolean menuOfMealListIsPublic(List<Meal> listMeal) {
+        if (listMeal.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
     public Meal selectMeal(int idMeal, List<Meal> listMeal) {
         Meal selectedMeal = null;
-        
+
         if (0 <= idMeal && idMeal < listMeal.size()) {
             selectedMeal = listMeal.get(idMeal);
         } else {
             throw new IllegalArgumentException("Meal id "
                     + idMeal + "is not valid!");
         }
-        
+
         return selectedMeal;
     }
-    
+
     public boolean doTransaction(Username id, Meal meal) throws DataConcurrencyException, DataIntegrityViolationException {
         Money mealPrice = meal.dish().currentPrice();
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
         if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
-            
+
             Balance userBalance = userService.getBalanceOfUser(user.get().mecanographicNumber());
             Money money = userBalance.currentBalance().subtract(mealPrice);
             Balance newBalance = new Balance(money);
-            
+
             user.get().updateUserBalance(newBalance);
             userService.save(user.get());
             this.t = new Debit(user.get(), mealPrice);
             saveTransaction(t);
-            
+
             return true;
         } else {
             System.out.println("USER HASN'T ENOUGH MONEY");
             return false;
         }
-        
+
     }
-    
+
     private void saveTransaction(Transaction t) {
         try {
             this.trepo.save(this.t);
@@ -98,27 +126,25 @@ public class BookingMealController implements Controller {
             Logger.getLogger(BookingMealController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public Booking persistBooking(final Username cafeteriaUser, final Calendar date,
             final BookingState bookingState, final Meal meal) throws DataIntegrityViolationException, DataConcurrencyException {
-        
+
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.SELECT_MEAL);
-        
+
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
-        
+
         final Booking newBooking = new Booking(meal, bookingState, user.get(), date);
-        
+
         return this.repository.saveBooking(newBooking);
     }
-    
-    public void showAlergen(Meal meal) {
+
+    public boolean mealHasAlergens(Meal meal) {
         List<Alergen> alergenList = meal.dish().alergenInDish();
         if (alergenList.isEmpty()) {
-            System.out.println("Dish doesn't have alergens.\n");
+            return false;
         } else {
-            for (Alergen alergen : alergenList) {
-                System.out.println(alergen);
-            }
+            return true;
         }
     }
     

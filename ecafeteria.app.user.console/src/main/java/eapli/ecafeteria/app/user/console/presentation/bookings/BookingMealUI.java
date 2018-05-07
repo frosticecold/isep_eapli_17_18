@@ -32,8 +32,8 @@ import java.util.logging.Logger;
 public class BookingMealUI extends CafeteriaUserBaseUI {
 
     private final BookingMealController controller = new BookingMealController();
-    
-    protected CafeteriaUserBaseController controller(){
+
+    protected CafeteriaUserBaseController controller() {
         return new CafeteriaUserBaseController();
     }
 
@@ -62,17 +62,18 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         switch (option) {
             case 1:
                 mealList = controller.listMeals(cal, MealType.LUNCH);
-                if (!mealList.iterator().hasNext()) {
+                if (controller.mealListIsEmpty(mealList)) {
                     System.out.println("\nThere are no meals in that conditions.\n");
                     return false;
                 }
-
-                for (Meal meal : mealList) {
-                    if (meal.menu().isPublished()) {
-                        listMeal.add(meal);
-                    }
+                
+                if (controller.mealListIsEmpty(mealList)) {
+                    System.out.println("\nThere are no meals in that conditions.\n");
+                    return false;
                 }
-                if (listMeal.isEmpty()) {
+                listMeal = controller.mealListIfMenuIsPublic(mealList);
+
+                if (!controller.menuOfMealListIsPublic(listMeal)) {
                     System.out.println("\nThere are no meals published.\n");
                     return false;
                 }
@@ -97,18 +98,19 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
 
             case 2:
                 mealList = controller.listMeals(cal, MealType.DINNER);
-                if (!mealList.iterator().hasNext()) {
-                    System.out.println("\nThere are no meals in that conditions.\n");
 
+                if (controller.mealListIsEmpty(mealList)) {
+                    System.out.println("\nThere are no meals in that conditions.\n");
                     return false;
                 }
 
-                for (Meal meal : mealList) {
-                    if (meal.menu().isPublished()) {
-                        listMeal.add(meal);
-                    }
+                if (controller.mealListIsEmpty(mealList)) {
+                    System.out.println("\nThere are no meals in that conditions.\n");
+                    return false;
                 }
-                if (listMeal.isEmpty()) {
+                listMeal = controller.mealListIfMenuIsPublic(mealList);
+
+                if (!controller.menuOfMealListIsPublic(listMeal)) {
                     System.out.println("\nThere are no meals published.\n");
                     return false;
                 }
@@ -138,13 +140,6 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         }
 
         //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
-//        System.out.println("Choose one meal");
-//        final Long id = Console.readLong("Insert the meal id:");
-//        for (Meal meal : mealList) {
-//            if (meal.id().equals(id)) {
-//                choosedMeal = meal;
-//            }
-//        }
         if (choosedMeal == null) {
             System.out.println("Invalid meal choice!");
             return false;
@@ -155,8 +150,15 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
 
         //===================================SHOW ALERGEN AND CALORICS==================================
         System.out.println("\nAlergen Info:\n");
-        controller.showAlergen(choosedMeal);
-        //===================================Paymemnt==================================
+        if (controller.mealHasAlergens(choosedMeal)) {
+           // for (Meal meal : listMeal) {
+                System.out.println(choosedMeal.dish().alergenInDish().toString());
+            //}
+        } else {
+            System.out.println("Dish doesn't have alergens.\n");
+        }
+
+        //===================================PAYMENT==================================
         System.out.println("Do you want to continue?\n1-Yes\n2-No\n");
 
         int option2 = 0;
