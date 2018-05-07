@@ -14,10 +14,10 @@ import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.meal.*;
-import eapli.ecafeteria.domain.CreditTransaction.Transaction;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.dishes.Alergen;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.*;
 import eapli.framework.application.*;
 import eapli.framework.date.DateEAPLI;
@@ -29,8 +29,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -41,9 +39,6 @@ public class BookingMealController implements Controller {
     private final CafeteriaUserService userService = new CafeteriaUserService();
 
     private final BookingRepository repository = PersistenceContext.repositories().booking();
-    private Transaction t;
-
-    private final TransactionRepository trepo = PersistenceContext.repositories().transactioRepository();
 
     /**
      *
@@ -62,6 +57,31 @@ public class BookingMealController implements Controller {
         } else {
             return false;
         }
+    }
+
+    public List<Booking> listBookingsOfUser(Username cafeteriaUser) {
+
+        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
+        BookingState booked = new BookingState();
+        return repository.findBookingsByCafeteriaUser(user.get(), booked);
+
+    }
+
+    public boolean isAlreadyBooked(List<Booking> bookings, Booking newBooking) {
+        for (Booking booking : bookings) {
+            if (booking.equals(newBooking)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Booking> isAlreadyBooked(Username cafeteriaUser) {
+
+        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
+        BookingState booked = new BookingState();
+        return repository.findBookingsByCafeteriaUser(user.get(), booked);
+
     }
 
     public List<Meal> mealListIfMenuIsPublic(Iterable<Meal> mealList) {
@@ -131,13 +151,20 @@ public class BookingMealController implements Controller {
      * @throws eapli.framework.persistence.DataIntegrityViolationException
      */
     public boolean confirmBooking(Username cafeteriaUser, Calendar date,
-            BookingState bookingState, Meal meal) throws DataConcurrencyException,
+            BookingState bookingState, Meal meal,List<Booking> bookings) throws DataConcurrencyException,
             DataIntegrityViolationException {
 
         // Add booking movement
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
         Booking newBooking = new Booking(meal, bookingState, user.get(), date);
-
+       
+        //check if user as already booked this meal
+        for (Booking booking : bookings) {
+            if(booking.equals(newBooking)){
+                return false;
+            }
+        }
+        
         Money mealPrice = meal.dish().currentPrice();
         Balance userBalance = userService.getBalanceOfUser(user.get().mecanographicNumber());
         Money money = userBalance.currentBalance().subtract(mealPrice);
@@ -167,16 +194,17 @@ public class BookingMealController implements Controller {
 
         return true;
     }
-    
+
     /**
-     * used in bootstrapper- tests 
+     * used in bootstrapper- tests
+     *
      * @param cafeteriaUser
      * @param date
      * @param bookingState
      * @param meal
      * @return
      * @throws DataIntegrityViolationException
-     * @throws DataConcurrencyException 
+     * @throws DataConcurrencyException
      */
     public Booking persistBooking(final Username cafeteriaUser, final Calendar date,
             final BookingState bookingState, final Meal meal) throws DataIntegrityViolationException, DataConcurrencyException {

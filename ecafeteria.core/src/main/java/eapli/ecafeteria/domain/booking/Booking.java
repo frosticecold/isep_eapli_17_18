@@ -67,17 +67,39 @@ public class Booking implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof Booking)) {
+        if (obj == null) {
             return false;
         }
-
-        final Booking other = (Booking) o;
-        return Objects.equals(getIdBooking(), other.getIdBooking());
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Booking other = (Booking) obj;
+        if (!Objects.equals(this.meal, other.meal)) {
+            return false;
+        }
+        if (!Objects.equals(this.bookingState, other.bookingState)) {
+            return false;
+        }
+        if (!Objects.equals(this.cafeteriaUser, other.cafeteriaUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.calendar, other.calendar)) {
+            return false;
+        }
+        return true;
     }
+
+    
 
     public Long getIdBooking() {
         return idBooking;
