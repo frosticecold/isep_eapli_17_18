@@ -145,7 +145,6 @@ public class BookingMealController implements Controller {
 
         user.get().updateUserBalance(newBalance);
 
-
         // Persist
         final TransactionalContext TxCtx
                 = PersistenceContext.repositories().buildTransactionalContext();
@@ -161,12 +160,34 @@ public class BookingMealController implements Controller {
         /* persist here */
         atbr.saveBooking(newBooking);
 
-        attr.saveTransaction( new Debit(user.get(), mealPrice));
+        attr.saveTransaction(new Debit(user.get(), mealPrice));
 
         cafer.save(user.get());
         TxCtx.commit();
 
         return true;
+    }
+    
+    /**
+     * used in bootstrapper- tests 
+     * @param cafeteriaUser
+     * @param date
+     * @param bookingState
+     * @param meal
+     * @return
+     * @throws DataIntegrityViolationException
+     * @throws DataConcurrencyException 
+     */
+    public Booking persistBooking(final Username cafeteriaUser, final Calendar date,
+            final BookingState bookingState, final Meal meal) throws DataIntegrityViolationException, DataConcurrencyException {
+
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.SELECT_MEAL);
+
+        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
+
+        final Booking newBooking = new Booking(meal, bookingState, user.get(), date);
+
+        return this.repository.saveBooking(newBooking);
     }
 
 }
