@@ -24,6 +24,7 @@ import eapli.framework.date.DateEAPLI;
 import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.persistence.repositories.TransactionalContext;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -95,48 +96,14 @@ public class BookingMealController implements Controller {
         return selectedMeal;
     }
 
-    public boolean doTransaction(Username id, Meal meal) throws DataConcurrencyException, DataIntegrityViolationException {
+    public boolean hasEnoughMoney(Username id, Meal meal) {
         Money mealPrice = meal.dish().currentPrice();
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
         if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
-
-            Balance userBalance = userService.getBalanceOfUser(user.get().mecanographicNumber());
-            Money money = userBalance.currentBalance().subtract(mealPrice);
-            Balance newBalance = new Balance(money);
-
-            user.get().updateUserBalance(newBalance);
-            userService.save(user.get());
-            this.t = new Debit(user.get(), mealPrice);
-            saveTransaction(t);
-
             return true;
         } else {
-            System.out.println("USER HASN'T ENOUGH MONEY");
             return false;
         }
-
-    }
-
-    private void saveTransaction(Transaction t) {
-        try {
-            this.trepo.save(this.t);
-        } catch (DataConcurrencyException ex) {
-            Logger.getLogger(BookingMealController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DataIntegrityViolationException ex) {
-            Logger.getLogger(BookingMealController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public Booking persistBooking(final Username cafeteriaUser, final Calendar date,
-            final BookingState bookingState, final Meal meal) throws DataIntegrityViolationException, DataConcurrencyException {
-
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.SELECT_MEAL);
-
-        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
-
-        final Booking newBooking = new Booking(meal, bookingState, user.get(), date);
-
-        return this.repository.saveBooking(newBooking);
     }
 
     public boolean mealHasAlergens(Meal meal) {
@@ -147,7 +114,7 @@ public class BookingMealController implements Controller {
             return true;
         }
     }
-    
+
     public boolean is24hBefore(Calendar date) {
         DateEAPLI dt = new DateEAPLI(date);
         if (dt.isTomorrow(date)) {
@@ -155,4 +122,51 @@ public class BookingMealController implements Controller {
         }
         return false;
     }
+
+    /**
+     * Confirms reservation and persists changes
+     *
+     * @return true after conclusion
+     * @throws eapli.framework.persistence.DataConcurrencyException
+     * @throws eapli.framework.persistence.DataIntegrityViolationException
+     */
+    public boolean confirmBooking(Username cafeteriaUser, Calendar date,
+            BookingState bookingState, Meal meal) throws DataConcurrencyException,
+            DataIntegrityViolationException {
+
+        // Add booking movement
+        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
+        Booking newBooking = new Booking(meal, bookingState, user.get(), date);
+
+        Money mealPrice = meal.dish().currentPrice();
+        Balance userBalance = userService.getBalanceOfUser(user.get().mecanographicNumber());
+        Money money = userBalance.currentBalance().subtract(mealPrice);
+        Balance newBalance = new Balance(money);
+
+        user.get().updateUserBalance(newBalance);
+
+
+        // Persist
+        final TransactionalContext TxCtx
+                = PersistenceContext.repositories().buildTransactionalContext();
+        final AutoTxTransactionRepository attr
+                = PersistenceContext.repositories().autoTxTransactionRepository(TxCtx);
+        final AutoTxBookingRepository atbr
+                = PersistenceContext.repositories().autoTxBookingRepository(TxCtx);
+        final CafeteriaUserRepository cafer
+                = PersistenceContext.repositories().cafeteriaUsers(TxCtx);
+
+        TxCtx.beginTransaction();
+
+        /* persist here */
+        atbr.saveBooking(newBooking);
+
+        attr.saveTransaction( new Debit(user.get(), mealPrice));
+
+        cafer.save(user.get());
+        TxCtx.commit();
+
+        return true;
+    }
+
 }

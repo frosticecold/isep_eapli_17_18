@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javassist.compiler.TokenId;
 
 /**
  *
@@ -151,14 +152,12 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         //===================================SHOW ALERGEN AND CALORICS==================================
         System.out.println("\nAlergen Info:\n");
         if (controller.mealHasAlergens(choosedMeal)) {
-           // for (Meal meal : listMeal) {
-                System.out.println(choosedMeal.dish().alergenInDish().toString());
-            //}
+             System.out.println(choosedMeal.dish().alergenInDish().toString());    
         } else {
             System.out.println("Dish doesn't have alergens.\n");
         }
 
-        //===================================PAYMENT==================================
+        //===================================PAYMENT AND PERSIST==================================
         System.out.println("Do you want to continue?\n1-Yes\n2-No\n");
 
         int option2 = 0;
@@ -167,15 +166,26 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
 
         switch (option2) {
             case 1:
-                try {
-                    if (controller.doTransaction(AuthorizationService.session().authenticatedUser().id(), choosedMeal)) {
-                        System.out.println("Success, the transaction was done.");
+                
+               if(!controller.hasEnoughMoney(AuthorizationService.session().authenticatedUser().id(), choosedMeal)){
+                   System.out.println("USER HASN'T ENOUGH MONEY");
+                   return false;
+               }else{
+                 try {
+                    
+                 BookingState bookingState = new BookingState();
+                        if (controller.confirmBooking(AuthorizationService.session().authenticatedUser().id(), cal, bookingState, choosedMeal)) {
+                            System.out.println("Success. Booking was created.");
+                        } else {
+                            System.out.println("Error occured. Not possible to create "
+                                    + "booking. Try again.");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error while saving. Please check your connection.\n"
+                                + e.getMessage());
                     }
-                } catch (DataConcurrencyException ex) {
-                    Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (DataIntegrityViolationException ex) {
-                    Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
+               
 
             case 2:
                 System.out.println("Operation closed.");
@@ -185,17 +195,6 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
                 System.out.println("Invalid Option");
                 return false;
 
-        }
-
-        //====================================SAVE IN DATABASE==================================
-        BookingState bookingState = new BookingState();
-
-        try {
-
-            controller.persistBooking(AuthorizationService.session().authenticatedUser().id(), cal, bookingState, choosedMeal);
-
-        } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
-            Logger.getLogger(BookingMealUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return true;
