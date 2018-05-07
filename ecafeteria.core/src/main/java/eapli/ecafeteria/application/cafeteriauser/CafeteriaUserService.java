@@ -62,7 +62,6 @@ public class CafeteriaUserService {
     public boolean hasEnoughtMoney(CafeteriaUser user, Money money) {
         Balance userBalance = brepo.getBalanceOfUser(user.mecanographicNumber());
         if (money.lessThanOrEqual(userBalance.currentBalance())) {
-            System.out.println("USER HAS ENOUGH MONEY");
             return true;
         } else {
             return false;
