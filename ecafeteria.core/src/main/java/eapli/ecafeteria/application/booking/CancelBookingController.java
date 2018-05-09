@@ -12,7 +12,6 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.CreditTransaction.CancelationBooking;
 import eapli.ecafeteria.persistence.AutoTxBookingRepository;
 import eapli.ecafeteria.persistence.AutoTxTransactionRepository;
-import eapli.ecafeteria.persistence.BookingReportingRepository;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
