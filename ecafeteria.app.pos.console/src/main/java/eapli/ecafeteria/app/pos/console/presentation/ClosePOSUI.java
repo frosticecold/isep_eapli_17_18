@@ -5,11 +5,11 @@
  */
 package eapli.ecafeteria.app.pos.console.presentation;
 
-import eapli.cafeteria.app.common.console.presentation.authz.LoginAction;
 import eapli.ecafeteria.application.pos.ClosePOSController;
-import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.framework.application.Controller;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.DateTime;
 import java.util.Map;
@@ -36,7 +36,12 @@ public class ClosePOSUI extends AbstractUI {
             output += e.getKey() + " : " + e.getValue() + "\n";
         }
         System.out.println(output);
-        new LoginAction(ActionRight.SALE).execute();
+        try {
+                controller.closeDeliveryMealSession();
+                System.out.println("Delivery Meal Session successfully closed.");
+            } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
+                System.out.println("Error inserting into database.: " + ex.getMessage());
+            }
         controller.closeSession();
         return true;
     }

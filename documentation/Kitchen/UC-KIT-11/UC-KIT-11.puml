@@ -1,0 +1,54 @@
+@startuml
+-> ui : starts
+ui -> User: Requests login and password
+User -> ui: Inserts information
+ui -> ui: Logs in
+menu -> ui: display main menu options
+User -> ui: invokes traceability menu
+ui -> menu: request traceability menu
+menu -> ui: display traceability menu
+User -> ui: choose option to register batch used in meal
+ui -> RegisterBatchUI: new RegistertUsedBatchUI()
+
+RegisterBatchUI -> RegisterBatchController: new RegisterBatchController()
+
+RegisterBatchController -> RegisterBatchUI: request meal type
+User -> RegisterBatchUI: inserts meal type
+
+RegisterBatchUI -> User: request date
+User -> RegisterBatchUI: inserts date
+
+RegisterBatchUI -> RegisterBatchController: gets available meals for date and type
+RegisterBatchUI -> User: show available meals, requests confirmation to continue
+alt if no
+    RegisterBatchUI -> ui: Use case ends
+else
+loop while
+    RegisterBatchUI -> User: Display meal in session
+
+loop while (materialCode != end)
+    RegisterBatchController -> MaterialRepository: showMaterialList()
+    RegisterBatchUI -> User: Display available materials
+
+    RegisterBatchUI -> User: request material code
+    User -> RegisterBatchUI: inserts material code
+
+    RegisterBatchUI -> RegisterBatchController: Get available batches
+    RegisterBatchUI --> User: Display available batches
+
+    RegisterBatchUI --> User: request batch id
+    User -> RegisterBatchUI: insert batch id
+
+    RegisterBatchUI --> User: request quantity
+    User -> RegisterBatchUI: quantity = inserts quantity
+
+    RegisterBatchUI -> RegisterBatch: register batch used
+
+    RegisterBatchController -> MealMaterialRepository: insertBatch(batch, quantity)
+    end
+    RegisterBatchController -> RegisterBatchUI: display used batches for meal
+    end
+end
+RegisterBatchController -> RegisterBatchUI: End Message
+
+@enduml

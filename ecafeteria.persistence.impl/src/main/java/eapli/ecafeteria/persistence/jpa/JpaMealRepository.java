@@ -13,6 +13,7 @@ import eapli.framework.domain.Designation;
 import java.util.*;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 /**
  * @author Miguel Santos <1161386@isep.ipp.pt>
@@ -67,6 +68,15 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         q = entityManager().createQuery("SELECT MIN(CURRENT_DATE-m.date) FROM Meal m WHERE m.menu=:menu  ", Meal.class);
         q.setParameter("menu", m);
         return q.getFirstResult();
+    }
+
+
+    @Override
+    public List<Meal> getMealByDate(Calendar cal) {
+        TypedQuery<Meal> q;
+        q = entityManager().createQuery("SELECT m FROM Meal m WHERE m.date=:cal", Meal.class);
+        q.setParameter("cal", cal);
+        return q.getResultList();
     }
 
 

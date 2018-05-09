@@ -1,0 +1,10 @@
+	_________
+
+	DESIGN
+	_________
+
+	* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+	Classes de Dominio: User
+	Controlador: UsedBatchRegisterController
+	Repository: MaterialRepo, MealRepo, MealMaterialRepo, HistoryRepo

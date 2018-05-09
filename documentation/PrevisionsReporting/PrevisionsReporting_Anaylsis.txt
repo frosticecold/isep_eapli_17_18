@@ -1,0 +1,29 @@
+	___________
+
+	ANÁLISE 
+	____________
+
+
+	Reunião com o cliente  em 2018.05.04
+
+	- Mostrar relação entre refeições reservadas;
+
+	- Mostrar refeições previstas no plano;
+
+	- Mostrar refeições efectivamente servidas agregadas por data ou ementa ou tipo de refeição ou prato;
+
+	- Deve permite fazer uma avaliação estatística da aceitação dos pratos junto dos utentes.
+
+
+	__________________________________________
+
+	REGRAS DE NEGOCIO
+	__________________________________________
+
+	- Listar quantas reservas tem associados a um certa refeição e que o seu estado = "BOOKED". 
+
+	- Listar as refeições agrupados por planos de refeição.
+
+	- Dar opção ao utilizador para poder ver refeições servidas escolhidos por data, ementa, tipo de refeicao ou prato.
+
+	- Calcular, em percentagem (talvez em valores absolutos), os pratos com ratings que indicam que foram aceites por utentes.
