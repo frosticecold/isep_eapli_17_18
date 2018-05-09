@@ -122,8 +122,8 @@ public interface RepositoryFactory {
      * DeliveryRegistry Repo
      */
     DeliveryRegistryRepository deliveryRegistryRepository();
-    
 
+    
     /**
      * Ratings reporting repository
      * @return 

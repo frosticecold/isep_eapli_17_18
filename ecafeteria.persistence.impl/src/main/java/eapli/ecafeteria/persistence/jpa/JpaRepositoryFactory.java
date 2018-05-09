@@ -181,5 +181,4 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public BalanceRepository balance() {
         return new JPAUserBalance();
     }
-
 }
