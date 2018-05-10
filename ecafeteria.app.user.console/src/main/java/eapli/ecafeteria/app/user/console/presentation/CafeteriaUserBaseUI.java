@@ -25,27 +25,26 @@ public abstract class CafeteriaUserBaseUI extends AbstractUI {
     protected abstract CafeteriaUserBaseController controller();
 
     private final CafeteriaUserService userService = new CafeteriaUserService();
-    
     Username username = AuthorizationService.session().authenticatedUser().id();
     Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(username);
-    
 
     public String showBalance() {
-        return "CURRENT BALANCE OF YOUR USERCARD: " + userService.getBalanceOfUser(user.get().mecanographicNumber());
+        return "CURRENT BALANCE OF YOUR USERCARD: " + controller().getBalanceOfUser(user.get().mecanographicNumber());
     }
 
     /**
      * Shows the current user next booking
-     * @return 
+     *
+     * @return
      */
-    public String showNextBooking(){
+    public String showNextBooking() {
         Booking book = userService.findNextBooking(user.get());
-        if(book == null){
+        if (book == null) {
             return "NO NEXT BOOKINGS";
         }
         return "NEXT BOOKING: " + book.toString();
     }
-    
+
     @Override
     public String headline() {
         return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   " + showBalance() + "\n" + showNextBooking() + "\n";
