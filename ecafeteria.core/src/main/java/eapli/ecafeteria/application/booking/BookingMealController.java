@@ -8,7 +8,8 @@ package eapli.ecafeteria.application.booking;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.application.menus.MenuService;
-import eapli.ecafeteria.domain.CreditTransaction.Debit;
+import eapli.ecafeteria.domain.CreditTransaction.Transaction;
+import eapli.ecafeteria.domain.CreditTransaction.TransactionType;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
@@ -187,7 +188,7 @@ public class BookingMealController implements Controller {
         /* persist here */
         atbr.saveBooking(newBooking);
 
-        attr.saveTransaction(new Debit(user.get(), mealPrice));
+        attr.saveTransaction(new Transaction(user.get(), TransactionType.DEBIT, mealPrice));
 
         cafer.save(user.get());
         TxCtx.commit();

@@ -13,7 +13,10 @@ import eapli.framework.util.DateTime;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,15 +33,17 @@ import javax.persistence.Version;
  * @param <K> Credits, theh mpney for the transaction
  */
 @Entity
-public abstract class Transaction implements Serializable {
+public class Transaction implements Serializable {
 
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
     @ManyToOne(cascade=CascadeType.ALL)
     protected CafeteriaUser cafeteriaUser;
     protected Money k;
-    protected String transactionType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transactionType")
+    protected TransactionType transactionType;
     @OneToOne
     protected SystemUser systemUser;
     @Temporal(TemporalType.DATE)
@@ -50,15 +55,19 @@ public abstract class Transaction implements Serializable {
     /**
      *
      * @param user Cafeteria user for the new transaction
+     * @param transactionType Type of transaction
      * @param k Either Meal or Credits for cancelation or debit/credit
      * respectively Construction of the object for the new transaction either
      * Debit, Credit or Cancelation
      */
-    public Transaction(CafeteriaUser user, Money k) {
+    public Transaction(CafeteriaUser user, TransactionType transactionType, Money k) {
         this.cafeteriaUser = user;
+        this.transactionType = transactionType;
         this.k = k;
         this.date = DateTime.now();
         this.systemUser = AuthorizationService.session().authenticatedUser();
+        
+        movement();
     }
 
     protected Transaction() {
@@ -66,16 +75,18 @@ public abstract class Transaction implements Serializable {
     }
 
     /**
-     *
-     * @param user Cafeteria user for the new transaction
-     * @param obj Either Meal or Credits for cancelation or debit/credit
-     * respectively
-     * @return true for success of the operation
+     * Proceed with the balance movement
+     * @author David Camelo <1161294@isep.ipp.pt>
      */
-    public abstract boolean movement(CafeteriaUser user, Money obj);
-
-    @Override
-    public abstract String toString();
+    private void movement() {
+        switch(transactionType){
+            case CANCELATION : cafeteriaUser.addCredits(k); break;
+            case RECHARGE : cafeteriaUser.addCredits(k); break;
+            case DEBIT : cafeteriaUser.removeCredits(k); break;
+            
+            default: throw new IllegalArgumentException("No such transaction type");
+        }
+    }
 
     
 }

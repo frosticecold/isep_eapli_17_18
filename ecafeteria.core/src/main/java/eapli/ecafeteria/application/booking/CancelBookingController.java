@@ -6,10 +6,11 @@
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.domain.CreditTransaction.Transaction;
+import eapli.ecafeteria.domain.CreditTransaction.TransactionType;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.CreditTransaction.CancelationBooking;
 import eapli.ecafeteria.persistence.AutoTxBookingRepository;
 import eapli.ecafeteria.persistence.AutoTxTransactionRepository;
 import eapli.ecafeteria.persistence.BookingRepository;
@@ -138,7 +139,7 @@ public class CancelBookingController {
         //Change state
         selectedBooking.getBookingState().changeToCanceled();
         // Add cancelation movement
-        CancelationBooking cb = new CancelationBooking(user, refund);
+        Transaction transaction = new Transaction(user, TransactionType.CANCELATION, refund);
         
         // Persist
         final TransactionalContext TxCtx 
@@ -155,10 +156,9 @@ public class CancelBookingController {
         /* persist here */
         atbr.saveBooking(selectedBooking);
         if(refund != null)
-            attr.saveTransaction(cb);
+            attr.saveTransaction(transaction);
         else
-            attr.saveTransaction(
-                    new CancelationBooking(user, new Money(0, refund.currency())));
+            attr.saveTransaction(new Transaction(user, TransactionType.CANCELATION, new Money(0, refund.currency())));
         cafer.save(user);
         TxCtx.commit();
         
