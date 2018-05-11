@@ -191,11 +191,7 @@ public class BookingMealController implements Controller {
         }
 
         Money mealPrice = meal.dish().currentPrice();
-        Balance userBalance = userService.getBalanceOfUser(user.get().mecanographicNumber());
-        Money money = userBalance.currentBalance().subtract(mealPrice);
-        Balance newBalance = new Balance(money);
 
-        user.get().updateUserBalance(newBalance);
 
         // Persist
         final TransactionalContext TxCtx
