@@ -181,4 +181,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public BalanceRepository balance() {
         return new JPAUserBalance();
     }
+
+    @Override
+    public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
+        return new JpaTransactionReportingRepository(autoTx);
+    }
 }
