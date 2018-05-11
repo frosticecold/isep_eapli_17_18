@@ -5,10 +5,12 @@
  */
 package eapli.ecafeteria.application.booking;
 
+import eapli.ecafeteria.Application;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
 import eapli.ecafeteria.application.menus.MenuService;
-import eapli.ecafeteria.domain.CreditTransaction.Debit;
+import eapli.ecafeteria.domain.CreditTransaction.Transaction;
+import eapli.ecafeteria.domain.CreditTransaction.TransactionType;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
@@ -25,6 +27,12 @@ import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.persistence.repositories.TransactionalContext;
+import eapli.framework.util.DateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -135,9 +143,26 @@ public class BookingMealController implements Controller {
         }
     }
 
-    public boolean is24hBefore(Calendar date) {
-        DateEAPLI dt = new DateEAPLI(date);
-        if (dt.isTomorrow(date)) {
+    public boolean is24hBeforeMeal(Calendar choosedDate, MealType mealType) {
+        final String lunchTimeBegin = Application.settings().getLUNCH_TIME_BEGIN();
+        final String dinnerTimeBegin = Application.settings().getDiNNER_TIME_BEGIN();
+
+        LocalTime time = null;
+        if (mealType == mealType.LUNCH) {
+            time = LocalTime.parse(lunchTimeBegin, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        } else {
+            time = LocalTime.parse(dinnerTimeBegin, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        }
+        int hour = time.get(ChronoField.CLOCK_HOUR_OF_DAY);
+        int minute = time.get(ChronoField.MINUTE_OF_HOUR);
+        int second = time.get(ChronoField.SECOND_OF_MINUTE);
+
+        choosedDate.set(Calendar.HOUR_OF_DAY, hour);
+        choosedDate.set(Calendar.MINUTE, minute);
+        choosedDate.set(Calendar.SECOND, second);
+
+        DateEAPLI dt = new DateEAPLI(choosedDate);
+        if (dt.isTomorrow(choosedDate)) {
             return true;
         }
         return false;
@@ -151,26 +176,22 @@ public class BookingMealController implements Controller {
      * @throws eapli.framework.persistence.DataIntegrityViolationException
      */
     public boolean confirmBooking(Username cafeteriaUser, Calendar date,
-            BookingState bookingState, Meal meal,List<Booking> bookings) throws DataConcurrencyException,
+            BookingState bookingState, Meal meal, List<Booking> bookings) throws DataConcurrencyException,
             DataIntegrityViolationException {
 
         // Add booking movement
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
         Booking newBooking = new Booking(meal, bookingState, user.get(), date);
-       
+
         //check if user as already booked this meal
         for (Booking booking : bookings) {
-            if(booking.equals(newBooking)){
+            if (booking.equals(newBooking)) {
                 return false;
             }
         }
-        
-        Money mealPrice = meal.dish().currentPrice();
-        Balance userBalance = userService.getBalanceOfUser(user.get().mecanographicNumber());
-        Money money = userBalance.currentBalance().subtract(mealPrice);
-        Balance newBalance = new Balance(money);
 
-        user.get().updateUserBalance(newBalance);
+        Money mealPrice = meal.dish().currentPrice();
+
 
         // Persist
         final TransactionalContext TxCtx
@@ -187,7 +208,7 @@ public class BookingMealController implements Controller {
         /* persist here */
         atbr.saveBooking(newBooking);
 
-        attr.saveTransaction(new Debit(user.get(), mealPrice));
+        attr.saveTransaction(new Transaction(user.get(), TransactionType.DEBIT, mealPrice));
 
         cafer.save(user.get());
         TxCtx.commit();

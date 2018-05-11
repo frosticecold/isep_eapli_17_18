@@ -149,4 +149,6 @@ public interface RepositoryFactory {
     AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
     
     AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
+    
+    TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx);
 }

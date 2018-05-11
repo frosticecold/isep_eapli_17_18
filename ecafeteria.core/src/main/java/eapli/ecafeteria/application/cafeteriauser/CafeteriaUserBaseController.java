@@ -5,6 +5,8 @@
  */
 package eapli.ecafeteria.application.cafeteriauser;
 
+import eapli.ecafeteria.domain.cafeteriauser.Balance;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.application.Controller;
 import eapli.framework.domain.money.Money;
 
@@ -14,8 +16,15 @@ import eapli.framework.domain.money.Money;
  */
 public class CafeteriaUserBaseController implements Controller {
 
+    private final CafeteriaUserService userService = new CafeteriaUserService();
+
     public Money balance() {
         // TODO get the actual balance of the user
         return Money.euros(0);
     }
+
+    public Balance getBalanceOfUser(MecanographicNumber user) {
+        return userService.getBalanceOfUser(user);
+    }
+
 }

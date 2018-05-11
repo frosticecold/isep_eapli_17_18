@@ -12,6 +12,7 @@ import eapli.ecafeteria.app.user.console.presentation.bookings.CheckBookingsByUs
 import eapli.ecafeteria.app.user.console.presentation.bookings.ConsultMealRatingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ListMenuUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.RatingMealUI;
+import eapli.ecafeteria.app.user.console.presentation.bookings.ShowTransactionsUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ViewRatingsUI;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.framework.actions.ReturnAction;
@@ -100,7 +101,7 @@ class MainMenu extends CafeteriaUserBaseUI{
 
     private Menu buildAccountMenu() {
         final Menu menu = new Menu("Account");
-        menu.add(new MenuItem(LIST_MOVEMENTS_OPTION, "List movements", new ShowMessageAction("Not implemented yet")));
+        menu.add(new MenuItem(LIST_MOVEMENTS_OPTION, "List movements", () -> new ShowTransactionsUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         return menu;
     }
