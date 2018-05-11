@@ -11,144 +11,147 @@ import javax.persistence.*;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-
 @Entity
 public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Column(name="ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "ID")
     private Long idSession;
-        
+
     @Temporal(TemporalType.DATE)
-    private DeliverySessionDate sessionDate;
-    
+    private Calendar sessionDate;
+
     @OneToOne
-    @JoinColumn(name="CASHIER")
+    @JoinColumn(name = "CASHIER")
     private SystemUser cashier;
-    
-    @Column (name="ACTIVE")
+
+    @Column(name = "ACTIVE")
     private boolean active;
-    
-    @Column (name="TYPESESSION")
+
+    @Column(name = "TYPESESSION")
     private int typeSession;
-    
+
     protected DeliveryMealSession() {
-       //for ORM only
+        //for ORM only
     }
-    
+
     //real constructor
     public DeliveryMealSession(POS pos) {
         this.cashier = pos.cashier();
-        this.sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
+        this.sessionDate = Calendar.getInstance();
         this.defineSessionType();
         this.active = true;
     }
-    
+
     @Override
     public boolean sameAs(Object other) {
-        
+
         boolean flag = false;
-        
-        if(other instanceof DeliveryMealSession) {
-            if(((DeliveryMealSession) other).id() == this.id())
-            flag = true;
-        }      
-        
+
+        if (other instanceof DeliveryMealSession) {
+            if (((DeliveryMealSession) other).id() == this.id()) {
+                flag = true;
+            }
+        }
+
         return flag;
     }
 
     /**
      * Returns the identifier of the delivery meal session
-     * @return 
+     *
+     * @return
      */
     @Override
     public Long id() {
         return this.idSession;
     }
 
-    public DeliverySessionDate sessionDate(){
+    public Calendar sessionDate() {
         return this.sessionDate;
     }
 
     /**
      * Define the type of the session
      */
-    private void defineSessionType () {
-        
+    private void defineSessionType() {
+
         int type = -1;
-        
+
         //see what is the hour to set the correct type of session LUNCH OR DINNER
-        
         //check if its lunch
-        if(this.sessionDate.Hour() >= 12 && this.sessionDate.Hour() < 15) type = 1;
-        
+        if (this.sessionDate.get(Calendar.HOUR_OF_DAY) >= 12 && this.sessionDate.get(Calendar.HOUR_OF_DAY) < 15) {
+            type = 1;
+        }
+
         //check if its dinner
-        if(this.sessionDate.Hour() >= 18 && this.sessionDate.Hour() < 23) type = 2;
-        
+        if (this.sessionDate.get(Calendar.HOUR_OF_DAY) >= 18 && this.sessionDate.get(Calendar.HOUR_OF_DAY) < 23) {
+            type = 2;
+        }
+
         //change the type of session on previous conditions
-        switch(type) {
+        switch (type) {
             case 1:
                 this.typeSession = 1;
-            break;
-            
+                break;
+
             case 2:
                 this.typeSession = 2;
-            break;
+                break;
             default:
                 this.typeSession = 0;
-            break;
+                break;
         }
     }
-    
+
     /**
      * Check if its a lunch session
-     * @return 
+     *
+     * @return
      */
     public boolean isLunch() {
-        
+
         boolean r = false;
-        
-        if(this.typeSession == 1) r = true;
-        
+
+        if (this.typeSession == 1) {
+            r = true;
+        }
+
         return r;
     }
-    
+
     /**
      * Check if the session is dinner session
-     * @return 
+     *
+     * @return
      */
     public boolean isDinner() {
-        
+
         boolean r = false;
-        
-        if(this.typeSession == 2) r = true;
-        
+
+        if (this.typeSession == 2) {
+            r = true;
+        }
+
         return r;
     }
-    
-    /**
-     * Returns the sessions date
-     * @return 
-     */
-    public Calendar date() {
-       
-        return this.sessionDate.calendar();
-    }
-    
-    /**
+
+    /*
      * Closes session
      */
     public void closeSession() {
-        if(this.active) this.active = false;
-  
+        if (this.active) {
+            this.active = false;
+        }
+
     }
-    
+
     /**
      * check if session is active
      */
     public boolean isActive() {
-        
+
         return this.active;
     }
 }

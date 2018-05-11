@@ -43,7 +43,7 @@ public class ClosePOSController implements Controller {
     }
 
     public String checkDate() {
-        return d.date().toString();
+        return d.sessionDate().toString();
     }
 
     public boolean checkPoSState() {

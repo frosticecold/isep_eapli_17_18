@@ -22,7 +22,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
     
     private boolean open;
     
-    @OneToOne
+    @Transient
     private SystemUser cashier;
     
     @OneToOne
