@@ -8,6 +8,7 @@ package eapli.ecafeteria.domain.CreditTransaction;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.dto.TransactionDTO;
 import eapli.framework.domain.money.Money;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
@@ -73,7 +74,7 @@ public class Transaction implements Serializable {
     protected Transaction() {
         // for ORM only
     }
-
+    
     /**
      * Proceed with the balance movement
      * @author David Camelo <1161294@isep.ipp.pt>
@@ -88,5 +89,19 @@ public class Transaction implements Serializable {
         }
     }
 
+    @Override
+    public String toString() {
+        String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);
+        return strDate + " -> " + transactionType + ": " + k.toString();
+    }    
+
+    /**
+     * Convert a transaction to a transactionDTO
+     * 
+     * @return DTO
+     */
+    public TransactionDTO toDTO(){
+        return new TransactionDTO(cafeteriaUser, transactionType, k, date, systemUser);
+    }
     
 }

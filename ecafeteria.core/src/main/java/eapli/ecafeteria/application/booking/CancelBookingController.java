@@ -32,15 +32,15 @@ public class CancelBookingController {
     /**
      * Factory
      */
-    RepositoryFactory factory;
+    private RepositoryFactory factory;
     
     /**
-     * Bookings repository
+     * Bookings reporting repository
      */
     private BookingRepository bookingReportingRepository = null;
     
     /**
-     * Bookings reporting repository
+     * Bookings repository
      */
     private BookingRepository bookingRepository = null;
     

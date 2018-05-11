@@ -18,19 +18,19 @@ public enum TransactionType {
     @Column(name = "Cancelation") CANCELATION{
         @Override
         public String toString(){
-            return "CANCELATION";
+            return "Cancelation";
         }
     },
     @Column(name = "Debit") DEBIT{
         @Override
         public String toString(){
-            return "DEBIT";
+            return "Debit";
         }
     },
     @Column(name = "Recharge") RECHARGE{
         @Override
         public String toString(){
-            return "RECHARGE";
+            return "Recharge";
         }
     }
 }

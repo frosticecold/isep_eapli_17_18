@@ -5,7 +5,7 @@ ___________
 
 
   * Cafeteria users must be pre-registered in the system.
-  * Booking state must be xxx to be cancelled.
+  * Booking state must be Canceled to be cancelled.
 
 _____________________
 
