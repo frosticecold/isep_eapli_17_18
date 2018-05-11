@@ -24,10 +24,6 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     private DeliverySessionDate sessionDate;
     
     @OneToOne
-    @JoinColumn(name="POS")
-    private POS pos;
-    
-    @OneToOne
     @JoinColumn(name="CASHIER")
     private SystemUser cashier;
     
@@ -43,7 +39,6 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     
     //real constructor
     public DeliveryMealSession(POS pos) {
-        this.pos = pos;
         this.cashier = pos.cashier();
         this.sessionDate = new DeliverySessionDate((Calendar) DateTime.now());
         this.defineSessionType();
@@ -75,14 +70,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     public DeliverySessionDate sessionDate(){
         return this.sessionDate;
     }
-    /**
-     * 
-     * @return 
-     */
-    public POS loggedPOS(){
-        return this.pos;
-    }
-    
+
     /**
      * Define the type of the session
      */
@@ -149,20 +137,11 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     }
     
     /**
-     * Returns the current pos of this session
-     * @return 
-     */
-    public POS pos(){
-        
-        return this.pos;
-    }
-    
-    /**
      * Closes session
      */
     public void closeSession() {
         if(this.active) this.active = false;
-        this.pos.changeState();
+  
     }
     
     /**

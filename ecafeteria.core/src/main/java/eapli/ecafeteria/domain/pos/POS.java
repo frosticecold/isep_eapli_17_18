@@ -24,6 +24,9 @@ public class POS implements AggregateRoot<Long>, Serializable{
     
     @OneToOne
     private SystemUser cashier;
+    
+    @OneToOne
+    private DeliveryMealSession session;
 
     protected POS () {
         //for ORM only
@@ -86,5 +89,10 @@ public class POS implements AggregateRoot<Long>, Serializable{
      */    
     public SystemUser cashier() {
         return this.cashier;
+    }
+    
+    private void openSession() {
+        
+        //this.session = new DeliveryMealSession
     }
  }

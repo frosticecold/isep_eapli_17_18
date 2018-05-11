@@ -70,30 +70,6 @@ public class DeliveryMealSessionTest {
     }
 
     /**
-     * Test of pos method, of class DeliveryMealSession.
-     */
-    @Test
-    public void testPos() {
-        System.out.println("pos");
-        SystemUserBuilder builder = new SystemUserBuilder();
-         Username username = new Username("pedro");
-        String pw = "Password1";
-        String firstName = "pedro";
-        String lastName = "coelho";
-        builder.withEmail("1131485@isep.ipp.pt");
-        builder.withPassword(pw);
-        builder.withUsername(username);
-        builder.withRole(RoleType.CASHIER);
-        builder.withFirstName(firstName);
-         builder.withLastName(lastName);
-       
-        SystemUser cashier = builder.build();
-        POS pos = new POS(cashier);
-        POS result = instance.pos();
-        assertTrue(pos.is(result.id()));
-    }
-
-    /**
      * Test of closeSession method, of class DeliveryMealSession.
      */
     @Test
