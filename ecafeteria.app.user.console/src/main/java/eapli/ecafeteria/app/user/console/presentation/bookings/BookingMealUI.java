@@ -38,11 +38,6 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
 
-        if (controller.is24hBefore(cal) == false) {
-            System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
-            return false;
-        }
-
         //====================================lIST MEAL============================================
         Iterable<Meal> mealList = null;
         List<Meal> listMeal = new ArrayList<>();
@@ -60,6 +55,12 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         switch (option) {
             case 1:
                 mealList = controller.listMeals(cal, MealType.LUNCH);
+
+                if (controller.is24hBeforeMeal(cal, MealType.LUNCH) == false) {
+                    System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
+                    return false;
+                }
+
                 if (controller.mealListIsEmpty(mealList)) {
                     System.out.println("\nThere are no meals in that conditions.\n");
                     return false;
@@ -96,6 +97,11 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
 
             case 2:
                 mealList = controller.listMeals(cal, MealType.DINNER);
+
+                if (controller.is24hBeforeMeal(cal, MealType.DINNER) == false) {
+                    System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
+                    return false;
+                }
 
                 if (controller.mealListIsEmpty(mealList)) {
                     System.out.println("\nThere are no meals in that conditions.\n");

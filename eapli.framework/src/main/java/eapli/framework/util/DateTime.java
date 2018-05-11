@@ -456,9 +456,9 @@ public final class DateTime {
         //86400000millis - 24 hours
         long choosed = choosedDay.getTimeInMillis();
         long day = today.getTimeInMillis();
-        if(day + 86400000 <  choosed){
+        if (day + 86400000 < choosed) {
             return true;
-            
+
         }
         return false;
     }
@@ -533,7 +533,8 @@ public final class DateTime {
     }
 
     public static boolean isTomorrow(final Calendar a) {
-        return is24hBefore(a, now());
+        Calendar now = Calendar.getInstance();
+        return is24hBefore(a, now);
     }
 
     /**
