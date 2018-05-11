@@ -52,91 +52,45 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
             option = Console.readInteger("");
         } while (option != 1 && option != 2);
 
-        switch (option) {
-            case 1:
-                mealList = controller.listMeals(cal, MealType.LUNCH);
+        MealType mealType = null;
+        if (option == 1) {
+            mealType = MealType.LUNCH;
+        } else {
+            mealType = MealType.DINNER;
 
-                if (controller.is24hBeforeMeal(cal, MealType.LUNCH) == false) {
-                    System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
-                    return false;
-                }
+        }
+        mealList = controller.listMeals(cal, mealType);
+        if (controller.is24hBeforeMeal(cal, mealType) == false) {
+            System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
+            return false;
+        }
 
-                if (controller.mealListIsEmpty(mealList)) {
-                    System.out.println("\nThere are no meals in that conditions.\n");
-                    return false;
-                }
+        if (controller.mealListIsEmpty(mealList)) {
+            System.out.println("\nThere are no meals in that conditions.\n");
+            return false;
+        }
 
-                if (controller.mealListIsEmpty(mealList)) {
-                    System.out.println("\nThere are no meals in that conditions.\n");
-                    return false;
-                }
-                listMeal = controller.mealListIfMenuIsPublic(mealList);
+        listMeal = controller.mealListIfMenuIsPublic(mealList);
 
-                if (!controller.menuOfMealListIsPublic(listMeal)) {
-                    System.out.println("\nThere are no meals published.\n");
-                    return false;
-                }
+        if (!controller.menuOfMealListIsPublic(listMeal)) {
+            System.out.println("\nThere are no meals published.\n");
+            return false;
+        }
 
-                SelectWidget<List<Meal>> selectWidget
-                        = new SelectWidget("Select a meal", listMeal);
-                selectWidget.show();
-                try {
-                    int index = selectWidget.selectedOption() - 1;
-                    if (index == -1) {
-                        return false;
-                    }
+        SelectWidget<List<Meal>> selectWidget
+                = new SelectWidget("Select a meal", listMeal);
+        selectWidget.show();
+        try {
+            int index = selectWidget.selectedOption() - 1;
+            if (index == -1) {
+                return false;
+            }
 
-                    choosedMeal = controller.selectMeal(index, listMeal);
+            choosedMeal = controller.selectMeal(index, listMeal);
 
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                    return false;
-                }
-
-                break;
-
-            case 2:
-                mealList = controller.listMeals(cal, MealType.DINNER);
-
-                if (controller.is24hBeforeMeal(cal, MealType.DINNER) == false) {
-                    System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
-                    return false;
-                }
-
-                if (controller.mealListIsEmpty(mealList)) {
-                    System.out.println("\nThere are no meals in that conditions.\n");
-                    return false;
-                }
-
-                if (controller.mealListIsEmpty(mealList)) {
-                    System.out.println("\nThere are no meals in that conditions.\n");
-                    return false;
-                }
-                listMeal = controller.mealListIfMenuIsPublic(mealList);
-
-                if (!controller.menuOfMealListIsPublic(listMeal)) {
-                    System.out.println("\nThere are no meals published.\n");
-                    return false;
-                }
-
-                SelectWidget<List<Meal>> selectWidget2
-                        = new SelectWidget("Select a meal", listMeal);
-                selectWidget2.show();
-                try {
-                    int index = selectWidget2.selectedOption() - 1;
-                    if (index == -1) {
-                        return false;
-                    }
-
-                    choosedMeal = controller.selectMeal(index, listMeal);
-
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                    return false;
-                }
-
-                break;
-
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
 
         //====================================CONFIRM AND SAVE THE CHOOSED MEAL==================================
@@ -144,7 +98,8 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         System.out.println(choosedMeal.toString());
 
         //===================================SHOW ALERGEN AND CALORICS==================================
-        System.out.println("\nAlergen Info:\n");
+        System.out.println(
+                "\nAlergen Info:\n");
         if (controller.mealHasAlergens(choosedMeal)) {
             System.out.println(choosedMeal.dish().alergenInDish().toString());
         } else {
