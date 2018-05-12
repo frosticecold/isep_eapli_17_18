@@ -21,15 +21,13 @@ public class POSOpeningUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        if (!theController.checkPoSState()) {
-            System.out.println(String.format("Creating Delivery Meal Session...\n", (Object) null));
-            try {
-                theController.createDeliveryMealSession();
-                System.out.println("Delivery Meal Session successfully created.");
-            } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
-                System.out.println("Error inserting into database.: " + ex.getMessage());
-            }
+        System.out.println(String.format("Creating Delivery Meal Session...\n", (Object) null));
+        try {
+            theController.createDeliveryMealSession();
+            System.out.println("Delivery Meal Session successfully created.");
             return true;
+        } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
+            System.out.println("Error inserting into database.: " + ex.getMessage());
         }
         System.out.println(String.format("Couldn't open point of sale as it was already opened."));
         return false;

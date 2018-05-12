@@ -28,6 +28,7 @@ import javax.persistence.Version;
 public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serializable {
 
     private static final long serialVersionUID = 1L;
+    
 
     @Version
     private Long version;
@@ -43,6 +44,9 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
 
     @Embedded
     private Balance currentBalance;
+    
+    @Embedded
+    private BalanceLimits balanceLimits;
 
     public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber) {
         if (mecanographicNumber == null || user == null) {
@@ -136,5 +140,17 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     @Override
     public MecanographicNumber id() {
         return this.mecanographicNumber;
+    }
+    /**
+     * 
+     * Define the limits of the user's balance to the amount at which they should be warned for going below the limit
+     * @param limits
+     */
+    public boolean defineBalanceLimits(double limits){
+        return balanceLimits.defineBalanceLimits(limits);
+    }
+    
+    public double checkBalanceLimits(){
+        return balanceLimits.checkBalanceLimits();
     }
 }

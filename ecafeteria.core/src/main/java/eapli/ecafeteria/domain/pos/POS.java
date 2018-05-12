@@ -21,7 +21,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
     private long idPOS;  
     
     private boolean open;
-    
+    private long identification;
     @Transient
     private SystemUser cashier;
     
@@ -35,6 +35,7 @@ public class POS implements AggregateRoot<Long>, Serializable{
     public POS (SystemUser posUser) {
         if(posUser != null) this.cashier = posUser;
         this.open = false;
+        this.identification = Long.valueOf("1");
     }
 
     /**
