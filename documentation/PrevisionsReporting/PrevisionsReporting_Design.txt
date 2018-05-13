@@ -6,10 +6,9 @@
 
 * Utilizar a estrutura base standard da aplicação baseada em camadas
 
-	Classes do dominio : PrevisionsReportingDTO
-	Controlador : PrevisionsReportingController
+	Controlador : PrevisionsReportingController, PrevisionsService
 	UserInterface : PrevisionsReportingUI, MainMenuUI
-	Repositorios : BookingsRepository, MenuPlanRepository, MealsRepository, DeliveryRegistryRepository
+	Repositorios : BookingsRepository, MenuPlanRepository, MealsRepository, DeliveryRegistryRepository, RatingsRepository
 	PersistenceContext : RepositoryFactory
 
 
@@ -20,14 +19,14 @@ title SD Previsions Reporting
 ":MainMenuUI" -> ":PrevisionsReportingUI" : create()
 ":PrevisionsReportingUI" -> ":PrevisionsReportingController" : create()
 ":PrevisionsReportingUI" -> ":PrevisionsReportingController" : showReports()
-":PrevisionsReportingController" -> ":PrevisionsReportingDTO" : create()
-":PrevisionsReportingDTO" -> ":PersistenceContext" : repositories()
+":PrevisionsReportingController" -> ":PrevisionsService" : create()
+":PrevisionsService" -> ":PersistenceContext" : repositories()
 ":PersistenceContext" -> ":RepositoryFactory" : bookingsRepo = booking()
 ":PersistenceContext" -> ":RepositoryFactory" : mealsRepo = meals()
 ":PersistenceContext" -> ":RepositoryFactory" : menuPlanRepo = menuPlan()
 ":PersistenceContext" -> ":RepositoryFactory" : deliveryRegistryRepo = deliveryRegistry()
 ":PersistenceContext" -> ":RepositoryFactory" : ratingReportingRepo = ratingsReporting()
-":PrevisionsReportingController" -> ":PrevisionsReportingDTO" : getBookingsMealsBooked()
-":PrevisionsReportingController" -> ":PrevisionsReportingDTO" : getMenuPlanMeals()
-":PrevisionsReportingController" -> ":PrevisionsReportingDTO" : getDeliveredMeals()
-":PrevisionsReportingController" -> ":PrevisionsReportingDTO" : getRatingsAcceptanceRate()
+":PrevisionsReportingController" -> ":PrevisionsService" : getDishesAcceptanceRate()
+":PrevisionsReportingController" -> ":PrevisionsService" : getMealsForPlan()
+":PrevisionsReportingController" -> ":PrevisionsService" : getBookedMeals()
+":PrevisionsReportingController" -> ":PrevisionsService" : getDeliveredMeals()
