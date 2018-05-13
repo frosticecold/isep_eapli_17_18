@@ -25,7 +25,7 @@ title SD Previsions Reporting
 ":PersistenceContext" -> ":RepositoryFactory" : mealsRepo = meals()
 ":PersistenceContext" -> ":RepositoryFactory" : menuPlanRepo = menuPlan()
 ":PersistenceContext" -> ":RepositoryFactory" : deliveryRegistryRepo = deliveryRegistry()
-":PersistenceContext" -> ":RepositoryFactory" : ratingReportingRepo = ratingsReporting()
+":PersistenceContext" -> ":RepositoryFactory" : ratingRepo = rating()
 ":PrevisionsReportingController" -> ":PrevisionsService" : calculateDishesAcceptanceRate()
 ":PrevisionsReportingController" -> ":PrevisionsService" : calculateMealsForPlan()
 ":PrevisionsReportingController" -> ":PrevisionsService" : calculateBookedMeals()
