@@ -1,14 +1,18 @@
 package eapli.ecafeteria.application.menus;
 
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.DeliveryRegistryRepository;
+import eapli.ecafeteria.persistence.DishTypeRepository;
 import eapli.ecafeteria.persistence.MealRepository;
 import eapli.ecafeteria.persistence.MenuPlanRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RatingRepository;
 import eapli.framework.application.Controller;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -22,37 +26,36 @@ public class PrevisionsService implements Controller {
     private MealRepository mealsRepo;
     private MenuPlanRepository menuPlanRepo;
     private RatingRepository ratingRepo;
+    private DishTypeRepository dishTypeRepo;
 
     //Construtor of service
     public PrevisionsService() {
         this.prepareRepositories();
     }
 
-    //prepare a list of booked meals
-    public int[][] getBookedMeals() {
+    public Long[][] prepareBookedMealsList() {
 
-        int[][] ret = new int[1000][1000];
+        Long[][] matrix = new Long[3][1];
 
-        Iterable<Meal> meals = this.mealsRepo.findAll();
+        DishType fish = this.dishTypeRepo.findByAcronym("fish").get();
+        DishType meat = this.dishTypeRepo.findByAcronym("meat").get();
+        DishType vegie = this.dishTypeRepo.findByAcronym("vegie").get();
 
-        List<Booking> bookings;
+        Long qtFish = this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), fish, MealType.LUNCH);
+        qtFish += this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), fish, MealType.DINNER);
 
-        int j = 0;
-        int i = 0;
+        Long qtMeat = this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), meat, MealType.LUNCH);
+        qtMeat += this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), meat, MealType.DINNER);
 
-        for (Meal m : meals) {
+        Long qtVegie = this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), vegie, MealType.LUNCH);
+        qtVegie += this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), vegie, MealType.DINNER);
 
-            bookings = this.bookingRepo.getAllBookingsFromMealThatAreBooked(m);
+        //filling matrix
+        matrix[0][0] = qtMeat;
+        matrix[1][0] = qtFish;
+        matrix[2][0] = qtVegie;
 
-            while (j < bookings.size() && i < 1000) {
-                ret[i][0] = m.id().intValue();
-                ret[i][1] = bookings.get(j).getIdBooking().intValue();
-                i++;
-                j++;
-            }
-        }
-
-        return ret;
+        return matrix;
     }
 
     /**
@@ -66,5 +69,6 @@ public class PrevisionsService implements Controller {
         this.mealsRepo = PersistenceContext.repositories().meals();
         this.menuPlanRepo = PersistenceContext.repositories().menuPlan();
         this.ratingRepo = PersistenceContext.repositories().rating();
+        this.dishTypeRepo = PersistenceContext.repositories().dishTypes();
     }
 }
