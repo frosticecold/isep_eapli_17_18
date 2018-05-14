@@ -45,7 +45,7 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     @Embedded
     private Balance currentBalance;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private BalanceLimits balanceLimits;
 
     public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber, BalanceLimits balanceLimits) {
@@ -65,6 +65,7 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
         this.systemUser = user;
         this.mecanographicNumber = mecanographicNumber;
         this.currentBalance = new Balance();
+        this.balanceLimits = new BalanceLimits();
     }
 
     protected CafeteriaUser() {

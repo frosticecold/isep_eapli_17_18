@@ -58,7 +58,7 @@ public class BookingBootstrapper implements Action  {
         /*
         Meals
         */
-        final Optional<Meal> meal1 = mealRepo.findOne(new Long(28));
+        final Optional<Meal> meal1 = mealRepo.findOne(new Long(36));
         final Optional<Meal> meal2 = mealRepo.findOne(new Long(29));
         final Optional<Meal> meal3 = mealRepo.findOne(new Long(30));
         final Optional<Meal> meal4 = mealRepo.findOne(new Long(31));
