@@ -83,5 +83,10 @@ public class InMemoryBookingRepository implements BookingRepository {
     public List<Booking> getAllBookingsFromMealThatAreServed(Meal m) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Booking> getAllBookingsFromMealThatAreBooked(Meal m) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

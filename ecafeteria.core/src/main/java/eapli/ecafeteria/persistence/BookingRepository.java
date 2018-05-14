@@ -35,4 +35,6 @@ public interface BookingRepository extends DataRepository<Booking, Long>{
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState);
     
     public List<Booking> getAllBookingsFromMealThatAreServed(Meal m);
+    
+    public List<Booking> getAllBookingsFromMealThatAreBooked(Meal m);
 }
