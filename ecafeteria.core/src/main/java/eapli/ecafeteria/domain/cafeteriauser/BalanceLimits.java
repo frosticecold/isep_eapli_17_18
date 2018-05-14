@@ -7,17 +7,21 @@ package eapli.ecafeteria.domain.cafeteriauser;
 
 import eapli.framework.domain.ddd.ValueObject;
 import java.io.Serializable;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import eapli.framework.domain.money.Money;
+import javax.persistence.Id;
 /**
  *
  * @author Rúben Santos
  */
 
-@Embeddable
+@Entity
 public class BalanceLimits implements ValueObject, Serializable{
     
     private Money balanceLimit;
+    
+    @Id
+    private Long id;
     /**
      * Constructor
      */

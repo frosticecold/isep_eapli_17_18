@@ -4,6 +4,7 @@ import eapli.framework.domain.ddd.ValueObject;
 import eapli.framework.domain.money.Money;
 import java.io.Serializable;
 import javax.persistence.Embeddable;
+import javax.persistence.Id;
 
 /**
  *
@@ -15,7 +16,8 @@ public class Balance implements ValueObject, Serializable{
     private static final long serialVersionUID = 1L;
 
     private Money currentBalance;
-
+      
+    
     /**
      *
      */
@@ -68,5 +70,4 @@ public class Balance implements ValueObject, Serializable{
     public String toString() {
         return currentBalance.toString();
     }
-
 }

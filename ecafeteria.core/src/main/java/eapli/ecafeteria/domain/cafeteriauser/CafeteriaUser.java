@@ -4,6 +4,7 @@ import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.domain.money.Money;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -28,7 +29,6 @@ import javax.persistence.Version;
 public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serializable {
 
     private static final long serialVersionUID = 1L;
-    
 
     @Version
     private Long version;
@@ -44,9 +44,19 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
 
     @Embedded
     private Balance currentBalance;
-    
-    @Embedded
+
+    @OneToOne
     private BalanceLimits balanceLimits;
+
+    public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber, BalanceLimits balanceLimits) {
+        if (mecanographicNumber == null || user == null) {
+            throw new IllegalArgumentException();
+        }
+        this.systemUser = user;
+        this.mecanographicNumber = mecanographicNumber;
+        this.currentBalance = new Balance();
+        this.balanceLimits = balanceLimits;
+    }
 
     public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber) {
         if (mecanographicNumber == null || user == null) {
@@ -141,16 +151,20 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     public MecanographicNumber id() {
         return this.mecanographicNumber;
     }
+
     /**
-     * 
-     * Define the limits of the user's balance to the amount at which they should be warned for going below the limit
+     *
+     * Define the limits of the user's balance to the amount at which they
+     * should be warned for going below the limit
+     *
      * @param limits
+     * @return
      */
-    public boolean defineBalanceLimits(double limits){
+    public boolean defineBalanceLimits(double limits) {
         return balanceLimits.defineBalanceLimits(limits);
     }
-    
-    public double checkBalanceLimits(){
+
+    public double checkBalanceLimits() {
         return balanceLimits.checkBalanceLimits();
     }
 }
