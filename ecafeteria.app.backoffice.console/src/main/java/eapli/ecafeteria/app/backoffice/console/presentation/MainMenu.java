@@ -44,6 +44,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.menu.CopyMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.application.kitchen.KitchenWatchDogo;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.framework.actions.ReturnAction;
 import eapli.framework.presentation.console.AbstractUI;
@@ -187,7 +188,7 @@ public class MainMenu extends AbstractUI {
                 .isAuthorizedTo(ActionRight.MANAGE_KITCHEN)) {
             final Menu kitchenMenu = buildKitchenMenu();
             mainMenu.add(new SubMenu(TRACEABILITY_OPTION, kitchenMenu,
-                    new ShowVerticalSubMenuAction(kitchenMenu)));
+                    new ShowVerticalSubMenuAction(kitchenMenu)));            
         }
         //==========================MANAGE MENU==================
         if (AuthorizationService.session().authenticatedUser()
@@ -207,6 +208,8 @@ public class MainMenu extends AbstractUI {
             final Menu reportingDishesMenu = buildReportingDishesMenu();
             mainMenu.add(new SubMenu(REPORTING_DISHES_OPTION, reportingDishesMenu,
                     new ShowVerticalSubMenuAction(reportingDishesMenu)));
+            
+            
 
 
         }
