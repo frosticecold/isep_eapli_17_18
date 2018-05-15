@@ -12,6 +12,7 @@ import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.presentation.console.SelectWidget;
@@ -19,6 +20,7 @@ import eapli.framework.util.Console;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -42,7 +44,6 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         List<Meal> listMeal = new ArrayList<>();
         Meal choosedMeal = null;
         Username user = AuthorizationService.session().authenticatedUser().id();
-        List<Booking> bookings = controller.listBookingsOfUser(user);
 
         int option = 0;
 
@@ -58,6 +59,13 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
             mealType = MealType.DINNER;
 
         }
+        
+        if(controller.isAlreadyBooked(user, mealType, cal)){
+          System.out.println("You already booked a meal for this date and this mealtype!");
+          return false;
+        }
+        
+        
 
         mealList = controller.listMeals(cal, mealType);
         Calendar choosedDate = cal;
@@ -124,10 +132,10 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
                 try {
 
                     BookingState bookingState = new BookingState();
-                    if (controller.confirmBooking(user, cal, bookingState, choosedMeal, bookings)) {
+                    if (controller.confirmBooking(user, cal, bookingState, choosedMeal)) {
                         System.out.println("Success. Booking was created.");
                     } else {
-                        System.out.println("You already booked this meal!");
+                        //System.out.println("You already booked a meal for this date and this mealtype!");
                         System.out.println("Error occured. Not possible to "
                                 + "book this meal.");
                     }
@@ -136,7 +144,7 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
                             + e.getMessage());
                 }
             }
-        } else if (option2 == 2) {
+        } else{
 
             System.out.println("Operation closed.");
 
