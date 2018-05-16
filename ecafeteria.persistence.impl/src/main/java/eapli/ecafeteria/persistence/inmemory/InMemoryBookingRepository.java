@@ -5,10 +5,12 @@
  */
 package eapli.ecafeteria.persistence.inmemory;
 
+
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.dishes.DishType;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -77,5 +79,20 @@ public class InMemoryBookingRepository implements BookingRepository {
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public List<Booking> getAllBookingsFromMealThatAreServed(Meal m) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Booking> getAllBookingsFromMealThatAreBooked(Meal m) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Booking> findBooking(CafeteriaUser user, MealType mealType, Calendar date) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

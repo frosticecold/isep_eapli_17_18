@@ -1,7 +1,9 @@
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
+import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.ViewRatingsController;
+import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.framework.presentation.console.AbstractUI;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import javax.persistence.NoResultException;
  *
  * @author Rui Almeida <1160818>
  */
-public class ViewRatingsUI extends AbstractUI implements ViewNextBookingInterface {
+public class ViewRatingsUI extends CafeteriaUserBaseUI{
 
     private ViewRatingsController controller = null;
 
@@ -19,7 +21,6 @@ public class ViewRatingsUI extends AbstractUI implements ViewNextBookingInterfac
     protected boolean doShow() {
 
         try {
-            showNextBooking();
             controller = new ViewRatingsController();
             ArrayList<Rating> ratings = (ArrayList<Rating>) controller.readRatings();
 
@@ -47,7 +48,12 @@ public class ViewRatingsUI extends AbstractUI implements ViewNextBookingInterfac
 
     @Override
     public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
+        return super.headline();
+    }
+
+    @Override
+    protected CafeteriaUserBaseController controller() {
+        return new CafeteriaUserBaseController();
     }
 
 }

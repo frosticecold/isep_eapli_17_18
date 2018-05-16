@@ -39,6 +39,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     private Calendar date;
     
     private String reply;
+
     @OneToOne
     private CafeteriaUser user;
 
@@ -63,6 +64,17 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         this.comment = comment;
         this.date = date;
         this.reply = "No reply yet.";
+    }
+
+    public Rating(String reply, CafeteriaUser user, Booking booking, int rating, String comment) {
+        if (booking == null || rating < 1 || rating > 5 || comment == null) {
+            throw new IllegalArgumentException();
+        }
+        this.user = user;
+        this.rating = rating;
+        this.booking = booking;
+        this.comment = comment;
+        this.reply = reply;
     }
 
     /**
@@ -126,6 +138,18 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     }
 
     public void addReply(String reply) {
+        this.reply = reply;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setReply(String reply) {
         this.reply = reply;
     }
 

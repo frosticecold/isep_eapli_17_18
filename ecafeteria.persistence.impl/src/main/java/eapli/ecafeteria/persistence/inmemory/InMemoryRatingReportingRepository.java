@@ -27,4 +27,9 @@ public class InMemoryRatingReportingRepository extends InMemoryRepositoryWithLon
         return match(e -> e.user().equals(user));
     }
 
+    @Override
+    public int countRatingReply(CafeteriaUser user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

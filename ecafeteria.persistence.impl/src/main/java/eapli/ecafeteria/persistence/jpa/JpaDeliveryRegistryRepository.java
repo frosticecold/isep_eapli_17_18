@@ -10,7 +10,7 @@ import javax.persistence.Query;
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
 public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<DeliveryRegistry, Long> implements DeliveryRegistryRepository{
-
+   
     /**
      * Returns a list of all DeliveryRegistry
      * @return 

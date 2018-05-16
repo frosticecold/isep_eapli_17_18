@@ -40,9 +40,11 @@ import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.Re
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDishUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.SearchBatchUsageAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.CopyMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.application.kitchen.KitchenWatchDogo;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.framework.actions.ReturnAction;
 import eapli.framework.presentation.console.AbstractUI;
@@ -186,7 +188,7 @@ public class MainMenu extends AbstractUI {
                 .isAuthorizedTo(ActionRight.MANAGE_KITCHEN)) {
             final Menu kitchenMenu = buildKitchenMenu();
             mainMenu.add(new SubMenu(TRACEABILITY_OPTION, kitchenMenu,
-                    new ShowVerticalSubMenuAction(kitchenMenu)));
+                    new ShowVerticalSubMenuAction(kitchenMenu)));            
         }
         //==========================MANAGE MENU==================
         if (AuthorizationService.session().authenticatedUser()
@@ -206,6 +208,8 @@ public class MainMenu extends AbstractUI {
             final Menu reportingDishesMenu = buildReportingDishesMenu();
             mainMenu.add(new SubMenu(REPORTING_DISHES_OPTION, reportingDishesMenu,
                     new ShowVerticalSubMenuAction(reportingDishesMenu)));
+            
+            
 
 
         }
@@ -351,6 +355,7 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Menus >");
 
         menu.add(new MenuItem(MENU_EDIT_CREATE_OPTION, "Edit/Create Menu", () -> new ElaborateOrEditMenuUI().show()));
+        menu.add(new MenuItem(MENU_COPY_OPTION, "Copy Menu", () -> new CopyMenuUI().show()));
         menu.add(new MenuItem(MENU_PUBLISH_OPTION, "Publish Menus", () -> new PublishMenuUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 

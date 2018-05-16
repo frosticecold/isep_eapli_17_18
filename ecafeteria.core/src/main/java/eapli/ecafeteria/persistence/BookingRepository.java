@@ -5,10 +5,12 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.dishes.DishType;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -32,4 +34,10 @@ public interface BookingRepository extends DataRepository<Booking, Long>{
     public Long getNumberOfDeliveredMealsByDayAndMealType(Calendar cal, MealType mealtype);
     
     public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, BookingState bookingState);
+    
+    public List<Booking> getAllBookingsFromMealThatAreServed(Meal m);
+    
+    public List<Booking> getAllBookingsFromMealThatAreBooked(Meal m);
+    
+    public List<Booking> findBooking(CafeteriaUser user, MealType mealType, Calendar date);
 }

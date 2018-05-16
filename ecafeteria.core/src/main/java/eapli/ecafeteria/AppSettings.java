@@ -22,7 +22,13 @@ public class AppSettings {
     private static final String PERSISTENCE_UNIT_KEY = "persistence.persistenceUnit";
     private static final String SCHEMA_GENERATION_KEY = "javax.persistence.schema-generation.database.action";
     private static final String HIGH_CALORIES_DISH_LIMIT = "HighCaloriesDishLimit";
-        
+
+    private static final String LIMIT_HOUR_DAY_BEFORE_NO_COST = "LimitHourDayBeforeNoCost";
+    private static final String DINNER_LIMIT_HOUR_DAY_BEFORE_NO_COST = "DinnerLimitHourDayBeforeNoCost";
+
+    private static final String LUNCH_TIME_BEGIN = "LunchTimeBegin";
+    private static final String DINNER_TIME_BEGIN = "DinnerTimeBegin";
+
     private final Properties applicationProperties = new Properties();
 
     public AppSettings() {
@@ -51,6 +57,16 @@ public class AppSettings {
         this.applicationProperties.setProperty(UI_MENU_LAYOUT_KEY, "horizontal");
         this.applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli.eCafeteriaPU");
         this.applicationProperties.setProperty(HIGH_CALORIES_DISH_LIMIT, "300");
+
+        this.applicationProperties.setProperty(LIMIT_HOUR_DAY_BEFORE_NO_COST,
+                "10");
+        this.applicationProperties.setProperty(DINNER_LIMIT_HOUR_DAY_BEFORE_NO_COST,
+                "16");
+
+        this.applicationProperties.setProperty(LUNCH_TIME_BEGIN,
+                "12:00:00");
+        this.applicationProperties.setProperty(DINNER_TIME_BEGIN,
+                "19:00:00");
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -69,8 +85,24 @@ public class AppSettings {
     public Integer getHighCaloriesDishLimit() {
         return Integer.valueOf(this.applicationProperties.getProperty(HIGH_CALORIES_DISH_LIMIT));
     }
-    
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+
+    public Integer getDINNER_LIMIT_HOUR_DAY_BEFORE_NO_COST() {
+        return Integer.valueOf(this.applicationProperties.getProperty(DINNER_LIMIT_HOUR_DAY_BEFORE_NO_COST));
+    }
+
+    public Integer getLIMIT_HOUR_DAY_BEFORE_NO_COST() {
+        return Integer.valueOf(this.applicationProperties.getProperty(LIMIT_HOUR_DAY_BEFORE_NO_COST));
+    }
+
+    public String getLUNCH_TIME_BEGIN() {
+        return this.applicationProperties.getProperty(LUNCH_TIME_BEGIN);
+    }
+
+    public String getDiNNER_TIME_BEGIN() {
+        return this.applicationProperties.getProperty(DINNER_TIME_BEGIN);
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public Map getExtendedPersistenceProperties() {
         final Map ret = new HashMap();
         ret.put(SCHEMA_GENERATION_KEY,

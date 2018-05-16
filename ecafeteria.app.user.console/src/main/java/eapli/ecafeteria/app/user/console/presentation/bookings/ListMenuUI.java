@@ -5,8 +5,10 @@
  */
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
+import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.ListMenuController;
+import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.application.menus.MenuService;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.presentation.console.AbstractUI;
@@ -22,14 +24,13 @@ import java.util.logging.Logger;
  *
  * @author Telmo
  */
-public class ListMenuUI extends AbstractUI implements ViewNextBookingInterface{
+public class ListMenuUI extends CafeteriaUserBaseUI{
 
     private final ListMenuController controller = new ListMenuController();
 
     @Override
     protected boolean doShow() {
         try {
-            showNextBooking();
             List<Meal> menuOfCurrentWeek = controller.listMenuCurrentWeek();
             for(Meal m : menuOfCurrentWeek){
                 System.out.println(m.toString());
@@ -44,7 +45,12 @@ public class ListMenuUI extends AbstractUI implements ViewNextBookingInterface{
 
     @Override
     public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   ";
+        return super.headline();
+    }
+
+    @Override
+    protected CafeteriaUserBaseController controller() {
+        return new CafeteriaUserBaseController();
     }
 
 }

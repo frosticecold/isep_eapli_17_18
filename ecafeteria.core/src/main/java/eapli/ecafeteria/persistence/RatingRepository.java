@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -17,4 +18,6 @@ import eapli.framework.persistence.repositories.DataRepository;
 public interface RatingRepository extends DataRepository<Rating,Long> {
      public Rating saveRating(Rating entity) throws DataConcurrencyException, 
             DataIntegrityViolationException;
+     
+     public Rating getRatingFromBooking(Booking b);
 }

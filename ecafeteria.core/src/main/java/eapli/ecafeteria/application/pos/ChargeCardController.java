@@ -6,8 +6,8 @@
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
-import eapli.ecafeteria.domain.CreditTransaction.CreditRecharge;
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
+import eapli.ecafeteria.domain.CreditTransaction.TransactionType;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
@@ -41,7 +41,7 @@ public class ChargeCardController implements Controller {
 
     public boolean chargeCafeteriaUserCard(double tempCredits) {
         Money credits = new Money(tempCredits, Currency.getInstance("EUR"));
-        this.t = new CreditRecharge(this.user, credits);
+        this.t = new Transaction(this.user, TransactionType.RECHARGE, credits);
         if (!this.user.addCredits(credits)) {
             throw new IllegalArgumentException("Error adding credits");
         }

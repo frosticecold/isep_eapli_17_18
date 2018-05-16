@@ -20,15 +20,13 @@ import java.util.List;
  *
  * @author Joana Oliveira <1161261@isep.ipp.pt>
  */
-public class RatingMealUI extends CafeteriaUserBaseUI implements ViewNextBookingInterface {
+public class RatingMealUI extends CafeteriaUserBaseUI{
 
     private final RatingMealController controller = new RatingMealController();
 
     @Override
     protected boolean doShow() {
         final List<Booking> bookings = controller.showBookings();
-
-        showNextBooking();
 
         if (!bookings.iterator().hasNext()) {
             System.out.println("There are no registered consumed bookings");
@@ -62,7 +60,7 @@ public class RatingMealUI extends CafeteriaUserBaseUI implements ViewNextBooking
 
     @Override
     public String headline() {
-        return "*** Rating of the meal ***";
+        return super.headline();
     }
 
     /**

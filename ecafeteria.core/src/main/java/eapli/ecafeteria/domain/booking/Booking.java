@@ -5,14 +5,14 @@
  */
 package eapli.ecafeteria.domain.booking;
 
+import eapli.ecafeteria.AppSettings;
+import eapli.ecafeteria.Application;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import eapli.ecafeteria.domain.cafeteriauser.*;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.framework.domain.money.Money;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -67,17 +67,39 @@ public class Booking implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof Booking)) {
+        if (obj == null) {
             return false;
         }
-
-        final Booking other = (Booking) o;
-        return Objects.equals(getIdBooking(), other.getIdBooking());
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Booking other = (Booking) obj;
+        if (!Objects.equals(this.meal, other.meal)) {
+            return false;
+        }
+        if (!Objects.equals(this.bookingState, other.bookingState)) {
+            return false;
+        }
+        if (!Objects.equals(this.cafeteriaUser, other.cafeteriaUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.calendar, other.calendar)) {
+            return false;
+        }
+        return true;
     }
+
+    
 
     public Long getIdBooking() {
         return idBooking;
@@ -114,8 +136,8 @@ public class Booking implements Serializable {
      */
     public Money refundForCancelation(){
         if (isBookingCancelable()) {
-            final int limit_hour_day_before_no_cost = 10;
-            final int dinner_limit_hour_day_before_no_cost = 16;
+            final int limit_hour_day_before_no_cost = Application.settings().getLIMIT_HOUR_DAY_BEFORE_NO_COST();
+            final int dinner_limit_hour_day_before_no_cost = Application.settings().getDINNER_LIMIT_HOUR_DAY_BEFORE_NO_COST();
         
             Calendar actual = Calendar.getInstance();
             

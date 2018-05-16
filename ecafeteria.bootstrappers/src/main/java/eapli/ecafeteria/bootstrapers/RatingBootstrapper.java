@@ -82,6 +82,12 @@ public class RatingBootstrapper implements Action{
         final int FAIR      = 3;
         final int GOOD      = 4;
         final int EXCELLENT = 5;
+        
+        /*
+        Reply
+        */
+        final String reply1 = "Okapa";
+        
         /*
         DATES
         */
@@ -94,7 +100,7 @@ public class RatingBootstrapper implements Action{
         */
         Rating rating;
         for (int i = 0; i < bookings.size(); i++) {
-            if (i == 0)  { rating = new Rating(user1.get(), bookings.get(i), BAD, badComment, time1);             register(rating); }
+            if (i == 0)  { rating = new Rating(reply1, user1.get(), bookings.get(i), BAD, badComment);            register(rating); }
             if (i == 1)  { rating = new Rating(user2.get(), bookings.get(i), POOR, poorComment, time1);           register(rating); }
             if (i == 2)  { rating = new Rating(user1.get(), bookings.get(i), FAIR, fairComment, time2);           register(rating); }
             if (i == 3)  { rating = new Rating(user2.get(), bookings.get(i), GOOD, goodComment, time3);           register(rating); }

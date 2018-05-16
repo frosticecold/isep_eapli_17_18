@@ -32,10 +32,11 @@ public class POSOpeningController {
 
     public boolean createDeliveryMealSession() throws DataConcurrencyException, DataIntegrityViolationException {
         Optional<POS> POSinDatabase = jpaPOS.findOne(Long.valueOf("1"));
-        if (!POSinDatabase.isPresent()) {
+        if (POSinDatabase.get() == null) {
             pointofsale = new POS(user);
         } else {
             pointofsale = POSinDatabase.get();
+            System.out.println(pointofsale);
             if(!checkPoSState()) return false;
         }
         

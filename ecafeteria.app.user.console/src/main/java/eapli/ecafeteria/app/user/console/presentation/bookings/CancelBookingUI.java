@@ -5,9 +5,10 @@
  */
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
+import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.booking.CancelBookingController;
+import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.util.Console;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author David Camelo 1161294@isep.ipp.pt
  */
-public class CancelBookingUI extends AbstractUI implements ViewNextBookingInterface {
+public class CancelBookingUI extends CafeteriaUserBaseUI {
 
     /**
      * Controller
@@ -25,8 +26,6 @@ public class CancelBookingUI extends AbstractUI implements ViewNextBookingInterf
 
     @Override
     protected boolean doShow() {
-
-        showNextBooking();
 
         // Show list with bookings
         if (controller.showBookings() == null || controller.showBookings().isEmpty()) {
@@ -86,8 +85,13 @@ public class CancelBookingUI extends AbstractUI implements ViewNextBookingInterf
     }
 
     @Override
-    public String headline() {
-        return "Cancel booking";
+    public String headline() {  
+        return super.headline();
+    }
+
+    @Override
+    protected CafeteriaUserBaseController controller() {
+        return new CafeteriaUserBaseController();
     }
 
 }

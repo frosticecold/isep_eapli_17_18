@@ -122,8 +122,8 @@ public interface RepositoryFactory {
      * DeliveryRegistry Repo
      */
     DeliveryRegistryRepository deliveryRegistryRepository();
-    
 
+    
     /**
      * Ratings reporting repository
      * @return 
@@ -149,4 +149,6 @@ public interface RepositoryFactory {
     AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
     
     AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
+    
+    TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx);
 }
