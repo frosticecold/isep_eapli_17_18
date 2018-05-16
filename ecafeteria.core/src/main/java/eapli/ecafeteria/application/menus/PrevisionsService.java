@@ -30,29 +30,9 @@ public class PrevisionsService implements Controller {
         this.prepareRepositories();
     }
 
-    public Long[][] prepareBookedMealsList() {
-
-        Long[][] matrix = new Long[3][1];
-
-        DishType fish = this.dishTypeRepo.findByAcronym("fish").get();
-        DishType meat = this.dishTypeRepo.findByAcronym("meat").get();
-        DishType vegie = this.dishTypeRepo.findByAcronym("vegie").get();
-
-        Long qtFish = this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), fish, MealType.LUNCH);
-        qtFish += this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), fish, MealType.DINNER);
-
-        Long qtMeat = this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), meat, MealType.LUNCH);
-        qtMeat += this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), meat, MealType.DINNER);
-
-        Long qtVegie = this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), vegie, MealType.LUNCH);
-        qtVegie += this.bookingRepo.countReservedMealsByDishType(Calendar.getInstance(), vegie, MealType.DINNER);
-
-        //filling matrix
-        matrix[0][0] = qtMeat;
-        matrix[1][0] = qtFish;
-        matrix[2][0] = qtVegie;
-
-        return matrix;
+    public void prepareBookedMealsList() {
+        
+       
     }
 
     /**

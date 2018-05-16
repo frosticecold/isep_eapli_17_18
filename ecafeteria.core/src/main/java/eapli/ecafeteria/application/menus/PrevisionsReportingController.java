@@ -32,14 +32,14 @@ public class PrevisionsReportingController implements Controller {
         
         Long[][] list = new Long [1][3];
         
-        list = this.service.prepareBookedMealsList();
+        //list = this.service.prepareBookedMealsList();
         
-        int i;
+        /*int i;
         
         for(i = 0; i < 1; i++) {
             
             msg += "    " + list[i][0] + "  |   " + list[i][1] + "  |   " + list[i][2] + "  |\n";
-        }
+        }*/
         
         return msg;
     }
