@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
@@ -37,4 +38,6 @@ public interface BookingRepository extends DataRepository<Booking, Long>{
     public List<Booking> getAllBookingsFromMealThatAreServed(Meal m);
     
     public List<Booking> getAllBookingsFromMealThatAreBooked(Meal m);
+    
+    public List<Booking> findBooking(CafeteriaUser user, MealType mealType, Calendar date);
 }

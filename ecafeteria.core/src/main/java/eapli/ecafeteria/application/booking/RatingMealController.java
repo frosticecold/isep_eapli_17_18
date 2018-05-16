@@ -17,6 +17,10 @@ import eapli.ecafeteria.persistence.RepositoryFactory;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.Console;
+import eapli.framework.util.DateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -63,8 +67,6 @@ public class RatingMealController {
                 AuthorizationService.session().authenticatedUser().username())
                 .get();
 
-        ratingRepository = factory.rating();
-        bookingRepository = factory.booking();
         BookingState served = new BookingState();
         served.changeToServed();
         bookings = bookingRepository.findBookingsByCafeteriaUser(user, served);
@@ -85,7 +87,16 @@ public class RatingMealController {
         if (booking == null || comment == null) {
             System.out.println("Invalid. Please check.");
         }
-        Rating rateMeal = new Rating(user, booking, rating, comment);
+        
+        /**
+         * Get current date and parse it to DD-MM-YYYY e.g 12-04-2018
+         */
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String date = dateFormat.format(Calendar.getInstance());
+        Calendar time = DateTime.parseDate(date);
+        
+        
+        Rating rateMeal = new Rating(user, booking, rating, comment, time);
         rateMeal = ratingRepository.saveRating(rateMeal);
         return rateMeal;
     }

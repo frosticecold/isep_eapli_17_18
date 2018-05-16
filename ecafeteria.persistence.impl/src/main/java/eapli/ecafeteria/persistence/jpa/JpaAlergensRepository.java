@@ -9,6 +9,7 @@ import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.framework.domain.Designation;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,6 +26,14 @@ public class JpaAlergensRepository extends CafeteriaJpaRepositoryBase<Alergen, D
 	params.put("name", name);
 	return matchOne("e.name=:name", params);
 	
+    }
+
+    @Override
+    public List<Alergen> findAll() {
+         return entityManager().createQuery("SELECT a "
+                + "FROM Alergen a")
+                .getResultList();
+
     }
  
 }

@@ -17,7 +17,9 @@ import eapli.ecafeteria.persistence.RatingRepository;
 import eapli.framework.actions.Action;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.util.DateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,17 +82,30 @@ public class RatingBootstrapper implements Action{
         final int FAIR      = 3;
         final int GOOD      = 4;
         final int EXCELLENT = 5;
+        
+        /*
+        Reply
+        */
+        final String reply1 = "Okapa";
+        
+        /*
+        DATES
+        */
+        Calendar time1      = DateTime.parseDate("07-05-2018");
+        Calendar time2      = DateTime.parseDate("14-05-2018");
+        Calendar time3      = DateTime.parseDate("21-05-2018");
+        Calendar time4      = DateTime.parseDate("28-06-2018");
         /*
         Register Ratings
         */
         Rating rating;
         for (int i = 0; i < bookings.size(); i++) {
-            if (i == 0)  { rating = new Rating(user1.get(), bookings.get(i), BAD, badComment);             register(rating); }
-            if (i == 1)  { rating = new Rating(user2.get(), bookings.get(i), POOR, poorComment);           register(rating); }
-            if (i == 2)  { rating = new Rating(user1.get(), bookings.get(i), FAIR, fairComment);           register(rating); }
-            if (i == 3)  { rating = new Rating(user2.get(), bookings.get(i), GOOD, goodComment);           register(rating); }
-            if (i == 4)  { rating = new Rating(user1.get(), bookings.get(i), EXCELLENT, excellentComment); register(rating); }
-            else if (i>4){ rating = new Rating(user1.get(), bookings.get(0), EXCELLENT, excellentComment); register(rating); }
+            if (i == 0)  { rating = new Rating(reply1, user1.get(), bookings.get(i), BAD, badComment);            register(rating); }
+            if (i == 1)  { rating = new Rating(user2.get(), bookings.get(i), POOR, poorComment, time1);           register(rating); }
+            if (i == 2)  { rating = new Rating(user1.get(), bookings.get(i), FAIR, fairComment, time2);           register(rating); }
+            if (i == 3)  { rating = new Rating(user2.get(), bookings.get(i), GOOD, goodComment, time3);           register(rating); }
+            if (i == 4)  { rating = new Rating(user1.get(), bookings.get(i), EXCELLENT, excellentComment, time4); register(rating); }
+            else if (i>4){ rating = new Rating(user1.get(), bookings.get(0), EXCELLENT, excellentComment, time4); register(rating); }
         }
         
         return true;
