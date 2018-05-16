@@ -63,8 +63,6 @@ public class RatingMealController {
                 AuthorizationService.session().authenticatedUser().username())
                 .get();
 
-        ratingRepository = factory.rating();
-        bookingRepository = factory.booking();
         BookingState served = new BookingState();
         served.changeToServed();
         bookings = bookingRepository.findBookingsByCafeteriaUser(user, served);
