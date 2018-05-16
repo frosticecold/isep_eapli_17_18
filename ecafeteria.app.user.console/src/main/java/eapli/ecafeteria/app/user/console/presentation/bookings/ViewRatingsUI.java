@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
@@ -26,7 +21,7 @@ public class ViewRatingsUI extends AbstractUI implements ViewNextBookingInterfac
         try {
             showNextBooking();
             controller = new ViewRatingsController();
-            ArrayList<Rating> ratings = (ArrayList<Rating>) controller.ratings();
+            ArrayList<Rating> ratings = (ArrayList<Rating>) controller.readRatings();
 
             if (ratings.isEmpty()) {
                 System.out.println("»» An error has occurreed!\n There are no ratings!\n");

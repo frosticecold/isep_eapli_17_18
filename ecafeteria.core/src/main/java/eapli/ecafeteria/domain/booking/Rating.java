@@ -7,7 +7,6 @@ package eapli.ecafeteria.domain.booking;
 
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.ddd.AggregateRoot;
-import eapli.framework.util.DateTime;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

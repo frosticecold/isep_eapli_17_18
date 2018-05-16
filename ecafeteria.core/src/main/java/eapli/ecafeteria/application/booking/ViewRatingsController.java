@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.application.booking;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
@@ -21,40 +16,35 @@ import javax.persistence.NoResultException;
  * @author Rui Almeida <1160818>
  */
 public final class ViewRatingsController implements Controller {
-
-    RatingReportingRepository ratingsRepo = PersistenceContext.repositories().ratingsReporting();
-
-    /**
-     * List of ratings
-     */
-    private List<Rating> ratings;
-
-    /**
-     * Repository Factory
-     */
-    private RepositoryFactory factory;
-    /**
-     * Cafeteria user
-     */
-    private CafeteriaUser user = null;
-
-    public ViewRatingsController() {
-        this.factory = PersistenceContext.repositories();
-
-        this.user = factory.cafeteriaUsers().findByUsername(
-                AuthorizationService.session().authenticatedUser().username())
-                .get();
-        
-        readRatings(user);
-    }
+    
+    public ViewRatingsController() {}
 
     /**
      * Loads all the ratings to an arrayList
      *
      * @param user 
      */
-    public void readRatings(CafeteriaUser user) throws NoResultException{
-        ratings = new ArrayList<>();
+    public List<Rating> readRatings() throws NoResultException{
+        
+        /**
+         * Open repository factory
+         */
+        RepositoryFactory factory = PersistenceContext.repositories();
+        
+        /**
+         * Open ratings reporting repo
+         */
+        RatingReportingRepository ratingsRepo = factory.ratingsReporting();
+        
+        /**
+         * Get current user
+         */
+        CafeteriaUser user = factory.cafeteriaUsers().findByUsername(
+                AuthorizationService.session().authenticatedUser().username())
+                .get();
+        
+        ArrayList<Rating> ratings = new ArrayList<>();
+        
         /*
         Adds all ratings to an array list
          */
@@ -65,16 +55,8 @@ public final class ViewRatingsController implements Controller {
         } catch (NoResultException ex) {
             throw new NoResultException();
         }
+        
+        return ratings;
     }
-
-    /**
-     * Returns the ratings stored in the repository
-     *
-     * @return
-     */
-    public List<Rating> ratings() {
-        return this.ratings;
-    }
-    
 
 }
