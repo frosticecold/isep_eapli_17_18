@@ -1,4 +1,4 @@
-package eapli.ecafeteria.app.user.console.presentation.previsions;
+package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.menus.PrevisionsReportingController;
