@@ -8,6 +8,7 @@ package eapli.ecafeteria.persistence.jpa;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.RatingReportingRepository;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +30,16 @@ public class JpaRatingReportingRepository extends CafeteriaJpaRepositoryBase imp
                 .setParameter("user", user)
                 .getResultList();
     }
+
+    public int countRatingReply(CafeteriaUser user) {
+        final Query q;
+        q = entityManager().createQuery("SELECT COUNT(r) FROM Rating r"
+                + "WHERE r.booking =: booking"
+                + "AND r.cafeteriaUser =: cafeteriaUser"
+                + "AND r.reply =: reply");
+
+        q.setParameter("CafeteriaUser", user);
+        return (int) q.getSingleResult();
+    }
+
 }

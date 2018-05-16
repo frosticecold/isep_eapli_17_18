@@ -8,11 +8,15 @@ package eapli.ecafeteria.domain.booking;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -31,7 +35,11 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar date;
+    
     private String reply;
+
     @OneToOne
     private CafeteriaUser user;
 
@@ -46,7 +54,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
      * @param rating
      * @param comment
      */
-    public Rating(CafeteriaUser user, Booking booking, int rating, String comment) {
+    public Rating(CafeteriaUser user, Booking booking, int rating, String comment, Calendar date) {
         if (booking == null || rating < 1 || rating > 5 || comment == null) {
             throw new IllegalArgumentException();
         }
@@ -54,7 +62,19 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         this.rating = rating;
         this.booking = booking;
         this.comment = comment;
+        this.date = date;
         this.reply = "No reply yet.";
+    }
+
+    public Rating(String reply, CafeteriaUser user, Booking booking, int rating, String comment) {
+        if (booking == null || rating < 1 || rating > 5 || comment == null) {
+            throw new IllegalArgumentException();
+        }
+        this.user = user;
+        this.rating = rating;
+        this.booking = booking;
+        this.comment = comment;
+        this.reply = reply;
     }
 
     /**
@@ -153,8 +173,14 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     }
 
     @Override
-    public String toString() {
+    public String toString() {      
+        
+
         StringBuilder str = new StringBuilder();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(date.getTime());
+        
+        str.append("Date: ").append(formattedDate);
         str.append("\nDish: ").append(booking.getMeal().dish().id())
                 .append("\nType: " + booking.getMeal().mealtype());
         str.append("\nRating: ");

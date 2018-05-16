@@ -67,29 +67,15 @@ public class BookingMealController implements Controller {
         }
     }
 
-    public List<Booking> listBookingsOfUser(Username cafeteriaUser) {
 
-        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
-        BookingState booked = new BookingState();
-        return repository.findBookingsByCafeteriaUser(user.get(), booked);
-
-    }
-
-    public boolean isAlreadyBooked(List<Booking> bookings, Booking newBooking) {
-        for (Booking booking : bookings) {
-            if (booking.equals(newBooking)) {
-                return true;
-            }
+    //if already exists that booking then return true
+    public boolean isAlreadyBooked(Username user, MealType mealType, Calendar date) {
+      
+      Optional<CafeteriaUser> cUser = userService.findCafeteriaUserByUsername(user);
+        if (repository.findBooking(cUser.get(), mealType, date).isEmpty()) {
+            return false;
         }
-        return false;
-    }
-
-    public List<Booking> isAlreadyBooked(Username cafeteriaUser) {
-
-        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
-        BookingState booked = new BookingState();
-        return repository.findBookingsByCafeteriaUser(user.get(), booked);
-
+        return true;
     }
 
     public List<Meal> mealListIfMenuIsPublic(Iterable<Meal> mealList) {
@@ -176,22 +162,17 @@ public class BookingMealController implements Controller {
      * @throws eapli.framework.persistence.DataIntegrityViolationException
      */
     public boolean confirmBooking(Username cafeteriaUser, Calendar date,
-            BookingState bookingState, Meal meal, List<Booking> bookings) throws DataConcurrencyException,
+            BookingState bookingState, Meal meal) throws DataConcurrencyException,
             DataIntegrityViolationException {
 
         // Add booking movement
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
+        
         Booking newBooking = new Booking(meal, bookingState, user.get(), date);
 
+
         //check if user as already booked this meal
-        for (Booking booking : bookings) {
-            if (booking.equals(newBooking)) {
-                return false;
-            }
-        }
-
         Money mealPrice = meal.dish().currentPrice();
-
 
         // Persist
         final TransactionalContext TxCtx

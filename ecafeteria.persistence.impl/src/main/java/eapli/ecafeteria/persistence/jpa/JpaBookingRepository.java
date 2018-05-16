@@ -24,8 +24,8 @@ import javax.persistence.TemporalType;
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class JpaBookingRepository 
-        extends CafeteriaJpaRepositoryBase<Booking, Long> 
+public class JpaBookingRepository
+        extends CafeteriaJpaRepositoryBase<Booking, Long>
         implements BookingRepository {
 
     public Booking saveBooking(Booking entity) throws DataConcurrencyException,
@@ -33,7 +33,7 @@ public class JpaBookingRepository
 
         return save(entity);
     }
-    
+
     @Override
     public Long countReservedMealsByDishType(Calendar cal, DishType dishType, MealType mealType) {
         final Query q;
@@ -41,9 +41,9 @@ public class JpaBookingRepository
         q = entityManager().createQuery("SELECT COUNT(e) FROM Booking e "
                 + "WHERE e.meal.mealtype=:mealType "
                 + "AND e.meal.date=:date "
-                + "AND e.meal.dish.dishType=:dt " 
+                + "AND e.meal.dish.dishType=:dt "
                 + "AND e.bookingState.actualBookingState=:bs1",
-                 Long.class);
+                Long.class);
 
         q.setParameter("date", cal, TemporalType.DATE);
         q.setParameter("mealType", mealType);
@@ -63,13 +63,12 @@ public class JpaBookingRepository
                 Long.class);
         q.setParameter("date", cal, TemporalType.DATE);
         q.setParameter("mealType", mealType);
-        q.setParameter("dt", dishType);       
-        q.setParameter("bs1", BookingStates.SERVED); 
-
+        q.setParameter("dt", dishType);
+        q.setParameter("bs1", BookingStates.SERVED);
 
         return (Long) q.getSingleResult();
     }
-    
+
     @Override
     public Long getNumberOfDeliveredMealsByDayAndMealType(final Calendar cal, final MealType mealType) {
         final Query q;
@@ -79,63 +78,86 @@ public class JpaBookingRepository
                 + "AND e.bookingState.actualBookingState=:bs1 ",
                 Long.class);
         q.setParameter("date", cal, TemporalType.DATE);
-        q.setParameter("mealType", mealType);    
-        q.setParameter("bs1", BookingStates.SERVED); 
-
+        q.setParameter("mealType", mealType);
+        q.setParameter("bs1", BookingStates.SERVED);
 
         return (Long) q.getSingleResult();
     }
-    
+
     /**
      * Find booking by cafeteria user that are in a specific state
      *
      * @param user user of the cafeteria
      * @param bookingState booking state
      * @author David Camelo <1161294@isep.ipp.pt>
-     * 
+     *
      * @return list with bookings
      */
     @Override
-    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user, 
+    public List<Booking> findBookingsByCafeteriaUser(CafeteriaUser user,
             BookingState bookingState) {
         Query query = entityManager().createQuery("SELECT booking "
-                        + "FROM Booking booking "
-                        + "WHERE booking.bookingState = :bookingState "
-                        + "AND booking.cafeteriaUser = :cafeteriaUser");
-        
+                + "FROM Booking booking "
+                + "WHERE booking.bookingState = :bookingState "
+                + "AND booking.cafeteriaUser = :cafeteriaUser");
+
         query.setParameter("bookingState", bookingState);
         query.setParameter("cafeteriaUser", user);
-        
+
         return query.getResultList();
     }
 
     @Override
     public List<Booking> getAllBookingsFromMealThatAreServed(Meal m) {
-        BookingState s=new BookingState();
+        BookingState s = new BookingState();
         s.changeToServed();
         Query query = entityManager().createQuery("SELECT booking "
-                        + "FROM Booking booking "
-                        + "WHERE booking.bookingState = :b "
-                        + "AND booking.meal = :m");
-        
-        query.setParameter("b",s);
+                + "FROM Booking booking "
+                + "WHERE booking.bookingState = :b "
+                + "AND booking.meal = :m");
+
+        query.setParameter("b", s);
         query.setParameter("m", m);
-        
+
         return query.getResultList();
     }
 
     @Override
     public List<Booking> getAllBookingsFromMealThatAreBooked(Meal m) {
-        BookingState s=new BookingState(); //BOOKED DEFAULT
-        
+        BookingState s = new BookingState(); //BOOKED DEFAULT
+
         Query query = entityManager().createQuery("SELECT booking "
-                        + "FROM Booking booking "
-                        + "WHERE booking.bookingState = :b "
-                        + "AND booking.meal = :m");
-        
-        query.setParameter("b",s);
+                + "FROM Booking booking "
+                + "WHERE booking.bookingState = :b "
+                + "AND booking.meal = :m");
+
+        query.setParameter("b", s);
         query.setParameter("m", m);
-        
+
         return query.getResultList();
     }
+
+    /**check if exists a booking in a given date and mealtype
+     * 
+     * @param user
+     * @param mealType
+     * @param calendar
+     * @return list bookings found
+     */
+    @Override
+    public List<Booking> findBooking(CafeteriaUser user, MealType mealType, Calendar calendar) {
+
+        Query q = entityManager().
+                createQuery("SELECT booking FROM Booking booking, Meal meal "
+                        + "WHERE booking.meal.mealtype=:mealType "
+                        + "AND booking.cafeteriaUser=:cafeteriaUser "
+                        + "AND booking.calendar=:calendar", Booking.class);
+
+        q.setParameter("calendar", calendar, TemporalType.DATE);
+        q.setParameter("cafeteriaUser", user);
+        q.setParameter("mealType", mealType);
+
+        return q.getResultList();
+    }
+
 }

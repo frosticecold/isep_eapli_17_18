@@ -18,3 +18,5 @@ TESTES UNITÁRIOS
 _____________________
 
 * mealInTheStateConsumed
+* sureRatingHasValidRating
+* sureRatingHasValidComment

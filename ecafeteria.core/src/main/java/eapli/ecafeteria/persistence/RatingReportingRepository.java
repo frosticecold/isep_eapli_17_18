@@ -14,6 +14,8 @@ import eapli.framework.persistence.repositories.ReportingRepository;
  * @author Rui Almeida <1160818>
  */
 public interface RatingReportingRepository extends ReportingRepository {
-    
+
     public Iterable<Rating> findRatingsByUser(CafeteriaUser user);
+
+    public int countRatingReply(CafeteriaUser user);
 }
