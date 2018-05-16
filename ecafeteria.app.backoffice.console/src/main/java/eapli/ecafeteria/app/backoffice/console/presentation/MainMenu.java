@@ -124,6 +124,12 @@ public class MainMenu extends AbstractUI {
     private static final int MENU_COPY_OPTION = 2;
     private static final int MENU_PUBLISH_OPTION = 3;
     private static final int MENU_PREVIEW_OPTION = 4;
+    
+    //PREVISIONS REPORTING
+    private static final int PREVISIONS_BOOKEDMEALS_OPTION = 1;
+    private static final int PREVISIONS_MEALMENUPLAN_OPTION = 2;
+    private static final int PREVISIONS_DELIVEREDMEALS_OPTION = 3;
+    private static final int PREVISIONS_RATING_OPTION = 4;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -135,6 +141,7 @@ public class MainMenu extends AbstractUI {
     private static final int TRACEABILITY_OPTION = 7;
     private static final int REPORTING_DISHES_OPTION = 8;
     private static final int REPORTING_BOOKING_OPTION = 9;
+    private static final int PREVISIONSREPORTING_OPTION = 10;
 
     @Override
     public boolean show() {
@@ -208,10 +215,10 @@ public class MainMenu extends AbstractUI {
             final Menu reportingDishesMenu = buildReportingDishesMenu();
             mainMenu.add(new SubMenu(REPORTING_DISHES_OPTION, reportingDishesMenu,
                     new ShowVerticalSubMenuAction(reportingDishesMenu)));
-            
-            
-
-
+            //previsions reporting
+            final Menu previsionsReportingMenu = buildPrevisionsReportingMenu();
+            mainMenu.add(new SubMenu(PREVISIONSREPORTING_OPTION,previsionsReportingMenu, 
+                    new ShowVerticalSubMenuAction(previsionsReportingMenu)));
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -371,12 +378,14 @@ public class MainMenu extends AbstractUI {
                 () -> new ReportBookingPerDishUI().show()));
         menu.add(new MenuItem(REPORTING_BOOKING_PER_MEAL, "Booking per Meal",
                 () -> new ReportBookingPerMealUI().show()));
+        return menu;
+    }
+    
+    private Menu buildPrevisionsReportingMenu() {
         
+        final Menu menu = new Menu("Previsions Reporting Menu");
         
-        
-        
-        
-        
+        menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         
         return menu;
     }
