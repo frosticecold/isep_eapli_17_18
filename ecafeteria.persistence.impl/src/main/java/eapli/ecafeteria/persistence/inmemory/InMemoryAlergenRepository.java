@@ -9,6 +9,7 @@ import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.framework.domain.Designation;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,6 +26,11 @@ public class InMemoryAlergenRepository extends InMemoryRepository<Alergen, Desig
     @Override
     public Optional<Alergen> findByName(Designation name) {
         return matchOne(e -> e.name().equals(name));
+    }
+
+    @Override
+    public List<Alergen> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

@@ -10,6 +10,8 @@ import eapli.ecafeteria.app.user.console.presentation.bookings.BookingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CancelBookingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CheckBookingsByUserUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ConsultMealRatingUI;
+import eapli.ecafeteria.app.user.console.presentation.bookings.CreateAlergenProfileAction;
+import eapli.ecafeteria.app.user.console.presentation.bookings.CreateAlergenProfileUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ListMenuUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.RatingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ShowTransactionsUI;
@@ -54,7 +56,7 @@ class MainMenu extends CafeteriaUserBaseUI{
 
     // SETTINGS
     private static final int SET_USER_ALERT_LIMIT_OPTION = 1;
-
+ 
     @Override
     public boolean show() {
         drawFormTitle();
@@ -125,6 +127,7 @@ class MainMenu extends CafeteriaUserBaseUI{
 
         menu.add(new MenuItem(SET_USER_ALERT_LIMIT_OPTION, "Set users' alert limit",
                 new ShowMessageAction("Not implemented yet")));
+        menu.add(new MenuItem(2, "add new alergen to the profile",new CreateAlergenProfileAction()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
