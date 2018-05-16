@@ -40,6 +40,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.Re
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDishUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.SearchBatchUsageAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.BookedMealsReportingUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.CopyMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
@@ -386,6 +387,8 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Previsions Reporting Menu");
         
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
+        menu.add(new MenuItem(PREVISIONS_BOOKEDMEALS_OPTION, "BookedMealsReporting",
+            () -> new BookedMealsReportingUI().show()));
         
         return menu;
     }
