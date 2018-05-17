@@ -158,4 +158,6 @@ public interface RepositoryFactory {
     AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
     
     TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx);
+    
+    ComplaintRepository complaints();
 }

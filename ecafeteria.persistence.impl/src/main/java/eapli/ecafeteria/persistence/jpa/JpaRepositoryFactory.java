@@ -186,4 +186,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
         return new JpaTransactionReportingRepository(autoTx);
     }
+
+    @Override
+    public ComplaintRepository complaints() {
+        return new JpaComplaintRepository();
+    }
 }
