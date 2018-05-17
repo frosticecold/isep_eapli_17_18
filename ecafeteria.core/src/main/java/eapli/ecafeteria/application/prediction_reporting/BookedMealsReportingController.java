@@ -1,4 +1,4 @@
-package eapli.ecafeteria.application.previsions_reporting;
+package eapli.ecafeteria.application.prediction_reporting;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.framework.application.Controller;
@@ -9,7 +9,7 @@ import eapli.framework.application.Controller;
  */
 public class BookedMealsReportingController implements Controller {
 
-    private PrevisionsService service;
+    private PredictionService service;
 
     public BookedMealsReportingController() {
 
@@ -20,7 +20,7 @@ public class BookedMealsReportingController implements Controller {
      */
     public void prepareService() {
 
-        this.service = new PrevisionsService();
+        this.service = new PredictionService();
     }
 
     /**
