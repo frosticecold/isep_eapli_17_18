@@ -26,14 +26,14 @@ public class AlergenProfileBootstrapper implements Action{
     }
      private void register(String name){
         final CreateAlergenProfileController controller = new  CreateAlergenProfileController();
-        try {
-            controller.newAlergen(name);
-        } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
-            // ignoring exception. assuming it is just a primary key violation
-            // due to the tentative of inserting a duplicated user
-            Logger.getLogger(ECafeteriaBootstrapper.class.getSimpleName())
-                    .info("EAPLI-DI001: bootstrapping existing record");
-        }
+//        try {
+//            controller.newAlergen(name);
+//        } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
+//            // ignoring exception. assuming it is just a primary key violation
+//            // due to the tentative of inserting a duplicated user
+//            Logger.getLogger(ECafeteriaBootstrapper.class.getSimpleName())
+//                    .info("EAPLI-DI001: bootstrapping existing record");
+//        }
     }
     
 }

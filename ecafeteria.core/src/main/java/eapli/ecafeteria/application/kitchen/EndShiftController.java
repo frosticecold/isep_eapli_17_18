@@ -25,10 +25,23 @@ public class EndShiftController implements Controller{
     private Calendar data;
     private MealType mealType;
     
-    public void presentMealsMadeNotSold() {
+    public Long presentMealsMadeNotSold() {
+        int executados = 0;
+
+        //CALCULA Confeccionados 
+        for (Execution it : res3.findMealExecutionByDate(data, mealType)) {
+            executados = executados + it.madeMeals().madeMeals();
+        }
+        
+        //CALCULA ENTREGUES 
+        Long entregues = numberOfDeliveredMeals(data, mealType);
+
+        return (executados - entregues);
+    }
+    
+    public void defineMealTypeAndDate(){
         data = DateTime.now();
         dia = data.get(Calendar.DAY_OF_MONTH);
-        int executados = 0;
         int hora = data.get(HOUR_OF_DAY);
         if (hora<15) {
             data.add(Calendar.DAY_OF_MONTH, -1);
@@ -39,16 +52,18 @@ public class EndShiftController implements Controller{
         }else {
             mealType=MealType.DINNER;
         }
-        
-        //CALCULA Confeccionados 
-        for (Execution it : res3.findMealExecutionByDate(data, mealType)) {
-            executados = executados + it.madeMeals().madeMeals();
-        }
-        
-        //CALCULA ENTREGUES 
-        Long entregues = numberOfDeliveredMeals(data, mealType);
-        
-        System.out.println("\nThe number of meals made but not sold on " + dia +"/" + DateTime.currentMonth() + "/" + DateTime.currentYear() + " at " + mealType.toString() + " is : " + (executados-entregues) + "\n");
+    }
+    
+    public MealType mealType(){
+        return this.mealType;
+    }
+    
+    public Calendar date(){
+        return this.data;
+    }
+    
+    public int dia(){
+        return this.dia;
     }
     
     /**
@@ -78,7 +93,6 @@ public class EndShiftController implements Controller{
      * @return 
      */
     public Long numberOfDeliveredMeals(Calendar cal, MealType mt) {
-        System.out.println(cal.toString());
         Long calcDeliveredStatistics = availableMealsService.calcDeliveredTotal(cal,mt);
         
         return calcDeliveredStatistics;
