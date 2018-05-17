@@ -47,6 +47,7 @@ public class AlergenProfileBootstrapper implements Action {
         final CafeteriaUserRepository userRepo = PersistenceContext.repositories().cafeteriaUsers();
         final Optional<CafeteriaUser> user1 = userRepo.findByMecanographicNumber(new MecanographicNumber("900330"));
         AlergenProfile ap = new AlergenProfile(user1.get());
+        ap.addAlergen(new Alergen(Designation.valueOf(name)));
         alergenPlanRepo.save(ap);
   
 
