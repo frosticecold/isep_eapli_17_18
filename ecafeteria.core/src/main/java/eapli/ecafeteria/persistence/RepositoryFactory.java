@@ -157,5 +157,5 @@ public interface RepositoryFactory {
     
     AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
     
-    TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx);
+    TransactionReportingRepository transactionReportingRepository();
 }

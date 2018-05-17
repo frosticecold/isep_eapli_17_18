@@ -183,7 +183,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
-        return new JpaTransactionReportingRepository(autoTx);
+    public TransactionReportingRepository transactionReportingRepository() {
+        return new JpaTransactionReportingRepository(Application.settings().getPersistenceUnitName());
     }
 }

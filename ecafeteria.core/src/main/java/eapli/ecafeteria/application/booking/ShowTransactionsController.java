@@ -20,41 +20,22 @@ import java.util.List;
  * @author David Camelo <1161294@isep.ipp.pt>
  */
 public class ShowTransactionsController {
-
-    /**
-     * Factory
-     */
-    private RepositoryFactory factory = null;
-
-    /**
-     * Cafeteria user
-     */
-    private CafeteriaUser user = null;
-    
-    /**
-     * Transaction reporting repository
-     */
-    private TransactionReportingRepository reportingRepository;
-    
     /**
      * List with transactionDTO
      */
     private List<TransactionDTO> list = null;
     
     public ShowTransactionsController() {
-        this.factory = PersistenceContext.repositories();
+        RepositoryFactory factory = PersistenceContext.repositories();
         
-        this.user = factory.cafeteriaUsers().findByUsername(
+        final CafeteriaUser user = factory.cafeteriaUsers().findByUsername(
                 AuthorizationService.session().authenticatedUser().username())
                 .get();
-        final TransactionalContext TxCtx 
-                = PersistenceContext.repositories().buildTransactionalContext();
         
-        this.reportingRepository = PersistenceContext.repositories().transactionReportingRepository(TxCtx);
+        final TransactionReportingRepository reportingRepository = 
+                PersistenceContext.repositories().transactionReportingRepository();
         
-        TxCtx.beginTransaction();
         this.list = reportingRepository.showTransactions(user);
-        TxCtx.commit();
     }
     
     /**

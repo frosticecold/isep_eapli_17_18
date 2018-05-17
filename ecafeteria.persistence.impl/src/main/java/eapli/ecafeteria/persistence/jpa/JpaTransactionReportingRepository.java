@@ -6,11 +6,11 @@
 
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.Application;
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.dto.TransactionDTO;
 import eapli.ecafeteria.persistence.TransactionReportingRepository;
-import eapli.framework.persistence.repositories.TransactionalContext;
 import eapli.framework.persistence.repositories.impl.jpa.JpaAutoTxRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,8 +25,8 @@ public class JpaTransactionReportingRepository
         extends JpaAutoTxRepository<Transaction, Long>
         implements TransactionReportingRepository {
 
-    public JpaTransactionReportingRepository(TransactionalContext autoTx) {
-        super(autoTx);
+    public JpaTransactionReportingRepository(String puname) {
+        super(puname, Application.settings().getExtendedPersistenceProperties());
     }
     
     /**
@@ -46,5 +46,4 @@ public class JpaTransactionReportingRepository
         
         return ret;
     }
-
 }
