@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.bootstrapers;
 
+import eapli.ecafeteria.application.cafeteriauser.CreateAlergenProfileController;
 import eapli.ecafeteria.application.dishes.AlergenController;
 import eapli.framework.actions.Action;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -24,7 +25,7 @@ public class AlergenProfileBootstrapper implements Action{
         return true;
     }
      private void register(String name){
-        final AlergenController controller = new AlergenController();
+        final CreateAlergenProfileController controller = new  CreateAlergenProfileController();
         try {
             controller.newAlergen(name);
         } catch (final DataIntegrityViolationException | DataConcurrencyException e) {

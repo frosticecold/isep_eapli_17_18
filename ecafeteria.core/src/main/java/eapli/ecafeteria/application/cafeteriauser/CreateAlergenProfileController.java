@@ -6,9 +6,11 @@
 package eapli.ecafeteria.application.cafeteriauser;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.cafeteriauser.AlergenProfile;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.dishes.Alergen;
+import eapli.ecafeteria.persistence.AlergenPlanRepository;
 import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.domain.Designation;
@@ -24,9 +26,10 @@ public class CreateAlergenProfileController {
 
     private final AlergenRepository alergenRepo = PersistenceContext.repositories().alergens();
     private AlergenProfile ap;
+    private final AlergenPlanRepository alergenPlanRepo = PersistenceContext.repositories().AlergenPlans();
 
     public CreateAlergenProfileController() {
-        ap = new AlergenProfile(getCurrentUser());
+        ap = alergenPlanRepo.findByUser(getCurrentUser());
     }
 
     public List<Alergen> getAllAlergensNotInAP() {
@@ -48,10 +51,11 @@ public class CreateAlergenProfileController {
         }
         return a;
     }
-    
-    public List<Alergen> getApAlergens(){
+
+    public List<Alergen> getApAlergens() {
         return ap.alergens();
     }
+
     public boolean addAlergen(Alergen a) {
         return ap.addAlergen(a);
     }
@@ -73,5 +77,11 @@ public class CreateAlergenProfileController {
             System.out.println("ERRO");
             return null;
         }
+    }
+
+    public void save() {
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_MENUS);
+
+        alergenPlanRepo.saveAlergenProfile(ap);
     }
 }

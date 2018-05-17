@@ -5,10 +5,19 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.cafeteriauser.AlergenProfile;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.dishes.Alergen;
+import eapli.framework.domain.Designation;
+import eapli.framework.persistence.repositories.DataRepository;
+
 /**
  *
  * @author utilizador
  */
-public class AlergenPlanRepository {
-    
+public interface AlergenPlanRepository extends DataRepository<AlergenProfile, Integer> {
+
+    AlergenProfile findByUser(CafeteriaUser user);
+
+    void saveAlergenProfile(AlergenProfile ap);
 }

@@ -34,10 +34,15 @@ public class AlergenProfile {
     public AlergenProfile(CafeteriaUser user) {
         alergenList = new ArrayList<>();
     }
-    
-    public List<Alergen> alergens(){
+
+    protected AlergenProfile() {
+        //FOR ORM
+    }
+
+    public List<Alergen> alergens() {
         return alergenList;
     }
+
     public boolean addAlergen(Alergen a) {
         return alergenList.add(a);
     }
