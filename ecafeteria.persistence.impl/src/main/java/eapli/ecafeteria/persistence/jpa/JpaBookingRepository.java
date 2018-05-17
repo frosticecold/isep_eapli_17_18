@@ -137,8 +137,9 @@ public class JpaBookingRepository
         return query.getResultList();
     }
 
-    /**check if exists a booking in a given date and mealtype
-     * 
+    /**
+     * check if exists a booking in a given date and mealtype
+     *
      * @param user
      * @param mealType
      * @param calendar
@@ -160,4 +161,20 @@ public class JpaBookingRepository
         return q.getResultList();
     }
 
+    /**
+     * Returns all bookings with Booked Booking State
+     */
+    @Override
+    public Iterable<Booking> findBookedBookings() {
+        
+        BookingState state = new BookingState();
+        
+        String query = "SELECT e FROM Booking e WHERE bookingstate = :bs";
+
+        final Query q = entityManager().createQuery(query, Booking.class);
+
+        q.setParameter("bs",state.actualState().toString());
+
+        return q.getResultList();
+    }
 }

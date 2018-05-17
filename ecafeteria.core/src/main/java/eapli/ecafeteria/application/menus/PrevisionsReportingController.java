@@ -1,6 +1,11 @@
 package eapli.ecafeteria.application.menus;
 
+import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,26 +26,20 @@ public class PrevisionsReportingController implements Controller {
 
         this.service = new PrevisionsService();
     }
-    
+
     /**
      * Gets the booked meals relation by dish type
      */
     public String getBookedMeals() {
-        
-        String msg = "------------------------------------Number of booked meals by dish type -------------------------------------\n"
-                + " MEAT    |   FISH    |   VEGIE   |\n";
-        
-        Long[][] list = new Long [1][3];
-        
-        //list = this.service.prepareBookedMealsList();
-        
-        /*int i;
-        
-        for(i = 0; i < 1; i++) {
-            
-            msg += "    " + list[i][0] + "  |   " + list[i][1] + "  |   " + list[i][2] + "  |\n";
-        }*/
-        
+
+        String msg = "================== Booked Meals ======================================\n";
+
+        Iterable<Booking> bookedMeals = this.service.prepareBookedMealsList();
+
+        msg += "\n" + bookedMeals.toString() + "\n";
+
+        msg += "=================================================================================";
+
         return msg;
     }
 }

@@ -95,4 +95,9 @@ public class InMemoryBookingRepository implements BookingRepository {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Iterable<Booking> findBookedBookings() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
