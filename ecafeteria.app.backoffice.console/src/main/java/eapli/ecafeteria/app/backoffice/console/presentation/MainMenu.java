@@ -387,8 +387,9 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Previsions Reporting Menu");
         
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
-        menu.add(new MenuItem(PREVISIONS_BOOKEDMEALS_OPTION, "BookedMealsReporting",
+        menu.add(new MenuItem(PREVISIONS_BOOKEDMEALS_OPTION, "Show all Booked Meals",
             () -> new BookedMealsReportingUI().show()));
+        //menu.add(new MenuItem(PREVISIONS_MEALMENUPLAN_OPTION, "Show all Meals by MenuPlan"));
         
         return menu;
     }

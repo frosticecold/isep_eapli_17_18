@@ -1,8 +1,6 @@
-package eapli.ecafeteria.application.menus;
+package eapli.ecafeteria.application.prediction_reporting;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.BookingState;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 
@@ -10,10 +8,10 @@ import eapli.framework.application.Controller;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class PrevisionsService implements Controller {
+public class PredictionService implements Controller {
 
     //Construtor of service
-    public PrevisionsService() {
+    public PredictionService() {
 
     }
 

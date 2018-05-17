@@ -1,7 +1,7 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.application.menus.PrevisionsReportingController;
+import eapli.ecafeteria.application.prediction_reporting.BookedMealsReportingController;
 import eapli.framework.presentation.console.AbstractUI;
 
 /**
@@ -10,10 +10,10 @@ import eapli.framework.presentation.console.AbstractUI;
  */
 public class BookedMealsReportingUI extends AbstractUI {
 
-    private PrevisionsReportingController ctrl;
+    private BookedMealsReportingController ctrl;
 
     public BookedMealsReportingUI() {
-        this.ctrl = new PrevisionsReportingController();
+        this.ctrl = new BookedMealsReportingController();
     }
 
     @Override

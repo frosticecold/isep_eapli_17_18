@@ -1,21 +1,17 @@
-package eapli.ecafeteria.application.menus;
+package eapli.ecafeteria.application.prediction_reporting;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.meal.Meal;
-import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class PrevisionsReportingController implements Controller {
+public class BookedMealsReportingController implements Controller {
 
-    private PrevisionsService service;
+    private PredictionService service;
 
-    public PrevisionsReportingController() {
+    public BookedMealsReportingController() {
 
     }
 
@@ -24,7 +20,7 @@ public class PrevisionsReportingController implements Controller {
      */
     public void prepareService() {
 
-        this.service = new PrevisionsService();
+        this.service = new PredictionService();
     }
 
     /**
