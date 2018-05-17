@@ -19,7 +19,7 @@ import javax.persistence.Query;
  *
  * @author utilizador
  */
-public class JPAAlergenPlanRepository extends CafeteriaJpaRepositoryBase<AlergenProfile, Integer> implements AlergenPlanRepository {
+public class JPAAlergenPlanRepository extends CafeteriaJpaRepositoryBase<AlergenProfile, Long> implements AlergenPlanRepository {
 
     @Override
     public AlergenProfile findByUser(CafeteriaUser user) {
