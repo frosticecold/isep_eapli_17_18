@@ -7,29 +7,29 @@ package eapli.ecafeteria.application.cafeteriauser;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
-import eapli.ecafeteria.domain.cafeteriauser.AlergenProfile;
+import eapli.ecafeteria.domain.cafeteriauser.AllergenProfile;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.dishes.Alergen;
-import eapli.ecafeteria.persistence.AlergenPlanRepository;
-import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.domain.Designation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
+import eapli.ecafeteria.persistence.AllergenProfileRepository;
+import eapli.ecafeteria.persistence.AlergenRepository;
 
 /**
  *
  * @author utilizador
  */
-public class AddAlergenProfileController {
+public class AddAllergenProfileController {
 
     private final AlergenRepository alergenRepo = PersistenceContext.repositories().alergens();
-    private AlergenProfile ap;
-    private final AlergenPlanRepository alergenPlanRepo = PersistenceContext.repositories().AlergenPlans();
+    private AllergenProfile ap;
+    private final AllergenProfileRepository alergenPlanRepo = PersistenceContext.repositories().AllergenProfiles();
 
-    public AddAlergenProfileController() {
-        ap = alergenPlanRepo.findByUser(getCurrentUser());
+    public AddAllergenProfileController() {
+        ap = alergenPlanRepo.findUserAllergenProfile(getCurrentUser());
     }
     public List<Alergen> getAllAlergensNotInAP() {
         List<Alergen> a = alergenRepo.findAll();

@@ -6,7 +6,7 @@
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
-import eapli.ecafeteria.application.cafeteriauser.AddAlergenProfileController;
+import eapli.ecafeteria.application.cafeteriauser.AddAllergenProfileController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.application.cafeteriauser.CreateAlergenProfileController;
 import eapli.ecafeteria.domain.dishes.Alergen;
@@ -18,7 +18,7 @@ import java.util.Scanner;
  */
 public class AddAlergenProfileUI extends CafeteriaUserBaseUI {
 
-    private AddAlergenProfileController controller = new AddAlergenProfileController();
+    private AddAllergenProfileController controller = new AddAllergenProfileController();
     Scanner ler = new Scanner(System.in);
 
     @Override

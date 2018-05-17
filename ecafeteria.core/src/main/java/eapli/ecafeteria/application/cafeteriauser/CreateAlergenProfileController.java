@@ -7,16 +7,16 @@ package eapli.ecafeteria.application.cafeteriauser;
 
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
-import eapli.ecafeteria.domain.cafeteriauser.AlergenProfile;
+import eapli.ecafeteria.domain.cafeteriauser.AllergenProfile;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.dishes.Alergen;
-import eapli.ecafeteria.persistence.AlergenPlanRepository;
-import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.domain.Designation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
+import eapli.ecafeteria.persistence.AllergenProfileRepository;
+import eapli.ecafeteria.persistence.AlergenRepository;
 
 /**
  *
@@ -25,11 +25,11 @@ import javax.persistence.NoResultException;
 public class CreateAlergenProfileController {
 
     private final AlergenRepository alergenRepo = PersistenceContext.repositories().alergens();
-    private AlergenProfile ap;
-    private final AlergenPlanRepository alergenPlanRepo = PersistenceContext.repositories().AlergenPlans();
+    private AllergenProfile ap;
+    private final AllergenProfileRepository alergenPlanRepo = PersistenceContext.repositories().AllergenProfiles();
 
     public CreateAlergenProfileController() {
-        ap = new AlergenProfile(getCurrentUser());
+        ap = new AllergenProfile(getCurrentUser());
     }
 
     public List<Alergen> getAllAlergensNotInAP() {

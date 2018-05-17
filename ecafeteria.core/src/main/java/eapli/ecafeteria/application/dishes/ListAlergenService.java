@@ -8,8 +8,8 @@ package eapli.ecafeteria.application.dishes;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.dishes.Alergen;
-import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.ecafeteria.persistence.AlergenRepository;
 
 /**
  *

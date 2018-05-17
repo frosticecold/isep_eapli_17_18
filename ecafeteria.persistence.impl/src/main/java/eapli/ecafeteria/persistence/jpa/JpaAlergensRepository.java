@@ -6,12 +6,12 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
-import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.framework.domain.Designation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import eapli.ecafeteria.persistence.AlergenRepository;
 
 /**
  *
