@@ -37,7 +37,8 @@ public class Rating implements AggregateRoot<Long>, Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar date;
-    
+
+    public static final String REPLY_BY_DEFAULT = "No reply yet";
     private String reply;
 
     @OneToOne
@@ -63,7 +64,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         this.booking = booking;
         this.comment = comment;
         this.date = date;
-        this.reply = "No reply yet.";
+        this.reply = REPLY_BY_DEFAULT;
     }
 
     public Rating(String reply, CafeteriaUser user, Booking booking, int rating, String comment) {
@@ -91,7 +92,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         this.rating = rating;
         this.booking = booking;
         this.comment = comment;
-        this.reply = "No reply yet.";
+        this.reply = REPLY_BY_DEFAULT;
     }
 
     @Override
@@ -173,13 +174,12 @@ public class Rating implements AggregateRoot<Long>, Serializable {
     }
 
     @Override
-    public String toString() {      
-        
+    public String toString() {
 
         StringBuilder str = new StringBuilder();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = dateFormat.format(date.getTime());
-        
+
         str.append("Date: ").append(formattedDate);
         str.append("\nDish: ").append(booking.getMeal().dish().id())
                 .append("\nType: " + booking.getMeal().mealtype());

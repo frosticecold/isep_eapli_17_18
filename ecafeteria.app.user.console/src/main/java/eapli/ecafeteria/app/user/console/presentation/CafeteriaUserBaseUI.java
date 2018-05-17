@@ -45,9 +45,14 @@ public abstract class CafeteriaUserBaseUI extends AbstractUI {
         return "NEXT BOOKING: " + book.toString();
     }
 
+    public String ratingToReply() {
+        return String.format("Rating waiting for reply: %d", controller().ratingWaitingReply());
+    }
+
     @Override
     public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   " + showBalance() + "\n" + showNextBooking() + "\n";
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   " + showBalance() + "\n" + showNextBooking() + "\n"
+                + ratingToReply();
     }
 
     @Override
