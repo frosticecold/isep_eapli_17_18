@@ -53,7 +53,7 @@ public class MainMenu extends AbstractUI {
     //CLOSE POS
     private static final int CLOSE_POS_OPTION = 5;
     private static final int CLOSE_POS_SUBMENU_OPTION = 1;
-
+    
     @Override
     public boolean show() {
         drawFormTitle();
@@ -137,7 +137,7 @@ public class MainMenu extends AbstractUI {
         } else {
             System.out.println("Can't close POS. Try another time!");
         }
-
+        
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.add(VerticalSeparator.separator());
         }
