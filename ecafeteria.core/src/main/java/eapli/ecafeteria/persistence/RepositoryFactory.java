@@ -145,6 +145,13 @@ public interface RepositoryFactory {
      * @return 
      */
     MealMaterialRepository mealMaterial();
+
+    
+    /**
+     * 
+     * @param autoTx
+     * @return 
+     */
     
     AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
     
