@@ -22,16 +22,15 @@ import javax.persistence.NoResultException;
  *
  * @author utilizador
  */
-public class CreateAlergenProfileController {
+public class AddAlergenProfileController {
 
     private final AlergenRepository alergenRepo = PersistenceContext.repositories().alergens();
     private AlergenProfile ap;
     private final AlergenPlanRepository alergenPlanRepo = PersistenceContext.repositories().AlergenPlans();
 
-    public CreateAlergenProfileController() {
-        ap = new AlergenProfile(getCurrentUser());
+    public AddAlergenProfileController() {
+        ap = alergenPlanRepo.findByUser(getCurrentUser());
     }
-
     public List<Alergen> getAllAlergensNotInAP() {
         List<Alergen> a = alergenRepo.findAll();
         List<Alergen> b = new ArrayList<>();
