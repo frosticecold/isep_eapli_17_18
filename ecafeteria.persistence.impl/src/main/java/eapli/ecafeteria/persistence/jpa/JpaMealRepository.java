@@ -8,12 +8,10 @@ package eapli.ecafeteria.persistence.jpa;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
-import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.persistence.MealRepository;
 import eapli.framework.domain.Designation;
 import java.util.*;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 /**
@@ -79,20 +77,6 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         q.setParameter("cal", cal);
         return q.getResultList();
     }
-
-    @Override
-    public Iterable<Meal> getMealsByMenuPlan(MenuPlan menuPlan) {
-        
-        String query = "SELECT m FROM Meal m "
-                + "WHERE m.menu =:menu";
-        
-        final Query q = entityManager().createQuery(query, Meal.class);
-        
-        q.setParameter("menu", menuPlan.getSelectedMenu());
-        
-        return q.getResultList();
-    }
-
     
 
 }

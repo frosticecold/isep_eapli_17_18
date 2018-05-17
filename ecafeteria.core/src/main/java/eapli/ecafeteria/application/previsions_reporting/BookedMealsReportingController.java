@@ -1,4 +1,4 @@
-package eapli.ecafeteria.application.prediction_reporting;
+package eapli.ecafeteria.application.previsions_reporting;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.framework.application.Controller;
@@ -9,7 +9,7 @@ import eapli.framework.application.Controller;
  */
 public class BookedMealsReportingController implements Controller {
 
-    private PredictionService service;
+    private PrevisionsService service;
 
     public BookedMealsReportingController() {
 
@@ -20,7 +20,7 @@ public class BookedMealsReportingController implements Controller {
      */
     public void prepareService() {
 
-        this.service = new PredictionService();
+        this.service = new PrevisionsService();
     }
 
     /**
@@ -33,6 +33,8 @@ public class BookedMealsReportingController implements Controller {
         Iterable<Booking> bookedMeals = this.service.prepareBookedMealsList();
 
         msg += "\n" + bookedMeals.toString() + "\n";
+
+        msg += "Total of Booked Meals : " + this.service.numberBookedMeals().toString() + "\n";
 
         msg += "=================================================================================";
 

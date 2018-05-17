@@ -25,7 +25,7 @@ public class MenuPlanBootstrapper implements Action {
         Menu menu = list.get(pos);
         MenuPlan menuPlan = new MenuPlan(menu); //set open by default
         
-        menuPlan.setClosed(true);
+        menuPlan.setClosed(false);
 
         try {
             PersistenceContext.repositories().menuPlan().save(menuPlan);
