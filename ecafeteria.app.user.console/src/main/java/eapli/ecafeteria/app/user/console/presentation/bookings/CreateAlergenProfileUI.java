@@ -33,6 +33,8 @@ public class CreateAlergenProfileUI extends CafeteriaUserBaseUI {
             for (Alergen a : controller.getAllAlergensNotInAP()) {
                 System.out.println(a.id());
             }
+       
+            
             System.out.println(" ");
             System.out.println("CHOOSE ONE OF THE ALERGENS TO ADD IT:");
            

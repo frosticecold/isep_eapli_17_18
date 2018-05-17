@@ -15,7 +15,7 @@ import eapli.framework.persistence.repositories.DataRepository;
  *
  * @author utilizador
  */
-public interface AlergenPlanRepository extends DataRepository<AlergenProfile, Integer> {
+public interface AlergenPlanRepository extends DataRepository<AlergenProfile, Long> {
 
     AlergenProfile findByUser(CafeteriaUser user);
 

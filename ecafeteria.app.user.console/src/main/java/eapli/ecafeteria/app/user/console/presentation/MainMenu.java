@@ -40,7 +40,7 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int BOOKINGS_OPTION = 2;
     private static final int ACCOUNT_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
-    private static final int ALERGEN_PROFILE_OPTION =5;
+    private static final int ALERGEN_PROFILE_OPTION = 5;
 
     // BOOKINGS MENU
     private static final int LIST_MENUS_OPTION = 1;
@@ -59,8 +59,9 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int SET_USER_ALERT_LIMIT_OPTION = 1;
 
     //AlergenProfile
-    private static final int ADD_ALERGEN_TO_PROFILE_OPTION = 1;
-    private static final int REMOVE_ALERGEN_TO_PROFILE_OPTION = 2;
+    private static final int CREATE_ALERGEN_PROFILE_OPTION = 1;
+    private static final int ADD_ALERGEN_TO_PROFILE_OPTION = 2;
+    private static final int REMOVE_ALERGEN_TO_PROFILE_OPTION = 3;
 
     @Override
     public boolean show() {
@@ -101,11 +102,11 @@ class MainMenu extends CafeteriaUserBaseUI {
 
         mainMenu.add(VerticalSeparator.separator());
         final Menu AlergenProfileMenu = buildAlergenProfileMenu();
-        
-        mainMenu.add(new SubMenu(ALERGEN_PROFILE_OPTION , AlergenProfileMenu, new ShowVerticalSubMenuAction(AlergenProfileMenu)));
-        
+
+        mainMenu.add(new SubMenu(ALERGEN_PROFILE_OPTION, AlergenProfileMenu, new ShowVerticalSubMenuAction(AlergenProfileMenu)));
+
         mainMenu.add(VerticalSeparator.separator());
-       
+
         mainMenu.add(new MenuItem(EXIT_OPTION, "Exit", new ExitWithMessageAction()));
 
         return mainMenu;
@@ -145,7 +146,7 @@ class MainMenu extends CafeteriaUserBaseUI {
 
     private Menu buildAlergenProfileMenu() {
         final Menu menu = new Menu("Alergen Profile");
-        menu.add(new MenuItem(ADD_ALERGEN_TO_PROFILE_OPTION, "add new alergen to the profile", new CreateAlergenProfileAction()));
+        menu.add(new MenuItem(CREATE_ALERGEN_PROFILE_OPTION, "add new alergen to the profile", new CreateAlergenProfileAction()));
         return menu;
     }
 

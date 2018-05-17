@@ -29,7 +29,7 @@ public class CreateAlergenProfileController {
     private final AlergenPlanRepository alergenPlanRepo = PersistenceContext.repositories().AlergenPlans();
 
     public CreateAlergenProfileController() {
-        ap = alergenPlanRepo.findByUser(getCurrentUser());
+        ap = new AlergenProfile(getCurrentUser());
     }
 
     public List<Alergen> getAllAlergensNotInAP() {
