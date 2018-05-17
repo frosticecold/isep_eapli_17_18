@@ -6,6 +6,7 @@ import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
 import eapli.framework.util.DateTime;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -19,9 +20,12 @@ public class MenuPlanBootstrapper implements Action {
         boolean flag = false;
         Calendar start = DateTime.parseDate("01-07-2018");
         Calendar end = DateTime.parseDate("07-07-2018");
-        Menu menu = PersistenceContext.repositories().menus().findMenuWithinPeriod(start, end).get();
-
+        List<Menu> list = PersistenceContext.repositories().menus().findLatestMenus();
+        int pos = list.size() - 1;
+        Menu menu = list.get(pos);
         MenuPlan menuPlan = new MenuPlan(menu); //set open by default
+        
+        menuPlan.setClosed(true);
 
         try {
             PersistenceContext.repositories().menuPlan().save(menuPlan);
