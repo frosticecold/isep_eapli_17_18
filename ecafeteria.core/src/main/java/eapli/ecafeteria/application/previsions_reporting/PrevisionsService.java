@@ -1,8 +1,6 @@
-package eapli.ecafeteria.application.menus;
+package eapli.ecafeteria.application.previsions_reporting;
 
 import eapli.ecafeteria.domain.booking.Booking;
-import eapli.ecafeteria.domain.booking.BookingState;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 
