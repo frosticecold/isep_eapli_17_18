@@ -6,6 +6,7 @@
 package eapli.ecafeteria.app.user.console.presentation;
 
 import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
+import eapli.ecafeteria.app.user.console.presentation.bookings.AddAlergenProfileAction;
 import eapli.ecafeteria.app.user.console.presentation.bookings.BookingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CancelBookingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CheckBookingsByUserUI;
@@ -146,7 +147,9 @@ class MainMenu extends CafeteriaUserBaseUI {
 
     private Menu buildAlergenProfileMenu() {
         final Menu menu = new Menu("Alergen Profile");
-        menu.add(new MenuItem(CREATE_ALERGEN_PROFILE_OPTION, "add new alergen to the profile", new CreateAlergenProfileAction()));
+        menu.add(new MenuItem(CREATE_ALERGEN_PROFILE_OPTION, "create new alergen profile", new CreateAlergenProfileAction()));
+        menu.add(new MenuItem(ADD_ALERGEN_TO_PROFILE_OPTION, "add alergen to the profile", new AddAlergenProfileAction()));
+        
         return menu;
     }
 

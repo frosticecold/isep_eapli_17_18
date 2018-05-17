@@ -22,16 +22,15 @@ import eapli.ecafeteria.persistence.AlergenRepository;
  *
  * @author utilizador
  */
-public class CreateAlergenProfileController {
+public class AddAllergenProfileController {
 
     private final AlergenRepository alergenRepo = PersistenceContext.repositories().alergens();
     private AllergenProfile ap;
     private final AllergenProfileRepository alergenPlanRepo = PersistenceContext.repositories().AllergenProfiles();
 
-    public CreateAlergenProfileController() {
-        ap = new AllergenProfile(getCurrentUser());
+    public AddAllergenProfileController() {
+        ap = alergenPlanRepo.findUserAllergenProfile(getCurrentUser());
     }
-
     public List<Alergen> getAllAlergensNotInAP() {
         List<Alergen> a = alergenRepo.findAll();
         List<Alergen> b = new ArrayList<>();

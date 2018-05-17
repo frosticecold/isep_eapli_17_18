@@ -161,5 +161,5 @@ public interface RepositoryFactory {
     
     ComplaintRepository complaints();
 
-    AlergenPlanRepository AlergenPlans();
+    AllergenProfileRepository AllergenProfiles();
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -21,23 +22,24 @@ import javax.persistence.OneToOne;
  * @author utilizador
  */
 @Entity
-public class AlergenProfile implements Serializable {
+public class AllergenProfile implements Serializable {
 
     @Id
     @GeneratedValue
     private long id;
 
+    @JoinTable
     @OneToMany
     private List<Alergen> alergenList;
     @OneToOne
     private CafeteriaUser user;
 
-    public AlergenProfile(CafeteriaUser user) {
+    public AllergenProfile(CafeteriaUser user) {
         this.user = user;
         alergenList = new ArrayList<>();
     }
 
-    protected AlergenProfile() {
+    protected AllergenProfile() {
         //FOR ORM
     }
 
@@ -52,5 +54,11 @@ public class AlergenProfile implements Serializable {
     public boolean removeAlergen(Alergen a) {
         return alergenList.remove(a);
     }
+
+    public CafeteriaUser user() {
+        return user;
+    }
+    
+    
 
 }

@@ -6,11 +6,11 @@
 package eapli.ecafeteria.persistence.inmemory;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
-import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.framework.domain.Designation;
 import eapli.framework.persistence.repositories.impl.inmemory.InMemoryRepository;
 import java.util.List;
 import java.util.Optional;
+import eapli.ecafeteria.persistence.AlergenRepository;
 
 /**
  *

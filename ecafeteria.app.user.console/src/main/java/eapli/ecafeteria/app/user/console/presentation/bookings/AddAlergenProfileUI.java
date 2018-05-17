@@ -6,6 +6,7 @@
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
+import eapli.ecafeteria.application.cafeteriauser.AddAllergenProfileController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.application.cafeteriauser.CreateAlergenProfileController;
 import eapli.ecafeteria.domain.dishes.Alergen;
@@ -15,9 +16,9 @@ import java.util.Scanner;
  *
  * @author utilizador
  */
-public class CreateAlergenProfileUI extends CafeteriaUserBaseUI {
+public class AddAlergenProfileUI extends CafeteriaUserBaseUI {
 
-    private CreateAlergenProfileController controller = new CreateAlergenProfileController();
+    private AddAllergenProfileController controller = new AddAllergenProfileController();
     Scanner ler = new Scanner(System.in);
 
     @Override
@@ -30,6 +31,14 @@ public class CreateAlergenProfileUI extends CafeteriaUserBaseUI {
 
         String op;
         do {
+            
+            System.out.println("THIS IS YOUR CURRENT ALERGEN PROFILE ");
+            System.out.println(" ");
+            for(Alergen a : controller.getApAlergens()){
+                System.out.println(a.id());
+            }
+            
+            
             for (Alergen a : controller.getAllAlergensNotInAP()) {
                 System.out.println(a.id());
             }

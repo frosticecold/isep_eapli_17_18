@@ -197,7 +197,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public AlergenPlanRepository AlergenPlans() {
+    public AllergenProfileRepository AllergenProfiles() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -195,7 +195,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public ComplaintRepository complaints() {
         return new JpaComplaintRepository();
     }
-    public AlergenPlanRepository AlergenPlans() {
-       return new JPAAlergenPlanRepository();
+    public AllergenProfileRepository AllergenProfiles() {
+       return new JpaAllergenProfileRepository();
     }
 }
