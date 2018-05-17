@@ -1,5 +1,6 @@
 package eapli.ecafeteria.persistence.inmemory;
 
+import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.meal.*;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.*;
@@ -63,5 +64,9 @@ public class InMemoryMealRepository extends InMemoryRepositoryWithLongPK<Meal> i
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public List<Meal> getMealByDish(Dish dish) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

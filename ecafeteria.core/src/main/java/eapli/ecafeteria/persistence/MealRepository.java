@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
@@ -30,5 +31,7 @@ public interface MealRepository extends DataRepository<Meal, Long> {
     List<Meal> findMealsByMenu(Menu menu);
     
     List<Meal> getMealByDate(Calendar cal);
+
+    List<Meal> getMealByDish(Dish dish);
 
 }

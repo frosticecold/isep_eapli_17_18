@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
@@ -78,7 +79,13 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         q.setParameter("cal", cal);
         return q.getResultList();
     }
-
-
+    
+    @Override
+    public List<Meal> getMealByDish(Dish dish){
+        TypedQuery<Meal> q;
+        q = entityManager().createQuery("SELECT m FROM Meal m WHERE m.dish=:dish", Meal.class);
+        q.setParameter("dish", dish);
+        return q.getResultList(); 
+   }
 
 }
