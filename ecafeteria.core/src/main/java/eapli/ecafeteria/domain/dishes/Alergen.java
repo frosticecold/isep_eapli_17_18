@@ -8,6 +8,7 @@ package eapli.ecafeteria.domain.dishes;
 import eapli.framework.domain.Designation;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -45,7 +46,7 @@ public class Alergen  implements AggregateRoot<Designation>, Serializable  {
 
     @Override
     public String toString() {
-        return "Alergen{" + "name=" + name + '}';
+        return name.toString();
     }
 
     @Override
@@ -61,5 +62,25 @@ public class Alergen  implements AggregateRoot<Designation>, Serializable  {
     public Object name() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Alergen other = (Alergen) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

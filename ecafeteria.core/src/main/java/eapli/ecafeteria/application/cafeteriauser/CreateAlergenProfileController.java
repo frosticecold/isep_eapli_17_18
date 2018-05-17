@@ -26,7 +26,7 @@ public class CreateAlergenProfileController {
 
     private final AlergenRepository alergenRepo = PersistenceContext.repositories().alergens();
     private AllergenProfile ap;
-    private final AllergenProfileRepository alergenPlanRepo = PersistenceContext.repositories().AllergenProfiles();
+    private final AllergenProfileRepository alergenPlanRepo = PersistenceContext.repositories().allergenProfiles();
 
     public CreateAlergenProfileController() {
         ap = new AllergenProfile(getCurrentUser());

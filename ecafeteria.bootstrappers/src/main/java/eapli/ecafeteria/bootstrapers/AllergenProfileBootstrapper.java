@@ -28,7 +28,7 @@ import eapli.ecafeteria.persistence.AllergenProfileRepository;
  */
 public class AllergenProfileBootstrapper implements Action {
 
-    private final AllergenProfileRepository alergenPlanRepo = PersistenceContext.repositories().AllergenProfiles();
+    private final AllergenProfileRepository allergenProfileRepo = PersistenceContext.repositories().allergenProfiles();
 
     /**
      * @author Rui Almeida <1160818> && Ricardo Sousa <>
@@ -79,7 +79,7 @@ public class AllergenProfileBootstrapper implements Action {
      * @author Rui Almeida <1160818> && Ricardo Sousa <>
      */
     private void register(AllergenProfile profile) throws DataConcurrencyException, DataIntegrityViolationException {
-        alergenPlanRepo.save(profile);
+        allergenProfileRepo.save(profile);
 
     }
 
