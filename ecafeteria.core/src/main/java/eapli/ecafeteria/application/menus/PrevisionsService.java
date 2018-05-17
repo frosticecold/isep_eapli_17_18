@@ -1,16 +1,10 @@
 package eapli.ecafeteria.application.menus;
 
-import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.domain.meal.MealType;
-import eapli.ecafeteria.persistence.BookingRepository;
-import eapli.ecafeteria.persistence.DeliveryRegistryRepository;
-import eapli.ecafeteria.persistence.DishTypeRepository;
-import eapli.ecafeteria.persistence.MealRepository;
-import eapli.ecafeteria.persistence.MenuPlanRepository;
+import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.BookingState;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.persistence.PersistenceContext;
-import eapli.ecafeteria.persistence.RatingRepository;
 import eapli.framework.application.Controller;
-import java.util.Calendar;
 
 /**
  *
@@ -18,34 +12,21 @@ import java.util.Calendar;
  */
 public class PrevisionsService implements Controller {
 
-    private BookingRepository bookingRepo;
-    private DeliveryRegistryRepository deliveryRepo;
-    private MealRepository mealsRepo;
-    private MenuPlanRepository menuPlanRepo;
-    private RatingRepository ratingRepo;
-    private DishTypeRepository dishTypeRepo;
-
     //Construtor of service
     public PrevisionsService() {
-        this.prepareRepositories();
-    }
 
-    public void prepareBookedMealsList() {
-        
-       
     }
 
     /**
-     * method to go to persistenceContext and extract all the repositories
-     * needed
+     * returns a list with all the meals that have booked bookings
+     *
+     * @return
      */
-    private void prepareRepositories() {
+    public Iterable<Booking> prepareBookedMealsList() {
 
-        this.bookingRepo = PersistenceContext.repositories().booking();
-        this.deliveryRepo = PersistenceContext.repositories().deliveryRegistryRepository();
-        this.mealsRepo = PersistenceContext.repositories().meals();
-        this.menuPlanRepo = PersistenceContext.repositories().menuPlan();
-        this.ratingRepo = PersistenceContext.repositories().rating();
-        this.dishTypeRepo = PersistenceContext.repositories().dishTypes();
+        Iterable<Booking> bookedMeals = PersistenceContext.repositories().booking().findBookedBookings();
+
+        return bookedMeals;
     }
+
 }

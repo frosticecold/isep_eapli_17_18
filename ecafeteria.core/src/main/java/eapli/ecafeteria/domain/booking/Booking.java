@@ -178,7 +178,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
-        return "Booking: \n" + meal;
+        return "Booking: id " + this.idBooking + "| " + meal;
     }
 
     
