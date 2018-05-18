@@ -4,8 +4,6 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.actions.Action;
-import eapli.framework.util.DateTime;
-import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,13 +16,11 @@ public class MenuPlanBootstrapper implements Action {
     @Override
     public boolean execute() {
         boolean flag = false;
-        Calendar start = DateTime.parseDate("01-07-2018");
-        Calendar end = DateTime.parseDate("07-07-2018");
         List<Menu> list = PersistenceContext.repositories().menus().findLatestMenus();
         int pos = list.size() - 1;
         Menu menu = list.get(pos);
         MenuPlan menuPlan = new MenuPlan(menu); //set open by default
-        
+
         menuPlan.setClosed(false);
 
         try {
@@ -33,6 +29,23 @@ public class MenuPlanBootstrapper implements Action {
         } catch (Exception e) {
             Logger.getLogger(ECafeteriaBootstrapper.class.getSimpleName())
                     .info("EAPLI-DI001: bootstrapping existing record");
+        }
+
+        pos--;
+
+        if (list.get(pos) != null) {
+            Menu menu1 = list.get(pos);
+            MenuPlan plan = new MenuPlan(menu1);
+
+            plan.setClosed(false);
+
+            try {
+                PersistenceContext.repositories().menuPlan().save(plan);
+                flag = true;
+            } catch (Exception e) {
+                Logger.getLogger(ECafeteriaBootstrapper.class.getSimpleName())
+                        .info("EAPLI-DI001: bootstrapping existing record");
+            }
         }
 
         return flag;
