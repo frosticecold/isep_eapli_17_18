@@ -33,13 +33,14 @@ import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Observable;
 import java.util.Optional;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class BookingMealController implements Controller {
+public class BookingMealController extends Observable implements Controller {
 
     private final CafeteriaUserService userService = new CafeteriaUserService();
 
@@ -172,8 +173,8 @@ public class BookingMealController implements Controller {
         // Persist
         final TransactionalContext TxCtx
                 = PersistenceContext.repositories().buildTransactionalContext();
-        final AutoTxTransactionRepository attr
-                = PersistenceContext.repositories().autoTxTransactionRepository(TxCtx);
+        final TransactionRepository attr
+                = PersistenceContext.repositories().transactions(TxCtx);
         final AutoTxBookingRepository atbr
                 = PersistenceContext.repositories().autoTxBookingRepository(TxCtx);
         final CafeteriaUserRepository cafer
@@ -189,6 +190,8 @@ public class BookingMealController implements Controller {
         cafer.save(user.get());
         TxCtx.commit();
 
+        this.notifyObservers(newBooking);
+        
         return true;
     }
 

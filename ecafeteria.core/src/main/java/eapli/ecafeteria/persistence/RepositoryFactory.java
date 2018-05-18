@@ -133,9 +133,14 @@ public interface RepositoryFactory {
     ExecutionRepository executions();
 
     AlergenRepository alergens();
+    
+    TransactionRepository transactions();
 
-    TransactionRepository transactioRepository();
-
+    TransactionRepository transactions(TransactionalContext autoTx);
+    
+    TransactionReportingRepository transactionsReporting();
+    
+        /**
     TransactionRepository transactioRepository(TransactionalContext autoTx);
 
     /**
@@ -151,6 +156,7 @@ public interface RepositoryFactory {
      * @return
      */
     AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
+    
 
     AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
 
@@ -177,4 +183,8 @@ public interface RepositoryFactory {
      * @return 
      */
     ReasonRepository reasons(TransactionalContext autoTx);
+    
+    AlertRepositoryBookings alertRepositoryBookings();
+   
+    AlertRepositoryLimits alertRepositoryLimits();
 }
