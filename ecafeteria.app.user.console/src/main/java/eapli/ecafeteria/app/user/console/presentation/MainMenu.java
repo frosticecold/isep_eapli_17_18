@@ -16,6 +16,7 @@ import eapli.ecafeteria.app.user.console.presentation.bookings.CreateAlergenProf
 import eapli.ecafeteria.app.user.console.presentation.bookings.ListMenuUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.RatingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ShowTransactionsUI;
+import eapli.ecafeteria.app.user.console.presentation.bookings.ViewCaloricConsumptionUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ViewRatingsUI;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.framework.actions.ReturnAction;
@@ -52,6 +53,7 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int LIST_MENU = 6;
     private static final int CHECK_BOOKINGS = 7;
     private static final int CONSULT_MEAL_RATING = 8;
+    private static final int VIEW_CALORIC_CONSUMPTION = 9;
 
     // ACCOUNT MENU
     private static final int LIST_MOVEMENTS_OPTION = 1;
@@ -130,6 +132,8 @@ class MainMenu extends CafeteriaUserBaseUI {
         menu.add(new MenuItem(LIST_MENU, "List Menu", () -> new ListMenuUI().show()));
         menu.add(new MenuItem(CHECK_BOOKINGS, "Check Bookings of Current User", () -> new CheckBookingsByUserUI().show()));
         menu.add(new MenuItem(CONSULT_MEAL_RATING, "consult meal rating", () -> new ConsultMealRatingUI().show()));
+        menu.add(new MenuItem(VIEW_CALORIC_CONSUMPTION,"View caloric consumption", () -> new ViewCaloricConsumptionUI().show()));
+        
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         return menu;
     }

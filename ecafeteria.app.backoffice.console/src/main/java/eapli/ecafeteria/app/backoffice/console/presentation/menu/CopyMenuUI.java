@@ -6,24 +6,29 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
 import eapli.ecafeteria.application.menus.CopyMenuController;
+import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
 
 /**
  *
  * @author Oliveira
  */
-public class CopyMenuUI extends AbstractUI{
-    
+public class CopyMenuUI extends AbstractUI {
+
     private CopyMenuController controller = new CopyMenuController();
+
+    protected Controller controller() {
+        return this.controller;
+    }
 
     @Override
     protected boolean doShow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("TO BE IMPLEMENTED");
+        return true;
     }
 
     @Override
     public String headline() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Copy Menu";
     }
-    
 }
