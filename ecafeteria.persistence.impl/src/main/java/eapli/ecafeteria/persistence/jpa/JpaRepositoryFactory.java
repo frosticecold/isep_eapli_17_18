@@ -138,13 +138,18 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public JpaTransactionRepository transactioRepository(TransactionalContext autoTx) {
+    public JpaTransactionRepository transactions(TransactionalContext autoTx) {
         return new JpaTransactionRepository(autoTx);
     }
 
     @Override
-    public JpaTransactionRepository transactioRepository() {
+    public JpaTransactionRepository transactions() {
         return new JpaTransactionRepository(Application.settings().getPersistenceUnitName());
+    }
+    
+    @Override
+    public JpaTransactionReportingRepository transactionsReporting() {
+        return new JpaTransactionReportingRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
@@ -162,11 +167,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaAutoTxBookingRepository(autoTx);
     }
 
-    @Override
-    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
-        return new JpaAutoTxTransactionRepository(autoTx);
-    }
-
     /**
      * Return JpaDeliveryRegistryRepository
      *
@@ -180,11 +180,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public BalanceRepository balance() {
         return new JPAUserBalance();
-    }
-
-    @Override
-    public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
-        return new JpaTransactionReportingRepository(autoTx);
     }
 
     /**

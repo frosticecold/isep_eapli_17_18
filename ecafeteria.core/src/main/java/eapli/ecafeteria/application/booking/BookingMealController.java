@@ -173,8 +173,8 @@ public class BookingMealController extends Observable implements Controller {
         // Persist
         final TransactionalContext TxCtx
                 = PersistenceContext.repositories().buildTransactionalContext();
-        final AutoTxTransactionRepository attr
-                = PersistenceContext.repositories().autoTxTransactionRepository(TxCtx);
+        final TransactionRepository attr
+                = PersistenceContext.repositories().transactions(TxCtx);
         final AutoTxBookingRepository atbr
                 = PersistenceContext.repositories().autoTxBookingRepository(TxCtx);
         final CafeteriaUserRepository cafer

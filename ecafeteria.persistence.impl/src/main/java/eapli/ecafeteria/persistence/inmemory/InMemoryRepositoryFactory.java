@@ -137,7 +137,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public TransactionRepository transactioRepository() {
+    public TransactionRepository transactions() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -172,22 +172,12 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public BalanceRepository balance() {
         return new InMemoryBalanceRepository();
     }
 
     @Override
-    public TransactionRepository transactioRepository(TransactionalContext autoTx) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
+    public TransactionRepository transactions(TransactionalContext autoTx) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -202,6 +192,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public TransactionReportingRepository transactionsReporting() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public AlertRepositoryBookings alertRepositoryBookings() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

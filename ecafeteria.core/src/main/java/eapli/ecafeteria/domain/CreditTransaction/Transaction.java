@@ -21,7 +21,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,7 +38,7 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @OneToOne
     protected CafeteriaUser cafeteriaUser;
     protected Money k;
     @Enumerated(EnumType.STRING)
@@ -49,7 +48,6 @@ public class Transaction implements Serializable {
     protected SystemUser systemUser;
     @Temporal(TemporalType.DATE)
     protected Calendar date;
-
     @Version
     protected Long version;
 

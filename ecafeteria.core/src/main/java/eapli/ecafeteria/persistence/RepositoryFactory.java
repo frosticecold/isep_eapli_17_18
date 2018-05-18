@@ -137,9 +137,12 @@ public interface RepositoryFactory {
 
     AlergenRepository alergens();
     
-    TransactionRepository transactioRepository();
+    TransactionRepository transactions();
 
-    TransactionRepository transactioRepository(TransactionalContext autoTx);
+    TransactionRepository transactions(TransactionalContext autoTx);
+    
+    TransactionReportingRepository transactionsReporting();
+    
         /**
      * MealMaterialRepositorySession Repo
      * @return 
@@ -154,10 +157,6 @@ public interface RepositoryFactory {
      */
     
     AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
-    
-    AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
-    
-    TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx);
     
     ComplaintRepository complaints();
 
