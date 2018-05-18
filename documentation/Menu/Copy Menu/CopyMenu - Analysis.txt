@@ -1,0 +1,21 @@
+___________
+
+ANÀLISE
+__________
+
+
+
+__________________
+
+REGRAS DE NEGÒCIO
+__________________
+
+* Cria uma nova ementa a partir de uma previamente criada;
+* É necessário uma nova data para a ementa editada;
+
+_______________
+
+TESTE UNITÀRIOS
+_______________
+
+// TODO
