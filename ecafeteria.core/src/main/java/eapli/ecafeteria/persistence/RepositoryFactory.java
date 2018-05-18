@@ -48,8 +48,8 @@ public interface RepositoryFactory {
      * @return
      */
     CafeteriaUserRepository cafeteriaUsers();
-    
-     /**
+
+    /**
      * repository will be created in auto transaction mode
      *
      * @return
@@ -78,11 +78,10 @@ public interface RepositoryFactory {
 
     BookingRepository booking();
 
-
     MenuRepository menus();
 
     MenuPlanRepository menuPlan();
-    
+
     MenuPlanItemRepository menuPlanItem();
 
     RatingRepository rating();
@@ -110,7 +109,6 @@ public interface RepositoryFactory {
      */
     POSRepository posRepository();
 
-
     /**
      * DeliveryMealSession Repo
      *
@@ -123,43 +121,60 @@ public interface RepositoryFactory {
      */
     DeliveryRegistryRepository deliveryRegistryRepository();
 
-    
     /**
      * Ratings reporting repository
-     * @return 
+     *
+     * @return
      */
     RatingReportingRepository ratingsReporting();
-
 
     MealRepository meals();
 
     ExecutionRepository executions();
 
     AlergenRepository alergens();
-    
+
     TransactionRepository transactioRepository();
 
     TransactionRepository transactioRepository(TransactionalContext autoTx);
-        /**
+
+    /**
      * MealMaterialRepositorySession Repo
-     * @return 
+     *
+     * @return
      */
     MealMaterialRepository mealMaterial();
 
-    
     /**
-     * 
+     *
      * @param autoTx
-     * @return 
+     * @return
      */
-    
     AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
-    
+
     AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
-    
+
     TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx);
-    
+
     ComplaintRepository complaints();
 
     AllergenProfileRepository allergenProfiles();
+
+    /**
+     * Reasons Repository
+     *
+     * @author Raúl Correia
+     *
+     * @return
+     */
+    ReasonRepository reasons();
+
+    /**
+     * Reason Repository with TransationalContext
+     *
+     * @author Raúl Correia
+     * @param autoTx
+     * @return 
+     */
+    ReasonRepository reasons(TransactionalContext autoTx);
 }
