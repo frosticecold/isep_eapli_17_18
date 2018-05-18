@@ -198,4 +198,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public AllergenProfileRepository allergenProfiles() {
        return new JpaAllergenProfileRepository();
     }
+
+    @Override
+    public AlertRepositoryBookings alertRepositoryBookings() {
+        return new JPAAltertRepositoryBookings();
+    }
+
+    @Override
+    public AlertRepositoryLimits alertRepositoryLimits() {
+        return new JPAAlertRepositoryLimits();
+    }
 }

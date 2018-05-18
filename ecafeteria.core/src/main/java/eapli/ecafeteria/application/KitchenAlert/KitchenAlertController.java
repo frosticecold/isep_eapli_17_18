@@ -15,8 +15,6 @@ public class KitchenAlertController {
     
     public KitchenAlertController(WatchDog wd) {
         myWatchDog = wd;
-       
-        
     }
     
     

@@ -15,7 +15,15 @@ import eapli.ecafeteria.persistence.AlertRepositoryLimits;
 public class JPAAlertRepositoryLimits extends CafeteriaJpaRepositoryBase<AlertLimit, Long> implements AlertRepositoryLimits {
 
     @Override
-    public float[] getLimits() {
+    public float[] getLimits() { //falta o man implementar na base de dados
+        
+        //acho que devemos mudar o tipo de float[] para uma List, pq a query só retorna para lista
+        
+//        Query q = entityManager().
+//                createQuery("SELECT limit FROM Limit limit ", Limit.class);
+//
+//        return q.getResultList();
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -25,7 +25,8 @@ public class WatchDog extends Observable implements Observer{
         
         kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
         
-        
+        //verificar isto pq continuo a achar que nao se pode fazer no construtor
+        kAlert.addObserver(this);
         
         new Thread(){
             @Override
@@ -44,13 +45,10 @@ public class WatchDog extends Observable implements Observer{
             
         };
     }
-    
 
-    
     void testLimits(){
         
-        kAlert.calculateX();
-        
+        kAlert.calculateX();   
     }
 
     public static WatchDog getInstance(){
@@ -58,11 +56,8 @@ public class WatchDog extends Observable implements Observer{
         if( myWatchDog == null){
             
             myWatchDog = new WatchDog();
-        }    
-            
+        }     
             return myWatchDog;
-        
-    
     }
 
     @Override
