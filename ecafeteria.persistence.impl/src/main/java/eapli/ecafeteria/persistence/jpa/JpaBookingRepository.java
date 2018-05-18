@@ -166,14 +166,14 @@ public class JpaBookingRepository
      */
     @Override
     public Iterable<Booking> findBookedBookings() {
-        
+
         BookingState state = new BookingState();
-        
+
         String query = "SELECT e FROM Booking e WHERE bookingstate = :bs";
 
         final Query q = entityManager().createQuery(query, Booking.class);
 
-        q.setParameter("bs",state.actualState().toString());
+        q.setParameter("bs", state.actualState().toString());
 
         return q.getResultList();
     }
