@@ -38,6 +38,7 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
+    @OneToOne
     protected CafeteriaUser cafeteriaUser;
     protected Money k;
     @Enumerated(EnumType.STRING)

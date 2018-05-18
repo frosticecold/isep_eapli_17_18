@@ -2,6 +2,8 @@ package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.framework.persistence.DataConcurrencyException;
+import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.persistence.repositories.DataRepository;
 
 /**
@@ -19,5 +21,8 @@ public interface TransactionRepository extends DataRepository<Transaction, Long>
     Iterable<Transaction> findAllTransactionsByCafeteriaUserAndType(CafeteriaUser user, String transactionType);
 
     public Iterable<Transaction> findAllActive();
-
+    
+    public Transaction saveTransaction(Transaction entity)
+            throws DataConcurrencyException, 
+                   DataIntegrityViolationException ;
 }

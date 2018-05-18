@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class TransactionBootstrapper implements Action{
 
     private final TransactionRepository transactionRepository = 
-            PersistenceContext.repositories().transactioRepository();
+            PersistenceContext.repositories().transactions();
     @Override
     public boolean execute() {
         final CafeteriaUserRepository repo = PersistenceContext.repositories().cafeteriaUsers();
@@ -38,9 +38,9 @@ public class TransactionBootstrapper implements Action{
         Transaction transaction_2 = new Transaction(user.get(), TransactionType.DEBIT, Money.euros(4.5));
         Transaction transaction_3 = new Transaction(user.get(), TransactionType.RECHARGE, Money.euros(50));
         
-        //register(transaction_1);
-        //register(transaction_2);
-        //register(transaction_3);
+        register(transaction_1);
+        register(transaction_2);
+        register(transaction_3);
         
         return true;
     }

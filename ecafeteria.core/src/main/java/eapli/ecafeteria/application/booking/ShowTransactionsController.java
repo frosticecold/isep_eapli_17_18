@@ -33,7 +33,7 @@ public class ShowTransactionsController {
                 .get();
         
         final TransactionReportingRepository reportingRepository = 
-                PersistenceContext.repositories().transactionReportingRepository();
+                PersistenceContext.repositories().transactionsReporting();
         
         this.list = reportingRepository.showTransactions(user);
     }
