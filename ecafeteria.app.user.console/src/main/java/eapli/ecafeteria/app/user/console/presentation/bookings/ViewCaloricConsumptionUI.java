@@ -6,25 +6,25 @@
 package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
-import eapli.ecafeteria.application.booking.RatingCommentNotificationController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 
 /**
  *
- * @author Joana Oliveira <1161261@isep.ipp.pt>
+ * @author Joao Rocha 1161838
  */
-public class RatingCommentNotificationUI extends CafeteriaUserBaseUI {
+public class ViewCaloricConsumptionUI extends CafeteriaUserBaseUI{
 
-    private RatingCommentNotificationController controller = new RatingCommentNotificationController();
-
-    @Override
-    protected boolean doShow() {
-        return true;
-    }
-
+    private ViewCaloricConsumptionUI controller = new ViewCaloricConsumptionUI();
+    
     @Override
     protected CafeteriaUserBaseController controller() {
         return new CafeteriaUserBaseController();
     }
 
+    @Override
+    protected boolean doShow() {
+        System.out.println("TODO");
+        return true;
+    }
+    
 }

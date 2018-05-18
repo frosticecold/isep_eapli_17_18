@@ -18,8 +18,8 @@ public final class TestDataConstants {
     public static final String ALLERGEN_MOSTARDA = "Mostarda";
     public static final String ALLERGEN_SESAMO = "Sementes de sésamo";
     public static final String ALLERGEN_ENXOFRE = "Dióxido de enxofre ";
-    public static final String ALLERGEN_TREMOCO = "Tremoço ";
-    public static final String ALLERGEN_MOLUSCO = "Moluscos ";
+    public static final String ALLERGEN_TREMOCO = "Tremoço";
+    public static final String ALLERGEN_MOLUSCO = "Moluscos";
 
     public static final String DISH_NAME_COSTELETA_A_SALSICHEIRO = "costeleta à salsicheiro";
     public static final String DISH_NAME_PICANHA = "picanha";

@@ -10,9 +10,8 @@ import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.authz.Username;
-import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
-import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.presentation.console.SelectWidget;
@@ -20,7 +19,7 @@ import eapli.framework.util.Console;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -59,13 +58,11 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
             mealType = MealType.DINNER;
 
         }
-        
-        if(controller.isAlreadyBooked(user, mealType, cal)){
-          System.out.println("You already booked a meal for this date and this mealtype!");
-          return false;
+
+        if (controller.isAlreadyBooked(user, mealType, cal)) {
+            System.out.println("You already booked a meal for this date and this mealtype!");
+            return false;
         }
-        
-        
 
         mealList = controller.listMeals(cal, mealType);
         Calendar choosedDate = cal;
@@ -107,22 +104,54 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         System.out.println(choosedMeal.toString());
 
         //===================================SHOW ALERGEN AND CALORICS==================================
-        System.out.println(
-                "\nAlergen Info:\n");
+        System.out.println("»»» Allergens present in the dish: ");
         if (controller.mealHasAlergens(choosedMeal)) {
-            System.out.println(choosedMeal.dish().alergenInDish().toString());
+            for (Alergen alergen : choosedMeal.dish().alergenInDish()) {
+                System.out.println("» " + alergen.toString());
+            }
         } else {
-            System.out.println("Dish doesn't have alergens.\n");
+            System.out.println("Dish doesn't have alergens.");
         }
 
-        //===================================PAYMENT AND PERSIST==================================
-        int option2 = 0;
+        /*
+        Verify if user has any allergens to the dish
+        If user doesn't have any matching allergen -> print an informative message and move with the program.
+        If the user, in fact, has matched allergens, display them and ask if the user still wishes to proceed with the booking.
+        If input is 1 -> Proceed with reservation, else if input is 2 -> Cancel reservation 
+        If user does not have an allergen profile, leave a simple message.
+        @autor Rui Almeida <1160818>
+         */
+        int option2 = 1;
+        
+        try {
+            
+            //Matches allergens between the dish and the user
+            List<Alergen> matchedAllergens = controller.matchAllergens(choosedMeal);
 
+            //Verify if user has any matched allergens
+            if (matchedAllergens.isEmpty() && controller.mealHasAlergens(choosedMeal)) {
+
+                System.out.println("\n»»» You have no allergens to the dish.");
+
+            } else if (controller.mealHasAlergens(choosedMeal)) {
+
+                //If the user has allergens, display them.
+                System.out.println("\n»»» You have " + matchedAllergens.size() + " allergen(s) that overlap with the dish's: ");
+                for (int i = 0; i < matchedAllergens.size(); i++) {
+                    System.out.println((i + 1) + ". " + matchedAllergens.get(i).toString() + ".");
+                }
+            }
+            
+        } catch (NoResultException ex) {
+            System.out.println("\n»»» User does not have an allergen profile!");
+        }
+
+        //Ask user if he wants to proceed with the booking and proceed accordingly.
         do {
-            System.out.println("Do you want to continue?\n1-Yes\n2-No\n");
-            option2 = Console.readInteger("");
+            option2 = Console.readInteger("\n»»» Do you still wish to proceed with the booking? ( 1. Yes / 2. No )");
         } while (option2 != 1 && option2 != 2);
 
+        //===================================PAYMENT AND PERSIST==================================
         if (option2 == 1) {
 
             if (!controller.hasEnoughMoney(user, choosedMeal)) {
@@ -144,7 +173,7 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
                             + e.getMessage());
                 }
             }
-        } else{
+        } else {
 
             System.out.println("Operation closed.");
 

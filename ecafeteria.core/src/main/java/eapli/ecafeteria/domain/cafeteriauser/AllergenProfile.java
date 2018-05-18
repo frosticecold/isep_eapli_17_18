@@ -7,11 +7,13 @@ package eapli.ecafeteria.domain.cafeteriauser;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.domain.dishes.AlergenEnum;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -20,24 +22,31 @@ import javax.persistence.OneToOne;
  * @author utilizador
  */
 @Entity
-public class AlergenProfile {
+public class AllergenProfile implements Serializable {
 
     @Id
     @GeneratedValue
     private long id;
 
+    @JoinTable
     @OneToMany
     private List<Alergen> alergenList;
     @OneToOne
     private CafeteriaUser user;
 
-    public AlergenProfile(CafeteriaUser user) {
+    public AllergenProfile(CafeteriaUser user) {
+        this.user = user;
         alergenList = new ArrayList<>();
     }
-    
-    public List<Alergen> alergens(){
+
+    protected AllergenProfile() {
+        //FOR ORM
+    }
+
+    public List<Alergen> alergens() {
         return alergenList;
     }
+
     public boolean addAlergen(Alergen a) {
         return alergenList.add(a);
     }
@@ -45,5 +54,11 @@ public class AlergenProfile {
     public boolean removeAlergen(Alergen a) {
         return alergenList.remove(a);
     }
+
+    public CafeteriaUser user() {
+        return user;
+    }
+    
+    
 
 }

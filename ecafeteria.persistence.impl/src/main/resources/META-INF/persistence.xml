@@ -28,6 +28,8 @@
     <class>eapli.ecafeteria.domain.booking.Booking</class>
     <class>eapli.ecafeteria.domain.CreditTransaction.Transaction</class>
     <class>eapli.ecafeteria.domain.cafeteriauser.BalanceLimits</class>
+    <class>eapli.ecafeteria.domain.pos.Complaint</class>
+    <class>eapli.ecafeteria.domain.cafeteriauser.AllergenProfile</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ecafeteria"/>
       <!--

@@ -28,7 +28,7 @@ public class ChargeCardController implements Controller {
 
     private final CafeteriaUserService service = new CafeteriaUserService();
     private final TransactionalContext TxCtx = PersistenceContext.repositories().buildTransactionalContext();
-    private final TransactionRepository tr = PersistenceContext.repositories().transactioRepository(TxCtx);
+    private final TransactionRepository tr = PersistenceContext.repositories().transactions(TxCtx);
     private final CafeteriaUserRepository cafer = PersistenceContext.repositories().cafeteriaUsers(TxCtx);
     private Transaction t;
     private CafeteriaUser user;

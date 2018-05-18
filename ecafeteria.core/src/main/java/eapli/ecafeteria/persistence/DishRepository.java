@@ -6,6 +6,7 @@ import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.dishes.DishType;
 import eapli.framework.domain.Designation;
 import eapli.framework.persistence.repositories.DataRepository;
+import java.util.Calendar;
 
 /**
  *
@@ -16,4 +17,6 @@ public interface DishRepository extends DataRepository<Dish, Designation> {
 	Optional<Dish> findByName(Designation name);
         
         Iterable<Dish> findByDishType(DishType dishtype);
+        
+        Iterable<Dish> findServedDishesBetween(Calendar initialDate,Calendar finalDate);
 }

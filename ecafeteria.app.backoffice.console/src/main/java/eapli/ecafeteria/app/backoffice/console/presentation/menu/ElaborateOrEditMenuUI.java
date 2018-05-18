@@ -83,7 +83,7 @@ public class ElaborateOrEditMenuUI extends AbstractUI {
         Menu menu;
         Calendar initialDate, endDate;
         do {
-            System.out.println("All dates are in dd-MM-yyy format.");
+            System.out.println("All dates are in dd-MM-yyyy format.");
             initialDate = Console.readCalendar("Please enter the initial date:");
             endDate = Console.readCalendar("Please enter the end date:");
             /**

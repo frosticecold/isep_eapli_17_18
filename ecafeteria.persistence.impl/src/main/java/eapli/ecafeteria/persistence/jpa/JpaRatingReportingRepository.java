@@ -33,13 +33,13 @@ public class JpaRatingReportingRepository extends CafeteriaJpaRepositoryBase imp
 
     public int countRatingReply(CafeteriaUser user) {
         final Query q;
-        q = entityManager().createQuery("SELECT COUNT(r) FROM Rating r"
-                + "WHERE r.booking =: booking"
-                + "AND r.cafeteriaUser =: cafeteriaUser"
-                + "AND r.reply =: reply");
+        q = entityManager().createQuery("SELECT r "
+                + "FROM Rating r "
+                + "WHERE r.user =:cafeteriaUser "
+                + "AND r.reply =:reply");
 
-        q.setParameter("CafeteriaUser", user);
-        return (int) q.getSingleResult();
+        q.setParameter("cafeteriaUser", user).setParameter("reply", Rating.REPLY_BY_DEFAULT);
+        return q.getResultList().size();
     }
 
 }

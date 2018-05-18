@@ -12,7 +12,6 @@ import eapli.ecafeteria.persistence.MealRepository;
 import eapli.framework.domain.Designation;
 import java.util.*;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 /**
@@ -78,7 +77,6 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         q.setParameter("cal", cal);
         return q.getResultList();
     }
-
-
+    
 
 }

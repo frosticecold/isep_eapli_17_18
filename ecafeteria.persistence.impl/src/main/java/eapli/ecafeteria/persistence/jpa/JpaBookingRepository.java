@@ -166,15 +166,32 @@ public class JpaBookingRepository
      */
     @Override
     public Iterable<Booking> findBookedBookings() {
-        
+
         BookingState state = new BookingState();
-        
+
         String query = "SELECT e FROM Booking e WHERE bookingstate = :bs";
 
         final Query q = entityManager().createQuery(query, Booking.class);
 
-        q.setParameter("bs",state.actualState().toString());
+        q.setParameter("bs", state.actualState().toString());
 
         return q.getResultList();
+    }
+    
+    /**
+     * Counts all bookings with Booked State
+     */
+    @Override
+    public Long countBookedBookings() {
+        
+        BookingState state = new BookingState();
+        
+        String query = "SELECT COUNT(e) FROM Booking e WHERE bookingstate = :bs";
+        
+        final Query q = entityManager().createQuery(query, Long.class);
+        
+        q.setParameter("bs",state.actualState().toString());
+        
+        return (Long)q.getSingleResult();
     }
 }

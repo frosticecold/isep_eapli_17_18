@@ -13,4 +13,8 @@ import eapli.framework.application.Controller;
  */
 public class CopyMenuController implements Controller{
     
+    public CopyMenuController(){
+        
+    }
+    
 }
