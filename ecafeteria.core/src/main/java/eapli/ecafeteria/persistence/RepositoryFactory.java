@@ -162,4 +162,8 @@ public interface RepositoryFactory {
     ComplaintRepository complaints();
 
     AllergenProfileRepository allergenProfiles();
+    
+    AlertRepositoryBookings alertRepositoryBookings();
+   
+    AlertRepositoryLimits alertRepositoryLimits();
 }
