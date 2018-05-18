@@ -8,6 +8,7 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
+import eapli.ecafeteria.application.booking.WatchDogAlert;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.BookingState;
@@ -19,23 +20,26 @@ import eapli.framework.util.Console;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import javax.persistence.NoResultException;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class BookingMealUI extends CafeteriaUserBaseUI {
+public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
 
     private final BookingMealController controller = new BookingMealController();
-
+    private final WatchDogAlert watchDog = new WatchDogAlert();
+    
     protected CafeteriaUserBaseController controller() {
         return new CafeteriaUserBaseController();
     }
 
     @Override
     protected boolean doShow() {
-
+        controller.addObserver(watchDog);
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
         //====================================lIST MEAL============================================
@@ -185,6 +189,11 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
     @Override
     public String headline() {
         return super.headline();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
