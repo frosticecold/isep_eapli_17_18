@@ -183,6 +183,7 @@ public interface RepositoryFactory {
      * @return 
      */
     ReasonRepository reasons(TransactionalContext autoTx);
+
     
     AlertRepositoryBookings alertRepositoryBookings();
    

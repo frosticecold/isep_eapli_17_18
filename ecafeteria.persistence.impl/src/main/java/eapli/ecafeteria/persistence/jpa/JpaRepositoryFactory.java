@@ -226,4 +226,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public AlertRepositoryLimits alertRepositoryLimits() {
         return new JPAAlertRepositoryLimits();
     }
+
+    @Override
+    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
