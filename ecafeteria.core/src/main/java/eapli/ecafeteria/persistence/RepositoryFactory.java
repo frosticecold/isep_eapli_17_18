@@ -110,6 +110,8 @@ public interface RepositoryFactory {
      * @return
      */
     POSRepository posRepository();
+    
+    AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx);
 
   /**
      * DeliveryMealSession Repo

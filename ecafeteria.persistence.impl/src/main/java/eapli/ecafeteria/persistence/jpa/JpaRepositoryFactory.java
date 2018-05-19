@@ -240,5 +240,10 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public BalanceLimitsRepository balanceLimits() {
         return new JPABalanceLimitsRepository();
+    }   
+        
+    @Override
+    public AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx) {
+        return new JpaAutoTxPOSRepository(autoTx);
     }
 }

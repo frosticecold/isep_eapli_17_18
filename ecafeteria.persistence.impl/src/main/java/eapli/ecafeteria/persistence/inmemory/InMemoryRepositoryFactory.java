@@ -226,7 +226,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+<<<<<<< HEAD
     public BalanceLimitsRepository balanceLimits() {
+=======
+    public AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx) {
+>>>>>>> origin/master
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

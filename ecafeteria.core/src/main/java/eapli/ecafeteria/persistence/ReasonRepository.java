@@ -21,6 +21,6 @@ public interface ReasonRepository extends DataRepository<Reason, Long> {
      * @param user
      * @return 
      */
-    Optional<Reason> findReasonByCafeteriaUser(final SystemUser user);
+    Optional<Reason> findReasonBySystemUser(final SystemUser user);
 
 }
