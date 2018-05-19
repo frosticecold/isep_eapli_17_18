@@ -50,16 +50,6 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     @OneToOne(cascade = CascadeType.ALL)
     private BalanceLimits balanceLimits;
 
-    public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber, BalanceLimits balanceLimits) {
-        if (mecanographicNumber == null || user == null) {
-            throw new IllegalArgumentException();
-        }
-        this.systemUser = user;
-        this.mecanographicNumber = mecanographicNumber;
-        this.currentBalance = new Balance();
-        this.balanceLimits = balanceLimits;
-    }
-
     public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber) {
         if (mecanographicNumber == null || user == null) {
             throw new IllegalArgumentException();
@@ -67,7 +57,7 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
         this.systemUser = user;
         this.mecanographicNumber = mecanographicNumber;
         this.currentBalance = new Balance();
-        this.balanceLimits = new BalanceLimits();
+        this.balanceLimits = new BalanceLimits(this);
     }
 
     protected CafeteriaUser() {

@@ -6,10 +6,13 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.cafeteriauser.BalanceLimits;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.persistence.BalanceLimitsRepository;
+import eapli.framework.domain.money.Money;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import javax.persistence.Query;
 
 /**
  *
@@ -22,6 +25,16 @@ public class JPABalanceLimitsRepository extends CafeteriaJpaRepositoryBase<Balan
         final Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         return matchOne("e.id=:id", params);
+    }
+
+    @Override
+    public Optional<Money> findUserBalanceLimits(MecanographicNumber number) {
+        final Query q;
+        q = entityManager().createQuery("SELECT limits FROM BalanceLimits limits" +
+                                       "WHERE limits.mealty=:mealType" +
+                                       "AND meal.date=:date", Money.class);
+        q.setParameter("number", number);
+        return (Optional<Money>) q.getSingleResult();
     }
     
 }

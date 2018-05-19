@@ -12,6 +12,7 @@ import eapli.framework.domain.money.Money;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -27,13 +28,21 @@ public class BalanceLimits implements Serializable {
     
     
     private Money balanceLimit;
+    
+    @OneToOne
+    private CafeteriaUser user;
     /**
      * Constructor
      */
     protected BalanceLimits() {
         balanceLimit = Money.euros(0);
     }
-
+    
+    protected BalanceLimits(CafeteriaUser user){
+        this.user = user;
+        this.balanceLimit = Money.euros(0);
+    }
+    
     /**
      * Define the limits of the user's balance to the amount at which they
      * should be warned for going below the limit
