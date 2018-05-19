@@ -30,7 +30,7 @@ public class JpaReasonsRepository extends JpaAutoTxRepository<Reason, Long> impl
     }
 
     @Override
-    public Optional<Reason> findReasonByCafeteriaUser(SystemUser user) {
+    public Optional<Reason> findReasonBySystemUser(SystemUser user) {
         final Map<String, Object> params = new HashMap<>();
         params.put("user_arg", user);
         return matchOne("e.user=:user_arg", params);

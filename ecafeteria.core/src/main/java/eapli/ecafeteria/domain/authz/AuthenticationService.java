@@ -35,9 +35,12 @@ public class AuthenticationService {
         if (!user.isPresent()) {
             return Optional.empty();
         }
+        /**
+         * Case the user is not active, throw a LoginException
+         */
         if (!user.get().isActive()) {
             ReasonRepository reasonrepo = PersistenceContext.repositories().reasons();
-            Reason why = reasonrepo.findReasonByCafeteriaUser(user.get()).get();
+            Reason why = reasonrepo.findReasonBySystemUser(user.get()).get();
             throw new LoginException("User is deactivated:" + why.getReasonType() + "\nComment: " + why.getComment());
         }
         if (user.get().passwordMatches(pass) && user.get().isActive()) {

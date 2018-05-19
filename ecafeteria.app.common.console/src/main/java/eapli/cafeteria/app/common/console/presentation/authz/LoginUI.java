@@ -58,6 +58,10 @@ public class LoginUI extends AbstractUI {
             }
             System.out.println("Sorry, we are unable to authenticate you. Please contact your system admnistrator.");
             return false;
+            /**
+             * Case the user is deactivated catch the exception and print the
+             * message
+             */
         } catch (LoginException ex) {
             System.out.println(ex.getMessage());
         }

@@ -65,6 +65,14 @@ public class Balance implements ValueObject, Serializable{
         return currentBalance;
     }
 
+    /**
+     * Checks if user balance is within the limits defined by him
+     * @param limits
+     * @return 
+     */
+    public boolean balanceIsWithinUserLimits(double limits){
+        return currentBalance.amount() > limits;
+    }
     
     @Override
     public String toString() {

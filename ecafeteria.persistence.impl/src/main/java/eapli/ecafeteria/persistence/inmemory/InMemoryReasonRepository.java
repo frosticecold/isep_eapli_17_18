@@ -23,7 +23,7 @@ public class InMemoryReasonRepository extends InMemoryRepository<Reason, Long> i
     }
 
     @Override
-    public Optional<Reason> findReasonByCafeteriaUser(SystemUser user) {
+    public Optional<Reason> findReasonBySystemUser(SystemUser user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

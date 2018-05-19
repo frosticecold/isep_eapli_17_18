@@ -18,23 +18,22 @@ import javax.persistence.Query;
  *
  * @author Rúben Santos
  */
-public class JPABalanceLimitsRepository extends CafeteriaJpaRepositoryBase<BalanceLimits, Long> implements BalanceLimitsRepository{
-    
+public class JPABalanceLimitsRepository extends CafeteriaJpaRepositoryBase<BalanceLimits, Long> implements BalanceLimitsRepository {
+
     @Override
-    public Optional<BalanceLimits> findOne(Long id){
+    public Optional<BalanceLimits> findOne(Long id) {
         final Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         return matchOne("e.id=:id", params);
     }
 
     @Override
-    public Optional<Money> findUserBalanceLimits(MecanographicNumber number) {
+    public Optional<BalanceLimits> findUserBalanceLimits(MecanographicNumber number) {
         final Query q;
-        q = entityManager().createQuery("SELECT limits FROM BalanceLimits limits" +
-                                       "WHERE limits.mealty=:mealType" +
-                                       "AND meal.date=:date", Money.class);
+        q = entityManager().createQuery("SELECT e FROM BalanceLimits"
+                + "WHERE e.user.number=:number", BalanceLimits.class);
         q.setParameter("number", number);
-        return (Optional<Money>) q.getSingleResult();
+        return (Optional<BalanceLimits>) q.getSingleResult();
     }
-    
+
 }
