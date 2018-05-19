@@ -9,91 +9,110 @@ import javax.persistence.*;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-
 //Entity that represents a session start in a point of sale
-
 @Entity
-public class POS implements AggregateRoot<Long>, Serializable{
+public class POS implements AggregateRoot<Long>, Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="IDPOS")
-    private long idPOS;  
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDPOS")
+    private long id;
+
     private boolean open;
     private long identification;
     @Transient
     private SystemUser cashier;
-    
+
     @OneToOne
     private DeliveryMealSession session;
 
-    protected POS () {
+    protected POS() {
         //for ORM only
     }
-    
-    public POS (SystemUser posUser) {
-        if(posUser != null) this.cashier = posUser;
+
+    public POS(SystemUser posUser) {
+        if (posUser != null) {
+            this.cashier = posUser;
+        }
         this.open = false;
         this.identification = Long.valueOf("1");
     }
 
     /**
      * Compares this object with another
+     *
      * @param other
-     * @return 
+     * @return
      */
     @Override
     public boolean sameAs(Object other) {
-        
+
         boolean finalResult = false;
-        
-        if(other.getClass() == this.getClass()) { //check if "other" is a POS entity aswell
-           //checks if it has same ID (only atribute of entity that will be unique)
-           POS p = (POS)other;
-           if(p.id() == this.id()) {
-               finalResult = true;
-           }
+
+        if (other.getClass() == this.getClass()) { //check if "other" is a POS entity aswell
+            //checks if it has same ID (only atribute of entity that will be unique)
+            POS p = (POS) other;
+            if (p.id() == this.id()) {
+                finalResult = true;
+            }
         }
-        
+
         return finalResult;
     }
 
     /**
      * Return the id of POS
-     * @return 
+     *
+     * @return
      */
     @Override
     public Long id() {
-       return this.idPOS;
+        return this.id;
     }
 
     /**
      * Check if pos is closed
-     * @return 
+     *
+     * @return
      */
-    public boolean isClosed() {
+    public boolean checkState() {
         return this.open;
     }
 
     /**
-     * change state of POS
+     * open pos
      */
-    public void changeState() {
-        if(this.open)this.open = false;
-        else this.open = true;
+    public void openPOS() {
+
+        this.open = true;
     }
-        
+
+    /**
+     * close pos
+     */
+    public void closePOS() {
+
+        this.open = false;
+    }
+
     /**
      * Return the cashier
-     * @return 
-     */    
+     *
+     * @return
+     */
     public SystemUser cashier() {
         return this.cashier;
     }
-    
-    private void openSession() {
-        
-        //this.session = new DeliveryMealSession
+
+    /**
+     * Creates a new session and returns it
+     *
+     * @return
+     */
+    public DeliveryMealSession openSession() {
+
+        this.session = new DeliveryMealSession(this);
+
+        return this.session;
     }
- }
+}

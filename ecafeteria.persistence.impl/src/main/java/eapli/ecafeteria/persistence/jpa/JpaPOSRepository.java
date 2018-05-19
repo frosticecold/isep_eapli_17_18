@@ -24,7 +24,7 @@ class JpaPOSRepository extends CafeteriaJpaRepositoryBase<POS, Long> implements 
 
     @Override
     public Optional<POS> findOne(Long id) {
-        return matchOne("e.IDPOS=id","id",id);
+        return matchOne("e.id=:id","id",id);
     }
 
     @Override
