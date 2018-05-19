@@ -25,7 +25,7 @@ import eapli.framework.util.Console;
  * @author Fernando
  */
 @SuppressWarnings("squid:S106")
-public class DeactivateUserUI extends AbstractUI {
+    public class DeactivateUserUI extends AbstractUI {
 
     private final DeactivateUserController theController = new DeactivateUserController();
 
