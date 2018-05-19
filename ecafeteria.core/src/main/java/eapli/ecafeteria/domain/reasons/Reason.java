@@ -49,6 +49,9 @@ public class Reason implements AggregateRoot<SystemUser>, Serializable {
     }
 
     public Reason(final SystemUser user, final ReasonType reasonType, final String comment) {
+        if (user == null || reasonType == null || comment == null) {
+            throw new IllegalArgumentException("Arguments cannot be null.");
+        }
         this.user = user;
         this.reason_type = reasonType;
         this.comment = comment;
