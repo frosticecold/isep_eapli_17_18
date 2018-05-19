@@ -60,7 +60,7 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         params.put("menu", menu);
         params.put("day", day);
         return match("e.menu=:menu AND e.date =:day", params);
-    }
+    }   
 
     public int findMealByMenuAndDate(Menu m) {
         final Query q;

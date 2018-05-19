@@ -29,8 +29,8 @@ public class WatchDogAlert extends Observable implements Observer{
     
     private boolean verifyBalanceLimits(Booking booking){
         CafeteriaUser user = booking.getCafeteriauser();
-        MecanographicNumber number = user.mecanographicNumber();
-        userService.findCafeteriaUserByMecNumber(number.toString());
+//        MecanographicNumber number = user.mecanographicNumber();
+//        userService.findCafeteriaUserByMecNumber(number.toString());
         return true;
     }
     
