@@ -53,11 +53,11 @@ public class RegisterComplaintUI extends AbstractUI{
                 }
             }
             
-            while(option1!=1&&option!=2){
+            while(option1!=1&&option1!=2){
                 System.out.println("Add dish?\n");
                 System.out.println("1.Yes\n");
                 System.out.println("2.No\n");
-                option = Console.readInteger("");
+                option1 = Console.readInteger("");
             }
             
             if(option1 == 1){

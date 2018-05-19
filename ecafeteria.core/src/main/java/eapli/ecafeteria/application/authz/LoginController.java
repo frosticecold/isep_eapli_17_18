@@ -5,6 +5,7 @@ import eapli.ecafeteria.domain.authz.AuthenticationService;
 import eapli.ecafeteria.domain.authz.Password;
 import eapli.ecafeteria.domain.authz.UserSession;
 import eapli.ecafeteria.domain.authz.Username;
+import eapli.ecafeteria.domain.reasons.LoginException;
 import eapli.framework.application.Controller;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class LoginController implements Controller {
      * @param password
      * @param onlyWithThis
      */
-    public boolean login(String userName, String password, ActionRight... onlyWithThis) {
+    public boolean login(String userName, String password, ActionRight... onlyWithThis) throws LoginException {
         try {
             final Optional<UserSession> newSession = authenticationService.authenticate(new Username(userName),
                     new Password(password), onlyWithThis);

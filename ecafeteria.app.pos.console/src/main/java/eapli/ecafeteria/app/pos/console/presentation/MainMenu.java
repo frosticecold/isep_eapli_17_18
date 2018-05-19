@@ -54,6 +54,10 @@ public class MainMenu extends AbstractUI {
     private static final int CLOSE_POS_OPTION = 5;
     private static final int CLOSE_POS_SUBMENU_OPTION = 1;
     
+    //REGISTER COMPLAINT
+    private static final int REGISTER_COMPLAINT_OPTION = 6;
+    private static final int REGISTER_COMPLAINT_SUBMENU_OPTION =1;
+    
     @Override
     public boolean show() {
         drawFormTitle();
@@ -138,6 +142,13 @@ public class MainMenu extends AbstractUI {
             System.out.println("Can't close POS. Try another time!");
         }
         
+        //======================Register Complaint=============
+        if (AuthorizationService.session().authenticatedUser().isAuthorizedTo(ActionRight.SALE)) {
+            final Menu registerComplaint = buildRegisterComplaintMenu();
+            mainMenu.add(new SubMenu(REGISTER_COMPLAINT_OPTION , registerComplaint,
+                    new ShowVerticalSubMenuAction(registerComplaint)));
+        }
+        
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.add(VerticalSeparator.separator());
         }
@@ -146,7 +157,17 @@ public class MainMenu extends AbstractUI {
 
         return mainMenu;
     }
+    
+    private Menu buildRegisterComplaintMenu(){
+        final Menu menu = new Menu("Complaints >");
 
+        menu.add(new MenuItem(REGISTER_COMPLAINT_SUBMENU_OPTION, "Rgister Complaint", () -> new RegisterComplaintUI().show()));
+        menu.add(new MenuItem(EXIT_OPTION, "Return", new ReturnAction()));
+
+        return menu;
+
+    }
+    
     private Menu buildDeliveryMenu() {
         final Menu menu = new Menu("Deliveries >");
 
