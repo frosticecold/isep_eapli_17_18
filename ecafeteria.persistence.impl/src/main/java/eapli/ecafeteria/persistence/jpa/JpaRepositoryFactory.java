@@ -183,15 +183,38 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     /**
-     * return JpaComplaintRepository 
+     * return JpaComplaintRepository
+     *
      * @return
      */
     @Override
     public ComplaintRepository complaints() {
         return new JpaComplaintRepository();
     }
+
     public AllergenProfileRepository allergenProfiles() {
-       return new JpaAllergenProfileRepository();
+        return new JpaAllergenProfileRepository();
+    }
+
+    /**
+     * Returns a JpaReasonsRepository
+     *
+     * @return
+     */
+    @Override
+    public ReasonRepository reasons() {
+        return new JpaReasonsRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    /**
+     * Returns a JPAReasonsRepository with TransactionalContext
+     *
+     * @param autoTx
+     * @return
+     */
+    @Override
+    public ReasonRepository reasons(TransactionalContext autoTx) {
+        return new JpaReasonsRepository(autoTx);
     }
 
     @Override
@@ -202,5 +225,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public AlertRepositoryLimits alertRepositoryLimits() {
         return new JPAAlertRepositoryLimits();
+    }
+
+    @Override
+    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
