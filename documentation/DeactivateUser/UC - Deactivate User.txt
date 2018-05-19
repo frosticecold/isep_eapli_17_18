@@ -1,0 +1,40 @@
+title UC Deactivate User
+User->DeactivateUserUI:show()
+DeactivateUserUI->DeactivateUserController:create
+DeactivateUserController->PersistenceContext:tx=PersistenceContext.repositories().buildTransactionalContext();
+PersistenceContext->RepositoryFactory:buildTransactionalContext()
+RepositoryFactory->TransactionalContext:create
+DeactivateUserController->PersistenceContext:userRepository=PersistenceContext.repositories().users(tx)
+PersistenceContext->RepositoryFactory:users(tx)
+RepositoryFactory->UserRepository:create
+DeactivateUserController->PersistenceContext:reasonRepository=PersistenceContext.repositories().reasons(tx)
+PersistenceContext->RepositoryFactory:reasons(tx)
+RepositoryFactory->ReasonRepository:create
+
+DeactivateUserUI->DeactivateUserController:list_users=activeUsers()
+DeactivateUserController->AuthorizationService:ensurePermissionOfLoggedInUser(admin)
+DeactivateUserController->UserRepository:findAll()
+DeactivateUserUI->DeactivateUserUI:Show users
+DeactivateUserUI-->User:Ask for what user to deactivate
+User->DeactivateUserUI:selects user
+DeactivateUserUI->DeactivateUserController:getAllReasons()
+DeactivateUserController->AuthorizationService:ensurePermissionOfLoggedInUser(admin)
+DeactivateUserController->ReasonType:values()
+
+DeactivateUserUI->DeactivateUserUI:show Reasons
+DeactivateUserUI-->User:Ask for what reason
+User->DeactivateUserUI:Select reason
+DeactivateUserUI-->User:Ask for a comment
+User->DeactivateUserUI:insert comment
+
+DeactivateUserUI->DeactivateUserController:deactivateUser(user,reason,comment)
+DeactivateUserController->AuthorizationService:ensurePermissionOfLoggedInUser(Admin)
+DeactivateUserController->Reason:create(user,reason,comment)
+DeactivateUserController->SystemUser:deactivate(now)
+DeactivateUserController->TransactionalContext:beginTransaction()
+DeactivateUserController->UserRepository:save(user)
+DeactivateUserController->ReasonRepository:save(reason)
+DeactivateUserController->TransactionalContext:commit()
+DeactivateUserController-->DeactivateUserUI:user
+DeactivateUserUI-->User:run again?
+User->DeactivateUserUI:Answer
