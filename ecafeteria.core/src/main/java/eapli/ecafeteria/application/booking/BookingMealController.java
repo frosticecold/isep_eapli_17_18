@@ -184,14 +184,15 @@ public class BookingMealController extends Observable implements Controller {
 
         /* persist here */
         atbr.saveBooking(newBooking);
-
-        attr.saveTransaction(new Transaction(user.get(), TransactionType.DEBIT, mealPrice));
+        Transaction t = new Transaction(user.get(), TransactionType.DEBIT, mealPrice);
+        t.movement();
+        attr.saveTransaction(t);
 
         cafer.save(user.get());
         TxCtx.commit();
 
         this.notifyObservers(newBooking);
-        
+
         return true;
     }
 
@@ -233,14 +234,14 @@ public class BookingMealController extends Observable implements Controller {
         List with all of the matched allergens
          */
         List<Alergen> allergensList = new ArrayList<>();
-        
+
         /*
         Get repositories
-        */
+         */
         RepositoryFactory factory = PersistenceContext.repositories();
         final AllergenProfileRepository alergenPlanRepo = factory.allergenProfiles();
-        final CafeteriaUserRepository userRepo          = factory.cafeteriaUsers();
-        
+        final CafeteriaUserRepository userRepo = factory.cafeteriaUsers();
+
         /**
          * Get current user
          */

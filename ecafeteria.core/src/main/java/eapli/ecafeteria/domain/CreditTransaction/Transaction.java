@@ -66,7 +66,6 @@ public class Transaction extends Observable implements Serializable {
         this.money = money;
         this.date = DateTime.now();
         this.systemUser = AuthorizationService.session().authenticatedUser();
-        this.setChanged();
     }
 
     protected Transaction() {

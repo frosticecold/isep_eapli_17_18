@@ -140,6 +140,7 @@ public class CancelBookingController {
         selectedBooking.getBookingState().changeToCanceled();
         // Add cancelation movement
         Transaction transaction = new Transaction(user, TransactionType.CANCELATION, refund);
+        transaction.movement();
         
         // Persist
         final TransactionalContext TxCtx 

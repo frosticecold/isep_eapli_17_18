@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.application.pos;
 
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserService;
@@ -38,6 +33,13 @@ public class ChargeCardController implements Controller, Observer {
     //movements to a given Cafeteria User
     private ChargeCreditsEvent observer = new ChargeCreditsEvent();
 
+    /**
+     * this method will take a given mechanographic number and try to find if
+     * the user is on the the database and return his identification as well his
+     * current balance as a string<p>
+     * @param mecanographicNumber is the number of a cafeteria user
+     * @return name of the cafeteria user and his current balance as a string
+     */
     public String findCafeteriaUserByMecanographicNumber(String mecanographicNumber) {
         this.mecNumber = mecanographicNumber;
         Optional<CafeteriaUser> user = service.findCafeteriaUserByMecNumber(mecanographicNumber);
@@ -45,24 +47,34 @@ public class ChargeCardController implements Controller, Observer {
         return this.user.cafeteriaUserNameAndCurrentBalance();
     }
 
+    /**
+     * This method will create the movement transaction of a given ammount of
+     * credits to a cafeteria user. In this case the charge movement.
+     *<p>
+     * @param tempCredits ammount of money of the movement
+     * @return true as for the succes of the operation false in case of error
+     */
     public boolean createMovementCharging(double tempCredits) {
         Money credits = new Money(tempCredits, Currency.getInstance("EUR"));
-
         this.t = new Transaction(this.user, TransactionType.RECHARGE, credits);
-
         return t != null;
     }
 
     public void saveMovementChargingTransaction() throws DataConcurrencyException, DataIntegrityViolationException {
+        //add the controller as an observer to the event of charge the cafeteria user
+        //to then be notified to check if an error occured
         observer.addObserver(this);
 
+        //we will need to overwrite the current t object, that is to get an updated object of the same
+        //in case of is needed to delete this ttransaction if an error as occured
         t = this.tr.saveTransaction(this.t);
         if (this.t == null) {
             throw new IllegalArgumentException("Error Saving transaction");
         }
+        //add an observer to transaction to then update the cafeteria user balance
         t.addObserver(observer);
         //because there is need to run the update method in the observed class
-        //and the changed state only occurs in the constructor we will need to update his state to run the update in the observers
+        //we will change his state 
         t.alterState();
 
         t.notifyObservers(user);
