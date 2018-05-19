@@ -112,7 +112,7 @@ public class POS implements AggregateRoot<Long>, Serializable {
     public DeliveryMealSession openSession() {
 
         this.session = new DeliveryMealSession(this);
-
+        
         return this.session;
     }
 }

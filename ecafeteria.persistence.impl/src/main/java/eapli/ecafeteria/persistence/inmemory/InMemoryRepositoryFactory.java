@@ -225,4 +225,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
