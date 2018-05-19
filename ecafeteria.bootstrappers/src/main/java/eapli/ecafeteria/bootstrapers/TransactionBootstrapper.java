@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class TransactionBootstrapper implements Action{
 
     private final TransactionRepository transactionRepository = 
-            PersistenceContext.repositories().transactions();
+            PersistenceContext.repositories().movementTransactions();
     @Override
     public boolean execute() {
         final CafeteriaUserRepository repo = PersistenceContext.repositories().cafeteriaUsers();

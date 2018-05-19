@@ -39,9 +39,9 @@ public class ShowTransactionsController {
     }
     
     /**
-     * Shows transactions
+     * Shows movementTransactions
      * 
-     * @return list with all transactions of the user
+     * @return list with all movementTransactions of the user
      */
     public List<TransactionDTO> showTransactions(){
         return list;

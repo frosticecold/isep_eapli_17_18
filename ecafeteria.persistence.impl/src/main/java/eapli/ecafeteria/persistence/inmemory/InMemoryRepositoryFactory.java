@@ -72,7 +72,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public TransactionalContext buildTransactionalContext() {
-        // in memory does not support transactions...
+        // in memory does not support movementTransactions...
         return null;
     }
 
@@ -137,7 +137,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public TransactionRepository transactions() {
+    public TransactionRepository movementTransactions() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -177,7 +177,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public TransactionRepository transactions(TransactionalContext autoTx) {
+    public TransactionRepository movementTransaction(TransactionalContext autoTx) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

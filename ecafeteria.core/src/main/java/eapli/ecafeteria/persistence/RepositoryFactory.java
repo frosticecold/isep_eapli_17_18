@@ -137,9 +137,9 @@ public interface RepositoryFactory {
 
     AlergenRepository alergens();
     
-    TransactionRepository transactions();
+    TransactionRepository movementTransactions();
 
-    TransactionRepository transactions(TransactionalContext autoTx);
+    TransactionRepository movementTransaction(TransactionalContext autoTx);
     
     TransactionReportingRepository transactionsReporting();
     

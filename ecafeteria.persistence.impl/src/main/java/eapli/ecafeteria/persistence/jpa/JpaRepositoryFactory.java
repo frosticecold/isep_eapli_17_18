@@ -138,12 +138,12 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public JpaTransactionRepository transactions(TransactionalContext autoTx) {
+    public JpaTransactionRepository movementTransaction(TransactionalContext autoTx) {
         return new JpaTransactionRepository(autoTx);
     }
 
     @Override
-    public JpaTransactionRepository transactions() {
+    public JpaTransactionRepository movementTransactions() {
         return new JpaTransactionRepository(Application.settings().getPersistenceUnitName());
     }
     
