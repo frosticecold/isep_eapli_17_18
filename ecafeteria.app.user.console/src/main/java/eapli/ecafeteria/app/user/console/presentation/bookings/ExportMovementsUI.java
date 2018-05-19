@@ -39,7 +39,7 @@ public class ExportMovementsUI extends CafeteriaUserBaseUI {
 
         try {
             if (controller.exportMovements(formats[option - 1], startDate, endDate)) {
-                System.out.println("»»» Movements were exported successfully.");
+                System.out.println("»»» Movements were successfully exported to " + formats[option-1].name() + ".");
                 return true;
             } else {
                 System.out.println("»»» Could not export movements!");

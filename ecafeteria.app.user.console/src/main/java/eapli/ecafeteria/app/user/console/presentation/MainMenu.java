@@ -132,7 +132,7 @@ class MainMenu extends CafeteriaUserBaseUI {
         menu.add(new MenuItem(CHECK_BOOKINGS, "Check Bookings of Current User", () -> new CheckBookingsByUserUI().show()));
         menu.add(new MenuItem(CONSULT_MEAL_RATING, "consult meal rating", () -> new ConsultMealRatingUI().show()));
         menu.add(new MenuItem(VIEW_CALORIC_CONSUMPTION,"View caloric consumption", () -> new ViewCaloricConsumptionUI().show()));
-        menu.add(new MenuItem(EXPORT,"Export", () -> new ExportMovementsUI().show()));
+        menu.add(new MenuItem(EXPORT,"Export Movements", () -> new ExportMovementsUI().show()));
         
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         return menu;
