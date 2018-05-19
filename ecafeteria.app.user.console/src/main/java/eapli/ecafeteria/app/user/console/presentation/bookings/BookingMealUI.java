@@ -32,7 +32,8 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
 
     private final BookingMealController controller = new BookingMealController();
     private final WatchDogAlert watchDog = new WatchDogAlert();
-    
+    private boolean limitAlert = true;
+
     protected CafeteriaUserBaseController controller() {
         return new CafeteriaUserBaseController();
     }
@@ -40,6 +41,7 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
     @Override
     protected boolean doShow() {
         controller.addObserver(watchDog);
+        watchDog.addObserver(this);
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
         //====================================lIST MEAL============================================
@@ -126,9 +128,9 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
         @autor Rui Almeida <1160818>
          */
         int option2 = 1;
-        
+
         try {
-            
+
             //Matches allergens between the dish and the user
             List<Alergen> matchedAllergens = controller.matchAllergens(choosedMeal);
 
@@ -145,7 +147,7 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
                     System.out.println((i + 1) + ". " + matchedAllergens.get(i).toString() + ".");
                 }
             }
-            
+
         } catch (NoResultException ex) {
             System.out.println("\n»»» User does not have an allergen profile!");
         }
@@ -163,10 +165,14 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
                 return false;
             } else {
                 try {
-
                     BookingState bookingState = new BookingState();
                     if (controller.confirmBooking(user, cal, bookingState, choosedMeal)) {
                         System.out.println("Success. Booking was created.");
+                        if (!limitAlert) {
+                            System.out.println("===========<<<<<<<<<<ALERT>>>>>>>>>>===========");
+                            System.out.println("|Your balance is under defined balance limits!|");
+                            System.out.println("===============================================");
+                        }
                     } else {
                         //System.out.println("You already booked a meal for this date and this mealtype!");
                         System.out.println("Error occured. Not possible to "
@@ -193,7 +199,9 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!(boolean) arg) {
+            limitAlert = false;
+        }
     }
 
 }
