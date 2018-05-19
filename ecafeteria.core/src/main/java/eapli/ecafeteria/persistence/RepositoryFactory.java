@@ -109,7 +109,7 @@ public interface RepositoryFactory {
      */
     POSRepository posRepository();
 
-    /**
+  /**
      * DeliveryMealSession Repo
      *
      * @return
@@ -133,17 +133,17 @@ public interface RepositoryFactory {
     ExecutionRepository executions();
 
     AlergenRepository alergens();
-    
+
     TransactionRepository movementTransactions();
 
     TransactionRepository movementTransaction(TransactionalContext autoTx);
-    
+
     TransactionReportingRepository transactionsReporting();
-    
-        /**
-    TransactionRepository transactioRepository(TransactionalContext autoTx);
 
     /**
+     * TransactionRepository transactioRepository(TransactionalContext autoTx);
+     *
+     * /**
      * MealMaterialRepositorySession Repo
      *
      * @return
@@ -156,7 +156,6 @@ public interface RepositoryFactory {
      * @return
      */
     AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
-    
 
     AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
 
@@ -180,12 +179,11 @@ public interface RepositoryFactory {
      *
      * @author Raúl Correia
      * @param autoTx
-     * @return 
+     * @return
      */
     ReasonRepository reasons(TransactionalContext autoTx);
 
-    
     AlertRepositoryBookings alertRepositoryBookings();
-   
+
     AlertRepositoryLimits alertRepositoryLimits();
 }
