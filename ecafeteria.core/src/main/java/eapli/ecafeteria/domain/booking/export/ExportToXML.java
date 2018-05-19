@@ -49,7 +49,7 @@ public class ExportToXML implements ExportStrategy {
         /**
          * Instantiate the transaction repository
          */
-        TransactionRepository transactionRepository = factory.transactioRepository();
+        TransactionRepository transactionRepository = factory.movementTransactions();
         
         /**
          * Instantiate user repository 

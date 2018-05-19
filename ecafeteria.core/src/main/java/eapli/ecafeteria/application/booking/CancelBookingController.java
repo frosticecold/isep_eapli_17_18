@@ -12,11 +12,11 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.persistence.AutoTxBookingRepository;
-import eapli.ecafeteria.persistence.AutoTxTransactionRepository;
 import eapli.ecafeteria.persistence.BookingRepository;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.RepositoryFactory;
+import eapli.ecafeteria.persistence.TransactionRepository;
 import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -144,8 +144,8 @@ public class CancelBookingController {
         // Persist
         final TransactionalContext TxCtx 
                 = PersistenceContext.repositories().buildTransactionalContext();
-        final AutoTxTransactionRepository attr = 
-                PersistenceContext.repositories().autoTxTransactionRepository(TxCtx);
+        final TransactionRepository attr = 
+                PersistenceContext.repositories().movementTransaction(TxCtx);
         final AutoTxBookingRepository atbr = 
                 PersistenceContext.repositories().autoTxBookingRepository(TxCtx);
         final CafeteriaUserRepository cafer = 

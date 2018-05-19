@@ -44,7 +44,7 @@ public class ExportToCSV implements ExportStrategy {
         /**
          * Instantiate the transaction repository
          */
-        TransactionRepository transactionRepository = factory.transactioRepository();
+        TransactionRepository transactionRepository = factory.movementTransactions();
         
         /**
          * Instantiate user repository 
