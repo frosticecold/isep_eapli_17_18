@@ -46,5 +46,7 @@ public class JpaTransactionReportingRepository
         
         return ret;
     }
+    
+       
 
 }
