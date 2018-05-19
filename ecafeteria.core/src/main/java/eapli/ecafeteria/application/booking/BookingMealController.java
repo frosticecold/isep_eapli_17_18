@@ -190,7 +190,8 @@ public class BookingMealController extends Observable implements Controller {
 
         cafer.save(user.get());
         TxCtx.commit();
-
+        
+        setChanged();
         this.notifyObservers(newBooking);
 
         return true;

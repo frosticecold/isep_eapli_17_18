@@ -56,6 +56,8 @@ public interface RepositoryFactory {
      */
     BalanceRepository balance();
 
+    BalanceLimitsRepository balanceLimits();
+    
     /**
      *
      * @param autoTx the transactional context to enroll

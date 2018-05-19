@@ -9,6 +9,7 @@ import eapli.framework.domain.ddd.ValueObject;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import eapli.framework.domain.money.Money;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class BalanceLimits implements Serializable {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
     
-    
+    @Column(name = "limit")
     private Money balanceLimit;
     
     @OneToOne
