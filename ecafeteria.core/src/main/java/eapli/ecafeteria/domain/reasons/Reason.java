@@ -58,6 +58,10 @@ public class Reason implements AggregateRoot<SystemUser>, Serializable {
         return comment;
     }
 
+    public ReasonType getReasonType() {
+        return reason_type;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         if (!(other instanceof Reason)) {
