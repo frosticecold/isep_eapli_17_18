@@ -40,7 +40,7 @@ public class DeliveryRegistry implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name = "SESSION")
     private DeliveryMealSession session;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Calendar dateMade;
 
     protected DeliveryRegistry() {
@@ -79,6 +79,16 @@ public class DeliveryRegistry implements AggregateRoot<Long>, Serializable {
     }
 
     /**
+     * Returns date of the registry
+     *
+     * @return
+     */
+    public Calendar date() {
+
+        return this.dateMade;
+    }
+
+    /**
      * Return the DeliveryRegistry ID
      *
      * @return
@@ -86,5 +96,19 @@ public class DeliveryRegistry implements AggregateRoot<Long>, Serializable {
     @Override
     public Long id() {
         return this.id;
+    }
+
+    /**
+     * Returns booking
+     */
+    public Booking booking() {
+
+        return this.booking;
+    }
+
+    @Override
+    public String toString() {
+
+        return "ID : " + this.id() + " CLIENT NUMBER : " + this.client.mecanographicNumber() + " BOOKING ID : " + this.booking().getIdBooking();
     }
 }
