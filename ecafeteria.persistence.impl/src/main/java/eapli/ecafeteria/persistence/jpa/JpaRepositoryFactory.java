@@ -138,13 +138,18 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public JpaTransactionRepository transactioRepository(TransactionalContext autoTx) {
+    public JpaTransactionRepository movementTransaction(TransactionalContext autoTx) {
         return new JpaTransactionRepository(autoTx);
     }
 
     @Override
-    public JpaTransactionRepository transactioRepository() {
+    public JpaTransactionRepository movementTransactions() {
         return new JpaTransactionRepository(Application.settings().getPersistenceUnitName());
+    }
+    
+    @Override
+    public JpaTransactionReportingRepository transactionsReporting() {
+        return new JpaTransactionReportingRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
@@ -162,11 +167,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaAutoTxBookingRepository(autoTx);
     }
 
-    @Override
-    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
-        return new JpaAutoTxTransactionRepository(autoTx);
-    }
-
     /**
      * Return JpaDeliveryRegistryRepository
      *
@@ -182,20 +182,68 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JPAUserBalance();
     }
 
-    @Override
-    public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
-        return new JpaTransactionReportingRepository(autoTx);
-    }
-
     /**
-     * return JpaComplaintRepository 
+     * return JpaComplaintRepository
+     *
      * @return
      */
     @Override
     public ComplaintRepository complaints() {
         return new JpaComplaintRepository();
     }
+
     public AllergenProfileRepository allergenProfiles() {
-       return new JpaAllergenProfileRepository();
+        return new JpaAllergenProfileRepository();
+    }
+
+    /**
+     * Returns a JpaReasonsRepository
+     *
+     * @return
+     */
+    @Override
+    public ReasonRepository reasons() {
+        return new JpaReasonsRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    /**
+     * Returns a JPAReasonsRepository with TransactionalContext
+     *
+     * @param autoTx
+     * @return
+     */
+    @Override
+    public ReasonRepository reasons(TransactionalContext autoTx) {
+        return new JpaReasonsRepository(autoTx);
+    }
+
+    @Override
+    public AlertRepositoryBookings alertRepositoryBookings() {
+        return new JPAAltertRepositoryBookings();
+    }
+
+    @Override
+    public AlertRepositoryLimits alertRepositoryLimits() {
+        return new JPAAlertRepositoryLimits();
+    }
+
+    @Override
+    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public BalanceLimitsRepository balanceLimits() {
+        return new JPABalanceLimitsRepository();
+    }   
+        
+    @Override
+    public AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx) {
+        return new JpaAutoTxPOSRepository(autoTx);
     }
 }

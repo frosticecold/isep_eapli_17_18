@@ -8,6 +8,7 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.booking.BookingMealController;
+import eapli.ecafeteria.application.booking.WatchDogAlert;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.BookingState;
@@ -19,15 +20,19 @@ import eapli.framework.util.Console;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import javax.persistence.NoResultException;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class BookingMealUI extends CafeteriaUserBaseUI {
+public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
 
     private final BookingMealController controller = new BookingMealController();
+    private final WatchDogAlert watchDog = new WatchDogAlert();
+    private boolean limitAlert = true;
 
     protected CafeteriaUserBaseController controller() {
         return new CafeteriaUserBaseController();
@@ -35,7 +40,8 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
 
     @Override
     protected boolean doShow() {
-
+        controller.addObserver(watchDog);
+        watchDog.addObserver(this);
         //====================================SAVE DAY============================================
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
         //====================================lIST MEAL============================================
@@ -122,9 +128,9 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
         @autor Rui Almeida <1160818>
          */
         int option2 = 1;
-        
+
         try {
-            
+
             //Matches allergens between the dish and the user
             List<Alergen> matchedAllergens = controller.matchAllergens(choosedMeal);
 
@@ -141,7 +147,7 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
                     System.out.println((i + 1) + ". " + matchedAllergens.get(i).toString() + ".");
                 }
             }
-            
+
         } catch (NoResultException ex) {
             System.out.println("\n»»» User does not have an allergen profile!");
         }
@@ -159,10 +165,14 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
                 return false;
             } else {
                 try {
-
                     BookingState bookingState = new BookingState();
                     if (controller.confirmBooking(user, cal, bookingState, choosedMeal)) {
                         System.out.println("Success. Booking was created.");
+                        if (!limitAlert) {
+                            System.out.println("===========<<<<<<<<<<ALERT>>>>>>>>>>===========");
+                            System.out.println("|Your balance is under defined balance limits!|");
+                            System.out.println("===============================================");
+                        }
                     } else {
                         //System.out.println("You already booked a meal for this date and this mealtype!");
                         System.out.println("Error occured. Not possible to "
@@ -185,6 +195,13 @@ public class BookingMealUI extends CafeteriaUserBaseUI {
     @Override
     public String headline() {
         return super.headline();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (!(boolean) arg) {
+            limitAlert = false;
+        }
     }
 
 }

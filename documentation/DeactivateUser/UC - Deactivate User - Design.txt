@@ -1,0 +1,10 @@
+
+	DESIGN
+	_________
+
+	* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+   	Classes do domínio:  SystemUser,Reason,ReasonType,LoginException
+	UI: LoginUI
+   	Controlador: LoginController
+   	Repository: UserRepository, ReasonRepository, TransactionalContext

@@ -68,7 +68,16 @@ public class RegisterMealDeliveryController extends ViewAvailableMealsController
 
         }
 
-        this.bookingsRepo.findOne(idBooking).get().getBookingState().changeToServed();
+        Booking b = this.bookingsRepo.findOne(idBooking).get();
+
+        b.getBookingState().changeToServed();
+
+        try {
+
+            this.bookingsRepo.save(b);
+        } catch (Exception e) {
+
+        }
 
     }
 

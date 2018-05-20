@@ -19,7 +19,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @Column(name = "ID")
     private Long idSession;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar sessionDate;
 
     @OneToOne
@@ -81,12 +81,12 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
 
         //see what is the hour to set the correct type of session LUNCH OR DINNER
         //check if its lunch
-        if (this.sessionDate.get(Calendar.HOUR_OF_DAY) >= 12 && this.sessionDate.get(Calendar.HOUR_OF_DAY) < 15) {
+        if (this.sessionDate.get(Calendar.HOUR) >= 12 && this.sessionDate.get(Calendar.HOUR) < 15) {
             type = 1;
         }
 
         //check if its dinner
-        if (this.sessionDate.get(Calendar.HOUR_OF_DAY) >= 18 && this.sessionDate.get(Calendar.HOUR_OF_DAY) < 23) {
+        if (this.sessionDate.get(Calendar.HOUR) >= 18 && this.sessionDate.get(Calendar.HOUR) < 23) {
             type = 2;
         }
 

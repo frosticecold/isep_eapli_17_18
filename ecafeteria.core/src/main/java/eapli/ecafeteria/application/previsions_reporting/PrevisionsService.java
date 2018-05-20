@@ -4,9 +4,11 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
+import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -63,11 +65,23 @@ public class PrevisionsService implements Controller {
             meals = PersistenceContext.repositories().meals().findMealsByMenu(menu);
 
             for (j = 0; j < meals.size(); j++) {
-               allMeals.add(meals.get(j));
+                allMeals.add(meals.get(j));
             }
         }
 
         return allMeals;
+    }
+
+    /**
+     * Returns of all delivered meals by date
+     *
+     * @return
+     */
+    public List<DeliveryRegistry> deliveredMealsByDate(Calendar date) {
+
+        List<DeliveryRegistry> meals = PersistenceContext.repositories().deliveryRegistryRepository().deliveredMealsByDate(date);
+
+        return meals;
     }
 
 }

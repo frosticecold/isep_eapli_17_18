@@ -1,0 +1,19 @@
+title: UC Login (User is not active)
+User->LoginUI:doShow()
+LoginUI->LoginController:create
+LoginController->AuthenticationService:create
+User->LoginUI:Input username,password
+LoginUI->LoginController:controller.login(username,password,permission)
+LoginController->Username:u = create(username)
+LoginController->Password:p=create(password)
+LoginController->AuthenticationService:a.authenticate(u,p,actionright)
+AuthenticationService->SystemUser:!u.isActive()
+AuthenticationService->PersistanceContext:reasonRepo=PersistanceContext.repositories().reasons()
+PersistanceContext->RepositoryFactory:reasons()
+RepositoryFactory->ReasonRepository:create
+
+AuthenticationService->ReasonRepository:reason =findReasonBySystemUser(user)
+AuthenticationService-->LoginController:throw LoginException(reason)
+LoginController-->LoginUI:throw LoginException(reason)
+LoginUI-->User:show deactivate and reason
+LoginUI->LoginUI:end()

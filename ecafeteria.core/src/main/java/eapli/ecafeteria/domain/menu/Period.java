@@ -269,5 +269,4 @@ public class Period implements Serializable {
         }
         return list;
     }
-
 }

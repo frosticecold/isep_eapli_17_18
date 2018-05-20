@@ -6,6 +6,7 @@
 
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.Application;
 import eapli.ecafeteria.domain.CreditTransaction.Transaction;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.dto.TransactionDTO;
@@ -24,6 +25,10 @@ import java.util.Map;
 public class JpaTransactionReportingRepository  
         extends JpaAutoTxRepository<Transaction, Long>
         implements TransactionReportingRepository {
+
+    public JpaTransactionReportingRepository(String puname) {
+        super(puname, Application.settings().getExtendedPersistenceProperties());
+    }
 
     public JpaTransactionReportingRepository(TransactionalContext autoTx) {
         super(autoTx);
@@ -46,5 +51,4 @@ public class JpaTransactionReportingRepository
         
         return ret;
     }
-
 }
