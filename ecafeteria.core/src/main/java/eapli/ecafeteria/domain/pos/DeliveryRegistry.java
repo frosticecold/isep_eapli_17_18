@@ -40,7 +40,7 @@ public class DeliveryRegistry implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name = "SESSION")
     private DeliveryMealSession session;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar dateMade;
 
     protected DeliveryRegistry() {

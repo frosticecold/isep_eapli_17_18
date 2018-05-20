@@ -19,7 +19,7 @@ public class DeliveryMealSession implements AggregateRoot<Long>, Serializable {
     @Column(name = "ID")
     private Long idSession;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar sessionDate;
 
     @OneToOne
