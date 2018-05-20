@@ -8,7 +8,6 @@ import eapli.framework.presentation.console.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.Menu;
 import eapli.framework.presentation.console.MenuItem;
 import eapli.framework.presentation.console.MenuRenderer;
-import eapli.framework.presentation.console.ShowMessageAction;
 import eapli.framework.presentation.console.VerticalMenuRenderer;
 
 /**
@@ -43,6 +42,8 @@ public class MainMenuDeliveredMealsReportingUI extends AbstractUI {
 
         menu.add(new MenuItem(SHOWBYDATE_OPTION, "List Delivered Meals by a chosen date",
                 () -> new DeliveredMealsByDateUI().show()));
+        menu.add(new MenuItem(SHOWBYMEAL_OPTION, "List Delivered Meals by a chosen meal",
+                () -> new DeliveredMealsByMealUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;

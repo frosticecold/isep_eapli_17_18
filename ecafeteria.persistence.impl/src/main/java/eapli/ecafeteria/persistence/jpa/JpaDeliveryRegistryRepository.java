@@ -82,8 +82,16 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
      * @return 
      */
     @Override
-    public Optional<DeliveryRegistry> deliveredMealByBooking(Booking booking) {
-        return matchOne("e.DELIVERY=:booking", booking, booking);
+    public List<DeliveryRegistry> deliveredMealByBooking(Booking booking) {
+        
+        String query = "SELECT e FROM DeliveryRegistry e"
+                + " WHERE e.booking = :booking";
+        
+        final Query q = entityManager().createQuery(query, this.entityClass);
+        
+        q.setParameter("booking", booking);
+        
+        return q.getResultList();
     }
 
 }

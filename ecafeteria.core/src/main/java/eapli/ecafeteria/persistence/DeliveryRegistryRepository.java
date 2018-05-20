@@ -5,7 +5,6 @@ import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.framework.persistence.repositories.DataRepository;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -24,5 +23,5 @@ public interface DeliveryRegistryRepository extends DataRepository<DeliveryRegis
     /**
      * method that returns a Optional of a delivered meal search by booking id
      */
-    public Optional<DeliveryRegistry> deliveredMealByBooking(Booking booking);
+    public List<DeliveryRegistry> deliveredMealByBooking(Booking booking);
 }

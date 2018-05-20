@@ -51,7 +51,7 @@ public class InMemoryDeliveryRegistryRepository implements DeliveryRegistryRepos
     }
 
     @Override
-    public Optional<DeliveryRegistry> deliveredMealByBooking(Booking booking) {
+    public List<DeliveryRegistry> deliveredMealByBooking(Booking booking) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

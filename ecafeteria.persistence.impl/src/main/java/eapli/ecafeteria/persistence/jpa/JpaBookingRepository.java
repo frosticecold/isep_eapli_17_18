@@ -209,8 +209,8 @@ public class JpaBookingRepository
 
         final Query q = entityManager().createQuery(query, Booking.class);
 
-        q.setParameter("m", m);
 
+        q.setParameter("m", m);
         return q.getResultList();
     }
 }

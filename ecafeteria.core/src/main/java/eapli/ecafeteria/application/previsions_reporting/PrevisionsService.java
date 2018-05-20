@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class PrevisionsService implements Controller {
+class PrevisionsService implements Controller {
 
     //Construtor of service
     public PrevisionsService() {
@@ -90,8 +90,40 @@ public class PrevisionsService implements Controller {
     public List<DeliveryRegistry> deliveredMealsByMeal(Meal meal) {
 
         List<DeliveryRegistry> list = new ArrayList();
-        
-        List<Booking> bookingsByMeal;
+
+        int j = 0;
+
+        boolean found = false;
+
+        List<Booking> bookingsByMeal = PersistenceContext.repositories().booking().findBookingsByMeal(meal);
+
+        DeliveryRegistry r; //reference
+
+        if (!bookingsByMeal.isEmpty()) {
+
+            for (int i = 0; i < bookingsByMeal.size(); i++) {
+
+                if (!PersistenceContext.repositories().deliveryRegistryRepository().deliveredMealByBooking(bookingsByMeal.get(i)).isEmpty()) {
+
+                    j = 0;
+
+                    found = false;
+
+                    r = PersistenceContext.repositories().deliveryRegistryRepository().deliveredMealByBooking(bookingsByMeal.get(i)).get(0);
+
+                    while (!found && j < list.size()) { //to ensure that each entity is added to the list just once
+                        if (list.get(j).id() == r.id()) {
+                            found = true;
+                        }
+                        j++;
+                    }
+
+                    if (!found) {
+                        list.add(r);
+                    }
+                }
+            }
+        }
 
         return list;
     }
