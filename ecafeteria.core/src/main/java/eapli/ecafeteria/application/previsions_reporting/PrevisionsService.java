@@ -2,6 +2,7 @@ package eapli.ecafeteria.application.previsions_reporting;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
@@ -141,6 +142,33 @@ class PrevisionsService implements Controller {
         List<DeliveryRegistry> listTmp;
 
         List<Meal> meals = PersistenceContext.repositories().meals().findMealsByMenu(menu);
+
+        for (int m = 0; m < meals.size(); m++) {
+
+            listTmp = this.deliveredMealsByMeal(meals.get(m));
+
+            for (int d = 0; d < listTmp.size(); d++) {
+
+                list.add(listTmp.get(d));
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * Returns a list of delivered meals by a certain mealtype
+     *
+     * @param type
+     * @return
+     */
+    public List<DeliveryRegistry> deliveredMealsByType(MealType type) {
+
+        List<DeliveryRegistry> list = new ArrayList();
+
+        List<Meal> meals = PersistenceContext.repositories().meals().getMealsByMealType(type);
+
+        List<DeliveryRegistry> listTmp;
 
         for (int m = 0; m < meals.size(); m++) {
 

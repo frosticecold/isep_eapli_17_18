@@ -44,6 +44,8 @@ public class MainMenuDeliveredMealsReportingUI extends AbstractUI {
                 () -> new DeliveredMealsByDateUI().show()));
         menu.add(new MenuItem(SHOWBYMENU_OPTION, "List Delivered Meals by a chosen menu",
                 () -> new DeliveredMealsByMenuUI().show()));
+        menu.add(new MenuItem(SHOWBYTYPE_OPTION, "List Delivered Meals groupped by meal type",
+                () -> new DeliveredMealsByTypeUI().show()));
         menu.add(new MenuItem(SHOWBYMEAL_OPTION, "List Delivered Meals by a chosen meal",
                 () -> new DeliveredMealsByMealUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));

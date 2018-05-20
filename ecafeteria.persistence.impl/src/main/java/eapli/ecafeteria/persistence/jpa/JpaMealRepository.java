@@ -91,7 +91,7 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
 
         final Query q = entityManager().createQuery(query, Meal.class);
 
-        q.setParameter("mealtype", type);
+        q.setParameter("mealType", type);
 
         return q.getResultList();
     }
