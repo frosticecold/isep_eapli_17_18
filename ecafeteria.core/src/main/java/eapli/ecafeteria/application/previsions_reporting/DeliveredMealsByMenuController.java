@@ -69,10 +69,10 @@ public class DeliveredMealsByMenuController implements Controller {
 
             for (int i = 0; i < list.size(); i++) {
 
-                msg += list.get(i).toString() + "\n";
+                msg +=list.get(i).booking().getMeal().toString() + "\n" +  list.get(i).toString() + "\n\n";
             }
 
-            msg += "TOTAL OF " + list.size() + "  DELIVERED MEALS LISTED\n";
+            msg += "\nTOTAL OF " + list.size() + "  DELIVERED MEALS LISTED\n";
         }
 
         msg += "===================================================================================================================================\n";
