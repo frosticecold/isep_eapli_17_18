@@ -27,7 +27,7 @@ public class DeliveredMealsByDateController implements Controller {
      */
     public String prepareListOfDeliveredMealsByDate(Calendar date) {
 
-        String dateCorrect = date.get(Calendar.DAY_OF_MONTH) + "-" + date.get(Calendar.MONTH) + 1 + "-" + date.get(Calendar.YEAR);
+        String dateCorrect = date.get(Calendar.DAY_OF_MONTH) + "-" + date.get(Calendar.MONTH) + "-" + date.get(Calendar.YEAR);
 
         String msg = "================================================ DELIVERED MEALS OF DATE : " + dateCorrect + "=============================\n";
 
