@@ -203,12 +203,13 @@ public class JpaBookingRepository
      */
     @Override
     public List<Booking> findBookingsByMeal(Meal m) {
-        String query = "SELECT e FROM Booking b"
-                + "WHERE e.meal : meal";
+        String query = "SELECT booking "
+                + "FROM Booking booking "
+                + "WHERE booking.meal = :m";
 
         final Query q = entityManager().createQuery(query, Booking.class);
 
-        q.setParameter("meal", m);
+        q.setParameter("m", m);
 
         return q.getResultList();
     }
