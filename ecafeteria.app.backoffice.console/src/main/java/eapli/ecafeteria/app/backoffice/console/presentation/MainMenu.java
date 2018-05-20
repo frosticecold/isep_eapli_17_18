@@ -46,8 +46,10 @@ import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEdit
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.MainMenuDeliveredMealsReportingUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.MealsByMenuPlanUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
+import eapli.ecafeteria.application.KitchenAlert.KitchenAlertController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.kitchen.KitchenWatchDogo;
+import eapli.ecafeteria.domain.KitchenAlert.WatchDog;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.framework.actions.ReturnAction;
 import eapli.framework.presentation.console.AbstractUI;
@@ -174,6 +176,8 @@ public class MainMenu extends AbstractUI {
     }
 
     private Menu buildMainMenu() {
+        
+        
         final Menu mainMenu = new Menu();
 
         final Menu myUserMenu = new MyUserMenu();
@@ -304,8 +308,8 @@ public class MainMenu extends AbstractUI {
 
         menu.add(new MenuItem(MATERIAL_REGISTER_OPTION, "Register new material",
                 new RegisterMaterialAction()));
-        menu.add(
-                new MenuItem(MATERIAL_LIST_OPTION, "List all materials", new ListMaterialAction()));
+        
+        menu.add(new MenuItem(MATERIAL_LIST_OPTION, "List all materials", new ListMaterialAction()));
 
         menu.add(new MenuItem(REGISTER_BATCH_USED_IN_MEAL, "Register batch used in meal", new RegisterBatchUsedInMealAction()));
 

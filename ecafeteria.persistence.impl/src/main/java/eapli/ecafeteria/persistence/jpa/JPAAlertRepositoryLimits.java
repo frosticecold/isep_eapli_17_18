@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.KitchenAlert.AlertLimit;
@@ -20,11 +15,13 @@ public class JPAAlertRepositoryLimits extends CafeteriaJpaRepositoryBase<AlertLi
         //acho que devemos mudar o tipo de float[] para uma List, pq a query só retorna para lista
         
 //        Query q = entityManager().
-//                createQuery("SELECT limit FROM Limit limit ", Limit.class);
+//                createQuery("SELECT limit FROM Limit limit ", Float.class);
 //
 //        return q.getResultList();
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    float[] omanoaindanaofez = {0.7F , 0.9F};
+
+        return omanoaindanaofez;
     }
     
 }

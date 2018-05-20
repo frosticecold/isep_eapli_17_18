@@ -6,12 +6,8 @@ import eapli.ecafeteria.persistence.PersistenceContext;
 import java.util.Observer;
 import java.util.Observable;
 import java.util.logging.Level;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-/**
-
- */
 public class WatchDog extends Observable implements Observer{
     
     private static WatchDog myWatchDog;
@@ -23,10 +19,12 @@ public class WatchDog extends Observable implements Observer{
 
     public WatchDog() {
         
-        kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
+       
         
+        kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
+        kAlert.addObserver(this); 
         //verificar isto pq continuo a achar que nao se pode fazer no construtor
-        kAlert.addObserver(this);
+        
         
         new Thread(){
             @Override
@@ -48,7 +46,8 @@ public class WatchDog extends Observable implements Observer{
 
     void testLimits(){
         
-        kAlert.calculateX();   
+        kAlert.calculateX();
+        
     }
 
     public static WatchDog getInstance(){
@@ -64,6 +63,8 @@ public class WatchDog extends Observable implements Observer{
     public void update(Observable o, Object o1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
 
 
     
