@@ -84,4 +84,16 @@ public class PrevisionsService implements Controller {
         return meals;
     }
 
+    /**
+     * Returns a list of delivered meals by a certain meal
+     */
+    public List<DeliveryRegistry> deliveredMealsByMeal(Meal meal) {
+
+        List<DeliveryRegistry> list = new ArrayList();
+        
+        List<Booking> bookingsByMeal;
+
+        return list;
+    }
+
 }
