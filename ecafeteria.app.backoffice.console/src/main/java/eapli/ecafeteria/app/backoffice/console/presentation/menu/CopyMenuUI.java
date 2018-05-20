@@ -6,12 +6,13 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
 import eapli.ecafeteria.application.menus.CopyMenuController;
+import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
 
 /**
  *
- * @author Oliveira
+ * @author André Oliveira <1040862@isep.ipp.pt>
  */
 public class CopyMenuUI extends AbstractUI {
 
@@ -23,7 +24,12 @@ public class CopyMenuUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        System.out.println("TO BE IMPLEMENTED");
+        Iterable<Menu> menu = controller.getAvailableMenus();
+        String output = "";
+        for (Menu m : menu) {
+            output += "\n" + m.toString() + controller.showStartAndFinishDates(m) + "\n";
+        }
+        System.out.println(output);
         return true;
     }
 

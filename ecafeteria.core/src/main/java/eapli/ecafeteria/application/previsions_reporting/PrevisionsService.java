@@ -4,6 +4,7 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
+import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 import java.util.ArrayList;
@@ -76,9 +77,9 @@ public class PrevisionsService implements Controller {
      *
      * @return
      */
-    public List<Meal> deliveredMealsByDate(Calendar date) {
+    public List<DeliveryRegistry> deliveredMealsByDate(Calendar date) {
 
-        List<Meal> meals = null;
+        List<DeliveryRegistry> meals = PersistenceContext.repositories().deliveryRegistryRepository().deliveredMealsByDate(date);
 
         return meals;
     }
