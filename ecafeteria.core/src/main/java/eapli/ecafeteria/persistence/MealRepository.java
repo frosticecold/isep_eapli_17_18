@@ -27,9 +27,11 @@ public interface MealRepository extends DataRepository<Meal, Long> {
     Optional<Meal> findOne(Long id);
 
     Iterable<Meal> listMealsFromMenuByGivenDay(final Menu menu, final Calendar day);
-    
+
     List<Meal> findMealsByMenu(Menu menu);
-    
+
     List<Meal> getMealByDate(Calendar cal);
-    
+
+    List<Meal> getMealsByMealType(MealType type);
+
 }

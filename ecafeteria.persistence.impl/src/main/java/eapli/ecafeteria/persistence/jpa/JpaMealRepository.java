@@ -60,7 +60,7 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         params.put("menu", menu);
         params.put("day", day);
         return match("e.menu=:menu AND e.date =:day", params);
-    }   
+    }
 
     public int findMealByMenuAndDate(Menu m) {
         final Query q;
@@ -69,7 +69,6 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         return q.getFirstResult();
     }
 
-
     @Override
     public List<Meal> getMealByDate(Calendar cal) {
         TypedQuery<Meal> q;
@@ -77,6 +76,24 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         q.setParameter("cal", cal);
         return q.getResultList();
     }
-    
+
+    /**
+     * Returns all meals of a certain meal type
+     *
+     * @param type
+     * @return
+     */
+    @Override
+    public List<Meal> getMealsByMealType(MealType type) {
+
+        String query = "SELECT meal FROM Meal meal "
+                + "WHERE meal.mealtype=:mealType ";
+
+        final Query q = entityManager().createQuery(query, Meal.class);
+
+        q.setParameter("mealtype", type);
+
+        return q.getResultList();
+    }
 
 }
