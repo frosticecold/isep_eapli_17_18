@@ -1,5 +1,6 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 
+import eapli.ecafeteria.app.backoffice.console.presentation.Alert.AlertUI;
 import eapli.ecafeteria.application.kitchen.RegisterMadeMealsController;
 import eapli.ecafeteria.domain.execution.Execution;
 import eapli.ecafeteria.domain.execution.MadeMeals;
@@ -17,7 +18,7 @@ import javax.persistence.NoResultException;
  *
  * @author MFerreira
  */
-public class RegisterMadeMealsUI extends AbstractUI {
+public class RegisterMadeMealsUI extends AlertUI {
 
     private RegisterMadeMealsController controller = new RegisterMadeMealsController();
 
@@ -108,7 +109,7 @@ public class RegisterMadeMealsUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "REGISTER THE NUMBER OF MADE MEALS";
+        return super.headline() + "REGISTER THE NUMBER OF MADE MEALS";
     }
 
 }
