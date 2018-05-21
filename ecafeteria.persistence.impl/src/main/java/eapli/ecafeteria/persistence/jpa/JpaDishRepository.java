@@ -41,6 +41,9 @@ class JpaDishRepository extends CafeteriaJpaRepositoryBase<Dish, Designation> im
         final Query q = entityManager().createQuery(query, this.entityClass);
 
         return q.getResultList();
+        
+    }
+    
     /**
      * Returns a list of dishes that were served between two dates
      *

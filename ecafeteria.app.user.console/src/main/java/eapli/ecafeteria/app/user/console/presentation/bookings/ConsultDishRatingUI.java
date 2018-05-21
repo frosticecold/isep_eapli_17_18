@@ -45,7 +45,7 @@ public class ConsultDishRatingUI extends CafeteriaUserBaseUI {
         Dish dish = ld.get(dishNumber - 1);
         
          /*Gets every Meal from the selected Dish*/
-        List<Meal> lm = theController.getMealByDish(dish);
+        List<Meal> lm = theController.getMealsByDish(dish);
         
         if (!lm.isEmpty()) {
             List<Rating> totalRatingList = new ArrayList<>();

@@ -41,8 +41,8 @@ public class ConsultDishRatingController implements Controller{
      * @param dish
      * @return 
      */
-    public List<Meal> getMealByDish(Dish dish) {
-        return mealRepo.getMealByDish(dish);    
+    public List<Meal> getMealsByDish(Dish dish) {
+        return mealRepo.getMealsByDish(dish);    
     }    
 
     /**

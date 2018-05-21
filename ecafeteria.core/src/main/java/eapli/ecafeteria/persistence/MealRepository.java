@@ -33,7 +33,7 @@ public interface MealRepository extends DataRepository<Meal, Long> {
 
     List<Meal> getMealByDate(Calendar cal);
 
-    List<Meal> getMealByDish(Dish dish);
+    List<Meal> getMealsByDish(Dish dish);
     
     List<Meal> getMealsByMealType(MealType type);
 

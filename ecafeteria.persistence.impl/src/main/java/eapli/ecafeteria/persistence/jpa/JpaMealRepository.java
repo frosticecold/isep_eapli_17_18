@@ -98,7 +98,7 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
     }
     
     @Override
-    public List<Meal> getMealByDish(Dish dish){
+    public List<Meal> getMealsByDish(Dish dish){
         TypedQuery<Meal> q;
         q = entityManager().createQuery("SELECT m FROM Meal m WHERE m.dish=:dish", Meal.class);
         q.setParameter("dish", dish);
