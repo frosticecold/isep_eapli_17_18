@@ -2,6 +2,7 @@ package eapli.ecafeteria.application.previsions_reporting;
 
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.Rating;
+import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
@@ -214,8 +215,34 @@ class PrevisionsService implements Controller {
         } else {
             rate = (double) acceptedDishes / total;
         }
-      
 
         return rate * 100.0;
+    }
+
+    /**
+     * Returns all delivered meals of a certain dish
+     *
+     * @param dish
+     * @return
+     */
+    public List<DeliveryRegistry> deliveredMealsByDish(Dish dish) {
+
+        List<DeliveryRegistry> list = new ArrayList();
+
+        List<Meal> meals = PersistenceContext.repositories().meals().getMealsByDish(dish);
+
+        List<DeliveryRegistry> listTmp;
+
+        for (int m = 0; m < meals.size(); m++) {
+
+            listTmp = this.deliveredMealsByMeal(meals.get(m));
+
+            for (int l = 0; l < listTmp.size(); l++) {
+
+                list.add(listTmp.get(l));
+            }
+        }
+
+        return list;
     }
 }
