@@ -14,11 +14,9 @@ public class AlertFactory {
             
             return null;
         }else if( Float.compare(percentage, l2) >= 0){
-            
             return new RedAlert(m, percentage);
                 
         }else{
-            
             return new YellowAlert(m, percentage);
         }
         

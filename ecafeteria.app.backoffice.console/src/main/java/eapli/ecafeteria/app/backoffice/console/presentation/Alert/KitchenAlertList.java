@@ -2,11 +2,13 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.Alert;
 
 import eapli.ecafeteria.domain.KitchenAlert.KitchenAlert;
+import eapli.ecafeteria.domain.KitchenAlert.RedAlert;
+import eapli.ecafeteria.domain.KitchenAlert.YellowAlert;
 import java.util.ArrayList;
 import java.util.List;
 
 
-class KitchenAlertList {
+public class KitchenAlertList {
     
     private List<KitchenAlert> myList;
 
@@ -26,6 +28,23 @@ class KitchenAlertList {
         }
     }
     
+    public void addAll(List<KitchenAlert> newAlerts){
+        
+        for( KitchenAlert alert : newAlerts){
+            if( alert != null){
+                add(alert);
+            }
+        }
+    }
+    
+    public void addAll(KitchenAlertList newList){
+        
+        if( newList != null && !newList.myList.isEmpty()){
+            
+            this.addAll(newList.myList);    
+        }
+    }
+    
     
 
     @Override
@@ -39,10 +58,22 @@ class KitchenAlertList {
         
         for( KitchenAlert k : myList){
             
-            output += "\n" + k.alertType();
+            if( k instanceof YellowAlert){ /* é obrigatoriamente deste tipo */
+                
+                YellowAlert yellow = (YellowAlert) k;
+                
+                output += "\n" + yellow.alertType();
+                
+            }else{
+                
+                RedAlert red = (RedAlert) k;
+                
+                  output += "\n" + red.alertType();
+                
+            }
+            
             
         }
-        
         
         return output;
     }

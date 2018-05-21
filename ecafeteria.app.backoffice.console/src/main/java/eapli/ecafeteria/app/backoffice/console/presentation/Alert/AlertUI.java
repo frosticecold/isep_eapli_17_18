@@ -1,10 +1,11 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.Alert;
 
-import eapli.ecafeteria.application.KitchenAlert.KitchenAlertController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
+import eapli.ecafeteria.domain.KitchenAlert.KitchenAlert;
 import eapli.ecafeteria.domain.KitchenAlert.KitchenAlertImp;
 import eapli.ecafeteria.domain.KitchenAlert.WatchDog;
 import eapli.framework.presentation.console.AbstractUI;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,7 +22,7 @@ public abstract class AlertUI extends AbstractUI implements Observer{
         myDog.addObserver(this);
         
         return  "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() 
-                + "]   \n" + CURRENT_ALERT;
+                + "]   \n\n" + CURRENT_ALERT.toString() ;
     }
     
     @Override
@@ -31,8 +32,9 @@ public abstract class AlertUI extends AbstractUI implements Observer{
             WatchDog currentWatchDog = (WatchDog) o;
             
             
-            if(o1 instanceof KitchenAlertImp){
-                CURRENT_ALERT.add(  (KitchenAlertImp) o1);
+            if(o1 instanceof List){
+                
+                CURRENT_ALERT.addAll((List<KitchenAlert>) o1);
                 
                 System.out.println("\n\nWARNING: NOVO ALERTA\n\n");
             }else{
@@ -46,7 +48,13 @@ public abstract class AlertUI extends AbstractUI implements Observer{
     }
     
     
-    
+    @Override
+    protected void drawFormTitle(String title) {
+        // drawFormBorder();
+        final String titleBorder = BORDER.substring(0, 2) + " " + title;
+        System.out.println(titleBorder);
+        drawFormBorder();
+    }
     
     
     
