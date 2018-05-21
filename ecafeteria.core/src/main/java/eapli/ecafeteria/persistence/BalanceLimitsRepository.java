@@ -6,6 +6,8 @@
 package eapli.ecafeteria.persistence;
 
 import eapli.ecafeteria.domain.cafeteriauser.BalanceLimits;
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
+import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.framework.persistence.repositories.DataRepository;
 import java.util.Optional;
 
@@ -18,4 +20,5 @@ public interface BalanceLimitsRepository extends DataRepository<BalanceLimits, L
     @Override
     Optional<BalanceLimits> findOne(Long id);
 
+    public BalanceLimits findUserBalanceLimits(CafeteriaUser user);
 }

@@ -72,7 +72,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public TransactionalContext buildTransactionalContext() {
-        // in memory does not support transactions...
+        // in memory does not support movementTransactions...
         return null;
     }
 
@@ -137,7 +137,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public TransactionRepository transactioRepository() {
+    public TransactionRepository movementTransactions() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -172,17 +172,31 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public BalanceRepository balance() {
         return new InMemoryBalanceRepository();
     }
 
     @Override
-    public TransactionRepository transactioRepository(TransactionalContext autoTx) {
+    public TransactionRepository movementTransaction(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ComplaintRepository complaints() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TransactionReportingRepository transactionsReporting() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AllergenProfileRepository allergenProfiles() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -192,14 +206,33 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public ComplaintRepository complaints() {
+    public ReasonRepository reasons() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public AlergenPlanRepository AlergenPlans() {
+    public ReasonRepository reasons(TransactionalContext autoTx) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
+    @Override
+    public AlertRepositoryBookings alertRepositoryBookings() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AlertRepositoryLimits alertRepositoryLimits() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public BalanceLimitsRepository balanceLimits() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        
+    @Override
+    public AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

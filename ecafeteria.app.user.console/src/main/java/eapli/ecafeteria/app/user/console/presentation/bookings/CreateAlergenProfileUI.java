@@ -41,18 +41,19 @@ public class CreateAlergenProfileUI extends CafeteriaUserBaseUI {
             String des = ler.nextLine();
             controller.addAlergen(controller.getAlergenByDesc(des));
             System.out.println(" ");
+            System.out.println("ADDED!");
             System.out.println("THIS IS YOUR CURRENT ALERGEN PROFILE ");
             System.out.println(" ");
             for(Alergen a : controller.getApAlergens()){
                 System.out.println(a.id());
             }
             System.out.println(" ");
-            System.out.println("ADDED!");
+            
             System.out.println("DO YOU WANT TO ADD MORE ALERGENS TO THE PROFILE");
             System.out.println("Y/N");
             op = ler.nextLine();
         } while (op.equals("Y") || controller.getAllAlergensNotInAP().isEmpty());
-
+        controller.save();
         return true;
     }
 

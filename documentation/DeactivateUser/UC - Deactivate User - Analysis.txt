@@ -1,0 +1,27 @@
+	___________
+
+	ANÁLISE 
+	____________
+
+
+	Reunião com o cliente
+	
+	* As razões de desactivação são sempre as mesmas (enumerado)
+	______________________
+
+	REGRAS DE NEGÓCIO
+	_____________________
+	
+	* Quem inicia o processo é o Administrador
+	* Uma razão de desactivação tem um utilizador, uma razão e um comentário
+	* As razões são sempre as mesmas
+	* Um utilizador uma vez desativado não pode ser reativado.
+	______________________
+		
+	TESTES UNITÁRIOS
+	_____________________
+	
+	Menu
+	*	testReasonNullUser
+    *   testReasonNullReasonType
+    *   testReasonNullComment

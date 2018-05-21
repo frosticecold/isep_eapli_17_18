@@ -1,15 +1,15 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 
+import eapli.ecafeteria.app.backoffice.console.presentation.Alert.AlertUI;
 import eapli.ecafeteria.application.kitchen.EndShiftController;
 import eapli.framework.application.Controller;
-import eapli.framework.presentation.console.AbstractUI;
 import java.util.Calendar;
 
 /**
  *
  * @author JoaoMagalhaes
  */
-public class EndShiftUI extends AbstractUI{
+public class EndShiftUI extends AlertUI{
 
     private final EndShiftController theController = new EndShiftController();
     
@@ -32,7 +32,7 @@ public class EndShiftUI extends AbstractUI{
 
     @Override
     public String headline() {
-        return "ENDSHIFT";
+        return super.headline() + "ENDSHIFT";
     }
     
 }

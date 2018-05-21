@@ -6,16 +6,18 @@
 package eapli.ecafeteria.app.user.console.presentation;
 
 import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
+import eapli.ecafeteria.app.user.console.presentation.bookings.AddAlergenProfileAction;
 import eapli.ecafeteria.app.user.console.presentation.bookings.BookingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CancelBookingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CheckBookingsByUserUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ConsultDishRatingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ConsultMealRatingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CreateAlergenProfileAction;
-import eapli.ecafeteria.app.user.console.presentation.bookings.CreateAlergenProfileUI;
+import eapli.ecafeteria.app.user.console.presentation.bookings.ExportMovementsUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ListMenuUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.RatingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ShowTransactionsUI;
+import eapli.ecafeteria.app.user.console.presentation.bookings.ViewCaloricConsumptionUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ViewRatingsUI;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.framework.actions.ReturnAction;
@@ -44,15 +46,17 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int ALERGEN_PROFILE_OPTION = 5;
 
     // BOOKINGS MENU
-    private static final int LIST_MENUS_OPTION = 1;
-    private static final int BOOK_A_MEAL_OPTION = 2;
-    private static final int VIEW_RATINGS_OPTION = 3;
-    private static final int RATE_MEAL_OPTION = 4;
-    private static final int CANCEL_BOOKING = 5;
-    private static final int LIST_MENU = 6;
-    private static final int CHECK_BOOKINGS = 7;
-    private static final int CONSULT_MEAL_RATING = 8;
-    private static final int CONSULT_DISH_RATING = 9;    
+    private static final int BOOK_A_MEAL_OPTION = 1;
+    private static final int VIEW_RATINGS_OPTION = 2;
+    private static final int RATE_MEAL_OPTION = 3;
+    private static final int CANCEL_BOOKING = 4;
+    private static final int LIST_MENU = 5;
+    private static final int CHECK_BOOKINGS = 6;
+    private static final int CONSULT_MEAL_RATING = 7;
+    private static final int VIEW_CALORIC_CONSUMPTION = 8;
+    private static final int EXPORT = 9;
+    private static final int CONSULT_DISH_RATING = 10;    
+
 
     // ACCOUNT MENU
     private static final int LIST_MOVEMENTS_OPTION = 1;
@@ -123,7 +127,6 @@ class MainMenu extends CafeteriaUserBaseUI {
 
     private Menu buildBookingsMenu() {
         final Menu menu = new Menu("Bookings");
-        menu.add(new MenuItem(LIST_MENUS_OPTION, "List menus", new ShowMessageAction("Not implemented yet")));
         menu.add(new MenuItem(BOOK_A_MEAL_OPTION, "Book a meal", () -> new BookingMealUI().show()));
         menu.add(new MenuItem(VIEW_RATINGS_OPTION, "View Ratings", () -> new ViewRatingsUI().show()));
         menu.add(new MenuItem(RATE_MEAL_OPTION, "Rate meal", () -> new RatingMealUI().show()));
@@ -131,7 +134,10 @@ class MainMenu extends CafeteriaUserBaseUI {
         menu.add(new MenuItem(LIST_MENU, "List Menu", () -> new ListMenuUI().show()));
         menu.add(new MenuItem(CHECK_BOOKINGS, "Check Bookings of Current User", () -> new CheckBookingsByUserUI().show()));
         menu.add(new MenuItem(CONSULT_MEAL_RATING, "consult meal rating", () -> new ConsultMealRatingUI().show()));
-        menu.add(new MenuItem(CONSULT_DISH_RATING, "Consult Dish rating", () -> new ConsultDishRatingUI().show()));
+        menu.add(new MenuItem(VIEW_CALORIC_CONSUMPTION,"View caloric consumption", () -> new ViewCaloricConsumptionUI().show()));
+        menu.add(new MenuItem(EXPORT,"Export Movements", () -> new ExportMovementsUI().show()));
+        menu.add(new MenuItem(CONSULT_DISH_RATING,"Consult Dish rating", () -> new ConsultDishRatingUI().show()));
+        
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         return menu;
     }
@@ -149,7 +155,9 @@ class MainMenu extends CafeteriaUserBaseUI {
 
     private Menu buildAlergenProfileMenu() {
         final Menu menu = new Menu("Alergen Profile");
-        menu.add(new MenuItem(CREATE_ALERGEN_PROFILE_OPTION, "add new alergen to the profile", new CreateAlergenProfileAction()));
+        menu.add(new MenuItem(CREATE_ALERGEN_PROFILE_OPTION, "create new alergen profile", new CreateAlergenProfileAction()));
+        menu.add(new MenuItem(ADD_ALERGEN_TO_PROFILE_OPTION, "add alergen to the profile", new AddAlergenProfileAction()));
+        
         return menu;
     }
 

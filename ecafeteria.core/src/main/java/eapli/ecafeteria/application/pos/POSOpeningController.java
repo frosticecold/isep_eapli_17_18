@@ -27,11 +27,11 @@ public class POSOpeningController {
     }
 
     public boolean checkPoSState() {
-        return pointofsale.isClosed();
+        return pointofsale.checkState();
     }
 
     public boolean createDeliveryMealSession() throws DataConcurrencyException, DataIntegrityViolationException {
-        Optional<POS> POSinDatabase = jpaPOS.findOne(Long.valueOf("1"));
+        Optional<POS> POSinDatabase = jpaPOS.findOne(Long.valueOf(1));
         if (POSinDatabase.get() == null) {
             pointofsale = new POS(user);
         } else {
@@ -40,9 +40,9 @@ public class POSOpeningController {
             if(!checkPoSState()) return false;
         }
         
-        pointofsale.changeState();
+        pointofsale.openPOS();
         POS jpa = jpaPOS.save(pointofsale);
-        DeliveryMealSession dms = new DeliveryMealSession(jpa);
+        DeliveryMealSession dms = jpa.openSession();
         jpaDMS.save(dms);
         return true;
     }

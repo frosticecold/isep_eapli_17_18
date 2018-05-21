@@ -65,6 +65,10 @@ public class InMemoryMealRepository extends InMemoryRepositoryWithLongPK<Meal> i
     }
 
     @Override
+    public List<Meal> getMealsByMealType(MealType type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public List<Meal> getMealByDish(Dish dish) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

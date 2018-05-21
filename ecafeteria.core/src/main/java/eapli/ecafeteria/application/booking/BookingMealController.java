@@ -15,9 +15,9 @@ import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
+import eapli.ecafeteria.domain.cafeteriauser.AllergenProfile;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.meal.Meal;
-import eapli.ecafeteria.domain.cafeteriauser.Balance;
 import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.*;
@@ -27,22 +27,20 @@ import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.persistence.repositories.TransactionalContext;
-import eapli.framework.util.DateTime;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Observable;
 import java.util.Optional;
 
 /**
  *
  * @author Beatriz Ferreira <1160701@isep.ipp.pt>
  */
-public class BookingMealController implements Controller {
+public class BookingMealController extends Observable implements Controller {
 
     private final CafeteriaUserService userService = new CafeteriaUserService();
 
@@ -67,11 +65,10 @@ public class BookingMealController implements Controller {
         }
     }
 
-
     //if already exists that booking then return true
     public boolean isAlreadyBooked(Username user, MealType mealType, Calendar date) {
-      
-      Optional<CafeteriaUser> cUser = userService.findCafeteriaUserByUsername(user);
+
+        Optional<CafeteriaUser> cUser = userService.findCafeteriaUserByUsername(user);
         if (repository.findBooking(cUser.get(), mealType, date).isEmpty()) {
             return false;
         }
@@ -167,9 +164,8 @@ public class BookingMealController implements Controller {
 
         // Add booking movement
         Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
-        
-        Booking newBooking = new Booking(meal, bookingState, user.get(), date);
 
+        Booking newBooking = new Booking(meal, bookingState, user.get(), date);
 
         //check if user as already booked this meal
         Money mealPrice = meal.dish().currentPrice();
@@ -177,8 +173,8 @@ public class BookingMealController implements Controller {
         // Persist
         final TransactionalContext TxCtx
                 = PersistenceContext.repositories().buildTransactionalContext();
-        final AutoTxTransactionRepository attr
-                = PersistenceContext.repositories().autoTxTransactionRepository(TxCtx);
+        final TransactionRepository attr
+                = PersistenceContext.repositories().movementTransaction(TxCtx);
         final AutoTxBookingRepository atbr
                 = PersistenceContext.repositories().autoTxBookingRepository(TxCtx);
         final CafeteriaUserRepository cafer
@@ -188,11 +184,15 @@ public class BookingMealController implements Controller {
 
         /* persist here */
         atbr.saveBooking(newBooking);
-
-        attr.saveTransaction(new Transaction(user.get(), TransactionType.DEBIT, mealPrice));
+        Transaction t = new Transaction(user.get(), TransactionType.DEBIT, mealPrice);
+        t.movement();
+        attr.saveTransaction(t);
 
         cafer.save(user.get());
         TxCtx.commit();
+        
+        setChanged();
+        this.notifyObservers(newBooking);
 
         return true;
     }
@@ -218,6 +218,57 @@ public class BookingMealController implements Controller {
         final Booking newBooking = new Booking(meal, bookingState, user.get(), date);
 
         return this.repository.saveBooking(newBooking);
+    }
+
+    /**
+     * Compares the list of allergens present in the meal with the user's
+     * allergen profile.
+     *
+     * @author Rui Almeida <1160818>
+     * @param allergenProfile - current authenticated user allergen profile
+     * @param meal - chosen meal for booking
+     * @return - List with the matched allergens between the user profile and
+     * the meal
+     */
+    public List<Alergen> matchAllergens(Meal meal) {
+        /*
+        List with all of the matched allergens
+         */
+        List<Alergen> allergensList = new ArrayList<>();
+
+        /*
+        Get repositories
+         */
+        RepositoryFactory factory = PersistenceContext.repositories();
+        final AllergenProfileRepository alergenPlanRepo = factory.allergenProfiles();
+        final CafeteriaUserRepository userRepo = factory.cafeteriaUsers();
+
+        /**
+         * Get current user
+         */
+        CafeteriaUser user = userRepo.findByUsername(
+                AuthorizationService.session().authenticatedUser().username())
+                .get();
+
+        /*
+        * Get user allergen plan repo and get current user allergen profile
+         */
+        AllergenProfile userAllergenProfile = alergenPlanRepo.findUserAllergenProfile(user);
+
+        /*
+        * Iterate through the list and compare the allergens.
+        * If we find a matching allergen and allergen isn't already on the list,
+        * add it.
+         */
+        for (Alergen userAllergen : userAllergenProfile.alergens()) {
+            for (Alergen mealAllergen : meal.dish().alergenInDish()) {
+                if (userAllergen.equals(mealAllergen) && !allergensList.contains(userAllergen)) {
+                    allergensList.add(userAllergen);
+                }
+            }
+        }
+
+        return allergensList;
     }
 
 }

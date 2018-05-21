@@ -48,14 +48,16 @@ public interface RepositoryFactory {
      * @return
      */
     CafeteriaUserRepository cafeteriaUsers();
-    
-     /**
+
+    /**
      * repository will be created in auto transaction mode
      *
      * @return
      */
     BalanceRepository balance();
 
+    BalanceLimitsRepository balanceLimits();
+    
     /**
      *
      * @param autoTx the transactional context to enroll
@@ -78,11 +80,10 @@ public interface RepositoryFactory {
 
     BookingRepository booking();
 
-
     MenuRepository menus();
 
     MenuPlanRepository menuPlan();
-    
+
     MenuPlanItemRepository menuPlanItem();
 
     RatingRepository rating();
@@ -109,9 +110,10 @@ public interface RepositoryFactory {
      * @return
      */
     POSRepository posRepository();
+    
+    AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx);
 
-
-    /**
+  /**
      * DeliveryMealSession Repo
      *
      * @return
@@ -123,43 +125,69 @@ public interface RepositoryFactory {
      */
     DeliveryRegistryRepository deliveryRegistryRepository();
 
-    
     /**
      * Ratings reporting repository
-     * @return 
+     *
+     * @return
      */
     RatingReportingRepository ratingsReporting();
-
 
     MealRepository meals();
 
     ExecutionRepository executions();
 
     AlergenRepository alergens();
-    
-    TransactionRepository transactioRepository();
 
-    TransactionRepository transactioRepository(TransactionalContext autoTx);
-        /**
+    TransactionRepository movementTransactions();
+
+    TransactionRepository movementTransaction(TransactionalContext autoTx);
+
+    TransactionReportingRepository transactionsReporting();
+
+    /**
+     * TransactionRepository transactioRepository(TransactionalContext autoTx);
+     *
+     * /**
      * MealMaterialRepositorySession Repo
-     * @return 
+     *
+     * @return
      */
     MealMaterialRepository mealMaterial();
 
-    
     /**
-     * 
+     *
      * @param autoTx
-     * @return 
+     * @return
      */
-    
     AutoTxBookingRepository autoTxBookingRepository(TransactionalContext autoTx);
-    
+
     AutoTxTransactionRepository autoTxTransactionRepository(TransactionalContext autoTx);
-    
+
     TransactionReportingRepository transactionReportingRepository(TransactionalContext autoTx);
-    
+
     ComplaintRepository complaints();
 
-    AlergenPlanRepository AlergenPlans();
+    AllergenProfileRepository allergenProfiles();
+
+    /**
+     * Reasons Repository
+     *
+     * @author Raúl Correia
+     *
+     * @return
+     */
+    ReasonRepository reasons();
+
+    /**
+     * Reason Repository with TransationalContext
+     *
+     * @author Raúl Correia
+     * @param autoTx
+     * @return
+     */
+    ReasonRepository reasons(TransactionalContext autoTx);
+
+    AlertRepositoryBookings alertRepositoryBookings();
+
+    AlertRepositoryLimits alertRepositoryLimits();
 }

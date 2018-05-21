@@ -13,7 +13,6 @@ import eapli.ecafeteria.persistence.MealRepository;
 import eapli.framework.domain.Designation;
 import java.util.*;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 /**
@@ -71,12 +70,30 @@ public class JpaMealRepository extends CafeteriaJpaRepositoryBase<Meal, Long> im
         return q.getFirstResult();
     }
 
-
     @Override
     public List<Meal> getMealByDate(Calendar cal) {
         TypedQuery<Meal> q;
         q = entityManager().createQuery("SELECT m FROM Meal m WHERE m.date=:cal", Meal.class);
         q.setParameter("cal", cal);
+        return q.getResultList();
+    }
+
+    /**
+     * Returns all meals of a certain meal type
+     *
+     * @param type
+     * @return
+     */
+    @Override
+    public List<Meal> getMealsByMealType(MealType type) {
+
+        String query = "SELECT meal FROM Meal meal "
+                + "WHERE meal.mealtype=:mealType ";
+
+        final Query q = entityManager().createQuery(query, Meal.class);
+
+        q.setParameter("mealType", type);
+
         return q.getResultList();
     }
     

@@ -2,7 +2,9 @@ package eapli.ecafeteria.domain.menu;
 
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -125,6 +127,17 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         return period.getWorkingDaysIterable();
     }
 
+    public List<Calendar> getStartAndEndDates() {
+        List<Calendar> list = new ArrayList<>();
+        Map<Integer, Calendar> workWeekDays = getWorkWeekDays();
+        list.add(workWeekDays.get(0));
+        int size = workWeekDays.size();
+        if (size > 0) {
+            list.add(workWeekDays.get(size - 1));
+        }
+        return list;
+    }
+
     /**
      * Method that returns if the menu is critical or not
      *
@@ -137,9 +150,9 @@ public class Menu implements AggregateRoot<Period>, Serializable {
 
     /**
      * Methot that returns if a menu is published
+     *
      * @return true if is published, false if it isn't
      */
-
     public boolean isPublished() {
         return menuState == MenuState.PUBLISHED;
     }
@@ -199,7 +212,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
 
     @Override
     public String toString() {
-        return "Menu{" + "id=" + id + ", menuState=" + menuState + ", period=" + period + '}';
+        return "Menu " + "id=" + id + ", menuState=" + menuState + ", ";
     }
 
 }

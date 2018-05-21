@@ -42,4 +42,8 @@ public interface BookingRepository extends DataRepository<Booking, Long>{
     public List<Booking> findBooking(CafeteriaUser user, MealType mealType, Calendar date);
     
     public Iterable<Booking> findBookedBookings();
+    
+    public Long countBookedBookings();
+    
+    public List<Booking> findBookingsByMeal(Meal m);
 }

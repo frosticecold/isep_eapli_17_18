@@ -24,6 +24,8 @@ public class POSBootstrapper implements Action {
        SystemUser cashier1 = PersistenceContext.repositories().users().findOne(username).get();
                
        POS pos = new POS(cashier1);
+       
+       pos.closePOS();
 
        this.register(pos);
            

@@ -32,7 +32,7 @@ public class CafeteriaUserService {
 
     private final CafeteriaUserRepository repo = PersistenceContext.repositories().cafeteriaUsers();
     private final BalanceRepository brepo = PersistenceContext.repositories().balance();
-    private static final BookingRepository bookingRepo = PersistenceContext
+    private final BookingRepository bookingRepo = PersistenceContext
             .repositories().booking();
 
     public Optional<CafeteriaUser> findCafeteriaUserByMecNumber(String mecNumber) {

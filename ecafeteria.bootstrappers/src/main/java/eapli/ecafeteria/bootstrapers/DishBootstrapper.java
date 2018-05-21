@@ -12,7 +12,6 @@ import eapli.ecafeteria.application.dishes.RegisterDishController;
 import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.dishes.DishType;
-import eapli.ecafeteria.persistence.AlergenRepository;
 import eapli.ecafeteria.persistence.DishRepository;
 import eapli.ecafeteria.persistence.DishTypeRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
@@ -21,6 +20,7 @@ import eapli.framework.domain.Designation;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import javax.persistence.NoResultException;
+import eapli.ecafeteria.persistence.AlergenRepository;
 
 /**
  *
