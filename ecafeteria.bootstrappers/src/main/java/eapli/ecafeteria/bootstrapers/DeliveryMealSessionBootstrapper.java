@@ -36,7 +36,6 @@ public class DeliveryMealSessionBootstrapper implements Action {
 
         DeliveryMealSession s = pos.openSession();
         
-        s.closeSession();
 
         try {
             PersistenceContext.repositories().deliveryMealRepository().save(s);

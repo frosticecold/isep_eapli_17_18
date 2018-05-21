@@ -69,7 +69,7 @@ public class JpaDeliveryMealSessionRepository extends CafeteriaJpaRepositoryBase
     public Optional<DeliveryMealSession> findYourSession(SystemUser cashier) {
         
         String query = "SELECT e FROM DeliveryMealSession e "
-                + "WHERE e.cashier=:cashier";
+                + "WHERE e.cashier=:cashier and e.active = true";
         
         final Query q = entityManager().createQuery(query, this.entityClass);
         
