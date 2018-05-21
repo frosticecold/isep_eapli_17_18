@@ -305,7 +305,9 @@ public class MainMenu extends AbstractUI {
 
     private Menu buildKitchenMenu() {
         final Menu menu = new Menu("Traceability >");
-
+       
+     //   WatchDog.getInstance();
+        
         menu.add(new MenuItem(MATERIAL_REGISTER_OPTION, "Register new material",
                 new RegisterMaterialAction()));
 

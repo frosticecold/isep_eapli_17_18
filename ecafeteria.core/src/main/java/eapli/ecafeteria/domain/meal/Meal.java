@@ -78,7 +78,7 @@ public class Meal implements Serializable {
 
     private void setData(final Dish dish, final MealType mt, final Calendar cal, final Menu menu) {
         if (dish == null || mt == null || cal == null || menu == null) {
-            throw new IllegalArgumentException("Arguments can't be null.");
+//            throw new IllegalArgumentException("Arguments can't be null.");
         }
         this.dish = dish;
         this.mealtype = mt;
