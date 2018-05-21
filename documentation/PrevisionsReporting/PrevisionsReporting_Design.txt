@@ -6,27 +6,9 @@
 
 * Utilizar a estrutura base standard da aplicação baseada em camadas
 
-	Controlador : PrevisionsReportingController, PrevisionsService
-	UserInterface : PrevisionsReportingUI, MainMenuUI
-	Repositorios : BookingsRepository, MenuPlanRepository, MealsRepository, DeliveryRegistryRepository, RatingsRepository
-	PersistenceContext : RepositoryFactory
+
 
 
 - Sequence Diagram
 
 title SD Previsions Reporting
-
-":MainMenuUI" -> ":PrevisionsReportingUI" : create()
-":PrevisionsReportingUI" -> ":PrevisionsReportingController" : create()
-":PrevisionsReportingUI" -> ":PrevisionsReportingController" : showReports()
-":PrevisionsReportingController" -> ":PrevisionsService" : create()
-":PrevisionsService" -> ":PersistenceContext" : repositories()
-":PersistenceContext" -> ":RepositoryFactory" : bookingsRepo = booking()
-":PersistenceContext" -> ":RepositoryFactory" : mealsRepo = meals()
-":PersistenceContext" -> ":RepositoryFactory" : menuPlanRepo = menuPlan()
-":PersistenceContext" -> ":RepositoryFactory" : deliveryRegistryRepo = deliveryRegistry()
-":PersistenceContext" -> ":RepositoryFactory" : ratingRepo = rating()
-":PrevisionsReportingController" -> ":PrevisionsService" : calculateDishesAcceptanceRate()
-":PrevisionsReportingController" -> ":PrevisionsService" : calculateMealsForPlan()
-":PrevisionsReportingController" -> ":PrevisionsService" : calculateBookedMeals()
-":PrevisionsReportingController" -> ":PrevisionsService" : calculateDeliveredMeals()
