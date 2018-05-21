@@ -19,18 +19,29 @@ import javax.persistence.Query;
  */
 class JpaDishRepository extends CafeteriaJpaRepositoryBase<Dish, Designation> implements DishRepository {
 
-	@Override
-	public Optional<Dish> findByName(Designation name) {
-		final Map<String, Object> params = new HashMap<>();
-		params.put("name", name);
-		return matchOne("e.name=:name", params);
-	}
+    @Override
+    public Optional<Dish> findByName(Designation name) {
+	final Map<String, Object> params = new HashMap<>();
+	params.put("name", name);
+	return matchOne("e.name=:name", params);
+    }
 
     @Override
     public Iterable<Dish> findByDishType(DishType dishtype) {
         final Map<String,Object> params = new HashMap<>();
         params.put("dishtype",dishtype);
         return match("e.dishType=:dishtype",params);
+    }
+    
+    @Override
+    public List<Dish> findListAll(){
+        String query = "SELECT d "
+                        + "FROM Dish d";
+
+        final Query q = entityManager().createQuery(query, this.entityClass);
+
+        return q.getResultList();
+        
     }
     
     /**

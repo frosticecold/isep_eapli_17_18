@@ -80,7 +80,7 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
 
     public Dish(final DishType dishType, final Designation name, Money price, Alergen alergen) {
         if (dishType == null || name == null || price == null || alergen == null) {
-            throw new IllegalArgumentException();
+          //  throw new IllegalArgumentException();
         }
 
         this.dishType = dishType;
@@ -97,7 +97,7 @@ public class Dish implements AggregateRoot<Designation>, Serializable {
 
     public Dish(DishType dishType, Designation name, Money price) {
         if (dishType == null || name == null || price == null) {
-            throw new IllegalArgumentException();
+//            throw new IllegalArgumentException();
         }
         this.dishType = dishType;
         this.name = name;

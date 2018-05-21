@@ -9,9 +9,9 @@ import eapli.framework.dto.DTO;
  */
 public class AlertBookingDTO implements DTO{
 
-    Meal meal;
-    int  nBookings;
-    int  nPlanned;
+    public Meal meal;
+    public int  nBookings;
+    public int  nPlanned;
 
     public AlertBookingDTO(Meal meal, int nBookings, int nPlanned) {
         
