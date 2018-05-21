@@ -1,6 +1,7 @@
 package eapli.ecafeteria.application.previsions_reporting;
 
 import eapli.ecafeteria.domain.booking.Booking;
+import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.domain.menu.Menu;
@@ -181,5 +182,40 @@ class PrevisionsService implements Controller {
         }
 
         return list;
+    }
+
+    /**
+     * Calculates de acceptance rate of the ratings of dishes
+     *
+     * @return
+     */
+    public double dishAcceptanceRate() {
+
+        double rate = 0.0;
+
+        Iterable<Rating> ratings = (List<Rating>) PersistenceContext.repositories().rating().findAll();
+
+        int acceptedDishes = 0;
+
+        int total = 0;
+
+        for (Rating r : ratings) {
+
+            total++;
+
+            if (r.getRating() >= 3) {
+                acceptedDishes++;
+            }
+        }
+
+        if (acceptedDishes == 0 || total == 0) {
+
+            rate = 0;
+        } else {
+            rate = (double) acceptedDishes / total;
+        }
+      
+
+        return rate * 100.0;
     }
 }
