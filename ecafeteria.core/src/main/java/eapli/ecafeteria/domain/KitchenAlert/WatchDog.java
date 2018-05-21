@@ -5,52 +5,18 @@ import eapli.ecafeteria.persistence.AlertRepositoryLimits;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import java.util.Observer;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class WatchDog extends Observable implements Observer{
+
+public class WatchDog extends Observable implements Observer, Runnable{
     
     private static WatchDog myWatchDog;
-    private static final float TIME_IN_SECONDS = 10; // 
-    private KitchenAlertService kAlert;
+    private static final float TIME_IN_MILISECONDS = 10; // 
+    private static int status;
+    private static KitchenAlertService kAlert;
+    private static final AlertRepositoryBookings alertRepositoryBookings = PersistenceContext.repositories().alertRepositoryBookings() ;
+    private static final AlertRepositoryLimits alertRepositoryLimits = PersistenceContext.repositories().alertRepositoryLimits() ;
     
-    private final AlertRepositoryBookings alertRepositoryBookings = PersistenceContext.repositories().alertRepositoryBookings() ;
-    private final AlertRepositoryLimits alertRepositoryLimits = PersistenceContext.repositories().alertRepositoryLimits() ;
-
-    public WatchDog() {
-        
-       
-        
-        kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
-        kAlert.addObserver(this); 
-        //verificar isto pq continuo a achar que nao se pode fazer no construtor
-        
-        
-        new Thread(){
-            @Override
-            public void run() {
-                while(true){
-                    
-                    try {
-                        testLimits();
-                        Thread.sleep((long) TIME_IN_SECONDS);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(WatchDog.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-                    
-            
-        };
-    }
-
-    void testLimits(){
-        
-        kAlert.calculateX();
-        
-    }
-
-    public static WatchDog getInstance(){
+    public static WatchDog getInstance(){ /* IS A SINGLETON */
         
         if( myWatchDog == null){
             
@@ -58,10 +24,44 @@ public class WatchDog extends Observable implements Observer{
         }     
             return myWatchDog;
     }
+    
+    private WatchDog() { /* CONSTRUCTOR IS PRIVATE BCS ONLY WATCHDOG CAN CREATE ITSELF */
+        
+       createAlertService(alertRepositoryBookings, alertRepositoryLimits);
+        System.out.println("ANTES DO RUN");
+      // run(); /* runs thread every TIME_IN_MILISECONDS */
+    }
+
+
+    void testLimits(){
+        
+        kAlert.calculateX();
+        
+    }
+
+    private void createAlertService(AlertRepositoryBookings alertRepositoryBookings, AlertRepositoryLimits alertRepositoryLimits) {
+        
+          
+        kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
+        kAlert.addObserver(this); 
+    }
+
+   
+    @Override
+    public void run() {
+        while (true) {
+            testLimits();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                status =-1;
+            }
+        }
+    }
 
     @Override
     public void update(Observable o, Object o1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     
