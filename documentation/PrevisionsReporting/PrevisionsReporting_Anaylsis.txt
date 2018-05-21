@@ -4,7 +4,7 @@
 	____________
 
 
-	Reunião com o cliente  em 2018.05.04
+	Reunião com o cliente  em 2018.05.21
 
 	- Mostrar relação entre refeições reservadas;
 
@@ -20,10 +20,12 @@
 	REGRAS DE NEGOCIO
 	__________________________________________
 
-	- Listar quantas reservas tem associados a um certa refeição e que o seu estado = "BOOKED". 
+	Utilizador pode escolher que tipo de listagem necessita ; 
+
+	- Listar quantas reservas tem associados a um certa refeição e que o seu estado reservados.
 
 	- Listar as refeições agrupados por planos de refeição.
 
-	- Dar opção ao utilizador para poder ver refeições servidas escolhidos por data, ementa, tipo de refeicao ou prato.
+	- Listagem de refeições entregues por uma data, um prato, um tipo de refeição ou uma ementa escolhida pelo o proprio utilizador.
 
-	- Calcular, em percentagem (talvez em valores absolutos), os pratos com ratings que indicam que foram aceites por utentes.
+	- Calcular, em percentagem (talvez em valores absolutos), os pratos com ratings que indicam que foram aceites por utentes. Listando todos os ratings realizados.
