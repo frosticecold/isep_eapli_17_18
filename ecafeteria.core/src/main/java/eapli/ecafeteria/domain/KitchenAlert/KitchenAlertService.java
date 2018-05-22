@@ -30,19 +30,29 @@ public class KitchenAlertService extends Observable{
         myLimits = limits;
     }
     
-    KitchenAlert calculateX(){
+    List<KitchenAlertImp> calculateX(){
         
         float[] limits =  {0.7f , 0.9f};                     //myLimits.getLimits();
         List<AlertBookingDTO> dtoList =  new ArrayList<>();//myBookings.getNOBookings();
+        
+        //quando tratarmos da exceçao é so substituir por isto
+        //List<AlertBookingDTO> dtoList = myBookings.getNOBookings();
         
         dtoList.add(new AlertBookingDTO(new Meal(new Dish(new DishType("Ola", "nice")
                                                 , null, null)
                                         , MealType.LUNCH, Calendar.getInstance(), null), 10, 10));
         
-        System.out.println("VAI MANEL\n");
-        System.out.println(dtoList);
         
-        return AlertFactory.buildAlert(1, limits[0], limits[1], dtoList.get(0).meal);
+        List<KitchenAlertImp> alerts = new ArrayList<>();
+        
+        for( AlertBookingDTO alert : dtoList){
+            
+            if( alert != null)
+            alerts.add(AlertFactory.buildAlert(alert.nBookings/alert.nPlanned, limits[0], limits[1], alert.meal));
+        }
+        
+        
+        return alerts;
     }
 
 

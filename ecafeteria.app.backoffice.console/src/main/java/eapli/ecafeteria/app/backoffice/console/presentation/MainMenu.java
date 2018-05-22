@@ -7,6 +7,7 @@ package eapli.ecafeteria.app.backoffice.console.presentation;
 
 import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.Application;
+import eapli.ecafeteria.app.backoffice.console.presentation.Alert.AlertUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.authz.AddUserUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.authz.DeactivateUserAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.authz.ListUsersAction;
@@ -70,7 +71,7 @@ import eapli.framework.presentation.console.VerticalSeparator;
  *
  * @author Paulo Gandra Sousa
  */
-public class MainMenu extends AbstractUI {
+public class MainMenu extends AlertUI {
 
     private static final int EXIT_OPTION = 0;
 
@@ -172,8 +173,7 @@ public class MainMenu extends AbstractUI {
 
     @Override
     public String headline() {
-        return "eCafeteria Back Office [@" + AuthorizationService.session().authenticatedUser().id()
-                + "]";
+        return super.headline();
     }
 
     private Menu buildMainMenu() {
