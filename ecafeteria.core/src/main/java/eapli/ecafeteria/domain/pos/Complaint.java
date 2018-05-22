@@ -24,7 +24,6 @@ public class Complaint implements Serializable{
     @GeneratedValue
     private long id;
    
-    @OneToOne
     private DescriptiveText description;
     
     @OneToOne
