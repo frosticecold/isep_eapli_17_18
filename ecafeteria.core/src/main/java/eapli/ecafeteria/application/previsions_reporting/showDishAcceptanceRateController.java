@@ -14,7 +14,7 @@ public class showDishAcceptanceRateController implements Controller {
 
     public showDishAcceptanceRateController() {
 
-        this.service.getInstance();
+       this.service = new PrevisionsService();
     }
 
     /**

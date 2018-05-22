@@ -20,24 +20,13 @@ import java.util.List;
  */
 class PrevisionsService implements Controller {
     
-    private static PrevisionsService instance = new PrevisionsService(); 
 
     //Construtor of service
-    private PrevisionsService() {
+    public PrevisionsService() {
         
         
     }
     
-    /**
-     * Implementing the singleton pattern
-     * 
-     * @return 
-     */
-    public PrevisionsService getInstance() {
-        
-        return this.getInstance();
-    }
-
     /**
      * returns a list with all the meals that have booked bookings
      *

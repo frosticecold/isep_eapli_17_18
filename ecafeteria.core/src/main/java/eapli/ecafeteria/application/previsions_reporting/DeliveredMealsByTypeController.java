@@ -17,7 +17,7 @@ public class DeliveredMealsByTypeController implements Controller {
 
     public DeliveredMealsByTypeController() {
 
-        this.service.getInstance();
+        this.service = new PrevisionsService();
     }
 
     /**

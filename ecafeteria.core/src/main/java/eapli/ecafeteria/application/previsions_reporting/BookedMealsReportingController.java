@@ -13,7 +13,7 @@ public class BookedMealsReportingController implements Controller {
 
     public BookedMealsReportingController() {
 
-        this.service.getInstance();
+        this.service = new PrevisionsService();
     }
 
   
