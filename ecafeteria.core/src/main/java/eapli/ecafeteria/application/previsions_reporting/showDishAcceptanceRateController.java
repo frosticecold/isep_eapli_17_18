@@ -3,7 +3,6 @@ package eapli.ecafeteria.application.previsions_reporting;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import java.util.List;
 
 /**
  *
@@ -11,11 +10,9 @@ import java.util.List;
  */
 public class showDishAcceptanceRateController implements Controller {
 
-    private PrevisionsService service;
 
     public showDishAcceptanceRateController() {
 
-        this.service = new PrevisionsService();
     }
 
     /**
@@ -29,7 +26,7 @@ public class showDishAcceptanceRateController implements Controller {
 
         Iterable<Rating> ratings = PersistenceContext.repositories().rating().findAll();
 
-        double acceptanceRate = this.service.dishAcceptanceRate();
+        double acceptanceRate = PrevisionsService.dishAcceptanceRate();
 
         msg += ratings.toString() + "\n";
 

@@ -19,8 +19,6 @@ public class BookedMealsReportingUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        this.ctrl.prepareService();
-
         System.out.println(this.ctrl.getBookedMeals());
 
         return true;
