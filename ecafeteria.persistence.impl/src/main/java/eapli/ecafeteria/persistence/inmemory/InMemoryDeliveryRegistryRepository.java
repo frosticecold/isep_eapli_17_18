@@ -1,5 +1,6 @@
 package eapli.ecafeteria.persistence.inmemory;
 
+import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.DeliveryRegistryRepository;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -46,6 +47,11 @@ public class InMemoryDeliveryRegistryRepository implements DeliveryRegistryRepos
 
     @Override
     public List<DeliveryRegistry> deliveredMealsByDate(Calendar date) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<DeliveryRegistry> deliveredMealByBooking(Booking booking) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

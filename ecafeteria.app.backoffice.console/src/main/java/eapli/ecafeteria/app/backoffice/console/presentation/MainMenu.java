@@ -7,6 +7,7 @@ package eapli.ecafeteria.app.backoffice.console.presentation;
 
 import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
 import eapli.ecafeteria.Application;
+import eapli.ecafeteria.app.backoffice.console.presentation.Alert.AlertUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.authz.AddUserUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.authz.DeactivateUserAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.authz.ListUsersAction;
@@ -46,8 +47,11 @@ import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEdit
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.MainMenuDeliveredMealsReportingUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.MealsByMenuPlanUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.showDishAcceptanceRateUI;
+import eapli.ecafeteria.application.KitchenAlert.KitchenAlertController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.application.kitchen.KitchenWatchDogo;
+import eapli.ecafeteria.domain.KitchenAlert.WatchDog;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.framework.actions.ReturnAction;
 import eapli.framework.presentation.console.AbstractUI;
@@ -67,7 +71,7 @@ import eapli.framework.presentation.console.VerticalSeparator;
  *
  * @author Paulo Gandra Sousa
  */
-public class MainMenu extends AbstractUI {
+public class MainMenu extends AlertUI {
 
     private static final int EXIT_OPTION = 0;
 
@@ -169,11 +173,11 @@ public class MainMenu extends AbstractUI {
 
     @Override
     public String headline() {
-        return "eCafeteria Back Office [@" + AuthorizationService.session().authenticatedUser().id()
-                + "]";
+        return super.headline();
     }
 
     private Menu buildMainMenu() {
+
         final Menu mainMenu = new Menu();
 
         final Menu myUserMenu = new MyUserMenu();
@@ -301,11 +305,13 @@ public class MainMenu extends AbstractUI {
 
     private Menu buildKitchenMenu() {
         final Menu menu = new Menu("Traceability >");
-
+       
+     //   WatchDog.getInstance();
+        
         menu.add(new MenuItem(MATERIAL_REGISTER_OPTION, "Register new material",
                 new RegisterMaterialAction()));
-        menu.add(
-                new MenuItem(MATERIAL_LIST_OPTION, "List all materials", new ListMaterialAction()));
+
+        menu.add(new MenuItem(MATERIAL_LIST_OPTION, "List all materials", new ListMaterialAction()));
 
         menu.add(new MenuItem(REGISTER_BATCH_USED_IN_MEAL, "Register batch used in meal", new RegisterBatchUsedInMealAction()));
 
@@ -394,6 +400,8 @@ public class MainMenu extends AbstractUI {
                 () -> new MealsByMenuPlanUI().show()));
         menu.add(new MenuItem(PREVISIONS_DELIVEREDMEALS_OPTION, "Show delivered meals menu",
                 () -> new MainMenuDeliveredMealsReportingUI().show()));
+        menu.add(new MenuItem(PREVISIONS_RATING_OPTION, "Show Ratings and Dishes Acceptance Rate",
+                () -> new showDishAcceptanceRateUI().show()));
 
         return menu;
     }

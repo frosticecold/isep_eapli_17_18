@@ -9,6 +9,7 @@ import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.pos.Complaint;
+import eapli.ecafeteria.domain.pos.DescriptiveText;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.ComplaintRepository;
 import eapli.ecafeteria.persistence.DishRepository;
@@ -36,7 +37,7 @@ public class RegisterComplaintController implements Controller{
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException 
      */
-    public Complaint saveComplaint(String description,CafeteriaUser user,Dish dish) throws DataConcurrencyException, DataIntegrityViolationException{
+    public Complaint saveComplaint(DescriptiveText description,CafeteriaUser user,Dish dish) throws DataConcurrencyException, DataIntegrityViolationException{
         Complaint c = new Complaint(description,dish ,user);
         return complaintRepository.save(c);
     }

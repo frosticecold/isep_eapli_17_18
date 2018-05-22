@@ -24,7 +24,7 @@ public class Complaint implements Serializable{
     @GeneratedValue
     private long id;
    
-    private String description;
+    private DescriptiveText description;
     
     @OneToOne
     private Dish dish;
@@ -36,7 +36,7 @@ public class Complaint implements Serializable{
     protected Complaint(){
         
     }
-    public Complaint(String description,Dish dish, CafeteriaUser user){
+    public Complaint(DescriptiveText description,Dish dish, CafeteriaUser user){
         this.description = description;
         this.dish = dish;
         this.user = user;

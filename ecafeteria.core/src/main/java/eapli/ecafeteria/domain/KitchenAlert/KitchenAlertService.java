@@ -1,7 +1,18 @@
 package eapli.ecafeteria.domain.KitchenAlert;
 
+import eapli.ecafeteria.domain.dishes.Dish;
+import eapli.ecafeteria.domain.dishes.DishType;
+import eapli.ecafeteria.domain.meal.Meal;
+import eapli.ecafeteria.domain.meal.MealType;
+import eapli.ecafeteria.domain.menu.Menu;
+import eapli.ecafeteria.dto.AlertBookingDTO;
 import eapli.ecafeteria.persistence.AlertRepositoryBookings;
 import eapli.ecafeteria.persistence.AlertRepositoryLimits;
+import eapli.framework.domain.money.Money;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Currency;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,8 +20,8 @@ import java.util.Observer;
  *
  * @author DAVID
  */
-public class KitchenAlertService extends Observable{
-    
+public class KitchenAlertService extends Observable {
+
     private AlertRepositoryBookings myBookings;
     private AlertRepositoryLimits myLimits;
 
@@ -18,25 +29,29 @@ public class KitchenAlertService extends Observable{
         myBookings = bookings;
         myLimits = limits;
     }
-    
-    KitchenAlert calculateX(){
-        return AlertFactory.buildAlert(1, 2, 3);
+
+    List<KitchenAlertImp> calculateX() {
+
+        float[] limits = {0.7f, 0.9f};
+        //List<AlertBookingDTO> dtoList =  new ArrayList<>();
+
+        //        dtoList.add(new AlertBookingDTO(new Meal(new Dish(new DishType("Ola", "nice")
+//                                                , null, null)
+//                                        , MealType.LUNCH, Calendar.getInstance(), null), 10, 10));
+
+        List<AlertBookingDTO> dtoList = myBookings.getNOBookings();
+
+        List<KitchenAlertImp> alerts = new ArrayList<>();
+
+        for (AlertBookingDTO alert : dtoList) {
+            if (alert != null) {
+                Float nBook = (float) alert.nBookings;
+                Float nPlan = (float) alert.nPlanned;
+                alerts.add(AlertFactory.buildAlert((nBook/nPlan), limits[0], limits[1], alert.meal));
+            }
+        }
+
+        return alerts;
     }
 
-    @Override
-    protected synchronized void setChanged() {
-        super.setChanged(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void notifyObservers(Object o) {
-        super.notifyObservers(o); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public synchronized void addObserver(Observer obsrvr) {
-        super.addObserver(obsrvr); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
 }

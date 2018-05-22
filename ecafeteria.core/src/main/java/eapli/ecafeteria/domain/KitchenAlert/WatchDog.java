@@ -3,55 +3,23 @@ package eapli.ecafeteria.domain.KitchenAlert;
 import eapli.ecafeteria.persistence.AlertRepositoryBookings;
 import eapli.ecafeteria.persistence.AlertRepositoryLimits;
 import eapli.ecafeteria.persistence.PersistenceContext;
-import java.util.Observer;
+import java.util.List;
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-/**
 
- */
-public class WatchDog extends Observable implements Observer{
+public class WatchDog extends Observable implements Runnable{
     
     private static WatchDog myWatchDog;
-    private static final float TIME_IN_SECONDS = 10; // 
-    private KitchenAlertService kAlert;
+    private static final float TIME_IN_MINUTES = 1; 
+    private static KitchenAlertService kAlert;
+    private static final AlertRepositoryBookings alertRepositoryBookings = PersistenceContext.repositories().alertRepositoryBookings() ;
+    private static final AlertRepositoryLimits alertRepositoryLimits = PersistenceContext.repositories().alertRepositoryLimits() ;
     
-    private final AlertRepositoryBookings alertRepositoryBookings = PersistenceContext.repositories().alertRepositoryBookings() ;
-    private final AlertRepositoryLimits alertRepositoryLimits = PersistenceContext.repositories().alertRepositoryLimits() ;
-
-    public WatchDog() {
-        
-        kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
-        
-        //verificar isto pq continuo a achar que nao se pode fazer no construtor
-        kAlert.addObserver(this);
-        
-        new Thread(){
-            @Override
-            public void run() {
-                while(true){
-                    
-                    try {
-                        testLimits();
-                        Thread.sleep((long) TIME_IN_SECONDS);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(WatchDog.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-                    
-            
-        };
-    }
-
-    void testLimits(){
-        
-        kAlert.calculateX();   
-    }
-
-    public static WatchDog getInstance(){
+    public static WatchDog getInstance(){ /* IS A SINGLETON */
         
         if( myWatchDog == null){
             
@@ -59,11 +27,71 @@ public class WatchDog extends Observable implements Observer{
         }     
             return myWatchDog;
     }
-
-    @Override
-    public void update(Observable o, Object o1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    private WatchDog() { /* CONSTRUCTOR IS PRIVATE BCS ONLY WATCHDOG CAN CREATE ITSELF */
+        
+       createAlertService(alertRepositoryBookings, alertRepositoryLimits);
+      
+        
+        runThread(); /* runs thread every TIME_IN_MILISECONDS */
+      //  dormir(); /* quero quando inicio o watchdog domir */
+        
     }
+
+
+    void testLimits(){
+        
+        List<KitchenAlertImp> alerts = kAlert.calculateX();
+      
+        
+        if( !alerts.isEmpty() ){
+            
+            setChanged();
+            notifyObservers(alerts);
+           
+        }
+        
+        
+    }
+
+ 
+    
+    
+
+    private void createAlertService(AlertRepositoryBookings alertRepositoryBookings, AlertRepositoryLimits alertRepositoryLimits) {
+        
+          
+        kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
+    }
+
+   
+    @Override
+    public void run() {
+        
+            testLimits();
+            
+    }
+
+
+    private void runThread() {
+        
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                WatchDog.getInstance().run();
+                
+               
+            }
+        }, 0, (long) (1000 * 60 * TIME_IN_MINUTES));
+        
+        
+        
+    }
+
+    
+    
 
 
     

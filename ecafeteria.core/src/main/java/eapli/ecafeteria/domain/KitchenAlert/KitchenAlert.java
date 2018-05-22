@@ -8,4 +8,6 @@ public interface KitchenAlert {
     
     String alertType();
     
+    
+    
 }

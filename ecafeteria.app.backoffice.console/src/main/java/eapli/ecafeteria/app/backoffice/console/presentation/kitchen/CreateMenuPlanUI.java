@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 
+import eapli.ecafeteria.app.backoffice.console.presentation.Alert.AlertUI;
 import eapli.ecafeteria.application.menuplan.CreateMenuPlanController;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.menu.Menu;
@@ -26,9 +27,9 @@ import javax.persistence.NoResultException;
 
 /**
  *
- * @author pedro
+ * @author pedro bosta
  */
-public class CreateMenuPlanUI extends AbstractUI {
+public class CreateMenuPlanUI extends AlertUI {
 
     private CreateMenuPlanController controller = new CreateMenuPlanController();
 
@@ -154,7 +155,7 @@ public class CreateMenuPlanUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Create a plan for this week menu.";
+        return super.headline() + "Create a plan for this week menu.";
     }
 
 }

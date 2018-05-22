@@ -1,5 +1,6 @@
 package eapli.ecafeteria.persistence.jpa;
 
+import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.pos.DeliveryRegistry;
 import eapli.ecafeteria.persistence.DeliveryRegistryRepository;
 import java.util.Calendar;
@@ -36,7 +37,7 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
      */
     @Override
     public Optional<DeliveryRegistry> findOne(Long id) {
-        return matchOne("e.DELIVERY=id", id, id);
+        return matchOne("e.DELIVERY=:id", id, id);
     }
 
     /**
@@ -66,11 +67,29 @@ public class JpaDeliveryRegistryRepository extends CafeteriaJpaRepositoryBase<De
     public List<DeliveryRegistry> deliveredMealsByDate(Calendar date) {
         
         String query = "SELECT e FROM DeliveryRegistry e"
-                + " WHERE dateMade = :date";
+                + " WHERE e.dateMade = :date";
         
         final Query q = entityManager().createQuery(query, this.entityClass);
         
         q.setParameter("date", date);
+        
+        return q.getResultList();
+    }
+
+    /**
+     * Returns a single delivery registry of a certain booking
+     * @param booking
+     * @return 
+     */
+    @Override
+    public List<DeliveryRegistry> deliveredMealByBooking(Booking booking) {
+        
+        String query = "SELECT e FROM DeliveryRegistry e"
+                + " WHERE e.booking = :booking";
+        
+        final Query q = entityManager().createQuery(query, this.entityClass);
+        
+        q.setParameter("booking", booking);
         
         return q.getResultList();
     }
