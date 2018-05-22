@@ -9,9 +9,11 @@ import eapli.framework.domain.ddd.ValueObject;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import eapli.framework.domain.money.Money;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -25,15 +27,23 @@ public class BalanceLimits implements Serializable {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
     
-    
+    @Column(name = "limit")
     private Money balanceLimit;
+    
+    @OneToOne
+    private CafeteriaUser user;
     /**
      * Constructor
      */
     protected BalanceLimits() {
         balanceLimit = Money.euros(0);
     }
-
+    
+    protected BalanceLimits(CafeteriaUser user){
+        this.user = user;
+        this.balanceLimit = Money.euros(0);
+    }
+    
     /**
      * Define the limits of the user's balance to the amount at which they
      * should be warned for going below the limit

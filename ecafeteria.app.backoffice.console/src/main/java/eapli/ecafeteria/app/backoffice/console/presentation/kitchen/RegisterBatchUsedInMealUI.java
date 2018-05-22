@@ -1,5 +1,6 @@
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 
+import eapli.ecafeteria.app.backoffice.console.presentation.Alert.AlertUI;
 import eapli.ecafeteria.application.kitchen.RegisterBatchUsedInMealController;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.kitchen.Batch;
@@ -7,12 +8,11 @@ import eapli.ecafeteria.domain.kitchen.Material;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.framework.application.Controller;
-import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class RegisterBatchUsedInMealUI extends AbstractUI {
+public class RegisterBatchUsedInMealUI extends AlertUI {
 
     private final RegisterBatchUsedInMealController theController = new RegisterBatchUsedInMealController();
 
@@ -89,7 +89,7 @@ public class RegisterBatchUsedInMealUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Register Batch Used in Meal";
+        return super.headline() + "Register Batch Used in Meal";
     }
 
     private List<Meal> meals(Calendar date, MealType mealType) {

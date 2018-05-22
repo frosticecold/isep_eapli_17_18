@@ -14,7 +14,7 @@ public class MealsByMenuPlanController implements Controller {
 
     public MealsByMenuPlanController() {
 
-        this.service = new PrevisionsService();
+        this.service.getInstance();
     }
 
     /**

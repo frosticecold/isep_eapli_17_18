@@ -12,10 +12,12 @@ import java.util.logging.Logger;
 
 import eapli.ecafeteria.application.authz.DeactivateUserController;
 import eapli.ecafeteria.domain.authz.SystemUser;
+import eapli.ecafeteria.domain.reasons.ReasonType;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.util.Console;
 
 /**
@@ -23,7 +25,7 @@ import eapli.framework.util.Console;
  * @author Fernando
  */
 @SuppressWarnings("squid:S106")
-public class DeactivateUserUI extends AbstractUI {
+    public class DeactivateUserUI extends AbstractUI {
 
     private final DeactivateUserController theController = new DeactivateUserController();
 
@@ -52,10 +54,19 @@ public class DeactivateUserUI extends AbstractUI {
             if (option == 0) {
                 System.out.println("No user selected");
             } else {
-                try {
-                    this.theController.deactivateUser(list.get(option - 1));
-                } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
-                    Logger.getLogger(DeactivateUserUI.class.getName()).log(Level.SEVERE, null, ex);
+                final Iterable<ReasonType> reason_iterable = theController.getAllReasons();
+                SelectWidget<ReasonType> select_reason = new SelectWidget<>("Select Reason", reason_iterable);
+                select_reason.show();
+                int reason_option = select_reason.selectedOption();
+                if (reason_option > 0) {
+                    String comment = Console.readLine("Please insert a comment");
+                    try {
+                        this.theController.deactivateUser(list.get(option - 1), select_reason.selectedElement(), comment);
+                    } catch (DataIntegrityViolationException | DataConcurrencyException ex) {
+                        Logger.getLogger(DeactivateUserUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    System.out.println("No reason selected...");
                 }
             }
         }

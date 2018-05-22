@@ -47,7 +47,7 @@ public class ClosePOSController implements Controller {
     }
 
     public boolean checkPoSState() {
-        return pointofsale.isClosed();
+        return pointofsale.checkState();
     }
 
     public boolean closeDeliveryMealSession() throws DataConcurrencyException, DataIntegrityViolationException {
@@ -55,7 +55,7 @@ public class ClosePOSController implements Controller {
         if (POSinDatabase.isPresent()) {
             pointofsale = POSinDatabase.get();
             if (!checkPoSState()) {
-                pointofsale.changeState();
+                pointofsale.closePOS();
                 jpaPOS.save(pointofsale);
             }
         } else {

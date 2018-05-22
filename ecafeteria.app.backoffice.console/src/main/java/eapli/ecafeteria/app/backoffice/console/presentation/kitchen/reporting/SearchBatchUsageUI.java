@@ -5,6 +5,7 @@
  */
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting;
 
+import eapli.ecafeteria.app.backoffice.console.presentation.Alert.AlertUI;
 import eapli.ecafeteria.application.kitchen.SearchBatchUsageController;
 import eapli.ecafeteria.domain.kitchen.Batch;
 import eapli.ecafeteria.domain.meal.Meal;
@@ -18,7 +19,7 @@ import java.util.Scanner;
  *
  * @author utilizador
  */
-public class SearchBatchUsageUI extends AbstractUI {
+public class SearchBatchUsageUI extends AlertUI {
 
     SearchBatchUsageController controller = new SearchBatchUsageController();
 
@@ -47,7 +48,7 @@ public class SearchBatchUsageUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Show Batch Usage";
+        return super.headline() + "Show Batch Usage";
     }
 
 }

@@ -13,16 +13,10 @@ public class BookedMealsReportingController implements Controller {
 
     public BookedMealsReportingController() {
 
+        this.service.getInstance();
     }
 
-    /**
-     * Prepare previsions service
-     */
-    public void prepareService() {
-
-        this.service = new PrevisionsService();
-    }
-
+  
     /**
      * Gets the booked meals relation by dish type
      */

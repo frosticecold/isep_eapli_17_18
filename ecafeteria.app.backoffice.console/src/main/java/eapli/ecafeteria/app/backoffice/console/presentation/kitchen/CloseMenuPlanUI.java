@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eapli.ecafeteria.app.backoffice.console.presentation.kitchen;
 
+import eapli.ecafeteria.app.backoffice.console.presentation.Alert.AlertUI;
 import eapli.ecafeteria.application.menuplan.CloseMenuPlanController;
 import eapli.ecafeteria.domain.menuplan.MenuPlan;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -14,9 +10,8 @@ import eapli.framework.util.Console;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.NoResultException;
 
-public class CloseMenuPlanUI extends AbstractUI {
+public class CloseMenuPlanUI extends AlertUI {
 
     private CloseMenuPlanController controller = new CloseMenuPlanController();
 
@@ -66,7 +61,7 @@ public class CloseMenuPlanUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Close the menu plan for this week's menu.";
+        return super.headline() + "Close the menu plan for this week's menu.";
     }
 
 }

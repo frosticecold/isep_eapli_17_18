@@ -4,6 +4,8 @@ import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.domain.money.Money;
 import java.io.Serializable;
+import java.util.Observable;
+import java.util.Observer;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
@@ -45,18 +47,8 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     @Embedded
     private Balance currentBalance;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private BalanceLimits balanceLimits;
-
-    public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber, BalanceLimits balanceLimits) {
-        if (mecanographicNumber == null || user == null) {
-            throw new IllegalArgumentException();
-        }
-        this.systemUser = user;
-        this.mecanographicNumber = mecanographicNumber;
-        this.currentBalance = new Balance();
-        this.balanceLimits = balanceLimits;
-    }
 
     public CafeteriaUser(SystemUser user, MecanographicNumber mecanographicNumber) {
         if (mecanographicNumber == null || user == null) {
@@ -65,7 +57,7 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
         this.systemUser = user;
         this.mecanographicNumber = mecanographicNumber;
         this.currentBalance = new Balance();
-        this.balanceLimits = new BalanceLimits();
+        this.balanceLimits = new BalanceLimits(this);
     }
 
     protected CafeteriaUser() {
@@ -107,10 +99,16 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     public Balance currentBalance() {
         return currentBalance;
     }
+    
+    public Money currentMoney(){
+        return currentBalance.currentBalance();
+    }
 
     public String cafeteriaUserNameAndCurrentBalance() {
         return "Username: " + systemUser.id().toString() + " Current Balance: " + currentBalance.toString();
     }
+    
+    
 
     @Override
     public boolean equals(Object o) {
@@ -168,4 +166,5 @@ public class CafeteriaUser implements AggregateRoot<MecanographicNumber>, Serial
     public double checkBalanceLimits() {
         return balanceLimits.checkBalanceLimits();
     }
+
 }

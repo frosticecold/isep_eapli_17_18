@@ -1,8 +1,11 @@
 package eapli.ecafeteria.domain.authz;
 
+import eapli.ecafeteria.domain.reasons.LoginException;
+import eapli.ecafeteria.domain.reasons.Reason;
 import java.util.Optional;
 
 import eapli.ecafeteria.persistence.PersistenceContext;
+import eapli.ecafeteria.persistence.ReasonRepository;
 import eapli.ecafeteria.persistence.UserRepository;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -24,13 +27,21 @@ public class AuthenticationService {
      * @return the authenticated user or null otherwise
      */
     public Optional<UserSession> authenticate(Username username, Password pass,
-            ActionRight... onlyWithThis) {
+            ActionRight... onlyWithThis) throws LoginException {
         if (username == null) {
             throw new IllegalArgumentException("a username must be provided");
         }
         final Optional<SystemUser> user = retrieveUser(username);
         if (!user.isPresent()) {
             return Optional.empty();
+        }
+        /**
+         * Case the user is not active, throw a LoginException
+         */
+        if (!user.get().isActive()) {
+            ReasonRepository reasonrepo = PersistenceContext.repositories().reasons();
+            Reason why = reasonrepo.findReasonBySystemUser(user.get()).get();
+            throw new LoginException("User is deactivated:" + why.getReasonType() + "\nComment: " + why.getComment());
         }
         if (user.get().passwordMatches(pass) && user.get().isActive()) {
             if (anyActionRight(onlyWithThis) || user.get().isAuthorizedTo(onlyWithThis)) {

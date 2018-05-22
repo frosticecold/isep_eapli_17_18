@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<userTransactionBetweenPeriod>
+	<transactions>
+		<transaction>
+			<user>900330</user>
+			<date>2018-05-18</date>
+			<money>2.85</money>
+			<type>Debit</type>
+		</transaction>
+		<transaction>
+			<user>900330</user>
+			<date>2018-05-15</date>
+			<money>3.99</money>
+			<type>Debit</type>
+		</transaction>
+		<transaction>
+			<user>900330</user>
+			<date>2018-05-14</date>
+			<money>150.0</money>
+			<type>Debit</type>
+		</transaction>
+	</transactions>
+</userTransactionBetweenPeriod>

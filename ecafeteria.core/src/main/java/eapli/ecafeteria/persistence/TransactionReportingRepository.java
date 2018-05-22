@@ -21,4 +21,9 @@ public interface TransactionReportingRepository
 
     
      public List<TransactionDTO> showTransactions(CafeteriaUser user);
+     
+     
+
+     
+     
 }
