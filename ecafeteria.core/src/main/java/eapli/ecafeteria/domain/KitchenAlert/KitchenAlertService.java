@@ -20,8 +20,8 @@ import java.util.Observer;
  *
  * @author DAVID
  */
-public class KitchenAlertService extends Observable{
-    
+public class KitchenAlertService extends Observable {
+
     private AlertRepositoryBookings myBookings;
     private AlertRepositoryLimits myLimits;
 
@@ -29,33 +29,29 @@ public class KitchenAlertService extends Observable{
         myBookings = bookings;
         myLimits = limits;
     }
-    
-    List<KitchenAlertImp> calculateX(){
-        
-        float[] limits =  {0.7f , 0.9f};                     //myLimits.getLimits();
-        List<AlertBookingDTO> dtoList =  new ArrayList<>();//myBookings.getNOBookings();
-        
-        //quando tratarmos da exceçao é so substituir por isto
-        //List<AlertBookingDTO> dtoList = myBookings.getNOBookings();
-        
-        dtoList.add(new AlertBookingDTO(new Meal(new Dish(new DishType("Ola", "nice")
-                                                , null, null)
-                                        , MealType.LUNCH, Calendar.getInstance(), null), 10, 10));
-        
-        
+
+    List<KitchenAlertImp> calculateX() {
+
+        float[] limits = {0.7f, 0.9f};
+        //List<AlertBookingDTO> dtoList =  new ArrayList<>();
+
+        //        dtoList.add(new AlertBookingDTO(new Meal(new Dish(new DishType("Ola", "nice")
+//                                                , null, null)
+//                                        , MealType.LUNCH, Calendar.getInstance(), null), 10, 10));
+
+        List<AlertBookingDTO> dtoList = myBookings.getNOBookings();
+
         List<KitchenAlertImp> alerts = new ArrayList<>();
-        
-        for( AlertBookingDTO alert : dtoList){
-            
-            if( alert != null)
-            alerts.add(AlertFactory.buildAlert(alert.nBookings/alert.nPlanned, limits[0], limits[1], alert.meal));
+
+        for (AlertBookingDTO alert : dtoList) {
+            if (alert != null) {
+                Float nBook = (float) alert.nBookings;
+                Float nPlan = (float) alert.nPlanned;
+                alerts.add(AlertFactory.buildAlert((nBook/nPlan), limits[0], limits[1], alert.meal));
+            }
         }
-        
-        
+
         return alerts;
     }
 
-
-    
-    
 }
