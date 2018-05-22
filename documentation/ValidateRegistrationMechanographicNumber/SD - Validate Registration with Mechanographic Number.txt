@@ -1,0 +1,36 @@
+_________
+
+DESIGN
+_________
+
+* Utilizar a estrutura base standard da aplicação baseada em camadas
+
+
+Classes do domínio:  --
+Controlador: --
+Repository: -
+
+Diagrama de Sequência - websequencediagrams.com source
+
+title SD - Validate registration through mechanographic number
+
+        participant ":SignupRequestBuilder" as srb
+        participant ":MechanographicValidator" as mv
+        participant ":MechanographicValidatorFactory" as mvf
+        participant ":MechanographicStrategy" as ms
+        participant ":MechanographicEmployeeStrategy" as mes
+        participant ":MechanographicStudentStrategy" as mss
+        
+
+        srb->mv: isValid(userType, mechanographicNumber) : boolean
+        mv->mvf: getInstance(userType : String) : MechanographicStrategy
+        mvf->ms: create(userType : String)
+        mvf->ms: isValid(mechanographicNumber : String) : boolean
+        alt userType : Employee
+            ms-->*mes: create()
+            mes->mes: isValid(mechanographicNumber : String) : boolean
+        else userType : Student
+            ms-->*mss: create()
+            mss->mss: isValid(mechanographicNumber : String) : boolean
+        end
+        mv-->srb: build()
