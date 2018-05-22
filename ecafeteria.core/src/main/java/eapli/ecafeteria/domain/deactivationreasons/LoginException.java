@@ -15,4 +15,8 @@ public class LoginException extends RuntimeException {
         super(message);
     }
 
+    public LoginException(DeactivationReasonType reason) {
+        super(reason.toString());
+    }
+
 }

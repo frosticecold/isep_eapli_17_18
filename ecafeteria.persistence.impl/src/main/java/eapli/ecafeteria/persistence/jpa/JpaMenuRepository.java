@@ -30,7 +30,7 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
         final Query q;
         String where = "e.menuState=:mstate";
         q = entityManager().createQuery("SELECT e FROM Menu e WHERE " + where, this.entityClass);
-        
+
         q.setParameter("mstate", MenuState.UNPUBLISHED);
 
         return q.getResultList();
@@ -48,24 +48,22 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
     }
 
     @Override
-    public Optional<Menu> findMenuOnDate(Calendar cal){
+    public Optional<Menu> findMenuOnDate(Calendar cal) {
         final Query q;
-        q = entityManager().createQuery("SELECT e FROM Menu e WHERE :date >= e.period.startingDate AND :date1 <= e.period.endingDate",Menu.class);
+        q = entityManager().createQuery("SELECT e FROM Menu e WHERE :date >= e.period.startingDate AND :date1 <= e.period.endingDate", Menu.class);
         q.setParameter("date", cal, TemporalType.DATE);
         q.setParameter("date1", cal, TemporalType.DATE);
-        
+
         return q.getResultList().stream().findFirst();
     }
 
     @Override
     public List<Menu> findLatestMenus() {
-        final Query q1;        
+        final Query q1;
         q1 = entityManager().createQuery("SELECT m FROM Menu m WHERE m.period.startingDate>=:date");
-        q1.setParameter("date",DateTime.now(),TemporalType.DATE);
-             
-        return  q1.getResultList();
-    }
-    
+        q1.setParameter("date", DateTime.now(), TemporalType.DATE);
 
-  
+        return q1.getResultList();
+    }
+
 }
