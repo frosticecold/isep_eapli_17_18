@@ -9,11 +9,9 @@ import eapli.framework.application.Controller;
  */
 public class BookedMealsReportingController implements Controller {
 
-    private PrevisionsService service;
 
     public BookedMealsReportingController() {
 
-        this.service = new PrevisionsService();
     }
 
   
@@ -24,11 +22,11 @@ public class BookedMealsReportingController implements Controller {
 
         String msg = "================== Booked Meals ======================================\n";
 
-        Iterable<Booking> bookedMeals = this.service.prepareBookedMealsList();
+        Iterable<Booking> bookedMeals = PrevisionsService.prepareBookedMealsList();
 
         msg += "\n" + bookedMeals.toString() + "\n";
 
-        msg += "Total of Booked Meals : " + this.service.numberBookedMeals().toString() + "\n";
+        msg += "Total of Booked Meals : " + PrevisionsService.numberBookedMeals().toString() + "\n";
 
         msg += "=================================================================================";
 

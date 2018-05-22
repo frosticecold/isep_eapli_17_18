@@ -12,11 +12,10 @@ import java.util.List;
  */
 public class DeliveredMealsByMenuController implements Controller {
 
-    private PrevisionsService service;
 
     public DeliveredMealsByMenuController() {
 
-      this.service = new PrevisionsService();
+
     }
 
     /**
@@ -60,7 +59,7 @@ public class DeliveredMealsByMenuController implements Controller {
 
         msg += "CURRENT MENU : " + menu.toString() + "\n\n";
 
-        List<DeliveryRegistry> list = this.service.deliveredMealsByMenu(menu);
+        List<DeliveryRegistry> list = PrevisionsService.deliveredMealsByMenu(menu);
 
         if (list.isEmpty()) {
 
