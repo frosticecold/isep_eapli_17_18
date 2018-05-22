@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
-public class PrevisionsService implements Controller {
+class PrevisionsService implements Controller {
     
     private static PrevisionsService instance = new PrevisionsService();
     
