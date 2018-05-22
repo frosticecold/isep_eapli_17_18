@@ -3,7 +3,6 @@ package eapli.ecafeteria.application.previsions_reporting;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import java.util.List;
 
 /**
  *
@@ -15,7 +14,7 @@ public class showDishAcceptanceRateController implements Controller {
 
     public showDishAcceptanceRateController() {
 
-        this.service = new PrevisionsService();
+        this.service.getInstance();
     }
 
     /**

@@ -17,7 +17,7 @@ public class DeliveredMealsByDishController implements Controller {
 
     public DeliveredMealsByDishController() {
 
-        this.service = new PrevisionsService();
+        this.service.getInstance();
     }
 
     /**

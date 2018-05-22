@@ -19,10 +19,23 @@ import java.util.List;
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
 class PrevisionsService implements Controller {
+    
+    private static PrevisionsService instance = new PrevisionsService(); 
 
     //Construtor of service
-    public PrevisionsService() {
-
+    private PrevisionsService() {
+        
+        
+    }
+    
+    /**
+     * Implementing the singleton pattern
+     * 
+     * @return 
+     */
+    public PrevisionsService getInstance() {
+        
+        return this.getInstance();
     }
 
     /**
