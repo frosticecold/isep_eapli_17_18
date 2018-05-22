@@ -212,7 +212,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
 
     @Override
     public String toString() {
-        return "Menu " + "id=" + id + ", menuState=" + menuState + ", ";
+        return "Menu " + "id=" + id + ", menuState=" + menuState + ", " + "Period: " + period;
     }
 
 }
