@@ -169,24 +169,6 @@ public interface RepositoryFactory {
 
     AllergenProfileRepository allergenProfiles();
 
-    /**
-     * Reasons Repository
-     *
-     * @author Raúl Correia
-     *
-     * @return
-     */
-    ReasonRepository reasons();
-
-    /**
-     * Reason Repository with TransationalContext
-     *
-     * @author Raúl Correia
-     * @param autoTx
-     * @return
-     */
-    ReasonRepository reasons(TransactionalContext autoTx);
-
     AlertRepositoryBookings alertRepositoryBookings();
 
     AlertRepositoryLimits alertRepositoryLimits();

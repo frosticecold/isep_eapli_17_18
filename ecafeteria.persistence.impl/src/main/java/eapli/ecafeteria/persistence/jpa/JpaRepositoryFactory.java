@@ -196,27 +196,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaAllergenProfileRepository();
     }
 
-    /**
-     * Returns a JpaReasonsRepository
-     *
-     * @return
-     */
-    @Override
-    public ReasonRepository reasons() {
-        return new JpaReasonsRepository(Application.settings().getPersistenceUnitName());
-    }
-
-    /**
-     * Returns a JPAReasonsRepository with TransactionalContext
-     *
-     * @param autoTx
-     * @return
-     */
-    @Override
-    public ReasonRepository reasons(TransactionalContext autoTx) {
-        return new JpaReasonsRepository(autoTx);
-    }
-
     @Override
     public AlertRepositoryBookings alertRepositoryBookings() {
         return new JPAAltertRepositoryBookings();

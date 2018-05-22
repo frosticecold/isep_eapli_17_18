@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.domain.reasons;
+package eapli.ecafeteria.domain.deactivationreasons;
 
 import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.framework.domain.ddd.AggregateRoot;
+import eapli.framework.domain.ddd.ValueObject;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,8 +21,7 @@ import javax.persistence.OneToOne;
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
-@Entity
-public class Reason implements AggregateRoot<SystemUser>, Serializable {
+public class Reason implements ValueObject,Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +36,7 @@ public class Reason implements AggregateRoot<SystemUser>, Serializable {
      * Reason type
      */
     @Enumerated(EnumType.ORDINAL)
-    private ReasonType reason_type;
+    private DeactivationReasonType reason_type;
 
     /**
      * Admin's comment
@@ -47,7 +47,7 @@ public class Reason implements AggregateRoot<SystemUser>, Serializable {
     protected Reason() {
     }
 
-    public Reason(final SystemUser user, final ReasonType reasonType, final String comment) {
+    public Reason(final SystemUser user, final DeactivationReasonType reasonType, final String comment) {
         if (user == null || reasonType == null || comment == null) {
             throw new IllegalArgumentException("Arguments cannot be null.");
         }
@@ -60,25 +60,7 @@ public class Reason implements AggregateRoot<SystemUser>, Serializable {
         return comment;
     }
 
-    public ReasonType getReasonType() {
+    public DeactivationReasonType getReasonType() {
         return reason_type;
     }
-
-    @Override
-    public boolean sameAs(Object other) {
-        if (!(other instanceof Reason)) {
-            return false;
-        }
-        final Reason other_reason = (Reason) other;
-        if (this == other_reason) {
-            return true;
-        }
-        return user.equals(other_reason.user) && reason_type == other_reason.reason_type && comment.equals(other_reason.comment);
-    }
-
-    @Override
-    public SystemUser id() {
-        return user;
-    }
-
 }
