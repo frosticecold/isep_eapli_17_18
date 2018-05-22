@@ -32,7 +32,6 @@
     <class>eapli.ecafeteria.domain.cafeteriauser.AllergenProfile</class>
     <class>eapli.ecafeteria.domain.reasons.Reason</class>
     <class>eapli.ecafeteria.domain.deactivationreasons.DeactivationReasonType</class>
-    <class>eapli.ecafeteria.domain.authz.DeactivationReason</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ecafeteria"/>
       <!--

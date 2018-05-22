@@ -1,6 +1,7 @@
 package eapli.ecafeteria.domain.authz;
 
 import eapli.ecafeteria.domain.deactivationreasons.LoginException;
+import eapli.ecafeteria.persistence.DeactivationReasonTypeRepository;
 import java.util.Optional;
 
 import eapli.ecafeteria.persistence.PersistenceContext;
@@ -36,13 +37,11 @@ public class AuthenticationService {
         /**
          * Case the user is not active, throw a LoginException
          */
-        /*
+        
         if (!user.get().isActive()) {
-            ReasonRepository reasonrepo = PersistenceContext.repositories().reasons();
-            Reason why = reasonrepo.findReasonBySystemUser(user.get()).get();
-            throw new LoginException("User is deactivated:" + why.getReasonType() + "\nComment: " + why.getComment());
+            DeactivationReason why = user.get().getReason();
+            throw new LoginException(why);
         }
-*/
         if (user.get().passwordMatches(pass) && user.get().isActive()) {
             if (anyActionRight(onlyWithThis) || user.get().isAuthorizedTo(onlyWithThis)) {
                 return Optional.of(createSessionForUser(user.get()));

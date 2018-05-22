@@ -231,7 +231,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
         // cannot deactivate an inactive user
         this.active = false;
         this.deactivatedOn = deactivatedOn;
-
+        this.deactivationReason= new DeactivationReason(reason, comment);
     }
 
     public DeactivationReason getReason() {

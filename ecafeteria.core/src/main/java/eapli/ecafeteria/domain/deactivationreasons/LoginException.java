@@ -5,6 +5,8 @@
  */
 package eapli.ecafeteria.domain.deactivationreasons;
 
+import eapli.ecafeteria.domain.authz.DeactivationReason;
+
 /**
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
@@ -15,7 +17,7 @@ public class LoginException extends RuntimeException {
         super(message);
     }
 
-    public LoginException(DeactivationReasonType reason) {
+    public LoginException(DeactivationReason reason) {
         super(reason.toString());
     }
 
