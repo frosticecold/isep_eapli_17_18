@@ -1,6 +1,7 @@
 package eapli.ecafeteria.persistence.jpa;
 
 import eapli.ecafeteria.domain.booking.BookingState;
+import eapli.ecafeteria.domain.booking.BookingState.BookingStates;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.dto.AlertBookingDTO;
 import eapli.ecafeteria.persistence.AlertRepositoryBookings;
@@ -17,6 +18,58 @@ public class JPAAltertRepositoryBookings extends CafeteriaJpaRepositoryBase<Aler
     @Override
     public List<AlertBookingDTO> getNOBookings() {
         
+            BookingState notServed = new BookingState();
+            notServed.changeToNotServed();
+
+            Query q = entityManager().createQuery("SELECT meal FROM Meal meal ", Meal.class);
+
+            List<AlertBookingDTO> lista = new ArrayList<>();
+            for(Object meal: q.getResultList()){
+                
+                
+                Query q2 = entityManager().
+                createQuery("SELECT COUNT(booking) FROM Booking booking"
+                + " WHERE booking.meal = :meal"
+                + " AND booking.bookingState = :bookingState", Long.class)
+                .setParameter("bookingState", notServed)
+                .setParameter("meal", (Meal)meal);
+                
+//                Query q2 = entityManager().
+//                createQuery("SELECT COUNT(*) FROM Booking booking"
+//                + " JOIN booking.meal m"
+//                + " WHERE booking.bookingState.actualBookingState = :bookingState");   
+             
+                //q.setParameter("bookingState", notServed);
+                
+                
+                
+                Query q3 = entityManager().
+                createQuery("SELECT mpi.quantityNumber FROM MenuPlanItem mpi"
+                + " WHERE mpi.currentMeal = :meal")
+                .setParameter("meal", meal);
+                
+                
+                lista.add(new AlertBookingDTO((Meal)meal, (long)q2.getSingleResult(), (long)q3.getSingleResult()));
+            }
+            
+            
+            return lista;
+//          isto returnava o número de bookings da meal especifica
+//                Query q = entityManager().
+//                createQuery("SELECT COUNT(*) as N_OF_BOOKINGS FROM Booking booking "
+//                + "WHERE b.meal_id=:meal.id "
+//                + " AND b.bookingstate = :bookingState");
+//
+//                q.setParameter("bookingState", BookingState.BookingStates.NOT_SERVED);
+//                q.setParameter("meal", meal);
+
+//          isto returnava o número planeado para cada prato
+//                Query q = entityManager().
+//                createQuery("SELECT mpi.QUANTITY FROM MENUPLANITEM mpi "
+//                + "WHERE mpi.meal_id=:meal.id");
+//
+//                q.setParameter("meal", meal);
+
           //usando a query que tinhamos ficava algo deste genero:
           
           //procurei uma maneira de conseguir guardar 3 elementos(meal, n_booking, n_planeadas)
@@ -52,47 +105,6 @@ public class JPAAltertRepositoryBookings extends CafeteriaJpaRepositoryBase<Aler
 //          usar tambem o repositorio das meals e fazer isto:
 //          era recebido uma meal por parametro(depois de se ir buscar a lista de meals ao repo das meals)
 
-            Query q = entityManager().createQuery("SELECT meal FROM Meal meal ", Meal.class);
-
-            List<AlertBookingDTO> lista = new ArrayList<>();
-            for(Object meal: q.getResultList()){
-                
-                Query q2 = entityManager().
-                createQuery("SELECT COUNT(*) FROM Booking booking"
-                + " JOIN booking.meal m"
-                + " WHERE b.bookingstate = :bookingState");      
-                
-                q.setParameter("bookingState", BookingState.BookingStates.NOT_SERVED);
-                q.setParameter("meal", (Meal)meal);
-                
-                
-                Query q3 = entityManager().
-                createQuery("SELECT mpi.QUANTITY FROM MENUPLANITEM mpi"
-                + " WHERE mpi.meal_id=:meal.id");
-
-                q.setParameter("meal", meal);
-                
-                
-                lista.add(new AlertBookingDTO((Meal)meal, (int)q2.getSingleResult(), (int)q3.getSingleResult()));
-            }
-            
-            
-            return lista;
-//          isto returnava o número de bookings da meal especifica
-//                Query q = entityManager().
-//                createQuery("SELECT COUNT(*) as N_OF_BOOKINGS FROM Booking booking "
-//                + "WHERE b.meal_id=:meal.id "
-//                + " AND b.bookingstate = :bookingState");
-//
-//                q.setParameter("bookingState", BookingState.BookingStates.NOT_SERVED);
-//                q.setParameter("meal", meal);
-
-//          isto returnava o número planeado para cada prato
-//                Query q = entityManager().
-//                createQuery("SELECT mpi.QUANTITY FROM MENUPLANITEM mpi "
-//                + "WHERE mpi.meal_id=:meal.id");
-//
-//                q.setParameter("meal", meal);
 
 
     }

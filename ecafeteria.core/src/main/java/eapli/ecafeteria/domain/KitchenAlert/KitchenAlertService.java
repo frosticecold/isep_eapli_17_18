@@ -35,6 +35,9 @@ public class KitchenAlertService extends Observable{
         float[] limits =  {0.7f , 0.9f};                     //myLimits.getLimits();
         List<AlertBookingDTO> dtoList =  new ArrayList<>();//myBookings.getNOBookings();
         
+        //quando tratarmos da exceçao é so substituir por isto
+        //List<AlertBookingDTO> dtoList = myBookings.getNOBookings();
+        
         dtoList.add(new AlertBookingDTO(new Meal(new Dish(new DishType("Ola", "nice")
                                                 , null, null)
                                         , MealType.LUNCH, Calendar.getInstance(), null), 10, 10));
