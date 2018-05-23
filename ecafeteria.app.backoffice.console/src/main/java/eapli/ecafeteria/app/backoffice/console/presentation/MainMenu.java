@@ -37,24 +37,23 @@ import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterial
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterBatchUsedInMealAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMadeMealsAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMaterialAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ListBatchesByMealAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDateUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDishUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.SearchBatchUsageAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.BookedMealsReportingUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.ConsultDishRatingUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.ConsultMealRatingUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.CopyMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.MainMenuDeliveredMealsReportingUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.MealsByMenuPlanUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.showDishAcceptanceRateUI;
-import eapli.ecafeteria.application.KitchenAlert.KitchenAlertController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.application.kitchen.KitchenWatchDogo;
-import eapli.ecafeteria.domain.KitchenAlert.WatchDog;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.framework.actions.ReturnAction;
-import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.Menu;
@@ -114,6 +113,7 @@ public class MainMenu extends AlertUI {
     private static final int KITCHEN_CREATE_OR_EDIT_MENUPLAN = 6;
     private static final int KITCHEN_CLOSE_MENU_PLAN = 7;
     private static final int KITCHEN_END_SHIFT = 9;
+    private static final int KITCHEN_LIST_BATCHES_BY_MEAL = 10;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
@@ -131,6 +131,8 @@ public class MainMenu extends AlertUI {
     private static final int MENU_COPY_OPTION = 2;
     private static final int MENU_PUBLISH_OPTION = 3;
     private static final int MENU_PREVIEW_OPTION = 4;
+    private static final int MENU_CONSULT_MEAL_RATING_OPTION=5;
+    private static final int MENU_CONSULT_DISH_RATING_OPTION=6;
 
     //PREVISIONS REPORTING
     private static final int PREVISIONS_BOOKEDMEALS_OPTION = 1;
@@ -322,11 +324,14 @@ public class MainMenu extends AlertUI {
         menu.add(new MenuItem(KITCHEN_CREATE_OR_EDIT_MENUPLAN, "Create or edit menuplan", new CreateMenuPlanAction()));
 
         menu.add(new MenuItem(KITCHEN_CLOSE_MENU_PLAN, "Close menuplan", new CloseMenuPlanAction()));
-
+        
         final Menu kitchenReportMenu = buildBookingReportingMenu();
+        
         menu.add(new SubMenu(REPORTING_BOOKING_SUB_MENU, kitchenReportMenu, new ShowVerticalSubMenuAction(kitchenReportMenu)));
 
         menu.add(new MenuItem(KITCHEN_END_SHIFT, "End Shift", new EndShiftAction()));
+         
+        menu.add(new MenuItem(KITCHEN_LIST_BATCHES_BY_MEAL, "List batches by meal", new ListBatchesByMealAction()));
 
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
@@ -373,6 +378,8 @@ public class MainMenu extends AlertUI {
         menu.add(new MenuItem(MENU_COPY_OPTION, "Copy Menu", () -> new CopyMenuUI().show()));
         menu.add(new MenuItem(MENU_PUBLISH_OPTION, "Publish Menus", () -> new PublishMenuUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
+        menu.add(new MenuItem(MENU_CONSULT_MEAL_RATING_OPTION, "consult meal rating", () -> new ConsultMealRatingUI().show()));
+        menu.add(new MenuItem(MENU_CONSULT_DISH_RATING_OPTION, "Consult Dish rating", () -> new ConsultDishRatingUI().show()));
 
         return menu;
     }

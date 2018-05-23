@@ -10,8 +10,9 @@ __________________
 REGRAS DE NEGÒCIO
 __________________
 
-* Cria uma nova ementa a partir de uma previamente criada;
-* É necessário uma nova data para a ementa editada;
+* Cria um Menu a partir de outro existente;
+* É necessário uma nova data de início e data de fim para o novo Menu;
+* É necessário copiar todas as Meals associadas ao Menu copiado para o novo Menu;
 
 _______________
 

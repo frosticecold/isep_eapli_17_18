@@ -82,4 +82,10 @@ public class Material implements AggregateRoot<String>, Serializable {
     public String acronym() {
         return acronym;
     }
+
+    @Override
+    public String toString() {
+        return "Material{" + "acronym=" + acronym + ", description=" + description + '}';
+    }
+    
 }
