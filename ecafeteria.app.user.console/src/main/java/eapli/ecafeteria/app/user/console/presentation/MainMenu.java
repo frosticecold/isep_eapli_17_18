@@ -10,7 +10,6 @@ import eapli.ecafeteria.app.user.console.presentation.bookings.AddAlergenProfile
 import eapli.ecafeteria.app.user.console.presentation.bookings.BookingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CancelBookingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CheckBookingsByUserUI;
-import eapli.ecafeteria.app.user.console.presentation.bookings.ConsultDishRatingUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CreateAlergenProfileAction;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ExportMovementsUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ListMenuUI;
@@ -54,7 +53,6 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int CHECK_BOOKINGS = 6;
     private static final int VIEW_CALORIC_CONSUMPTION = 8;
     private static final int EXPORT = 9;
-    private static final int CONSULT_DISH_RATING = 10;
 
     // ACCOUNT MENU
     private static final int LIST_MOVEMENTS_OPTION = 1;
@@ -128,7 +126,6 @@ class MainMenu extends CafeteriaUserBaseUI {
         menu.add(new MenuItem(CHECK_BOOKINGS, "Check Bookings of Current User", () -> new CheckBookingsByUserUI().show()));
         menu.add(new MenuItem(VIEW_CALORIC_CONSUMPTION, "View caloric consumption", () -> new ViewCaloricConsumptionUI().show()));
         menu.add(new MenuItem(EXPORT, "Export Movements", () -> new ExportMovementsUI().show()));
-        menu.add(new MenuItem(CONSULT_DISH_RATING, "Consult Dish rating", () -> new ConsultDishRatingUI().show()));
 
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
         return menu;
