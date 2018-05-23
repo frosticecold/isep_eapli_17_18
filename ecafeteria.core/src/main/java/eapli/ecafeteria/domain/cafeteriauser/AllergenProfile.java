@@ -7,6 +7,7 @@ package eapli.ecafeteria.domain.cafeteriauser;
 
 import eapli.ecafeteria.domain.dishes.Alergen;
 import eapli.ecafeteria.domain.dishes.AlergenEnum;
+import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import javax.persistence.OneToOne;
  * @author utilizador
  */
 @Entity
-public class AllergenProfile implements Serializable {
+public class AllergenProfile implements  Serializable {
 
     @Id
     @GeneratedValue
@@ -58,7 +59,10 @@ public class AllergenProfile implements Serializable {
     public CafeteriaUser user() {
         return user;
     }
-    
+
+  
+
+ 
     
 
 }
