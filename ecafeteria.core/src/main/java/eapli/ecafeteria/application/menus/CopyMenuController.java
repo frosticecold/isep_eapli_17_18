@@ -19,6 +19,7 @@ import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.persistence.repositories.TransactionalContext;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -36,11 +37,13 @@ import java.util.logging.Logger;
  */
 public class CopyMenuController implements Controller {
 
-    // PersistenceContext.repositories().buildTransactionalContext();
+  
     private final MenuRepository menurepo = PersistenceContext.repositories().menus();
     private final MealRepository mealrepo = PersistenceContext.repositories().meals();
     private final DishRepository dishrepo = PersistenceContext.repositories().dishes();
     private final DishTypeRepository dishtyperepo = PersistenceContext.repositories().dishTypes();
+    private final TransactionalContext tx = PersistenceContext.repositories().buildTransactionalContext();
+    private final MealRepository mealTx = PersistenceContext.repositories().mealRepositoryAutoTx(tx);
     private Menu m_menu;
     private Calendar selectedDay;
     private Iterable<DishType> listOfDishTypes;
