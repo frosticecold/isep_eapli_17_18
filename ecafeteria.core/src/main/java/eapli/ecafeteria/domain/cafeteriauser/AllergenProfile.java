@@ -50,7 +50,10 @@ public class AllergenProfile implements  Serializable {
 
     public boolean addAlergen(Alergen a) {
         return alergenList.add(a);
-    }
+    }    
+    
+    
+    
 
     public boolean removeAlergen(Alergen a) {
         return alergenList.remove(a);
