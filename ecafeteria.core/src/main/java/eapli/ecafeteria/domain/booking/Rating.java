@@ -67,7 +67,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         this.reply = REPLY_BY_DEFAULT;
     }
 
-    public Rating(String reply, CafeteriaUser user, Booking booking, int rating, String comment) {
+    public Rating(String reply, CafeteriaUser user, Booking booking, int rating, String comment, Calendar date) {
         if (booking == null || rating < 1 || rating > 5 || comment == null) {
             throw new IllegalArgumentException();
         }
@@ -75,7 +75,8 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         this.rating = rating;
         this.booking = booking;
         this.comment = comment;
-        this.reply = reply;
+        this.date = date;
+        this.reply = REPLY_BY_DEFAULT;
     }
 
     /**
