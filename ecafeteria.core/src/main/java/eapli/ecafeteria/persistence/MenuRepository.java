@@ -28,9 +28,11 @@ public interface MenuRepository extends DataRepository<Menu, Long> {
      * @return Menu if found, null ifnot
      */
     Optional<Menu> findMenuWithinPeriod(final Calendar startDate, final Calendar endDate);
-    
+
     List<Menu> findLatestMenus();
-    
+
     Optional<Menu> findMenuOnDate(Calendar cal);
+
+    Optional<Menu> cloneMenu(Menu menu);
 
 }

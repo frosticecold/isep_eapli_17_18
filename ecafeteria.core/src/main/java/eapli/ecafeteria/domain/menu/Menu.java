@@ -2,9 +2,7 @@ package eapli.ecafeteria.domain.menu;
 
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -88,6 +86,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         period = new Period(startingOfWeek, endOfWeek);
     }
 
+
     public Period period() {
         return period;
     }
@@ -125,17 +124,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
 
     public Iterable<Calendar> getWorkWeekDaysIterable() {
         return period.getWorkingDaysIterable();
-    }
-
-    public List<Calendar> getStartAndEndDates() {
-        List<Calendar> list = new ArrayList<>();
-        Map<Integer, Calendar> workWeekDays = getWorkWeekDays();
-        list.add(workWeekDays.get(0));
-        int size = workWeekDays.size();
-        if (size > 0) {
-            list.add(workWeekDays.get(size - 1));
-        }
-        return list;
     }
 
     /**
@@ -212,7 +200,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
 
     @Override
     public String toString() {
-        return "Menu " + "id=" + id + ", menuState=" + menuState + ", ";
+        return "Menu " + "id=" + id + ", menuState=" + menuState + ", " + period.toString();
     }
 
 }

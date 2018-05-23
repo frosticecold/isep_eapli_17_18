@@ -41,9 +41,10 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
         Calendar cal = Console.readCalendar("Insert desired day (DD-MM-YYYY)");
         //====================================lIST MEAL============================================
         Iterable<Meal> mealList = null;
-        List<Meal> listMeal = new ArrayList<>();
+        List<Meal> listMealPublish = new ArrayList<>();
         Meal choosedMeal = null;
-        Username user = AuthorizationService.session().authenticatedUser().id();
+        Username cafeteriaUser = AuthorizationService.session().authenticatedUser().id();
+     
 
         int option = 0;
 
@@ -60,32 +61,33 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
 
         }
 
-        if (controller.isAlreadyBooked(user, mealType, cal)) {
+        if (controller.isAlreadyBooked(cafeteriaUser,mealType, cal)) {
             System.out.println("You already booked a meal for this date and this mealtype!");
             return false;
         }
 
-        mealList = controller.listMeals(cal, mealType);
         Calendar choosedDate = cal;
         if (controller.is24hBeforeMeal(choosedDate, mealType) == false) {
             System.out.println("Only avaliable to do a booking in 24hours before the meal date!");
             return false;
         }
 
+        mealList = controller.listMeals(cal, mealType);
+
         if (controller.mealListIsEmpty(mealList)) {
             System.out.println("\nThere are no meals in that conditions.\n");
             return false;
         }
 
-        listMeal = controller.mealListIfMenuIsPublic(mealList);
+        listMealPublish = controller.mealListIfMenuIsPublic(mealList);
 
-        if (!controller.menuOfMealListIsPublic(listMeal)) {
+        if (!controller.menuOfMealListIsPublic(listMealPublish)) {
             System.out.println("\nThere are no meals published.\n");
             return false;
         }
 
         SelectWidget<List<Meal>> selectWidget
-                = new SelectWidget("Select a meal", listMeal);
+                = new SelectWidget("Select a meal", listMealPublish);
         selectWidget.show();
         try {
             int index = selectWidget.selectedOption() - 1;
@@ -93,7 +95,7 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
                 return false;
             }
 
-            choosedMeal = controller.selectMeal(index, listMeal);
+            choosedMeal = controller.selectMeal(index, listMealPublish);
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -155,13 +157,13 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
         //===================================PAYMENT AND PERSIST==================================
         if (option2 == 1) {
 
-            if (!controller.hasEnoughMoney(user, choosedMeal)) {
+            if (!controller.hasEnoughMoney(cafeteriaUser,choosedMeal)) {
                 System.out.println("USER HASN'T ENOUGH MONEY\nPlease charge your card before booking a meal");
                 return false;
             } else {
                 try {
                     BookingState bookingState = new BookingState();
-                    if (controller.confirmBooking(user, cal, bookingState, choosedMeal)) {
+                    if (controller.confirmBooking(cafeteriaUser, cal, bookingState, choosedMeal)) {
                         System.out.println("Success. Booking was created.");
                         if (!limitAlert) {
                             System.out.println("===========<<<<<<<<<<ALERT>>>>>>>>>>===========");

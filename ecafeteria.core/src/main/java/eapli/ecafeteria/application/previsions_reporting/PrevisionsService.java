@@ -15,35 +15,36 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
+ * Using the singleton pattern
  *
  * @author PedroEmanuelCoelho 1131485@isep.ipp.pt
  */
 class PrevisionsService implements Controller {
     
-    private static PrevisionsService instance = new PrevisionsService(); 
+    private static PrevisionsService instance = new PrevisionsService();
+    
 
     //Construtor of service
     private PrevisionsService() {
         
-        
     }
     
+    
     /**
-     * Implementing the singleton pattern
-     * 
+     * Lets others classes use this service
      * @return 
      */
-    public PrevisionsService getInstance() {
+    public static PrevisionsService use() {
         
-        return this.getInstance();
+        return instance;
     }
-
+    
     /**
      * returns a list with all the meals that have booked bookings
      *
      * @return
      */
-    public Iterable<Booking> prepareBookedMealsList() {
+    public static Iterable<Booking> prepareBookedMealsList() {
 
         Iterable<Booking> bookedMeals = PersistenceContext.repositories().booking().findBookedBookings();
 
@@ -55,7 +56,7 @@ class PrevisionsService implements Controller {
      *
      * @return
      */
-    public Long numberBookedMeals() {
+    public static Long numberBookedMeals() {
 
         return PersistenceContext.repositories().booking().countBookedBookings();
     }
@@ -63,7 +64,7 @@ class PrevisionsService implements Controller {
     /**
      * returns a list with all meals associated to a menu plan
      */
-    public List<Meal> prepareMealsByMenuPlanList() {
+    public static List<Meal> prepareMealsByMenuPlanList() {
 
         List<MenuPlan> menuPlans = PersistenceContext.repositories().menuPlan().getActiveMenuPlans();
 
@@ -93,7 +94,7 @@ class PrevisionsService implements Controller {
      *
      * @return
      */
-    public List<DeliveryRegistry> deliveredMealsByDate(Calendar date) {
+    public static List<DeliveryRegistry> deliveredMealsByDate(Calendar date) {
 
         List<DeliveryRegistry> meals = PersistenceContext.repositories().deliveryRegistryRepository().deliveredMealsByDate(date);
 
@@ -103,7 +104,7 @@ class PrevisionsService implements Controller {
     /**
      * Returns a list of delivered meals by a certain meal
      */
-    public List<DeliveryRegistry> deliveredMealsByMeal(Meal meal) {
+    public static List<DeliveryRegistry> deliveredMealsByMeal(Meal meal) {
 
         List<DeliveryRegistry> list = new ArrayList();
 
@@ -150,7 +151,7 @@ class PrevisionsService implements Controller {
      * @param menu
      * @return
      */
-    public List<DeliveryRegistry> deliveredMealsByMenu(Menu menu) {
+    public static List<DeliveryRegistry> deliveredMealsByMenu(Menu menu) {
 
         List<DeliveryRegistry> list = new ArrayList();
 
@@ -160,7 +161,7 @@ class PrevisionsService implements Controller {
 
         for (int m = 0; m < meals.size(); m++) {
 
-            listTmp = this.deliveredMealsByMeal(meals.get(m));
+            listTmp = PrevisionsService.use().deliveredMealsByMeal(meals.get(m));
 
             for (int d = 0; d < listTmp.size(); d++) {
 
@@ -177,7 +178,7 @@ class PrevisionsService implements Controller {
      * @param type
      * @return
      */
-    public List<DeliveryRegistry> deliveredMealsByType(MealType type) {
+    public static List<DeliveryRegistry> deliveredMealsByType(MealType type) {
 
         List<DeliveryRegistry> list = new ArrayList();
 
@@ -187,7 +188,7 @@ class PrevisionsService implements Controller {
 
         for (int m = 0; m < meals.size(); m++) {
 
-            listTmp = this.deliveredMealsByMeal(meals.get(m));
+            listTmp = PrevisionsService.use().deliveredMealsByMeal(meals.get(m));
 
             for (int d = 0; d < listTmp.size(); d++) {
 
@@ -203,7 +204,7 @@ class PrevisionsService implements Controller {
      *
      * @return
      */
-    public double dishAcceptanceRate() {
+    public static double dishAcceptanceRate() {
 
         double rate = 0.0;
 
@@ -238,7 +239,7 @@ class PrevisionsService implements Controller {
      * @param dish
      * @return
      */
-    public List<DeliveryRegistry> deliveredMealsByDish(Dish dish) {
+    public static  List<DeliveryRegistry> deliveredMealsByDish(Dish dish) {
 
         List<DeliveryRegistry> list = new ArrayList();
 
@@ -248,7 +249,7 @@ class PrevisionsService implements Controller {
 
         for (int m = 0; m < meals.size(); m++) {
 
-            listTmp = this.deliveredMealsByMeal(meals.get(m));
+            listTmp = PrevisionsService.use().deliveredMealsByMeal(meals.get(m));
 
             for (int l = 0; l < listTmp.size(); l++) {
 

@@ -76,7 +76,7 @@ public class AllergenProfileBootstrapper implements Action {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      *
-     * @author Rui Almeida <1160818> && Ricardo Sousa <>
+     * @author Rui Almeida <1160818> && Ricardo Sousa <1160900>
      */
     private void register(AllergenProfile profile) throws DataConcurrencyException, DataIntegrityViolationException {
         allergenProfileRepo.save(profile);

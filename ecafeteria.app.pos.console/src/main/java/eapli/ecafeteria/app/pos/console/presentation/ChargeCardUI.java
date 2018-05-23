@@ -7,7 +7,6 @@ package eapli.ecafeteria.app.pos.console.presentation;
 
 import eapli.ecafeteria.application.pos.ChargeCardController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.domain.CreditTransaction.ChargeCreditsEvent;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
@@ -32,7 +31,9 @@ public class ChargeCardUI extends AbstractUI {
             final String mecanographicNumber = Console.readLine("Enter Mecanographic Number:");
 
             String currentBalanceAndUser = theController.findCafeteriaUserByMecanographicNumber(mecanographicNumber);
-
+            if (currentBalanceAndUser.equals("Error has occured\n")) {
+                return false;
+            }
             System.out.println("Before Transaction: " + currentBalanceAndUser);
             final double tempCredits = Console.readDouble("Please enter the amount of Credits to charge:");
 

@@ -3,6 +3,7 @@ package eapli.ecafeteria.domain.cafeteriauser;
 import eapli.ecafeteria.domain.authz.Name;
 import eapli.ecafeteria.domain.authz.Password;
 import eapli.ecafeteria.domain.authz.Username;
+import eapli.ecafeteria.domain.cafeteriauser.strategy.MechanographicValidator;
 import eapli.framework.domain.EmailAddress;
 import eapli.framework.domain.ddd.AggregateRoot;
 import eapli.framework.util.DateTime;
@@ -15,6 +16,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 /**
@@ -36,10 +38,12 @@ import javax.persistence.Version;
 public class SignupRequest implements AggregateRoot<Username>, Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Version
     private Long version;
-
+    
+    @Transient
+    private String userType;
     @EmbeddedId
     private Username username;
     private Password password;
@@ -51,20 +55,23 @@ public class SignupRequest implements AggregateRoot<Username>, Serializable {
     private ApprovalStatus approvalStatus;
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
+    
+    @Transient
+    MechanographicValidator validator = new MechanographicValidator();
 
-    public SignupRequest(final String username, final String password, final String firstName, final String lastName,
+    public SignupRequest(final String userType, final String username, final String password, final String firstName, final String lastName,
             final String email, String mecanographicNumber) {
-        this(username, password, firstName, lastName, email, mecanographicNumber, DateTime.now());
+        this(userType, username, password, firstName, lastName, email, mecanographicNumber, DateTime.now());
     }
 
-    public SignupRequest(final String username, final String password, final String firstName, final String lastName,
+    public SignupRequest(final String userType, final String username, final String password, final String firstName, final String lastName,
             final String email, String mecanographicNumber, final Calendar createdOn) {
         if (Strings.isNullOrEmpty(username) || Strings.isNullOrEmpty(password) || Strings.isNullOrEmpty(firstName)
                 || Strings.isNullOrEmpty(lastName) || Strings.isNullOrEmpty(email)
-                || Strings.isNullOrEmpty(mecanographicNumber)) {
+                || Strings.isNullOrEmpty(mecanographicNumber) || validator.isValid(userType, mecanographicNumber)) {
             throw new IllegalArgumentException();
         }
-
+        this.userType = userType;
         this.username = new Username(username);
         this.password = new Password(password);
         this.name = new Name(firstName, lastName);
@@ -169,5 +176,9 @@ public class SignupRequest implements AggregateRoot<Username>, Serializable {
 
     public Password password() {
         return this.password;
+    }
+    
+    public String userType() {
+        return this.userType;
     }
 }
