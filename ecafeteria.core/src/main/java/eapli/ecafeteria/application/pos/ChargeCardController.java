@@ -44,6 +44,9 @@ public class ChargeCardController implements Controller, Observer {
         this.mecNumber = mecanographicNumber;
         Optional<CafeteriaUser> user = service.findCafeteriaUserByMecNumber(mecanographicNumber);
         this.user = user.get();
+        if(this.user == null){
+            return "Error has occured\n";
+        }
         return this.user.cafeteriaUserNameAndCurrentBalance();
     }
 
@@ -86,10 +89,10 @@ public class ChargeCardController implements Controller, Observer {
      * @return true if there was an error to notify the current system user
      * @throws DataIntegrityViolationException errors deleting the transaction
      */
-    public void checkMovementPersistence() throws DataIntegrityViolationException, Exception {
+    public void checkMovementPersistence() throws DataIntegrityViolationException {
         if (errorFlag) {
             tr.delete(t);
-            throw new Exception("Error occurred in the charging movement, please repeat or contact support.");
+            throw new DataIntegrityViolationException("Error occurred in the charging movement, please repeat or contact support.");
         }
     }
 

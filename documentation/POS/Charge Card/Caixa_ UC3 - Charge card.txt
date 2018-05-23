@@ -4,49 +4,86 @@ participant ":User" as user
 participant ":ChargeCardUI" as ccui
 participant ":ChargeCardController" as controller
 participant ":CafeteriaUserService" as srv
-participant ":TransactionalContext" as txctx
-participant ":TransactionRepository" as trp
-participant ":PersistenceContext" as pcontext
-participant ":RepositoryFactory" as fact
-participant ":CafeteriaUserRepository" as userrep
-participant ":"TransactionRepository" as trrepo
+
 participant ":Money" as credit
 participant ":Transaction" as tr
-participant ":CreditRecharge" as chrg
 
-user->ccui: Inserts mechanographicNumber number
+participant ":ChargeCreditsEvent" as event
+participant ":PersistenceContext" as pcontext
+
+participant ":TransactionRepository" as trp
+participant ":RepositoryFactory" as fact
+participant ":CafeteriaUserRepository" as userrep
+participant ":ChargeCreditsEvent" as observer
+participant ":CafeteriaUser" as cafUser
+
+
 ccui->*controller : create()
-ccui -> controller : getCafeteriaUser(mechanographicNumber)
-controller->trp:create()
 controller -> srv: create()
-controller -> txctx: create()
-controller->controller:TxCtx = PersistenceContext.repositories().buildTransactionalContext()
-controller -> srv: user = findCafeteriaUserByMecNumber(mechanographicNumber)
+
 srv->pcontext:repositories()
 pcontext->fact:create()
 pcontext->fact:cafeteriaUsers()
 fact -> userrep : create()
+controller -> observer : create()
+
+
+observer->srv: create()
+srv->pcontext:repositories()
+pcontext->fact:create()
+pcontext->fact:cafeteriaUsers()
+controller->trp:create()
+
+user->ccui: Inserts mechanographicNumber number
+ccui -> controller : getCafeteriaUser(mechanographicNumber)
+controller -> srv: user = findCafeteriaUserByMecNumber(mechanographicNumber)
 srv->userrep:user = findByMecanographicNumber(mechanographicNumber)
-userrep-->srv :user = findByMecanographicNumber(mechanographicNumber)
+userrep->cafUser: create()
+
+userrep-->srv :
 srv-->controller:
 controller-->ccui:
 ccui-->user:Shows the cafeteria data and current balance
 user->ccui:Insert transaction value to charge card
-ccui->controller:chargeCafeteriaUserCard(user , creditToCharge)
+ccui->controller:createMovementCharging(creditToCharge)
 controller->credit:credit = create(valueToCharge, Currency.getInstance("EUR"))
-controller->chrg:transaction = create()
-controller->tr:transaction.movement(user , credit)
-tr->chrg:transaction.movement(user , credit)
-chrg-->tr:
+
+controller->tr:t = transaction(user , transactionType , credit)
+
 tr-->controller:
-trp->pcontext:repositories()
-pcontext->trrepo:transactionRepository()
-controller->txctx:beginTransaction()
-txctx->pcontext:beginTransaction()
-pcontext->trrepo:beginTransaction()
-pcontext->trrepo:save(transaction)
-controller->txctx:beginTransaction()
-txctx->pcontext:endTransaction()
-pcontext->trrepo:endTransaction()
-controller-->ccui:
+
+controller-->ccui: t != null
+
+ccui->controller:saveMovementChargingTransaction()
+controller->observer: observer.addObserver(this.controller)
+pcontext->trp:transactionRepository()
+controller->pcontext:t = transactionsave( t )
+
+pcontext->trp:save(transaction)
+trp-->pcontext:
+pcontext-->controller: return t;
+controller->tr: t.addObserver(observer)
+tr->tr: addObserver(o)
+controller->tr:t.alterState()
+tr->tr:changeState()
+controller->tr:t.notifyObservers(user)
+tr->observer:notifyObservers(user)
+
+observer -> observer: update((Transaction) obsevable , (CafeteriaUser)user)
+observer -> observer:updateCafeteriaUserBalance()
+observer->srv:save(user)
+observer->cafUser:addCredits(obeservable.retrieveQuantityOfMoneyOfTheMovement() )
+srv->pcontext: repositories()
+pcontext->userrep:save(user)
+observer->controller:notifyObservers(user)
+
+controller->controller:update(update(Observable o, (CafeteriaUser) updatedUser)
+
+controller->credit:updateBalance = updatedUser.getCurrentMoney()
+controller->srv:user = service.findCafeteriaUserByMecNumber(mecNumber);
+controller->credit:money = user.getCurrentMoney()
+controller->credit: !updatedBalance.equals( money ) ? errorFlag = true : errorFlag = false 
+
+ccui->controller:checkMovementPersistence()
+
 ccui-->user:Confirms the success of the operation and shows new balance

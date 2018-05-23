@@ -1,0 +1,27 @@
+Este caso de uso é:
+UC3 - Charge card (Carregar Cartão)
+
+Este caso de uso tem como objectivo a o carregamento de cartao de um dado Cafeteria User,
+Com o seguinte fluxo basico, o System user apos fazer login e escolher faer um carregamento, terá que podir 
+ao cafeteria user o seu numero mecanografico para poder certificar que o utilizador faz realmente parte do sistema.
+Apos obter o utilizador será enviado ao system user o nome de utilizador assim como o seu saldo corrente.
+Agora o sistema vai pedir para ser inserido um dado valor para carregamento, apos ser refetrido esse valor 
+o system user vai introduzir no sistema e será criado um novo movimento identificando data, quem fez o carregamento, 
+a quem e a sua quantia.
+será feito uma actualização no sistema do saldo corrente do cafeteria user e será novamente apresentado o seu saldo apos
+o carregamento.
+
+########################################################################################################################
+
+Nesta implementação foi utilizado o padrao "Observer", nesta implementação existem dois observadores e um observado.
+O observado será a classe "Transaction", que é a classe que esta responsavel por criar um movimento de carregamento.
+notificando depois da persistencia todos os objecto interessados neste evento.
+Os observadores serão o ChargeCardEvent e Controller, ChargeCardEvent observa  a classe Transaction e esta responsavel 
+por assegurar a persistencia do cafeteria user na base de dados, apos a persistencia notifica quem esta interessado. 
+O controller observa por sua vez o ChargeCardEvent, e esta responsavel por verificar a veracidade e consistencia do 
+movimento de carregamento, isto é acedendo á base de dados e comparando o saldo que foi persistido com o do objeto
+instanciado no controller, se forem diferentes um erro ocurreu durante a persistencia e será eliminada o carregamento 
+da base de dados, assim assegurando que so existem carregamentos se realmente todas as persistencias forem bem sucedidas.
+
+
+e a consistencia dessa mesma transação.
