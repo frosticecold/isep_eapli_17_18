@@ -1,0 +1,15 @@
+	___________
+
+	ANÁLISE 
+	____________
+
+	REGRAS DE NEGÓCIO
+	_____________________
+
+	* O saldo do utente deve estar sempre presente na aplicaçao do utente 
+	______________________
+		
+	TESTES UNITÁRIOS
+	_____________________
+
+
