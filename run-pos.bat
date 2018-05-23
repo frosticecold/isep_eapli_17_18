@@ -4,3 +4,4 @@ SET ECAFETERIA_CP=ecafeteria.app.pos.console\target\app.pos.console-1.3.0-SNAPSH
 
 REM call the java VM, e.g, 
 java -cp %ECAFETERIA_CP% eapli.ecafeteria.app.pos.console.ECafeteriaPOS
+PAUSE

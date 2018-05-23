@@ -53,6 +53,7 @@ public class BalanceLimits implements Serializable {
      */
     public boolean defineBalanceLimits(double limits) {
         try {
+            if(limits < 0) return false;
             balanceLimit = Money.euros(limits);
         } catch (Exception ex) {
             return false;

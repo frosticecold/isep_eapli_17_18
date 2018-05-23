@@ -6,6 +6,7 @@
 package eapli.ecafeteria.app.user.console.presentation;
 
 import eapli.cafeteria.app.common.console.presentation.MyUserMenu;
+import eapli.ecafeteria.app.user.console.presentation.BalanceLimits.BalanceLimitsUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.AddAlergenProfileAction;
 import eapli.ecafeteria.app.user.console.presentation.bookings.BookingMealUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.CancelBookingUI;
@@ -42,7 +43,8 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int MY_USER_OPTION = 1;
     private static final int BOOKINGS_OPTION = 2;
     private static final int ACCOUNT_OPTION = 3;
-    private static final int SETTINGS_OPTION = 4;
+    private static final int LIMITS_OPTION = 4;
+    private static final int SETTINGS_OPTION = 5;
 
     // BOOKINGS MENU
     private static final int BOOK_A_MEAL_OPTION = 1;
@@ -54,6 +56,8 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int VIEW_CALORIC_CONSUMPTION = 8;
     private static final int EXPORT = 9;
 
+    // BALANCE LIMITS MENU
+    private static final int DEFINE_LIMITS_OPTION = 1;
     // ACCOUNT MENU
     private static final int LIST_MOVEMENTS_OPTION = 1;
 
@@ -98,6 +102,11 @@ class MainMenu extends CafeteriaUserBaseUI {
         mainMenu.add(new SubMenu(ACCOUNT_OPTION, accountMenu, new ShowVerticalSubMenuAction(accountMenu)));
 
         mainMenu.add(VerticalSeparator.separator());
+        
+        final Menu balanceLimitsMenu = buildBalanceLimitsMenu();
+        mainMenu.add(new SubMenu(LIMITS_OPTION, balanceLimitsMenu, new ShowVerticalSubMenuAction(balanceLimitsMenu)));
+        
+        mainMenu.add(VerticalSeparator.separator());
 
         final Menu settingsMenu = buildAdminSettingsMenu();
         mainMenu.add(new SubMenu(SETTINGS_OPTION, settingsMenu, new ShowVerticalSubMenuAction(settingsMenu)));
@@ -107,6 +116,13 @@ class MainMenu extends CafeteriaUserBaseUI {
         mainMenu.add(new MenuItem(EXIT_OPTION, "Exit", new ExitWithMessageAction()));
 
         return mainMenu;
+    }
+    
+    private Menu buildBalanceLimitsMenu(){
+        final Menu menu = new Menu("Balance Limits");
+        menu.add(new MenuItem(DEFINE_LIMITS_OPTION, "Define balance limits", () -> new BalanceLimitsUI().show()));
+        menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
+        return menu;
     }
 
     private Menu buildAccountMenu() {
