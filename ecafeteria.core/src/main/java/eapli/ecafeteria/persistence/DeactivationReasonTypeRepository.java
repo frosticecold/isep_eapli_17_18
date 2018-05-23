@@ -5,22 +5,18 @@
  */
 package eapli.ecafeteria.persistence;
 
-import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.reasons.Reason;
+import eapli.ecafeteria.domain.deactivationreasons.DeactivationReasonType;
 import eapli.framework.persistence.repositories.DataRepository;
-import java.util.Optional;
 
 /**
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
-public interface ReasonRepository extends DataRepository<Reason, Long> {
+public interface DeactivationReasonTypeRepository extends DataRepository<DeactivationReasonType, Long> {
 
     /**
-     * Given an CafeteriaUser returs the Reason
-     * @param user
-     * @return 
+     * DeactivationReasonType Repository
+     * <p>
+     * Default methods are enough</p>
      */
-    Optional<Reason> findReasonBySystemUser(final SystemUser user);
-
 }

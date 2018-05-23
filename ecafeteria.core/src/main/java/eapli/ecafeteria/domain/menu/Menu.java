@@ -127,17 +127,6 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         return period.getWorkingDaysIterable();
     }
 
-    public List<Calendar> getStartAndEndDates() {
-        List<Calendar> list = new ArrayList<>();
-        Map<Integer, Calendar> workWeekDays = getWorkWeekDays();
-        list.add(workWeekDays.get(0));
-        int size = workWeekDays.size();
-        if (size > 0) {
-            list.add(workWeekDays.get(size - 1));
-        }
-        return list;
-    }
-
     /**
      * Method that returns if the menu is critical or not
      *
@@ -212,7 +201,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
 
     @Override
     public String toString() {
-        return "Menu " + "id=" + id + ", menuState=" + menuState + ", ";
+        return "Menu " + "id=" + id + ", menuState=" + menuState + ", " + period.toString();
     }
 
 }

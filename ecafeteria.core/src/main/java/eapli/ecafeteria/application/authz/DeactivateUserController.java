@@ -7,17 +7,14 @@ package eapli.ecafeteria.application.authz;
 
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.reasons.Reason;
-import eapli.ecafeteria.domain.reasons.ReasonType;
+import eapli.ecafeteria.domain.deactivationreasons.DeactivationReasonType;
+import eapli.ecafeteria.persistence.DeactivationReasonTypeRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
-import eapli.ecafeteria.persistence.ReasonRepository;
 import eapli.ecafeteria.persistence.UserRepository;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import eapli.framework.persistence.repositories.TransactionalContext;
 import eapli.framework.util.DateTime;
-import java.util.Arrays;
 
 /**
  *
@@ -25,9 +22,8 @@ import java.util.Arrays;
  */
 public class DeactivateUserController implements Controller {
 
-    private final TransactionalContext tx = PersistenceContext.repositories().buildTransactionalContext();
-    private final UserRepository userRepository = PersistenceContext.repositories().users(tx);
-    private final ReasonRepository reasonRepository = PersistenceContext.repositories().reasons(tx);
+    private final UserRepository userRepository = PersistenceContext.repositories().users();
+    private final DeactivationReasonTypeRepository dRepo = PersistenceContext.repositories().deactivationReasonRepository();
 
     public Iterable<SystemUser> activeUsers() {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
@@ -35,22 +31,18 @@ public class DeactivateUserController implements Controller {
         return this.userRepository.findAll();
     }
 
-    public Iterable<ReasonType> getAllReasons() {
+    public Iterable<DeactivationReasonType> getAllReasons() {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
-        return Arrays.asList(ReasonType.values());
+        return dRepo.findAll();
     }
 
-    public SystemUser deactivateUser(final SystemUser user, final ReasonType reason, final String comment) throws DataConcurrencyException, DataIntegrityViolationException {
+    public SystemUser deactivateUser(final SystemUser user, final DeactivationReasonType reason, final String comment) throws DataConcurrencyException, DataIntegrityViolationException {
         if (user == null || reason == null) {
             throw new IllegalArgumentException("Error, invalid argument");
         }
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
-        Reason why = new Reason(user, reason, comment);
-        user.deactivate(DateTime.now());
-        tx.beginTransaction();
+        user.deactivate(DateTime.now(), reason, comment);
         SystemUser saved_user = userRepository.save(user);
-        Reason saved_reason = reasonRepository.save(why);
-        tx.commit();
         return saved_user;
     }
 }

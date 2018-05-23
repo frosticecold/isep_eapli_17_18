@@ -57,6 +57,13 @@ public class SignupRequestUI extends AbstractUI {
             }
         } else {
             throw new IllegalArgumentException("No strategy has been defined!");
+        try {
+            this.theController.signup(userData.userType(), userData.username(), userData.password(),
+                    userData.firstName(), userData.lastName(), userData.email(),
+                    mecanographicNumber);
+        } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
+            // TODO Auto-generated catch block
+            Logger.getLogger(SignupRequestUI.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

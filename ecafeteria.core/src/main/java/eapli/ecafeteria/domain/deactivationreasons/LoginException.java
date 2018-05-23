@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.domain.reasons;
+package eapli.ecafeteria.domain.deactivationreasons;
+
+import eapli.ecafeteria.domain.authz.DeactivationReason;
 
 /**
  *
@@ -13,6 +15,10 @@ public class LoginException extends RuntimeException {
 
     public LoginException(String message) {
         super(message);
+    }
+
+    public LoginException(DeactivationReason reason) {
+        super(reason.toString());
     }
 
 }

@@ -8,6 +8,7 @@ package eapli.ecafeteria.domain.menu;
 import eapli.framework.date.DateEAPLI;
 import eapli.framework.util.DateTime;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -166,7 +167,7 @@ public class Period implements Serializable {
         if (DateTime.isAfterNow(start)) {
             throw new IllegalArgumentException("Can't put a working date before present. You can't time travel... ");
         }
-         
+
         if (DateTime.isBefore(end, start)) {
             throw new IllegalArgumentException("Can't put a endingDate before the startingDate.");
         }
@@ -269,4 +270,11 @@ public class Period implements Serializable {
         }
         return list;
     }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        return "Period{" + "startingDate=" + format.format(startingDate.getTime()) + ", endingDate=" + format.format(endingDate.getTime()) + '}';
+    }
+
 }

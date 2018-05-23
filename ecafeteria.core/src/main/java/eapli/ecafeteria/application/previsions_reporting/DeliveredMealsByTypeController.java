@@ -11,13 +11,11 @@ import java.util.List;
  */
 public class DeliveredMealsByTypeController implements Controller {
 
-    private PrevisionsService service;
     private static final int LUNCH = 1;
     private static final int DINNER = 2;
 
     public DeliveredMealsByTypeController() {
 
-        this.service.getInstance();
     }
 
     /**
@@ -36,7 +34,7 @@ public class DeliveredMealsByTypeController implements Controller {
 
         msg += "\nLUNCH : \n\n";
 
-        List<DeliveryRegistry> list = this.service.deliveredMealsByType(lunch);
+        List<DeliveryRegistry> list = PrevisionsService.deliveredMealsByType(lunch);
 
         if (list.isEmpty()) {
 
@@ -52,7 +50,7 @@ public class DeliveredMealsByTypeController implements Controller {
 
         msg += "DINNER : \n\n";
 
-        List<DeliveryRegistry> list2 = this.service.deliveredMealsByType(dinner);
+        List<DeliveryRegistry> list2 = PrevisionsService.deliveredMealsByType(dinner);
 
         if (list2.isEmpty()) {
             msg += "No delivered meals for dinner\n";

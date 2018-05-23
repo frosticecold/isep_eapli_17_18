@@ -10,6 +10,7 @@ import eapli.ecafeteria.application.pos.RegisterComplaintController;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import eapli.ecafeteria.domain.cafeteriauser.MecanographicNumber;
 import eapli.ecafeteria.domain.dishes.Dish;
+import eapli.ecafeteria.domain.pos.DescriptiveText;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
@@ -91,11 +92,15 @@ public class RegisterComplaintUI extends AbstractUI{
             }else{
                 dish = null;
             }
-            
-            System.out.println("Description:\n");
-            String d = Console.readLine("");
-            
-            controller.saveComplaint(d, u, dish);
+            DescriptiveText description = null;
+            boolean flag = false;
+            while(flag == false){
+                System.out.println("Description:\n");
+                String d = Console.readLine("");
+                description = new DescriptiveText(d);
+                flag = description.checkDescriptiveText();
+            }
+            controller.saveComplaint(description, u, dish);
             
             
         } catch (DataConcurrencyException | DataIntegrityViolationException ex) {

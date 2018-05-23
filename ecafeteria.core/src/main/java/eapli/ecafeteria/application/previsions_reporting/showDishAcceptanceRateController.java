@@ -10,11 +10,9 @@ import eapli.framework.application.Controller;
  */
 public class showDishAcceptanceRateController implements Controller {
 
-    private PrevisionsService service;
 
     public showDishAcceptanceRateController() {
 
-        this.service.getInstance();
     }
 
     /**
@@ -28,7 +26,7 @@ public class showDishAcceptanceRateController implements Controller {
 
         Iterable<Rating> ratings = PersistenceContext.repositories().rating().findAll();
 
-        double acceptanceRate = this.service.dishAcceptanceRate();
+        double acceptanceRate = PrevisionsService.dishAcceptanceRate();
 
         msg += ratings.toString() + "\n";
 

@@ -1,0 +1,10 @@
+	
+
+	TEST PLAN
+
+	_______________________________
+	CASO #1: getBalnceOfUser
+	_______________________________
+	
+	1. Fazer o login como user 900330 e Password: Password1
+	2. Aparece o saldo do user que esta neste momento na base de dados

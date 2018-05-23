@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class MealsByMenuPlanController implements Controller {
 
-    private PrevisionsService service;
+
 
     public MealsByMenuPlanController() {
 
-        this.service.getInstance();
+
     }
 
     /**
@@ -26,7 +26,7 @@ public class MealsByMenuPlanController implements Controller {
 
         String msg = "======================== Meals Planned for Active Menus ===================\n";
 
-        List<Meal> mealList = this.service.prepareMealsByMenuPlanList();
+        List<Meal> mealList = PrevisionsService.prepareMealsByMenuPlanList();
 
         for (int i = 0; i < mealList.size(); i++) {
 

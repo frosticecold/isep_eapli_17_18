@@ -5,7 +5,7 @@ import eapli.ecafeteria.domain.authz.AuthenticationService;
 import eapli.ecafeteria.domain.authz.Password;
 import eapli.ecafeteria.domain.authz.UserSession;
 import eapli.ecafeteria.domain.authz.Username;
-import eapli.ecafeteria.domain.reasons.LoginException;
+import eapli.ecafeteria.domain.deactivationreasons.LoginException;
 import eapli.framework.application.Controller;
 import java.util.Optional;
 

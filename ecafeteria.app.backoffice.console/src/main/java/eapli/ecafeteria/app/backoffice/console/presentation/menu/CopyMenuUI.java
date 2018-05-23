@@ -9,6 +9,7 @@ import eapli.ecafeteria.application.menus.CopyMenuController;
 import eapli.ecafeteria.domain.menu.Menu;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
 
 /**
  *
@@ -24,12 +25,11 @@ public class CopyMenuUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        Iterable<Menu> menu = controller.getAvailableMenus();
-        String output = "";
-        for (Menu m : menu) {
-            output += "\n" + m.toString() + controller.showStartAndFinishDates(m) + "\n";
+        SelectWidget<Menu> widget = new SelectWidget<>("Select a menu:\n", controller.getAvailableMenus());
+        widget.show();
+        if (widget.selectedElement() != null) {
+            Menu menu = widget.selectedElement();
         }
-        System.out.println(output);
         return true;
     }
 

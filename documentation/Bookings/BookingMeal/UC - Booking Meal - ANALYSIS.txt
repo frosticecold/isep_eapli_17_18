@@ -4,14 +4,15 @@
 	____________
 
 
-	Reunião com o cliente  em 2018.02.23
+	Reunião com o cliente  em 2018.05.24
 
 	* o "utilizador da cantina" utiliza a aplicação para reservar uma refeiçao na cantina num determinado dia e para a opção - almoço/jantar
 	* é apresentada a lista de refeições pra esse dia e conforme se escolheu almoço ou jantar
 	* No momento da reserva devem ser mostrados os alergénios existentes no prato dessa refeição
-	* Deve ser mostrada a informação nutricional dessa refeição e qual o consumo calórico semanal se o utente escolher essa refeição. 
+	* Deve ser mostrada a informação nutricional dessa refeição e qual o consumo calórico semanal.
 	* Ao efetuar a reserva deve actualizar-se o saldo do utente
-	* Adicionar a reserva à lista 
+	* Adicionar a reserva à lista de reservas do cliente, adicionar uma transaçao
+	* Adicionar à base de dados a nova transaçao, a nova booking e guardar o cliente 
 
 
 	______________________
@@ -22,6 +23,7 @@
 	* As reservas de refeições devem ser efetuadas até às 24h da véspera para um dia e refeição específico
 	* o utilizador tem que ter saldo suficiente para a refeição
 	* a ementa tem que estar no estado publicado para o utilizador poder visualizá-la
+	* Se o utente ja tem uma reserva pra esse dia e para essa refeiçao náo é possivel reservar outro parto para a mesma refeiçao
 	
 
 	______________________
@@ -32,12 +34,12 @@
 
 	RESERVATION
 	* testLessThan24Hours
+	* isAlreadyBooked
 
 	MENU
 	* testMenuIsPublish
 
 
 	BALANCE
-	* testUserBalanceCanNotBeNegative
 	* testUserHasSuficientBalance
 

@@ -12,11 +12,8 @@ import java.util.List;
  */
 public class DeliveredMealsByDateController implements Controller {
 
-    private PrevisionsService service;
-
     public DeliveredMealsByDateController() {
 
-        this.service.getInstance();
     }
 
     /**
@@ -31,7 +28,7 @@ public class DeliveredMealsByDateController implements Controller {
 
         String msg = "================================================ DELIVERED MEALS OF DATE : " + dateCorrect + "=============================\n";
 
-        List<DeliveryRegistry> list = this.service.deliveredMealsByDate(date);
+        List<DeliveryRegistry> list = PrevisionsService.deliveredMealsByDate(date);
 
         if (list.isEmpty()) {
 

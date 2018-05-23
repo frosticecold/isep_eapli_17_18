@@ -9,10 +9,6 @@ import eapli.ecafeteria.domain.menu.Menu;
 import eapli.ecafeteria.persistence.MenuRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.framework.application.Controller;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 /**
  *
@@ -24,12 +20,5 @@ public class CopyMenuController implements Controller {
 
     public Iterable<Menu> getAvailableMenus() {
         return menurepo.findAll();
-    }
-
-    public String showStartAndFinishDates(Menu menu) {
-        ArrayList<Calendar> list = (ArrayList) menu.getStartAndEndDates();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        String output = "Start Date:" + format.format(list.get(0).getTime()) + "  End Date:" + format.format(list.get(list.size() - 1).getTime());
-        return output;
     }
 }

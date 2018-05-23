@@ -12,11 +12,8 @@ import java.util.List;
  */
 public class DeliveredMealsByMealController implements Controller {
 
-    private PrevisionsService service;
-
     public DeliveredMealsByMealController() {
-
-        this.service.getInstance();
+        
     }
 
     /**
@@ -61,7 +58,7 @@ public class DeliveredMealsByMealController implements Controller {
 
         String msg = "============================= DELIVERED MEALS GROUPED BY MEAL =======================================\n";
 
-        List<DeliveryRegistry> list = this.service.deliveredMealsByMeal(m);
+        List<DeliveryRegistry> list = PrevisionsService.deliveredMealsByMeal(m);
 
         if (list.isEmpty()) {
 

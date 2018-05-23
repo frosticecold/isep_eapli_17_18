@@ -31,6 +31,7 @@ public class AddAllergenProfileController {
     public AddAllergenProfileController() {
         ap = alergenPlanRepo.findUserAllergenProfile(getCurrentUser());
     }
+
     public List<Alergen> getAllAlergensNotInAP() {
         List<Alergen> a = alergenRepo.findAll();
         List<Alergen> b = new ArrayList<>();
@@ -59,6 +60,10 @@ public class AddAllergenProfileController {
         return ap.addAlergen(a);
     }
 
+    public AllergenProfile getAp() {
+        return ap;
+    }
+
     public Alergen getAlergenByDesc(String desc) {
 
         return alergenRepo.findByName(Designation.valueOf(desc)).get();
@@ -79,7 +84,6 @@ public class AddAllergenProfileController {
     }
 
     public void save() {
-   
 
         alergenPlanRepo.saveAlergenProfile(ap);
     }
