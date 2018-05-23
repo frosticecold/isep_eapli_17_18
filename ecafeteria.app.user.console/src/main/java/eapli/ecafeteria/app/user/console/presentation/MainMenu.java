@@ -85,6 +85,9 @@ class MainMenu extends CafeteriaUserBaseUI {
         return renderer.show();
     }
 
+     public String ratingToReply() {
+        return String.format("Rating waiting for reply: %d", controller().ratingWaitingReply());
+    }
     private Menu buildMainMenu() {
         final Menu mainMenu = new Menu();
 
@@ -113,7 +116,7 @@ class MainMenu extends CafeteriaUserBaseUI {
 
         mainMenu.add(VerticalSeparator.separator());
 
-        mainMenu.add(new MenuItem(EXIT_OPTION, "Exit", new ExitWithMessageAction()));
+        mainMenu.add(new MenuItem(EXIT_OPTION, "Exit\n------------------\n" + ratingToReply(), new ExitWithMessageAction()));
 
         return mainMenu;
     }
