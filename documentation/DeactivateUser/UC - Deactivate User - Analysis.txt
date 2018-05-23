@@ -22,6 +22,10 @@
 	_____________________
 	
 	Menu
-	*	testReasonNullUser
-    *   testReasonNullReasonType
-    *   testReasonNullComment
+	*	testDeactivationReasonNull
+    *   testDeactivationReasonEmpty
+    *   testDeactivationReasonString
+	*	testDeactivateUserNullCalendar
+	*	testDeactivateUserNullReason
+	*	testDeactivateUserTwice
+	*	testDeactivateUserValid
