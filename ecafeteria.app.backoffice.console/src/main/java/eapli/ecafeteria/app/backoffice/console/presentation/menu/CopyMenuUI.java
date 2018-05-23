@@ -44,52 +44,42 @@ public class CopyMenuUI extends AbstractUI {
 
         try {
             boolean editing = true;
-            widget.show();
-            if (widget.selectedElement() != null) {
-                Menu oldMenu = widget.selectedElement();
+            boolean copy = true;
+            do {
+                widget.show();
+                if (widget.selectedElement() != null) {
+                    Menu oldMenu = widget.selectedElement();
+                    Iterable<Meal> meals = controller.findAllMeals(oldMenu);
 
-                Calendar startingDay = Console.readCalendar("Insert Start Date");
-                Calendar endingDay = Console.readCalendar("Insert end Date");
-                Menu newMenu = new Menu(startingDay, endingDay);
-                Iterable<Meal> meals = controller.findAllMeals(oldMenu);
-               // Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
+                    Calendar startingDay = Console.readCalendar("\nInsert new start date");
+                    Calendar endingDay = Console.readCalendar("Insert new end date");
+                    Menu newMenu = new Menu(startingDay, endingDay);
 
-             /*   for (Meal meal : newMealsToSave) {
-                    System.out.println(meal.toString());
-                }*/
+                    newMenu = controller.saveMenu(newMenu);
+                    Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
+                    controller.saveAllMeals(newMealsToSave);
 
-                do {
-                    Calendar calendar = askAndSelectWorkingDay(newMenu);
-                    if (calendar != null) {
-                        menuAddOrRemoveMeals(newMenu, calendar);
-                        editing = Console.readBoolean("Keep editing? Y/N");
-                    } else {
-                        editing = false;
+                    editing = Console.readBoolean("\nEdit new menu? Y/N");
+
+                    while (editing) {
+                        Calendar calendar = askAndSelectWorkingDay(newMenu);
+                        if (calendar != null) {
+                            menuAddOrRemoveMeals(newMenu, calendar);
+                            editing = Console.readBoolean("\nKeep editing? Y/N");
+                        } else {
+                            editing = false;
+                        }
                     }
-                } while (editing);
-            }
+                } else {
+                    copy = false;
+                }
+                copy = Console.readBoolean("Copy another menu? Y/N");
+            } while (copy);
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
 
         return true;
-    }
-
-    private Menu askForWorkingPeriod() throws DataIntegrityViolationException, DataConcurrencyException {
-        boolean runagain = true;
-        Menu menu;
-        Calendar initialDate, endDate;
-        do {
-            System.out.println("\nAll dates are in dd-MM-yyyy format.");
-            initialDate = Console.readCalendar("Please enter the new initial date:");
-            endDate = Console.readCalendar("Please enter the new end date:");
-            menu = controller.createOrFindMenu(initialDate, endDate);
-            if (menu == null) {
-                System.out.println("Error creating menu.");
-            }
-            runagain = false;
-        } while (runagain);
-        return menu;
     }
 
     private Calendar askAndSelectWorkingDay(final Menu m) {

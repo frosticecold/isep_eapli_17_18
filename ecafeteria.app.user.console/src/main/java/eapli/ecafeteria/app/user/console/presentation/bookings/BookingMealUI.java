@@ -43,6 +43,7 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
         Iterable<Meal> mealList = null;
         List<Meal> listMealPublish = new ArrayList<>();
         Meal choosedMeal = null;
+        Username cafeteriaUser = AuthorizationService.session().authenticatedUser().id();
      
 
         int option = 0;
@@ -60,7 +61,7 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
 
         }
 
-        if (controller.isAlreadyBooked(mealType, cal)) {
+        if (controller.isAlreadyBooked(cafeteriaUser,mealType, cal)) {
             System.out.println("You already booked a meal for this date and this mealtype!");
             return false;
         }
@@ -156,13 +157,13 @@ public class BookingMealUI extends CafeteriaUserBaseUI implements Observer {
         //===================================PAYMENT AND PERSIST==================================
         if (option2 == 1) {
 
-            if (!controller.hasEnoughMoney(choosedMeal)) {
+            if (!controller.hasEnoughMoney(cafeteriaUser,choosedMeal)) {
                 System.out.println("USER HASN'T ENOUGH MONEY\nPlease charge your card before booking a meal");
                 return false;
             } else {
                 try {
                     BookingState bookingState = new BookingState();
-                    if (controller.confirmBooking( cal, bookingState, choosedMeal)) {
+                    if (controller.confirmBooking(cafeteriaUser, cal, bookingState, choosedMeal)) {
                         System.out.println("Success. Booking was created.");
                         if (!limitAlert) {
                             System.out.println("===========<<<<<<<<<<ALERT>>>>>>>>>>===========");

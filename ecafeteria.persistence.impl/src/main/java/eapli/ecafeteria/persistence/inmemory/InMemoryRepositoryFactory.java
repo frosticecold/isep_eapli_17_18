@@ -226,12 +226,17 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public DeactivationReasonTypeRepository deactivationReasonRepository() {
+    public DeactivationReasonTypeRepository deactivationReasonTypeRepository() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public DeactivationReasonTypeRepository deactivationReasonTypeRepository(TransactionalContext autoTx) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public MealRepository mealRepositoryAutoTx(TransactionalContext autoTx) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

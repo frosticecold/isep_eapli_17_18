@@ -146,7 +146,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public JpaTransactionRepository movementTransactions() {
         return new JpaTransactionRepository(Application.settings().getPersistenceUnitName());
     }
-    
+
     @Override
     public JpaTransactionReportingRepository transactionsReporting() {
         return new JpaTransactionReportingRepository(Application.settings().getPersistenceUnitName());
@@ -219,20 +219,25 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public BalanceLimitsRepository balanceLimits() {
         return new JPABalanceLimitsRepository();
-    }   
-        
+    }
+
     @Override
     public AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx) {
         return new JpaAutoTxPOSRepository(autoTx);
     }
 
     @Override
-    public DeactivationReasonTypeRepository deactivationReasonRepository() {
+    public DeactivationReasonTypeRepository deactivationReasonTypeRepository() {
         return new JpaDeactivationReasonTypeRepository(buildTransactionalContext());
     }
 
     @Override
     public DeactivationReasonTypeRepository deactivationReasonTypeRepository(TransactionalContext autoTx) {
         return new JpaDeactivationReasonTypeRepository(autoTx);
+    }
+
+    @Override
+    public MealRepository mealRepositoryAutoTx(TransactionalContext autoTx) {
+        return new JpaMealAutoTxRepository(autoTx);
     }
 }
