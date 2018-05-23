@@ -37,7 +37,6 @@ import java.util.logging.Logger;
  */
 public class CopyMenuController implements Controller {
 
-  
     private final MenuRepository menurepo = PersistenceContext.repositories().menus();
     private final MealRepository mealrepo = PersistenceContext.repositories().meals();
     private final DishRepository dishrepo = PersistenceContext.repositories().dishes();
@@ -57,10 +56,8 @@ public class CopyMenuController implements Controller {
     }
 
     public Iterable<Meal> changeMealsToNewMenu(Iterable<Meal> list, Menu newMenu, Menu oldMenu) {
-        Iterable<Calendar> workWeekDaysIterable = newMenu.getWorkWeekDaysIterable();
-        Map<Integer, List<Meal>> mapOfMeals = new LinkedHashMap<>();
         Iterable<Calendar> oldMenuDays = oldMenu.getWorkWeekDaysIterable();
-        List<Meal> newMealsList = new ArrayList<>();
+        Map<Integer, List<Meal>> mapOfMeals = new LinkedHashMap<>();
 
         for (Calendar c : oldMenuDays) {
             mapOfMeals.put(c.get(Calendar.DAY_OF_YEAR), new ArrayList<>());
@@ -70,17 +67,21 @@ public class CopyMenuController implements Controller {
             int dayOfMeal = mealDate.get(Calendar.DAY_OF_YEAR);
             mapOfMeals.get(dayOfMeal).add(m);
         }
+
         Map<Calendar, Integer> mapDaysAssociated = new LinkedHashMap<>();
+        Iterable<Calendar> workWeekDaysIterable = newMenu.getWorkWeekDaysIterable();
         Iterator<Calendar> iterator = workWeekDaysIterable.iterator();
         for (Integer i : mapOfMeals.keySet()) {
             mapDaysAssociated.put(iterator.next(), i);
         }
+
+        List<Meal> newMealsList = new ArrayList<>();
         for (Calendar c : workWeekDaysIterable) {
             Integer Day = mapDaysAssociated.get(c);
             List<Meal> listOfMeals = mapOfMeals.get(Day);
             for (Meal m : listOfMeals) {
-                Meal new_meal = new Meal(m, c, newMenu);
-                newMealsList.add(new_meal);
+                Meal newMeal = new Meal(m, c, newMenu);
+                newMealsList.add(newMeal);
             }
         }
         return newMealsList;

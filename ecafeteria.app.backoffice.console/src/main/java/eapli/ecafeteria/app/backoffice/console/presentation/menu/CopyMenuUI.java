@@ -54,8 +54,8 @@ public class CopyMenuUI extends AbstractUI {
                     Calendar startingDay = Console.readCalendar("\nInsert new start date");
                     Calendar endingDay = Console.readCalendar("Insert new end date");
                     Menu newMenu = new Menu(startingDay, endingDay);
-
                     newMenu = controller.saveMenu(newMenu);
+
                     Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
                     controller.saveAllMeals(newMealsToSave);
 
