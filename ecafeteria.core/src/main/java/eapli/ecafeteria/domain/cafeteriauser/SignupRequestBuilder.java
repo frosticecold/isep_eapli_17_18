@@ -13,7 +13,8 @@ import eapli.framework.domain.ddd.DomainFactory;
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
 public class SignupRequestBuilder implements DomainFactory<SignupRequest> {
-
+        
+        private String userType;
 	private String username;
 	private String password;
 	private String firstName;
@@ -22,6 +23,11 @@ public class SignupRequestBuilder implements DomainFactory<SignupRequest> {
 	private String mecanographicNumber;
 	private Calendar createdOn;
 
+        public SignupRequestBuilder withUserType(String userType) {
+            this.userType = userType;
+            return this;
+        }
+        
 	public SignupRequestBuilder withUsername(String username) {
 		this.username = username;
 		return this;
@@ -62,10 +68,10 @@ public class SignupRequestBuilder implements DomainFactory<SignupRequest> {
 		// since the factory knows that all the parts are needed it could throw
 		// an exception. however, we will leave that to the constructor
 		if (this.createdOn != null) {
-			return new SignupRequest(this.username, this.password, this.firstName, this.lastName, this.email,
+			return new SignupRequest(this.userType, this.username, this.password, this.firstName, this.lastName, this.email,
 					this.mecanographicNumber, this.createdOn);
 		} else {
-			return new SignupRequest(this.username, this.password, this.firstName, this.lastName, this.email,
+			return new SignupRequest(this.userType, this.username, this.password, this.firstName, this.lastName, this.email,
 					this.mecanographicNumber);
 		}
 	}

@@ -11,6 +11,12 @@ package eapli.ecafeteria.domain.cafeteriauser.strategy;
  */
 public class MechanographicEmployeeStrategy implements MechanographicStrategy {
 
+    /**
+     * Pattern: sigla do funcionário (4 letras)
+     * 
+     * @param mechanographicNumber mechanographic number
+     * @return true if matches, false if not
+     */
     @Override
     public boolean isValid(String mechanographicNumber) {
         String pattern = "[A-Z]{4}";

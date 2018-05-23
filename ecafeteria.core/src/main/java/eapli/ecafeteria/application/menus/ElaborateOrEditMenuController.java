@@ -196,5 +196,4 @@ public class ElaborateOrEditMenuController implements Controller {
         Menu savedMenu = menurepo.save(menu);
         return savedMenu;
     }
-
 }

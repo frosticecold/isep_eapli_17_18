@@ -76,6 +76,13 @@ public class Meal implements Serializable {
         setData(dish, mt, cal, menu);
     }
 
+    public Meal(final Meal mealToCopy, final Calendar newDay, final Menu newMenu) {
+        this.dish = mealToCopy.dish;
+        this.mealtype = mealToCopy.mealtype;
+        this.date = newDay;
+        this.menu = newMenu;
+    }
+
     private void setData(final Dish dish, final MealType mt, final Calendar cal, final Menu menu) {
         if (dish == null || mt == null || cal == null || menu == null) {
 //            throw new IllegalArgumentException("Arguments can't be null.");
@@ -161,7 +168,7 @@ public class Meal implements Serializable {
     public MealType mealtype() {
         return mealtype;
     }
-    
+
     //simplified information about the meal
     public String info() {
         String strDate = DateTime.convertCalendarToDayMonthYearAndDayName(date);

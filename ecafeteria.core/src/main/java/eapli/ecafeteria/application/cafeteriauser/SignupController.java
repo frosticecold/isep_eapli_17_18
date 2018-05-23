@@ -20,7 +20,7 @@ public class SignupController implements Controller {
     private final SignupRequestRepository signupRequestRepository = PersistenceContext
             .repositories().signupRequests();
 
-    public SignupRequest signup(final String username, final String password,
+    public SignupRequest signup(final String userType, final String username, final String password,
             final String firstName, final String lastName, final String email,
             String mecanographicNumber, final Calendar createdOn)
             throws DataIntegrityViolationException, DataConcurrencyException {
@@ -28,7 +28,7 @@ public class SignupController implements Controller {
         // there is no need for authorisation check in this method as even
         // unauthenticated users may request a signup
         final SignupRequestBuilder signupRequestBuilder = new SignupRequestBuilder();
-        signupRequestBuilder.withUsername(username).withPassword(password).withFirstName(firstName)
+        signupRequestBuilder.withUserType(userType).withUsername(username).withPassword(password).withFirstName(firstName)
                 .withLastName(lastName).withEmail(email).withCreatedOn(createdOn)
                 .withMecanographicNumber(mecanographicNumber);
 
@@ -36,12 +36,12 @@ public class SignupController implements Controller {
         return this.signupRequestRepository.save(newSignupRequest);
     }
 
-    public SignupRequest signup(final String username, final String password,
+    public SignupRequest signup(final String userType, final String username, final String password,
             final String firstName, final String lastName, final String email,
             String mecanographicNumber)
             throws DataIntegrityViolationException, DataConcurrencyException {
 
-        return signup(username, password, firstName, lastName, email, mecanographicNumber,
+        return signup(userType, username, password, firstName, lastName, email, mecanographicNumber,
                 DateTime.now());
     }
 }
