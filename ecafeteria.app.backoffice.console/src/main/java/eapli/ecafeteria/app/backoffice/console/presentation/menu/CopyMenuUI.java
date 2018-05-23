@@ -52,11 +52,11 @@ public class CopyMenuUI extends AbstractUI {
                 Calendar endingDay = Console.readCalendar("Insert end Date");
                 Menu newMenu = new Menu(startingDay, endingDay);
                 Iterable<Meal> meals = controller.findAllMeals(oldMenu);
-                Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
+               // Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
 
-                for (Meal meal : newMealsToSave) {
+             /*   for (Meal meal : newMealsToSave) {
                     System.out.println(meal.toString());
-                }
+                }*/
 
                 do {
                     Calendar calendar = askAndSelectWorkingDay(newMenu);
