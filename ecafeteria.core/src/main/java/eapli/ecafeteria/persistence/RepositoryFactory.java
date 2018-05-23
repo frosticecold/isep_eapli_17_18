@@ -174,7 +174,7 @@ public interface RepositoryFactory {
 
     AlertRepositoryLimits alertRepositoryLimits();
 
-    DeactivationReasonTypeRepository deactivationReasonRepository();
+    DeactivationReasonTypeRepository deactivationReasonTypeRepository();
 
     DeactivationReasonTypeRepository deactivationReasonTypeRepository(TransactionalContext autoTx);
     
