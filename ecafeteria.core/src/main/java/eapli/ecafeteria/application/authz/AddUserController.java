@@ -1,8 +1,5 @@
 package eapli.ecafeteria.application.authz;
 
-import java.util.Calendar;
-import java.util.Set;
-
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.authz.RoleType;
 import eapli.ecafeteria.domain.authz.SystemUser;
@@ -13,9 +10,10 @@ import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.DateTime;
+import java.util.Calendar;
+import java.util.Set;
 
 /**
- *
  * Created by nuno on 21/03/16.
  */
 public class AddUserController implements Controller {
@@ -32,7 +30,7 @@ public class AddUserController implements Controller {
     }
 
     public SystemUser addUser(String username, String password, String firstName, String lastName,
-            String email, Set<RoleType> roles, Calendar createdOn)
+                              String email, Set<RoleType> roles, Calendar createdOn)
             throws DataIntegrityViolationException, DataConcurrencyException {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
 
@@ -44,7 +42,7 @@ public class AddUserController implements Controller {
     }
 
     public SystemUser addUser(String username, String password, String firstName, String lastName,
-            String email, Set<RoleType> roles)
+                              String email, Set<RoleType> roles)
             throws DataIntegrityViolationException, DataConcurrencyException {
         return addUser(username, password, firstName, lastName, email, roles, DateTime.now());
     }
