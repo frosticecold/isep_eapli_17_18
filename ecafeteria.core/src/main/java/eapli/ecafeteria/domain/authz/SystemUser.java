@@ -214,6 +214,14 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
         return this.active;
     }
 
+    /**
+     * Method to deactivate a user with a date, valid reason and a comment(can
+     * be empty)
+     *
+     * @param deactivatedOn Day of deactivation
+     * @param reason Reason to be deactivated
+     * @param comment Comment
+     */
     public void deactivate(Calendar deactivatedOn, DeactivationReasonType reason, String comment) {
         if (deactivatedOn == null || reason == null) {
             throw new IllegalArgumentException("Invalid argument.");
@@ -222,7 +230,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
             throw new IllegalStateException("Cannot deactivate user again");
         }
 
-        /*
+        /* TO SEVERE FOR TESTS OR DEACTIVATING ON THE SAME DAY
         if (!DateTime.isBefore(createdOn, deactivatedOn)) {
             throw new IllegalArgumentException("Cannot deactivate an user before its creation date.");
         }
@@ -231,7 +239,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
         // cannot deactivate an inactive user
         this.active = false;
         this.deactivatedOn = deactivatedOn;
-        this.deactivationReason= new DeactivationReason(reason, comment);
+        this.deactivationReason = new DeactivationReason(reason, comment);
     }
 
     public DeactivationReason getReason() {
