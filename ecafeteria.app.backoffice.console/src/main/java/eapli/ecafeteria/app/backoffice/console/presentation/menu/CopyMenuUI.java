@@ -47,16 +47,15 @@ public class CopyMenuUI extends AbstractUI {
             widget.show();
             if (widget.selectedElement() != null) {
                 Menu oldMenu = widget.selectedElement();
+                Iterable<Meal> meals = controller.findAllMeals(oldMenu);
 
                 Calendar startingDay = Console.readCalendar("Insert Start Date");
                 Calendar endingDay = Console.readCalendar("Insert end Date");
                 Menu newMenu = new Menu(startingDay, endingDay);
-                Iterable<Meal> meals = controller.findAllMeals(oldMenu);
-               // Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
-
-             /*   for (Meal meal : newMealsToSave) {
-                    System.out.println(meal.toString());
-                }*/
+                
+                newMenu = controller.saveMenu(newMenu);
+                Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
+                controller.saveAllMeals(newMealsToSave);
 
                 do {
                     Calendar calendar = askAndSelectWorkingDay(newMenu);
@@ -73,23 +72,6 @@ public class CopyMenuUI extends AbstractUI {
         }
 
         return true;
-    }
-
-    private Menu askForWorkingPeriod() throws DataIntegrityViolationException, DataConcurrencyException {
-        boolean runagain = true;
-        Menu menu;
-        Calendar initialDate, endDate;
-        do {
-            System.out.println("\nAll dates are in dd-MM-yyyy format.");
-            initialDate = Console.readCalendar("Please enter the new initial date:");
-            endDate = Console.readCalendar("Please enter the new end date:");
-            menu = controller.createOrFindMenu(initialDate, endDate);
-            if (menu == null) {
-                System.out.println("Error creating menu.");
-            }
-            runagain = false;
-        } while (runagain);
-        return menu;
     }
 
     private Calendar askAndSelectWorkingDay(final Menu m) {

@@ -177,4 +177,6 @@ public interface RepositoryFactory {
     DeactivationReasonTypeRepository deactivationReasonRepository();
 
     DeactivationReasonTypeRepository deactivationReasonTypeRepository(TransactionalContext autoTx);
+    
+    MealRepository mealRepositoryAutoTx (TransactionalContext autoTx);
 }

@@ -21,7 +21,6 @@ import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,6 +36,7 @@ import java.util.logging.Logger;
  */
 public class CopyMenuController implements Controller {
 
+    // PersistenceContext.repositories().buildTransactionalContext();
     private final MenuRepository menurepo = PersistenceContext.repositories().menus();
     private final MealRepository mealrepo = PersistenceContext.repositories().meals();
     private final DishRepository dishrepo = PersistenceContext.repositories().dishes();
@@ -53,7 +53,7 @@ public class CopyMenuController implements Controller {
         return mealrepo.findMealsByMenu(menu);
     }
 
-    public Menu changeMealsToNewMenu(Iterable<Meal> list, Menu newMenu, Menu oldMenu) throws DataIntegrityViolationException, DataConcurrencyException {
+    public Iterable<Meal> changeMealsToNewMenu(Iterable<Meal> list, Menu newMenu, Menu oldMenu) {
         Iterable<Calendar> workWeekDaysIterable = newMenu.getWorkWeekDaysIterable();
         Map<Integer, List<Meal>> mapOfMeals = new LinkedHashMap<>();
         Iterable<Calendar> oldMenuDays = oldMenu.getWorkWeekDaysIterable();
@@ -77,14 +77,10 @@ public class CopyMenuController implements Controller {
             List<Meal> listOfMeals = mapOfMeals.get(Day);
             for (Meal m : listOfMeals) {
                 Meal new_meal = new Meal(m, c, newMenu);
-             
                 newMealsList.add(new_meal);
             }
         }
-
-        Menu retmenu = saveMenu(newMenu);
-
-        return retmenu;
+        return newMealsList;
     }
 
     public Menu createOrFindMenu(final Calendar initialDate, final Calendar finalDate) throws DataIntegrityViolationException, DataConcurrencyException {
@@ -156,6 +152,13 @@ public class CopyMenuController implements Controller {
             throw new IllegalStateException("Cannot save published menu.");
         }
         mealrepo.delete(meal);
+        return true;
+    }
+
+    public boolean saveAllMeals(Iterable<Meal> list) throws DataConcurrencyException, DataIntegrityViolationException {
+        for (Meal m : list) {
+            mealrepo.save(m);
+        }
         return true;
     }
 
