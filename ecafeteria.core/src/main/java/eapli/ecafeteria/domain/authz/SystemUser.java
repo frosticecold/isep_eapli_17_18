@@ -1,5 +1,6 @@
 package eapli.ecafeteria.domain.authz;
 
+import eapli.ecafeteria.domain.deactivationreasons.DeactivationReasonType;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
@@ -20,6 +21,7 @@ import eapli.framework.dto.GenericDTO;
 import eapli.framework.util.DateTime;
 import eapli.framework.visitor.Visitable;
 import eapli.framework.visitor.Visitor;
+import javax.persistence.Embedded;
 
 /**
  * An application user.
@@ -38,216 +40,241 @@ import eapli.framework.visitor.Visitor;
 @Entity
 public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<GenericDTO>, Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Version
-	private Long version;
+    @Version
+    private Long version;
 
-	@EmbeddedId
-	private Username username;
-	private Password password;
-	private Name name;
-	private EmailAddress email;
-	@OneToOne(cascade = CascadeType.ALL)
-	private RoleSet roles;
-	@Temporal(TemporalType.DATE)
-	private Calendar createdOn;
-	private boolean active;
-	@Temporal(TemporalType.DATE)
-	private Calendar deactivatedOn;
+    @EmbeddedId
+    private Username username;
+    private Password password;
+    private Name name;
+    private EmailAddress email;
+    @OneToOne(cascade = CascadeType.ALL)
+    private RoleSet roles;
+    @Temporal(TemporalType.DATE)
+    private Calendar createdOn;
+    private boolean active;
+    @Temporal(TemporalType.DATE)
+    private Calendar deactivatedOn;
 
-	public SystemUser(final String username, final String password, final String firstName, final String lastName,
-			final String email, final Set<RoleType> roles) {
-		this(username, password, firstName, lastName, email, roles, DateTime.now());
-	}
+    @Embedded
+    private DeactivationReason deactivationReason;
 
-	public SystemUser(final String username, final String password, final String firstName, final String lastName,
-			final String email, final Set<RoleType> roles, final Calendar createdOn) {
-		if (roles == null || createdOn == null) {
-			throw new IllegalArgumentException("roles cannot be null");
-		}
-		this.createdOn = createdOn;
-		this.username = new Username(username);
-		this.password = new Password(password);
-		this.name = new Name(firstName, lastName);
-		this.email = EmailAddress.valueOf(email);
-		this.roles = new RoleSet();
+    public SystemUser(final String username, final String password, final String firstName, final String lastName,
+            final String email, final Set<RoleType> roles) {
+        this(username, password, firstName, lastName, email, roles, DateTime.now());
+        deactivationReason = new NoDeactivationReason();
+    }
 
-		this.roles.addAll(roles.stream().map(rt -> new Role(rt, this.createdOn)).collect(Collectors.toList()));
+    public SystemUser(final String username, final String password, final String firstName, final String lastName,
+            final String email, final Set<RoleType> roles, final Calendar createdOn) {
+        if (roles == null || createdOn == null) {
+            throw new IllegalArgumentException("roles cannot be null");
+        }
+        this.createdOn = createdOn;
+        this.username = new Username(username);
+        this.password = new Password(password);
+        this.name = new Name(firstName, lastName);
+        this.email = EmailAddress.valueOf(email);
+        this.roles = new RoleSet();
 
-		this.active = true;
-	}
+        this.roles.addAll(roles.stream().map(rt -> new Role(rt, this.createdOn)).collect(Collectors.toList()));
 
-	public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-			final RoleSet roles) {
-		this(username, password, name, email, roles, DateTime.now());
-	}
+        this.active = true;
 
-	public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-			final RoleSet roles, final Calendar createdOn) {
-		if (roles == null || username == null || password == null || name == null || email == null) {
-			throw new IllegalArgumentException("Cannot be null");
-		}
-		this.createdOn = createdOn;
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.roles = roles;
+        deactivationReason = new NoDeactivationReason();
+    }
 
-		this.active = true;
-	}
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final RoleSet roles) {
+        this(username, password, name, email, roles, DateTime.now());
+        deactivationReason = new NoDeactivationReason();
+    }
 
-	protected SystemUser() {
-		// for ORM
-	}
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final RoleSet roles, final Calendar createdOn) {
+        if (roles == null || username == null || password == null || name == null || email == null) {
+            throw new IllegalArgumentException("Cannot be null");
+        }
+        this.createdOn = createdOn;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.roles = roles;
 
-	@Override
-	public boolean sameAs(Object other) {
-		if (!(other instanceof SystemUser)) {
-			return false;
-		}
+        this.active = true;
+        deactivationReason = new NoDeactivationReason();
+    }
 
-		final SystemUser that = (SystemUser) other;
-		if (this == that) {
-			return true;
-		}
-		if (!this.username.equals(that.username)) {
-			return false;
-		}
-		if (!this.password.equals(that.password)) {
-			return false;
-		}
-		if (!this.name.equals(that.name)) {
-			return false;
-		}
-		if (!this.email.equals(that.email)) {
-			return false;
-		}
-		return this.roles.equals(that.roles);
-	}
+    protected SystemUser() {
+        // for ORM
+    }
 
-	@Override
-	public Username id() {
-		return this.username;
-	}
+    @Override
+    public boolean sameAs(Object other) {
+        if (!(other instanceof SystemUser)) {
+            return false;
+        }
 
-	/**
-	 * Add role to user.
-	 *
-	 * @param role Role to assign to SystemUser.
-	 */
-	public void addRole(final Role role) {
-		this.roles.add(role);
-	}
+        final SystemUser that = (SystemUser) other;
+        if (this == that) {
+            return true;
+        }
+        if (!this.username.equals(that.username)) {
+            return false;
+        }
+        if (!this.password.equals(that.password)) {
+            return false;
+        }
+        if (!this.name.equals(that.name)) {
+            return false;
+        }
+        if (!this.email.equals(that.email)) {
+            return false;
+        }
+        return this.roles.equals(that.roles);
+    }
 
-	public RoleSet getRoles() {
-		return this.roles;
-	}
+    @Override
+    public Username id() {
+        return this.username;
+    }
 
-	@Override
-	public GenericDTO toDTO() {
-		final GenericDTO ret = new GenericDTO("user");
-		ret.put("username", this.username.toString());
-		ret.put("password", this.password.toString());
-		ret.put("name", this.name.toString());
-		ret.put("email", this.email.toString());
-		ret.put("roles", this.roles.roleTypes().toString());
-		// TODO: ASK Isn't it easy to forget mapping an element to DTO when
-		// manipulating members?
+    /**
+     * Add role to user.
+     *
+     * @param role Role to assign to SystemUser.
+     */
+    public void addRole(final Role role) {
+        this.roles.add(role);
+    }
 
-		return ret;
-	}
+    public RoleSet getRoles() {
+        return this.roles;
+    }
 
-	/**
-	 * Remove role from user.
-	 *
-	 * @param role Role to remove from SystemUser.
-	 */
-	public void removeRole(final Role role) {
-		// TODO should the role be removed or marked as "expired"?
-		this.roles.remove(role);
-	}
+    @Override
+    public GenericDTO toDTO() {
+        final GenericDTO ret = new GenericDTO("user");
+        ret.put("username", this.username.toString());
+        ret.put("password", this.password.toString());
+        ret.put("name", this.name.toString());
+        ret.put("email", this.email.toString());
+        ret.put("roles", this.roles.roleTypes().toString());
+        // TODO: ASK Isn't it easy to forget mapping an element to DTO when
+        // manipulating members?
 
-	public boolean isAuthorizedTo(final ActionRight... actions) {
-		for (final ActionRight a : actions) {
-			if (a != null && a.canBePerformedBy(roles.roleTypes())) {
-				return true;
-			}
-		}
-		return false;
-	}
+        return ret;
+    }
 
-	public boolean passwordMatches(final Password password) {
-		return this.password.equals(password);
-	}
+    /**
+     * Remove role from user.
+     *
+     * @param role Role to remove from SystemUser.
+     */
+    public void removeRole(final Role role) {
+        // TODO should the role be removed or marked as "expired"?
+        this.roles.remove(role);
+    }
 
-	@Override
-	public void accept(final Visitor<GenericDTO> visitor) {
-		visitor.visit(toDTO());
-	}
+    public boolean isAuthorizedTo(final ActionRight... actions) {
+        for (final ActionRight a : actions) {
+            if (a != null && a.canBePerformedBy(roles.roleTypes())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public boolean is(final Username id) {
-		return id().equals(id);
-	}
+    public boolean passwordMatches(final Password password) {
+        return this.password.equals(password);
+    }
 
-	public Username username() {
-		return this.username;
-	}
+    @Override
+    public void accept(final Visitor<GenericDTO> visitor) {
+        visitor.visit(toDTO());
+    }
 
-	public Name name() {
-		return this.name;
-	}
+    @Override
+    public boolean is(final Username id) {
+        return id().equals(id);
+    }
 
-	public boolean isActive() {
-		return this.active;
-	}
+    public Username username() {
+        return this.username;
+    }
 
-	public void deactivate(Calendar deactivatedOn) {
-		// FIXME validate parameters: not null; deactivatedOn > createdOn;
-		// cannot deactivate an inactive user
-		this.active = false;
-		this.deactivatedOn = deactivatedOn;
-	}
+    public Name name() {
+        return this.name;
+    }
 
-	@Override
-	public int hashCode() {
-		return this.username.hashCode();
-	}
+    public boolean isActive() {
+        return this.active;
+    }
 
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof SystemUser)) {
-			return false;
-		}
+    public void deactivate(Calendar deactivatedOn, DeactivationReasonType reason, String comment) {
+        if (deactivatedOn == null || reason == null) {
+            throw new IllegalArgumentException("Invalid argument.");
+        }
+        if (active == false) {
+            throw new IllegalStateException("Cannot deactivate user again");
+        }
 
-		final SystemUser that = (SystemUser) o;
+        /*
+        if (!DateTime.isBefore(createdOn, deactivatedOn)) {
+            throw new IllegalArgumentException("Cannot deactivate an user before its creation date.");
+        }
+         */
+        // FIXME validate parameters: not null; deactivatedOn > createdOn;
+        // cannot deactivate an inactive user
+        this.active = false;
+        this.deactivatedOn = deactivatedOn;
+        this.deactivationReason= new DeactivationReason(reason, comment);
+    }
 
-		// DDD entities are only compared thru their ID field. in this
-		// case only username should be compared
-		return this.username.equals(that.username);
+    public DeactivationReason getReason() {
+        return deactivationReason;
+    }
 
-	}
+    @Override
+    public int hashCode() {
+        return this.username.hashCode();
+    }
 
-	public boolean changePassword(Password oldPassword, Password newPassword) {
-		if (this.password.equals(oldPassword)){
-			this.password=newPassword;
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SystemUser)) {
+            return false;
+        }
 
-	public String resetPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        final SystemUser that = (SystemUser) o;
 
-	public boolean resetPassword(String token) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        // DDD entities are only compared thru their ID field. in this
+        // case only username should be compared
+        return this.username.equals(that.username);
+
+    }
+
+    public boolean changePassword(Password oldPassword, Password newPassword) {
+        if (this.password.equals(oldPassword)) {
+            this.password = newPassword;
+            return true;
+        }
+        return false;
+    }
+
+    public String resetPassword() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public boolean resetPassword(String token) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

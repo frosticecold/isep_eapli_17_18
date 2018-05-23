@@ -3,6 +3,7 @@
  */
 package eapli.ecafeteria.persistence;
 
+import eapli.ecafeteria.domain.deactivationreasons.DeactivationReasonType;
 import eapli.framework.persistence.repositories.TransactionalContext;
 
 /**
@@ -57,7 +58,7 @@ public interface RepositoryFactory {
     BalanceRepository balance();
 
     BalanceLimitsRepository balanceLimits();
-    
+
     /**
      *
      * @param autoTx the transactional context to enroll
@@ -110,10 +111,10 @@ public interface RepositoryFactory {
      * @return
      */
     POSRepository posRepository();
-    
+
     AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx);
 
-  /**
+    /**
      * DeliveryMealSession Repo
      *
      * @return
@@ -172,4 +173,8 @@ public interface RepositoryFactory {
     AlertRepositoryBookings alertRepositoryBookings();
 
     AlertRepositoryLimits alertRepositoryLimits();
+
+    DeactivationReasonTypeRepository deactivationReasonRepository();
+
+    DeactivationReasonTypeRepository deactivationReasonTypeRepository(TransactionalContext autoTx);
 }

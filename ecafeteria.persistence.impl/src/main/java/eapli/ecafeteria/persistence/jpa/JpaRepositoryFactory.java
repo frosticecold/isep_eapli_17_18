@@ -225,4 +225,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public AutoTxPOSRepository autoTxPOSRepository(TransactionalContext autoTx) {
         return new JpaAutoTxPOSRepository(autoTx);
     }
+
+    @Override
+    public DeactivationReasonTypeRepository deactivationReasonRepository() {
+        return new JpaDeactivationReasonTypeRepository(buildTransactionalContext());
+    }
+
+    @Override
+    public DeactivationReasonTypeRepository deactivationReasonTypeRepository(TransactionalContext autoTx) {
+        return new JpaDeactivationReasonTypeRepository(autoTx);
+    }
 }

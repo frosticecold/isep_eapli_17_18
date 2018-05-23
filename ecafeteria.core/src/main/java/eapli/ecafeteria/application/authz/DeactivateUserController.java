@@ -7,16 +7,14 @@ package eapli.ecafeteria.application.authz;
 
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.deactivationreasons.Reason;
 import eapli.ecafeteria.domain.deactivationreasons.DeactivationReasonType;
+import eapli.ecafeteria.persistence.DeactivationReasonTypeRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.UserRepository;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
-import eapli.framework.persistence.repositories.TransactionalContext;
 import eapli.framework.util.DateTime;
-import java.util.ArrayList;
 
 /**
  *
@@ -24,8 +22,8 @@ import java.util.ArrayList;
  */
 public class DeactivateUserController implements Controller {
 
-    private final TransactionalContext tx = PersistenceContext.repositories().buildTransactionalContext();
-    private final UserRepository userRepository = PersistenceContext.repositories().users(tx);
+    private final UserRepository userRepository = PersistenceContext.repositories().users();
+    private final DeactivationReasonTypeRepository dRepo = PersistenceContext.repositories().deactivationReasonRepository();
 
     public Iterable<SystemUser> activeUsers() {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
@@ -35,7 +33,7 @@ public class DeactivateUserController implements Controller {
 
     public Iterable<DeactivationReasonType> getAllReasons() {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
-        return new ArrayList<>();
+        return dRepo.findAll();
     }
 
     public SystemUser deactivateUser(final SystemUser user, final DeactivationReasonType reason, final String comment) throws DataConcurrencyException, DataIntegrityViolationException {
@@ -43,11 +41,8 @@ public class DeactivateUserController implements Controller {
             throw new IllegalArgumentException("Error, invalid argument");
         }
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
-        Reason why = new Reason(user, reason, comment);
-        user.deactivate(DateTime.now());
-        tx.beginTransaction();
+        user.deactivate(DateTime.now(), reason, comment);
         SystemUser saved_user = userRepository.save(user);
-        tx.commit();
         return saved_user;
     }
 }
