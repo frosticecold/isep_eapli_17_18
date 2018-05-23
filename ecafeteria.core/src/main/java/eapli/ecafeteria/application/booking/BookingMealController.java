@@ -43,7 +43,9 @@ import java.util.Optional;
 public class BookingMealController extends Observable implements Controller {
 
     private final CafeteriaUserService userService = new CafeteriaUserService();
-
+     Username cafeteriaUser = AuthorizationService.session().authenticatedUser().id();
+     Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
+    
     private final BookingRepository repository = PersistenceContext.repositories().booking();
 
     /**
@@ -66,10 +68,8 @@ public class BookingMealController extends Observable implements Controller {
     }
 
     //if already exists that booking then return true
-    public boolean isAlreadyBooked(Username user, MealType mealType, Calendar date) {
-
-        Optional<CafeteriaUser> cUser = userService.findCafeteriaUserByUsername(user);
-        if (repository.findBooking(cUser.get(), mealType, date).isEmpty()) {
+    public boolean isAlreadyBooked(MealType mealType, Calendar date) {
+        if (repository.findBooking(user.get(), mealType, date).isEmpty()) {
             return false;
         }
         return true;
@@ -107,9 +107,8 @@ public class BookingMealController extends Observable implements Controller {
         return selectedMeal;
     }
 
-    public boolean hasEnoughMoney(Username id, Meal meal) {
+    public boolean hasEnoughMoney( Meal meal) {
         Money mealPrice = meal.dish().currentPrice();
-        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(id);
         if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
             return true;
         } else {
@@ -158,16 +157,15 @@ public class BookingMealController extends Observable implements Controller {
      * @throws eapli.framework.persistence.DataConcurrencyException
      * @throws eapli.framework.persistence.DataIntegrityViolationException
      */
-    public boolean confirmBooking(Username cafeteriaUser, Calendar date,
+    public boolean confirmBooking(Calendar date,
             BookingState bookingState, Meal meal) throws DataConcurrencyException,
             DataIntegrityViolationException {
 
         // Add booking movement
-        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
+    
 
         Booking newBooking = new Booking(meal, bookingState, user.get(), date);
 
-        //check if user as already booked this meal
         Money mealPrice = meal.dish().currentPrice();
 
         // Persist
