@@ -17,11 +17,11 @@ import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.BookingState;
 import eapli.ecafeteria.domain.cafeteriauser.AllergenProfile;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
-import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.dishes.Alergen;
+import eapli.ecafeteria.domain.meal.Meal;
 import eapli.ecafeteria.domain.meal.MealType;
 import eapli.ecafeteria.persistence.*;
-import eapli.framework.application.*;
+import eapli.framework.application.Controller;
 import eapli.framework.date.DateEAPLI;
 import eapli.framework.domain.money.Money;
 import eapli.framework.persistence.DataConcurrencyException;
@@ -30,11 +30,7 @@ import eapli.framework.persistence.repositories.TransactionalContext;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Observable;
-import java.util.Optional;
+import java.util.*;
 
 /**
  *
@@ -45,7 +41,7 @@ public class BookingMealController extends Observable implements Controller {
     private final CafeteriaUserService userService = new CafeteriaUserService();
      Username cafeteriaUser = AuthorizationService.session().authenticatedUser().id();
      Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
-    
+
     private final BookingRepository repository = PersistenceContext.repositories().booking();
 
     /**
@@ -60,19 +56,12 @@ public class BookingMealController extends Observable implements Controller {
 
     public boolean mealListIsEmpty(Iterable<Meal> mealList) {
 
-        if (!mealList.iterator().hasNext()) {
-            return true;
-        } else {
-            return false;
-        }
+        return !mealList.iterator().hasNext();
     }
 
     //if already exists that booking then return true
     public boolean isAlreadyBooked(MealType mealType, Calendar date) {
-        if (repository.findBooking(user.get(), mealType, date).isEmpty()) {
-            return false;
-        }
-        return true;
+        return !repository.findBooking(user.get(), mealType, date).isEmpty();
     }
 
     public List<Meal> mealListIfMenuIsPublic(Iterable<Meal> mealList) {
@@ -86,11 +75,7 @@ public class BookingMealController extends Observable implements Controller {
     }
 
     public boolean menuOfMealListIsPublic(List<Meal> listMeal) {
-        if (listMeal.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !listMeal.isEmpty();
 
     }
 
@@ -109,20 +94,12 @@ public class BookingMealController extends Observable implements Controller {
 
     public boolean hasEnoughMoney( Meal meal) {
         Money mealPrice = meal.dish().currentPrice();
-        if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
-            return true;
-        } else {
-            return false;
-        }
+        return userService.hasEnoughtMoney(user.get(), mealPrice);
     }
 
     public boolean mealHasAlergens(Meal meal) {
         List<Alergen> alergenList = meal.dish().alergenInDish();
-        if (alergenList.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !alergenList.isEmpty();
     }
 
     public boolean is24hBeforeMeal(Calendar choosedDate, MealType mealType) {
@@ -130,7 +107,7 @@ public class BookingMealController extends Observable implements Controller {
         final String dinnerTimeBegin = Application.settings().getDiNNER_TIME_BEGIN();
 
         LocalTime time = null;
-        if (mealType == mealType.LUNCH) {
+        if (mealType == MealType.LUNCH) {
             time = LocalTime.parse(lunchTimeBegin, DateTimeFormatter.ofPattern("HH:mm:ss"));
         } else {
             time = LocalTime.parse(dinnerTimeBegin, DateTimeFormatter.ofPattern("HH:mm:ss"));
@@ -144,10 +121,7 @@ public class BookingMealController extends Observable implements Controller {
         choosedDate.set(Calendar.SECOND, second);
 
         DateEAPLI dt = new DateEAPLI(choosedDate);
-        if (dt.isTomorrow(choosedDate)) {
-            return true;
-        }
-        return false;
+        return dt.isTomorrow(choosedDate);
     }
 
     /**
@@ -162,7 +136,7 @@ public class BookingMealController extends Observable implements Controller {
             DataIntegrityViolationException {
 
         // Add booking movement
-    
+
 
         Booking newBooking = new Booking(meal, bookingState, user.get(), date);
 
@@ -188,7 +162,7 @@ public class BookingMealController extends Observable implements Controller {
 
         cafer.save(user.get());
         TxCtx.commit();
-        
+
         setChanged();
         this.notifyObservers(newBooking);
 
@@ -223,7 +197,6 @@ public class BookingMealController extends Observable implements Controller {
      * allergen profile.
      *
      * @author Rui Almeida <1160818>
-     * @param allergenProfile - current authenticated user allergen profile
      * @param meal - chosen meal for booking
      * @return - List with the matched allergens between the user profile and
      * the meal

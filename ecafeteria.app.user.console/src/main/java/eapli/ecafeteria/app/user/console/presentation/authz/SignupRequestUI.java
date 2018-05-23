@@ -9,7 +9,6 @@ import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,20 +31,19 @@ public class SignupRequestUI extends AbstractUI {
 
         final String mecanographicNumber = Console.readLine("Mecanographic Number:");
         MecanographicNumberValidationContext validationContext = null;
-        String type = Objects.requireNonNull(Console.readLine("Insert your role(Student or Employee)")).toLowerCase();
 
-        if ("employee".equalsIgnoreCase(type)) {
+        if ("employee".equalsIgnoreCase(userData.userType())) {
             validationContext = new MecanographicNumberValidationContext(new EmployeeStrategy(), mecanographicNumber);
         }
 
-        if ("student".equalsIgnoreCase(type)) {
+        if ("student".equalsIgnoreCase(userData.userType())) {
             validationContext = new MecanographicNumberValidationContext(new StudentStrategy(), mecanographicNumber);
         }
 
         if (validationContext != null) {
             if (validationContext.validateUser()) {
                 try {
-                    this.theController.signup(userData.username(), userData.password(),
+                    this.theController.signup(userData.userType(), userData.username(), userData.password(),
                             userData.firstName(), userData.lastName(), userData.email(),
                             mecanographicNumber);
                 } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
@@ -57,13 +55,6 @@ public class SignupRequestUI extends AbstractUI {
             }
         } else {
             throw new IllegalArgumentException("No strategy has been defined!");
-        try {
-            this.theController.signup(userData.userType(), userData.username(), userData.password(),
-                    userData.firstName(), userData.lastName(), userData.email(),
-                    mecanographicNumber);
-        } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
-            // TODO Auto-generated catch block
-            Logger.getLogger(SignupRequestUI.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
