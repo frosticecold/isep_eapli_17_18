@@ -63,6 +63,7 @@ public class LoginUI extends AbstractUI {
              * message
              */
         } catch (LoginException ex) {
+            System.out.println("Warning! You were deactivated");
             System.out.println(ex.getMessage());
         }
         return false;

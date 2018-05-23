@@ -6,6 +6,8 @@ import eapli.ecafeteria.domain.authz.Username;
 import eapli.ecafeteria.persistence.UserRepository;
 import eapli.framework.persistence.repositories.TransactionalContext;
 import eapli.framework.persistence.repositories.impl.jpa.JpaAutoTxRepository;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -20,5 +22,13 @@ class JpaUserRepository extends JpaAutoTxRepository<SystemUser, Username>
 
     public JpaUserRepository(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties());
+    }
+
+    @Override
+    public Iterable<SystemUser> findAllActiveUsers(boolean active) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("isactive", active);
+        return match("e.active=:isactive", params);
+        
     }
 }

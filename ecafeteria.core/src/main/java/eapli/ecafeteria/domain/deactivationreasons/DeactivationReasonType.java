@@ -5,7 +5,6 @@
  */
 package eapli.ecafeteria.domain.deactivationreasons;
 
-import eapli.ecafeteria.persistence.DeactivationReasonTypeRepository;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -65,13 +64,10 @@ public class DeactivationReasonType implements AggregateRoot<String>, Serializab
         return reasonType;
     }
 
-    public String getReasonType() {
-        return reasonType;
-    }
 
     @Override
     public String toString() {
-        return "DeactivationReasonType{" + "reasonType=" + reasonType + '}';
+        return reasonType;
     }
 
 }

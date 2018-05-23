@@ -23,15 +23,14 @@ import eapli.framework.util.DateTime;
 public class DeactivateUserController implements Controller {
 
     private final UserRepository userRepository = PersistenceContext.repositories().users();
-    private final DeactivationReasonTypeRepository dRepo = PersistenceContext.repositories().deactivationReasonRepository();
+    private final DeactivationReasonTypeRepository dRepo = PersistenceContext.repositories().deactivationReasonTypeRepository();
 
     public Iterable<SystemUser> activeUsers() {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
-
-        return this.userRepository.findAll();
+        return this.userRepository.findAllActiveUsers(true);
     }
 
-    public Iterable<DeactivationReasonType> getAllReasons() {
+    public Iterable<DeactivationReasonType> getAllReasonsTypes() {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
         return dRepo.findAll();
     }
