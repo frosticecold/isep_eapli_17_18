@@ -39,5 +39,10 @@ public class InMemoryMenuRepository extends InMemoryRepositoryWithLongPK<Menu> i
     public Optional<Menu> findMenuOnDate(Calendar cal) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Optional<Menu> cloneMenu(Menu menu) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
      
 }

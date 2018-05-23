@@ -2,9 +2,7 @@ package eapli.ecafeteria.domain.menu;
 
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -87,6 +85,7 @@ public class Menu implements AggregateRoot<Period>, Serializable {
         menuState = MenuState.UNPUBLISHED;
         period = new Period(startingOfWeek, endOfWeek);
     }
+
 
     public Period period() {
         return period;

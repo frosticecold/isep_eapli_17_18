@@ -56,6 +56,14 @@ public class JpaMenuRepository extends CafeteriaJpaRepositoryBase<Menu, Long> im
 
         return q.getResultList().stream().findFirst();
     }
+    
+    @Override
+    public Optional<Menu> cloneMenu(Menu menu){
+        final Query q;
+        q = entityManager().createQuery("SELECT e FROM Menu e WHERE :id =e.id", Menu.class);
+        q.setParameter("id", menu);
+        return q.getResultList().stream().findFirst();
+    }
 
     @Override
     public List<Menu> findLatestMenus() {
