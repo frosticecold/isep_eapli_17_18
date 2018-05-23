@@ -43,9 +43,6 @@ import java.util.Optional;
 public class BookingMealController extends Observable implements Controller {
 
     private final CafeteriaUserService userService = new CafeteriaUserService();
-     Username cafeteriaUser = AuthorizationService.session().authenticatedUser().id();
-     Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(cafeteriaUser);
-    
     private final BookingRepository repository = PersistenceContext.repositories().booking();
 
     /**
@@ -68,8 +65,9 @@ public class BookingMealController extends Observable implements Controller {
     }
 
     //if already exists that booking then return true
-    public boolean isAlreadyBooked(MealType mealType, Calendar date) {
-        if (repository.findBooking(user.get(), mealType, date).isEmpty()) {
+    public boolean isAlreadyBooked(Username cafeteriaUser, MealType mealType, Calendar date) {
+        CafeteriaUser user = findCafeteriaUserByUsername(cafeteriaUser);
+        if (repository.findBooking(user, mealType, date).isEmpty()) {
             return false;
         }
         return true;
@@ -107,9 +105,10 @@ public class BookingMealController extends Observable implements Controller {
         return selectedMeal;
     }
 
-    public boolean hasEnoughMoney( Meal meal) {
+    public boolean hasEnoughMoney(Username cafeteriaUser, Meal meal) {
         Money mealPrice = meal.dish().currentPrice();
-        if (userService.hasEnoughtMoney(user.get(), mealPrice)) {
+        CafeteriaUser user = findCafeteriaUserByUsername(cafeteriaUser);
+        if (userService.hasEnoughtMoney(user, mealPrice)) {
             return true;
         } else {
             return false;
@@ -150,6 +149,11 @@ public class BookingMealController extends Observable implements Controller {
         return false;
     }
 
+    CafeteriaUser findCafeteriaUserByUsername(Username username) {
+        Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(username);
+        return user.get();
+    }
+
     /**
      * Confirms reservation and persists changes
      *
@@ -157,14 +161,13 @@ public class BookingMealController extends Observable implements Controller {
      * @throws eapli.framework.persistence.DataConcurrencyException
      * @throws eapli.framework.persistence.DataIntegrityViolationException
      */
-    public boolean confirmBooking(Calendar date,
+    public boolean confirmBooking(Username username, Calendar date,
             BookingState bookingState, Meal meal) throws DataConcurrencyException,
             DataIntegrityViolationException {
 
+          CafeteriaUser user = findCafeteriaUserByUsername(username);
         // Add booking movement
-    
-
-        Booking newBooking = new Booking(meal, bookingState, user.get(), date);
+        Booking newBooking = new Booking(meal, bookingState, user, date);
 
         Money mealPrice = meal.dish().currentPrice();
 
@@ -182,13 +185,13 @@ public class BookingMealController extends Observable implements Controller {
 
         /* persist here */
         atbr.saveBooking(newBooking);
-        Transaction t = new Transaction(user.get(), TransactionType.DEBIT, mealPrice);
+        Transaction t = new Transaction(user, TransactionType.DEBIT, mealPrice);
         t.movement();
         attr.saveTransaction(t);
 
-        cafer.save(user.get());
+        cafer.save(user);
         TxCtx.commit();
-        
+
         setChanged();
         this.notifyObservers(newBooking);
 
