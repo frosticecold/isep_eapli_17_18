@@ -13,6 +13,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="app.common.console" />
     <orderEntry type="module" module-name="core" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:14.0" level="project" />
     <orderEntry type="module" module-name="persistence.impl" scope="RUNTIME" />
     <orderEntry type="module" module-name="bootstrappers" scope="RUNTIME" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.h2database:h2:1.4.195" level="project" />

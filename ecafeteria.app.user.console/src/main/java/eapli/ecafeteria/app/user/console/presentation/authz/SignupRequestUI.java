@@ -1,17 +1,19 @@
 package eapli.ecafeteria.app.user.console.presentation.authz;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import eapli.ecafeteria.application.cafeteriauser.SignupController;
+import eapli.ecafeteria.domain.authz.EmployeeStrategy;
+import eapli.ecafeteria.domain.authz.MecanographicNumberValidationContext;
+import eapli.ecafeteria.domain.authz.StudentStrategy;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
  * @author Jorge Santos ajs@isep.ipp.pt
  */
 public class SignupRequestUI extends AbstractUI {
@@ -28,18 +30,34 @@ public class SignupRequestUI extends AbstractUI {
 
         userData.show();
 
-        final String mecanographicNumber = Console.readLine("Mecanographic Number");
+        final String mecanographicNumber = Console.readLine("Mecanographic Number:");
+        MecanographicNumberValidationContext validationContext = null;
+        String type = Objects.requireNonNull(Console.readLine("Insert your role(Student or Employee)")).toLowerCase();
 
-        try {
-            this.theController.signup(userData.username(), userData.password(),
-                    userData.firstName(), userData.lastName(), userData.email(),
-                    mecanographicNumber);
-        } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
-            // TODO Auto-generated catch block
-            Logger.getLogger(SignupRequestUI.class.getName()).log(Level.SEVERE, null, e);
+        if ("employee".equalsIgnoreCase(type)) {
+            validationContext = new MecanographicNumberValidationContext(new EmployeeStrategy(), mecanographicNumber);
         }
 
-        return true;
+        if ("student".equalsIgnoreCase(type)) {
+            validationContext = new MecanographicNumberValidationContext(new StudentStrategy(), mecanographicNumber);
+        }
+
+        if (validationContext != null) {
+            if (validationContext.validateUser()) {
+                try {
+                    this.theController.signup(userData.username(), userData.password(),
+                            userData.firstName(), userData.lastName(), userData.email(),
+                            mecanographicNumber);
+                } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
+                    Logger.getLogger(SignupRequestUI.class.getName()).log(Level.SEVERE, null, e);
+                }
+                return false;
+            } else {
+                throw new IllegalArgumentException("Mecanographic number is invalid!");
+            }
+        } else {
+            throw new IllegalArgumentException("No strategy has been defined!");
+        }
     }
 
     @Override
