@@ -9,4 +9,11 @@ import eapli.framework.persistence.repositories.DataRepository;
  */
 public interface UserRepository extends DataRepository<SystemUser, Username> {
 
+    /**
+     * Find all active or deactive users
+     *
+     * @param active
+     * @return
+     */
+    public Iterable<SystemUser> findAllActiveUsers(boolean active);
 }

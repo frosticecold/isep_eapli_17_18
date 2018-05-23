@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eapli.ecafeteria.app.user.console.presentation.bookings;
+package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
-import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.booking.ConsultMealRatingController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.booking.Booking;
@@ -13,6 +12,7 @@ import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.meal.Meal;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,7 +27,7 @@ import javax.persistence.NoResultException;
  *
  * @author pedro
  */
-public class ConsultMealRatingUI extends CafeteriaUserBaseUI {
+public class ConsultMealRatingUI extends AbstractUI {
 
     private ConsultMealRatingController controller = new ConsultMealRatingController();
 
@@ -114,10 +114,10 @@ public class ConsultMealRatingUI extends CafeteriaUserBaseUI {
 
                     String response = Console.readLine("");
 
-                    controller.replyComment(response,map.get(CommentList.get(comment - 1))); //por num map
+                    controller.replyComment(response,map.get(CommentList.get(comment - 1))); 
 
                     try {
-                        controller.saveRating(map.get(CommentList.get(comment - 1))); //por num map
+                        controller.saveRating(map.get(CommentList.get(comment - 1))); 
                     } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
                         Logger.getLogger(ConsultMealRatingUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -141,11 +141,6 @@ public class ConsultMealRatingUI extends CafeteriaUserBaseUI {
     @Override
     public String headline() {
         return "Consult the ratings for a meal:";
-    }
-
-    @Override
-    protected CafeteriaUserBaseController controller() {
-        return new CafeteriaUserBaseController();
     }
 
 }

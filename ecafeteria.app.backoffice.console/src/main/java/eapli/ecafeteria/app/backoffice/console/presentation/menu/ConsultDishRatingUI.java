@@ -1,19 +1,13 @@
-package eapli.ecafeteria.app.user.console.presentation.bookings;
+package eapli.ecafeteria.app.backoffice.console.presentation.menu;
 
-
-
-import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.booking.ConsultDishRatingController;
-import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.ecafeteria.domain.booking.Booking;
 import eapli.ecafeteria.domain.booking.Rating;
 import eapli.ecafeteria.domain.dishes.Dish;
 import eapli.ecafeteria.domain.meal.Meal;
-import eapli.framework.application.Controller;
-import eapli.framework.domain.Designation;
+import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -22,7 +16,7 @@ import java.util.List;
  *
  * @author JoaoMagalhaes
  */
-public class ConsultDishRatingUI extends CafeteriaUserBaseUI {
+public class ConsultDishRatingUI extends AbstractUI {
     
     private ConsultDishRatingController theController = new ConsultDishRatingController();
     
@@ -82,10 +76,5 @@ public class ConsultDishRatingUI extends CafeteriaUserBaseUI {
     @Override
     public String headline() {
         return "Consult the ratings for a Dish:";
-    }
-
-    @Override
-    protected CafeteriaUserBaseController controller() {
-        return new CafeteriaUserBaseController();
     }
 }

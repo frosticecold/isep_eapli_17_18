@@ -6,15 +6,15 @@
 
 	Reunião com o cliente
 	
-	* As razões de desactivação são sempre as mesmas (enumerado)
+	* As razões de desactivação são carregadas de um ficheiro em tempo de instalação
 	______________________
 
 	REGRAS DE NEGÓCIO
 	_____________________
 	
 	* Quem inicia o processo é o Administrador
-	* Uma razão de desactivação tem um utilizador, uma razão e um comentário
-	* As razões são sempre as mesmas
+	* Uma razão de desactivação tem uma razão e um comentário
+	* As razões são pré definidas.
 	* Um utilizador uma vez desativado não pode ser reativado.
 	______________________
 		

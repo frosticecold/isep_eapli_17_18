@@ -15,4 +15,9 @@ public class InMemoryUserRepository extends InMemoryRepository<SystemUser, Usern
 	protected Username newKeyFor(SystemUser u) {
 		return u.username();
 	}
+
+    @Override
+    public Iterable<SystemUser> findAllActiveUsers(boolean active) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

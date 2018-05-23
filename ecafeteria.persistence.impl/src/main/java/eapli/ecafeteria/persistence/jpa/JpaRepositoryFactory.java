@@ -227,7 +227,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public DeactivationReasonTypeRepository deactivationReasonRepository() {
+    public DeactivationReasonTypeRepository deactivationReasonTypeRepository() {
         return new JpaDeactivationReasonTypeRepository(buildTransactionalContext());
     }
 
