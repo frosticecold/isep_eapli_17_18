@@ -30,7 +30,7 @@ public class DeactivateUserController implements Controller {
         return this.userRepository.findAllActiveUsers(true);
     }
 
-    public Iterable<DeactivationReasonType> getAllReasons() {
+    public Iterable<DeactivationReasonType> getAllReasonsTypes() {
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
         return dRepo.findAll();
     }
