@@ -111,9 +111,9 @@ public class ConsultMealRatingUI extends AbstractUI {
                     } while (comment < 0 && comment > CommentList.size());
 
                     System.out.println("Insira uma resposta para o comentario" + CommentList.get(comment - 1) + ":");
-
+                    
                     String response = Console.readLine("");
-
+                    
                     controller.replyComment(response,map.get(CommentList.get(comment - 1))); 
 
                     try {
