@@ -159,9 +159,11 @@ public class CopyMenuController implements Controller {
     }
 
     public boolean saveAllMeals(Iterable<Meal> list) throws DataConcurrencyException, DataIntegrityViolationException {
+        tx.beginTransaction();
         for (Meal m : list) {
-            mealrepo.save(m);
+            mealTx.save(m);
         }
+        tx.commit();
         return true;
     }
 

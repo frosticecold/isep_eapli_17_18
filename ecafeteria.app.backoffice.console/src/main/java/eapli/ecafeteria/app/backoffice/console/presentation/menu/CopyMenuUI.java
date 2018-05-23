@@ -44,29 +44,37 @@ public class CopyMenuUI extends AbstractUI {
 
         try {
             boolean editing = true;
-            widget.show();
-            if (widget.selectedElement() != null) {
-                Menu oldMenu = widget.selectedElement();
-                Iterable<Meal> meals = controller.findAllMeals(oldMenu);
+            boolean copy = true;
+            do {
+                widget.show();
+                if (widget.selectedElement() != null) {
+                    Menu oldMenu = widget.selectedElement();
+                    Iterable<Meal> meals = controller.findAllMeals(oldMenu);
 
-                Calendar startingDay = Console.readCalendar("Insert Start Date");
-                Calendar endingDay = Console.readCalendar("Insert end Date");
-                Menu newMenu = new Menu(startingDay, endingDay);
-                
-                newMenu = controller.saveMenu(newMenu);
-                Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
-                controller.saveAllMeals(newMealsToSave);
+                    Calendar startingDay = Console.readCalendar("\nInsert new start date");
+                    Calendar endingDay = Console.readCalendar("Insert new end date");
+                    Menu newMenu = new Menu(startingDay, endingDay);
 
-                do {
-                    Calendar calendar = askAndSelectWorkingDay(newMenu);
-                    if (calendar != null) {
-                        menuAddOrRemoveMeals(newMenu, calendar);
-                        editing = Console.readBoolean("Keep editing? Y/N");
-                    } else {
-                        editing = false;
+                    newMenu = controller.saveMenu(newMenu);
+                    Iterable<Meal> newMealsToSave = controller.changeMealsToNewMenu(meals, newMenu, oldMenu);
+                    controller.saveAllMeals(newMealsToSave);
+
+                    editing = Console.readBoolean("\nEdit new menu? Y/N");
+
+                    while (editing) {
+                        Calendar calendar = askAndSelectWorkingDay(newMenu);
+                        if (calendar != null) {
+                            menuAddOrRemoveMeals(newMenu, calendar);
+                            editing = Console.readBoolean("\nKeep editing? Y/N");
+                        } else {
+                            editing = false;
+                        }
                     }
-                } while (editing);
-            }
+                } else {
+                    copy = false;
+                }
+                copy = Console.readBoolean("Copy another menu? Y/N");
+            } while (copy);
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
