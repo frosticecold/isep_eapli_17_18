@@ -1,0 +1,31 @@
+____________________________________________
+
+		ANALISYS
+
+____________________________________________
+
+Client meeting:
+
+* The only bookings to be considered are the ones in the "booked" state
+* The calories to be calculed must be the about the meals that the user ate between a period of time
+____________________________________________
+
+		BUSINESS RULES
+
+____________________________________________
+
+- The Booking must be in "served" state
+- The Meals must be between two dates
+- The Dishes two be considered are the ones that the user ate
+
+____________________________________________
+
+		UNIT TESTS
+
+____________________________________________
+
+- testServedState
+- testGetCaloricConsumption
+- testFindServedDishes
+- testMealDate
+- testGetDishCalories
