@@ -3,12 +3,76 @@
 	TEST PLAN
 
 	_______________________________
-	CASO #1: Booking Meal
+	CASO #1: Booking Meal sem dinheiro 
 	_______________________________
-
+	--- Se o user nao tiver dinheiro suficiente <=2,99
+	
 	1. Fazer o login como user 900330 e Password: Password1
-	2. Escolher a opção Reservation Meal
-	3. Escolher dia 10-05-2018 e almoço
-	4. Escolher a meal 55
-	5. Apresenta 475 calorias, 2 sal , 3,99 EUR 
-	6. User fica com menos 3,99 , é adicionada uma transaçao 
+	2. Escolher a opção 2 Bookings
+	3. Escolher a opçao 1 - Book a meal
+	4. Introduzir dia 10-08-2018 
+	5. Escolher 1 - Lunch
+	6. Escolher 1 - Tofu Grelhado 
+	7. Apresenta 140 calorias, 1 sal , 2,99 EUR 
+	8. Apresenta o alergenio soja, e o aviso de que o user nao possui esse alergenio
+	9. Escolher 1 - proceed with the booking - yes
+	9. Aviso que o user nao tem dinheiro suficiente, carregue o cartao
+
+	
+	---> depois de carregar o cartao
+	
+	_______________________________
+	CASO #2: Booking Meal Normal
+	_______________________________
+	--- Se o user tiver dinheiro >=2,99
+	
+	1. Fazer o login como user 900330 e Password: Password1
+	2. Escolher a opção 2 Bookings
+	3. Escolher a opçao 1 - Book a meal
+	4. Introduzir dia 10-08-2018 
+	5. Escolher 1 - Lunch
+	6. Escolher 1 - Tofu Grelhado 
+	7. Apresenta 140 calorias, 1 sal , 2,99 EUR 
+	8. Apresenta o alergenio soja, e o aviso de que o user nao possui esse alergenio
+	9. Escolher 1 - proceed with the booking - yes
+	9. User fica com menos 2,99 no seu saldo -> criaçao de uma booking e de uma transaçao na base de dados, assim como a atualizaçao do saldo do cliente
+
+	
+	_______________________________
+	CASO #3: Booking Meal reservar de novo
+	_______________________________
+	---> se escolher Dinner já é possivel, pois nao reservou nenhuma refeiçao de jantar mas sim de almoço
+	
+	1. Fazer o login como user 900330 e Password: Password1
+	2. Escolher a opção 2 Bookings
+	3. Escolher a opçao 1 - Book a meal
+	4. Introduzir dia 10-08-2018 
+	5. Escolher 1 - Lunch
+	6. Apresenta que o user já reservou um prato para esta refeiçao
+	
+
+	
+	_______________________________
+	CASO #4: Booking Meal 24horas antes da refeiçao
+	_______________________________
+	---- mudar hora do sistema para dia 05-08-2018 para as 15:00
+	
+	1. Fazer o login como user 900330 e Password: Password1
+	2. Escolher a opção 2 Bookings
+	3. Escolher a opçao 1 - Book a meal
+	4. Introduzir dia 06-08-2018 
+	5. Escolher 1 - Lunch
+	6. Avisa user que só pode reservar 24h antes da refeiçao 
+
+
+	_______________________________
+	CASO #5: Booking Meal 24horas antes da refeiçao
+	_______________________________
+	---- mudar hora do sistema para dia 05-08-2018 para as 15:00
+	
+	1. Fazer o login como user 900330 e Password: Password1
+	2. Escolher a opção 2 Bookings
+	3. Escolher a opçao 1 - Book a meal
+	4. Introduzir dia 06-08-2018 
+	5. Escolher 2 - Dinner
+	6. Continuar reserva (vai funcionar pois esta a 24 h antes do jantar)

@@ -11,10 +11,15 @@ package eapli.ecafeteria.domain.cafeteriauser.strategy;
  */
 public class MechanographicValidator {
     
-    private final MechanographicValidatorFactory factory = new MechanographicValidatorFactory();
-    
+    /**
+     * Method to verify if, according to a userType, the mechanographic number is valid.
+     * 
+     * @param userType "Student" or "Employee"
+     * @param mechanographicNumber  the mechanographic number
+     * @return true if is valid, false if not
+     */
     public boolean isValid(String userType, String mechanographicNumber) {
-        MechanographicStrategy strategy = factory.getInstance(userType);
+        MechanographicStrategy strategy = MechanographicValidatorFactory.instance().getInstance(userType);
         return strategy.isValid(mechanographicNumber);
     }
 }

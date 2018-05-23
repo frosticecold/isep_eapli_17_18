@@ -11,6 +11,11 @@ package eapli.ecafeteria.domain.cafeteriauser.strategy;
  */
 public interface MechanographicStrategy {
     
+    /**
+     * Method to validate a mechanographic number
+     * 
+     * @param mechanographicNumber mechanographic number
+     * @return true if is valid, false if not
+     */
     public boolean isValid(String mechanographicNumber);
-    
 }

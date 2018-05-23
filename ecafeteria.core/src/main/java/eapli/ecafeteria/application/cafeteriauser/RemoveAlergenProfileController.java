@@ -22,13 +22,13 @@ import eapli.ecafeteria.persistence.AlergenRepository;
  *
  * @author utilizador
  */
-public class AddAllergenProfileController {
+public class RemoveAlergenProfileController {
 
     private final AlergenRepository alergenRepo = PersistenceContext.repositories().alergens();
     private AllergenProfile ap;
     private final AllergenProfileRepository alergenPlanRepo = PersistenceContext.repositories().allergenProfiles();
 
-    public AddAllergenProfileController() {
+    public RemoveAlergenProfileController() {
         ap = alergenPlanRepo.findUserAllergenProfile(getCurrentUser());
     }
 
@@ -60,10 +60,6 @@ public class AddAllergenProfileController {
         return ap.addAlergen(a);
     }
 
-    public AllergenProfile getAp() {
-        return ap;
-    }
-
     public Alergen getAlergenByDesc(String desc) {
 
         return alergenRepo.findByName(Designation.valueOf(desc)).get();
@@ -86,5 +82,9 @@ public class AddAllergenProfileController {
     public void save() {
 
         alergenPlanRepo.saveAlergenProfile(ap);
+    }
+
+    public boolean remove(Alergen a) {
+        return ap.removeAlergen(a);
     }
 }
