@@ -1,25 +1,22 @@
 title UC Deactivate User
 User->DeactivateUserUI:show()
 DeactivateUserUI->DeactivateUserController:create
-DeactivateUserController->PersistenceContext:tx=PersistenceContext.repositories().buildTransactionalContext();
-PersistenceContext->RepositoryFactory:buildTransactionalContext()
-RepositoryFactory->TransactionalContext:create
-DeactivateUserController->PersistenceContext:userRepository=PersistenceContext.repositories().users(tx)
-PersistenceContext->RepositoryFactory:users(tx)
+DeactivateUserController->PersistenceContext:userRepository=PersistenceContext.repositories().users()
+PersistenceContext->RepositoryFactory:users()
 RepositoryFactory->UserRepository:create
-DeactivateUserController->PersistenceContext:reasonRepository=PersistenceContext.repositories().reasons(tx)
-PersistenceContext->RepositoryFactory:reasons(tx)
-RepositoryFactory->ReasonRepository:create
+DeactivateUserController->PersistenceContext:reasonRepository=PersistenceContext.repositories().deactivationReasonTypeRepository()
+PersistenceContext->RepositoryFactory:deactivationReasonTypeRepository()
+RepositoryFactory->DeactivationReasonRepository:create
 
 DeactivateUserUI->DeactivateUserController:list_users=activeUsers()
 DeactivateUserController->AuthorizationService:ensurePermissionOfLoggedInUser(admin)
-DeactivateUserController->UserRepository:findAll()
+DeactivateUserController->UserRepository:findAllActiveUsers()
 DeactivateUserUI->DeactivateUserUI:Show users
 DeactivateUserUI-->User:Ask for what user to deactivate
 User->DeactivateUserUI:selects user
-DeactivateUserUI->DeactivateUserController:getAllReasons()
+DeactivateUserUI->DeactivateUserController:getAllReasonsTypes()
 DeactivateUserController->AuthorizationService:ensurePermissionOfLoggedInUser(admin)
-DeactivateUserController->ReasonType:values()
+DeactivateUserController->DeactivationReasonRepository:findAll()
 
 DeactivateUserUI->DeactivateUserUI:show Reasons
 DeactivateUserUI-->User:Ask for what reason
@@ -29,12 +26,8 @@ User->DeactivateUserUI:insert comment
 
 DeactivateUserUI->DeactivateUserController:deactivateUser(user,reason,comment)
 DeactivateUserController->AuthorizationService:ensurePermissionOfLoggedInUser(Admin)
-DeactivateUserController->Reason:create(user,reason,comment)
-DeactivateUserController->SystemUser:deactivate(now)
-DeactivateUserController->TransactionalContext:beginTransaction()
+DeactivateUserController->SystemUser:deactivate(now,reason,comment)
 DeactivateUserController->UserRepository:save(user)
-DeactivateUserController->ReasonRepository:save(reason)
-DeactivateUserController->TransactionalContext:commit()
 DeactivateUserController-->DeactivateUserUI:user
 DeactivateUserUI-->User:run again?
 User->DeactivateUserUI:Answer

@@ -42,6 +42,8 @@ import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.Re
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.SearchBatchUsageAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.BookedMealsReportingUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.ConsultDishRatingUI;
+import eapli.ecafeteria.app.backoffice.console.presentation.menu.ConsultMealRatingUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.CopyMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.ElaborateOrEditMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.MainMenuDeliveredMealsReportingUI;
@@ -131,6 +133,8 @@ public class MainMenu extends AlertUI {
     private static final int MENU_COPY_OPTION = 2;
     private static final int MENU_PUBLISH_OPTION = 3;
     private static final int MENU_PREVIEW_OPTION = 4;
+    private static final int MENU_CONSULT_MEAL_RATING_OPTION=5;
+    private static final int MENU_CONSULT_DISH_RATING_OPTION=6;
 
     //PREVISIONS REPORTING
     private static final int PREVISIONS_BOOKEDMEALS_OPTION = 1;
@@ -373,6 +377,8 @@ public class MainMenu extends AlertUI {
         menu.add(new MenuItem(MENU_COPY_OPTION, "Copy Menu", () -> new CopyMenuUI().show()));
         menu.add(new MenuItem(MENU_PUBLISH_OPTION, "Publish Menus", () -> new PublishMenuUI().show()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
+        menu.add(new MenuItem(MENU_CONSULT_MEAL_RATING_OPTION, "consult meal rating", () -> new ConsultMealRatingUI().show()));
+        menu.add(new MenuItem(MENU_CONSULT_DISH_RATING_OPTION, "Consult Dish rating", () -> new ConsultDishRatingUI().show()));
 
         return menu;
     }
