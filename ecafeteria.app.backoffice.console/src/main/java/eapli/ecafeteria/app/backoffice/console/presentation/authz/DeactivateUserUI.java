@@ -54,7 +54,7 @@ import eapli.framework.util.Console;
             if (option == 0) {
                 System.out.println("No user selected");
             } else {
-                final Iterable<DeactivationReasonType> reason_iterable = theController.getAllReasons();
+                final Iterable<DeactivationReasonType> reason_iterable = theController.getAllReasonsTypes();
                 SelectWidget<DeactivationReasonType> select_reason = new SelectWidget<>("Select Reason", reason_iterable);
                 select_reason.show();
                 int reason_option = select_reason.selectedOption();
