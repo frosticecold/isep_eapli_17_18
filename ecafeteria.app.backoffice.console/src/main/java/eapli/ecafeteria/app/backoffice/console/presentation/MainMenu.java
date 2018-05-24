@@ -33,6 +33,7 @@ import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.Registe
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.CloseMenuPlanAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.CreateMenuPlanAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.EndShiftAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.KitchenAlertAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterBatchUsedInMealAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMadeMealsAction;
@@ -59,7 +60,6 @@ import eapli.framework.presentation.console.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.Menu;
 import eapli.framework.presentation.console.MenuItem;
 import eapli.framework.presentation.console.MenuRenderer;
-import eapli.framework.presentation.console.ShowMessageAction;
 import eapli.framework.presentation.console.ShowVerticalSubMenuAction;
 import eapli.framework.presentation.console.SubMenu;
 import eapli.framework.presentation.console.VerticalMenuRenderer;
@@ -243,7 +243,7 @@ public class MainMenu extends AlertUI {
         final Menu menu = new Menu("Settings >");
 
         menu.add(new MenuItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Kitchen alert limit",
-                new ShowMessageAction("Not implemented yet")));
+                new KitchenAlertAction()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;

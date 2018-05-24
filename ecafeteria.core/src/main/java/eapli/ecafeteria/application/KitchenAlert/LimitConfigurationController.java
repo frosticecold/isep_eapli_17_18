@@ -22,7 +22,7 @@ public class LimitConfigurationController implements Controller {
      private final AlertRepositoryLimits alertRepositoryLimits = PersistenceContext.repositories().alertRepositoryLimits() ;
       final AlertLimit limit = null;
      
-    public void configureYellowLimit(double limitValue) throws DataIntegrityViolationException, DataConcurrencyException, Exception {
+    public void configureYellowLimit(float limitValue) throws DataIntegrityViolationException, DataConcurrencyException, Exception {
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
 
@@ -31,7 +31,7 @@ public class LimitConfigurationController implements Controller {
         
         configureLimit(limit, (float) limitValue);
     }
-     public void configureRedLimit(double limitValue) throws DataIntegrityViolationException, DataConcurrencyException, Exception {
+     public void configureRedLimit(float limitValue) throws DataIntegrityViolationException, DataConcurrencyException, Exception {
 
         AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
 
