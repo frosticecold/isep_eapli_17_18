@@ -1,0 +1,9 @@
+TEST PLAN
+_______________________________
+
+CASO #1: Rating comment notification
+_______________________________
+
+1. Fazer login na aplicação user.console, como user 900330 ou 900331 e Password: Password1(a mesma para ambos os user)
+2. São apresentadas diferentes opções.
+3. É logo visível no 'rodapé' da aplicação os comentários sem resposta.

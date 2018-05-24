@@ -76,7 +76,7 @@ public class Rating implements AggregateRoot<Long>, Serializable {
         this.booking = booking;
         this.comment = comment;
         this.date = date;
-        this.reply = REPLY_BY_DEFAULT;
+        this.reply = "No reply yet";
     }
 
     /**

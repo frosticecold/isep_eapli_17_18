@@ -1,0 +1,18 @@
+ANÁLISE 
+____________
+* Se o utilizador não tiver ratings efetuados, o mesmo deve ser notificado.
+* Deverá ser apresentado o numero de ratings com comentário sem resposta no rodapé da aplicação.
+* O utilizador apenas tem acesso aos seus comentários efetuados, assim como apenas poderá visualizar a resposta dada ao seu comentário.
+	
+______________________
+REGRAS DE NEGÓCIO
+_____________________
+
+* Os ratings não devem ter resposta ao comentário
+* Devem existir ratings com comentário
+* O utilizador deve estar logado
+
+______________________
+		
+TESTES UNITÁRIOS
+_____________________
