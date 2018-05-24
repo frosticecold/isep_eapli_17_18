@@ -179,4 +179,6 @@ public interface RepositoryFactory {
     DeactivationReasonTypeRepository deactivationReasonTypeRepository(TransactionalContext autoTx);
     
     MealRepository mealRepositoryAutoTx (TransactionalContext autoTx);
+
+    NutritionalProfileRepository nutritionalProfiles();
 }

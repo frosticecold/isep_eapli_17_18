@@ -240,4 +240,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public MealRepository mealRepositoryAutoTx(TransactionalContext autoTx) {
         return new JpaMealAutoTxRepository(autoTx);
     }
+
+    @Override
+    public NutritionalProfileRepository nutritionalProfiles() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
