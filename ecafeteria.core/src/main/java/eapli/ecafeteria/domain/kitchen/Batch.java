@@ -87,4 +87,11 @@ public class Batch implements Serializable {
         return this.pk + " " + this.material.acronym();
     }
 
+    @Override
+    public String toString() {
+        return "Batch{" + "status=" + status + ", quantity=" + quantity + ", availableQuantitity=" + availableQuantitity + ", material=" + material + '}';
+    }
+
+   
+
 }

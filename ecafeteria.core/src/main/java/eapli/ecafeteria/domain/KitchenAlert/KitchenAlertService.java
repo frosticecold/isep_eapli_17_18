@@ -30,9 +30,9 @@ public class KitchenAlertService extends Observable {
         myLimits = limits;
     }
 
-    List<KitchenAlertImp> calculateX() {
+    List<KitchenAlertImp> calculateQuotient() {
 
-        float[] limits = {0.7f, 0.9f};
+        float[] limits = {0.7f, 0.9f}; // não estava implementado as 23:50 do dia 23/05
         //List<AlertBookingDTO> dtoList =  new ArrayList<>();
 
         //        dtoList.add(new AlertBookingDTO(new Meal(new Dish(new DishType("Ola", "nice")

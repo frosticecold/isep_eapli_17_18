@@ -2,46 +2,66 @@ package eapli.ecafeteria.domain.KitchenAlert;
 
 import eapli.ecafeteria.persistence.AlertRepositoryBookings;
 import eapli.ecafeteria.persistence.AlertRepositoryLimits;
-import eapli.ecafeteria.persistence.PersistenceContext;
+//import eapli.framework.actions.singleton.SingletonStrategy;
 import java.util.List;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
+/*
+DÚVIDA: Porquê que não se pode usar interface para metodos static?
+*/
 public class WatchDog extends Observable implements Runnable{
     
     private static WatchDog myWatchDog;
-    private static final float TIME_IN_MINUTES = 1; 
     private static KitchenAlertService kAlert;
-    private static final AlertRepositoryBookings alertRepositoryBookings = PersistenceContext.repositories().alertRepositoryBookings() ;
-    private static final AlertRepositoryLimits alertRepositoryLimits = PersistenceContext.repositories().alertRepositoryLimits() ;
     
-    public static WatchDog getInstance(){ /* IS A SINGLETON */
+    private static final float TIME_IN_MINUTES = 1; 
+    
+
+    
+    public static WatchDog getInstance() {/* IS A SINGLETON */
         
         if( myWatchDog == null){
             
             myWatchDog = new WatchDog();
-        }     
-            return myWatchDog;
+        }
+        
+        
+        
+        return myWatchDog;
     }
+   
     
     private WatchDog() { /* CONSTRUCTOR IS PRIVATE BCS ONLY WATCHDOG CAN CREATE ITSELF */
         
-       createAlertService(alertRepositoryBookings, alertRepositoryLimits);
-      
-        
-        runThread(); /* runs thread every TIME_IN_MILISECONDS */
-      //  dormir(); /* quero quando inicio o watchdog domir */
-        
+        dormir(); /* quero quando inicio o watchdog domir */
     }
+    
+    
+    
+    
+    // ^ IS SINGLETON
 
-
-    void testLimits(){
+   
+    public void createAlertService(AlertRepositoryBookings alertRepositoryBookings, AlertRepositoryLimits alertRepositoryLimits) {
         
-        List<KitchenAlertImp> alerts = kAlert.calculateX();
+          
+        kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
+    }
+  
+    @Override
+    public void run() {
+        
+            testLimits();
+            
+    }
+    
+    
+    private void testLimits(){
+        
+        List<KitchenAlertImp> alerts = kAlert.calculateQuotient();
       
         
         if( !alerts.isEmpty() ){
@@ -53,26 +73,7 @@ public class WatchDog extends Observable implements Runnable{
         
         
     }
-
- 
     
-    
-
-    private void createAlertService(AlertRepositoryBookings alertRepositoryBookings, AlertRepositoryLimits alertRepositoryLimits) {
-        
-          
-        kAlert = new KitchenAlertService(alertRepositoryLimits, alertRepositoryBookings);
-    }
-
-   
-    @Override
-    public void run() {
-        
-            testLimits();
-            
-    }
-
-
     private void runThread() {
         
         
@@ -80,9 +81,8 @@ public class WatchDog extends Observable implements Runnable{
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                       
                 WatchDog.getInstance().run();
-                
-               
             }
         }, 0, (long) (1000 * 60 * TIME_IN_MINUTES));
         
@@ -90,9 +90,27 @@ public class WatchDog extends Observable implements Runnable{
         
     }
 
-    
-    
+    private void dormir() { /* DORME POR 1 SEGUNDO */
+        
+        long startTime = System.currentTimeMillis();
+        long now;
+        
+        for (int count = 0;; count++) {
+            
+            now = System.currentTimeMillis();
+            if (now - startTime >= 1000) {
+
+                break;
+            }
+        }
+
+    }
+
+
+    }
+
+
 
 
     
-}
+

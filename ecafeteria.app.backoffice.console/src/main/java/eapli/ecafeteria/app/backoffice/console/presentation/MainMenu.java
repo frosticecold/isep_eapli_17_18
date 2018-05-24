@@ -33,10 +33,12 @@ import eapli.ecafeteria.app.backoffice.console.presentation.dishesviadto.Registe
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.CloseMenuPlanAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.CreateMenuPlanAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.EndShiftAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.KitchenAlertAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.ListMaterialAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterBatchUsedInMealAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMadeMealsAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.RegisterMaterialAction;
+import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ListBatchesByMealAction;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDateUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerDishUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.kitchen.reporting.ReportBookingPerMealUI;
@@ -50,19 +52,14 @@ import eapli.ecafeteria.app.backoffice.console.presentation.menu.MainMenuDeliver
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.MealsByMenuPlanUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.PublishMenuUI;
 import eapli.ecafeteria.app.backoffice.console.presentation.menu.showDishAcceptanceRateUI;
-import eapli.ecafeteria.application.KitchenAlert.KitchenAlertController;
 import eapli.ecafeteria.application.authz.AuthorizationService;
-import eapli.ecafeteria.application.kitchen.KitchenWatchDogo;
-import eapli.ecafeteria.domain.KitchenAlert.WatchDog;
 import eapli.ecafeteria.domain.authz.ActionRight;
 import eapli.framework.actions.ReturnAction;
-import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.Menu;
 import eapli.framework.presentation.console.MenuItem;
 import eapli.framework.presentation.console.MenuRenderer;
-import eapli.framework.presentation.console.ShowMessageAction;
 import eapli.framework.presentation.console.ShowVerticalSubMenuAction;
 import eapli.framework.presentation.console.SubMenu;
 import eapli.framework.presentation.console.VerticalMenuRenderer;
@@ -116,6 +113,7 @@ public class MainMenu extends AlertUI {
     private static final int KITCHEN_CREATE_OR_EDIT_MENUPLAN = 6;
     private static final int KITCHEN_CLOSE_MENU_PLAN = 7;
     private static final int KITCHEN_END_SHIFT = 9;
+    private static final int KITCHEN_LIST_BATCHES_BY_MEAL = 10;
 
     // REPORTING
     private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
@@ -244,8 +242,8 @@ public class MainMenu extends AlertUI {
     private Menu buildAdminSettingsMenu() {
         final Menu menu = new Menu("Settings >");
 
-        menu.add(new MenuItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Set kitchen alert limit",
-                new ShowMessageAction("Not implemented yet")));
+        menu.add(new MenuItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Kitchen alert limit",
+                new KitchenAlertAction()));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
@@ -326,11 +324,14 @@ public class MainMenu extends AlertUI {
         menu.add(new MenuItem(KITCHEN_CREATE_OR_EDIT_MENUPLAN, "Create or edit menuplan", new CreateMenuPlanAction()));
 
         menu.add(new MenuItem(KITCHEN_CLOSE_MENU_PLAN, "Close menuplan", new CloseMenuPlanAction()));
-
+        
         final Menu kitchenReportMenu = buildBookingReportingMenu();
+        
         menu.add(new SubMenu(REPORTING_BOOKING_SUB_MENU, kitchenReportMenu, new ShowVerticalSubMenuAction(kitchenReportMenu)));
 
         menu.add(new MenuItem(KITCHEN_END_SHIFT, "End Shift", new EndShiftAction()));
+         
+        menu.add(new MenuItem(KITCHEN_LIST_BATCHES_BY_MEAL, "List batches by meal", new ListBatchesByMealAction()));
 
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 

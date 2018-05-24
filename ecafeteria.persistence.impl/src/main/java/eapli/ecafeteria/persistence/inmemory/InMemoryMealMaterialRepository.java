@@ -29,4 +29,14 @@ public class InMemoryMealMaterialRepository extends InMemoryRepository<MealMater
     public List<Meal> getMealsByBatchID(Batch b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<MealMaterial> getMealMaterialFromMeal(Meal m) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Batch getBatchFromMealMaterial(MealMaterial mm) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
