@@ -23,8 +23,6 @@ import javax.persistence.NoResultException;
  */
 public class RegisterComplaintUI extends AbstractUI{
     RegisterComplaintController controller = new RegisterComplaintController();
-    CafeteriaUser u;
-    Dish dish;
     
     @Override
     protected boolean doShow() {
@@ -41,14 +39,16 @@ public class RegisterComplaintUI extends AbstractUI{
             }
             
             if(option == 1){
-                u = null;
+                controller.setUser(null);
             }else{
                 try{
                     String mn;
                     System.out.println("Mecanographic Number:\n");
                     mn = Console.readLine("");
                     MecanographicNumber number = new MecanographicNumber(mn);
+                    CafeteriaUser u;
                     u = controller.getUserById(number).get();
+                    controller.setUser(u);
                 }catch(NoResultException e){
                     System.out.println("User Not Found!\n" + e.getMessage());
                 }
@@ -80,7 +80,7 @@ public class RegisterComplaintUI extends AbstractUI{
                     
                     for(Dish dish1 : list){
                         if(it1 == sel){
-                            dish = dish1;
+                            controller.setDish(dish1);
                             break;
                         }else{
                             it1 ++;
@@ -90,7 +90,7 @@ public class RegisterComplaintUI extends AbstractUI{
                     System.out.println("No dishes on data base!\n" + e.getMessage());
                 }
             }else{
-                dish = null;
+                controller.setDish(null);
             }
             DescriptiveText description = null;
             boolean flag = false;
@@ -100,7 +100,7 @@ public class RegisterComplaintUI extends AbstractUI{
                 description = new DescriptiveText(d);
                 flag = description.checkDescriptiveText();
             }
-            controller.saveComplaint(description, u, dish);
+            controller.saveComplaint(description);
             
             
         } catch (DataConcurrencyException | DataIntegrityViolationException ex) {

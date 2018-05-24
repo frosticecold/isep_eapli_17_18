@@ -27,6 +27,16 @@ public class RegisterComplaintController implements Controller{
     private static final ComplaintRepository complaintRepository = PersistenceContext.repositories().complaints();
     private static final CafeteriaUserRepository cafeteriaUserRepository = PersistenceContext.repositories().cafeteriaUsers();
     private static final DishRepository dishRepository = PersistenceContext.repositories().dishes();
+    private Dish dish;
+    private CafeteriaUser user;
+    
+    public void setUser(CafeteriaUser user){
+        this.user = user;
+    }
+    
+    public void setDish(Dish dish){
+        this.dish = dish;
+    }
     
     /**
      * Method that saves a complaint on data base
@@ -37,7 +47,7 @@ public class RegisterComplaintController implements Controller{
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException 
      */
-    public Complaint saveComplaint(DescriptiveText description,CafeteriaUser user,Dish dish) throws DataConcurrencyException, DataIntegrityViolationException{
+    public Complaint saveComplaint(DescriptiveText description) throws DataConcurrencyException, DataIntegrityViolationException{
         Complaint c = new Complaint(description,dish ,user);
         return complaintRepository.save(c);
     }

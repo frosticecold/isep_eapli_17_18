@@ -1,0 +1,8 @@
+ANALYSIS - REGISTER COMPLAINT
+
+--------------------
+BUISINESS RULES
+--------------------
+ * User associated to complaint is optional
+ * Dish associated to complaint is optional
+ * Complaint must have a descriptive text
