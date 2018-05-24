@@ -5,7 +5,6 @@
  */
 package eapli.ecafeteria.application.KitchenAlert;
 
-import static com.google.common.collect.Iterables.limit;
 import eapli.ecafeteria.application.authz.AuthorizationService;
 import eapli.ecafeteria.domain.KitchenAlert.AlertLimit;
 import eapli.ecafeteria.domain.authz.ActionRight;
@@ -45,7 +44,5 @@ public class LimitConfigurationController implements Controller {
         
     }
      
-      
-    
-    }
+   }
 
