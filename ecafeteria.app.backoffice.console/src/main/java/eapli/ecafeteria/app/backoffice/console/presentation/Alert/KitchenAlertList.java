@@ -22,7 +22,7 @@ public class KitchenAlertList {
     
     public void add(KitchenAlert ka){
         
-        if( ka != null){
+        if( ka != null && !myList.contains(ka)){
             
           myList.add(ka);
         }

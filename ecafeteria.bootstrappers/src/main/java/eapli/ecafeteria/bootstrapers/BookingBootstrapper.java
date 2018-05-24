@@ -83,6 +83,7 @@ public class BookingBootstrapper implements Action  {
         register(reserved, DateTime.parseDate("07-05-2018"), user2.get().user().username(), meal8.get());
         register(reserved, DateTime.parseDate("07-05-2018"), user1.get().user().username(), meal9.get());
         register(served, DateTime.parseDate("07-05-2018"), user1.get().user().username(), meal6.get());
+        
         register(notServed, DateTime.parseDate("11-05-2018"), user1.get().user().username(), meal10.get());
         register(notServed, DateTime.parseDate("11-05-2018"), user2.get().user().username(), meal10.get());
         register(notServed, DateTime.parseDate("11-05-2018"), user2.get().user().username(), meal10.get());
