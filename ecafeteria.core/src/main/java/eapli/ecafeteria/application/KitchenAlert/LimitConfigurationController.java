@@ -33,6 +33,7 @@ public class LimitConfigurationController implements Controller {
 
         AlertLimit limit=new AlertLimit(0);
         limit.configureLimitValue(limitValue);
+        alertRepositoryLimits.save(limit);
     }
      public void configureRedLimit(float limitValue) throws DataIntegrityViolationException, DataConcurrencyException, Exception {
 
@@ -40,7 +41,7 @@ public class LimitConfigurationController implements Controller {
 
        AlertLimit limit=new AlertLimit(0);
         limit.configureLimitValue(limitValue);
-
+        alertRepositoryLimits.save(limit);
         
     }
      

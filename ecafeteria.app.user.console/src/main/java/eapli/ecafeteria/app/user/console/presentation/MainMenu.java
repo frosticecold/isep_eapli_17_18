@@ -66,8 +66,8 @@ class MainMenu extends CafeteriaUserBaseUI {
     private static final int ALERGEN_PROFILE_OPTION = 2;
     //AlergenProfile
     private static final int CREATE_ALERGEN_PROFILE_OPTION = 1;
-    private static final int ADD_ALERGEN_TO_PROFILE_OPTION = 1;
-    private static final int REMOVE_ALERGEN_TO_PROFILE_OPTION = 2;
+    private static final int ADD_ALERGEN_TO_PROFILE_OPTION = 2;
+    private static final int REMOVE_ALERGEN_TO_PROFILE_OPTION = 3;
 
     @Override
     public boolean show() {
@@ -173,18 +173,18 @@ class MainMenu extends CafeteriaUserBaseUI {
 
     private Menu buildAlergenProfileMenu() {
         final Menu menu = new Menu("Alergen Profile");
-        AddAllergenProfileController controller = new AddAllergenProfileController();
-        if (controller.getAp() == null) {
+//        AddAllergenProfileController controller = new AddAllergenProfileController();
+//        if (controller.getAp() == null) {
 
             menu.add(new MenuItem(CREATE_ALERGEN_PROFILE_OPTION, "create new alergen profile", new CreateAlergenProfileAction()));
-            menu.add(VerticalSeparator.separator());
+     
 
-        } else {
+//        } else {
             menu.add(VerticalSeparator.separator());
             menu.add(new MenuItem(ADD_ALERGEN_TO_PROFILE_OPTION, "add alergen to the profile", new AddAlergenProfileAction()));
             menu.add(VerticalSeparator.separator());
             menu.add(new MenuItem(REMOVE_ALERGEN_TO_PROFILE_OPTION, "remove alergen from the profile", new RemoveAlergenProfileAction()));
-        }
+//        }
         return menu;
     }
 
