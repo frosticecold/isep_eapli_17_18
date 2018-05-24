@@ -29,9 +29,7 @@ public class KitchenAlertUI extends AlertUI {
 
     @Override
     protected boolean doShow() {
-        
-        System.out.println("Yellow Alert = %f"+controller.getYellowLimit());
-        System.out.println("Red Alert = %f"+controller.getRedLimit());
+    
         final Menu menu = buildMenu();
         final MenuRenderer renderer;
         if (Application.settings().isMenuLayoutHorizontal()) {

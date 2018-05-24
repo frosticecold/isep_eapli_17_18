@@ -19,47 +19,30 @@ import eapli.framework.persistence.DataIntegrityViolationException;
  * @author Car
  */
 public class LimitConfigurationController implements Controller {
+     private final ListLimitService svc = new ListLimitService();
      private final AlertRepositoryLimits alertRepositoryLimits = PersistenceContext.repositories().alertRepositoryLimits() ;
-      final AlertLimit limit = null;
-     
+      
+     public Iterable<AlertLimit> allAlertLimits() {
+        return this.svc.allAlertLimits();
+    }
     public void configureYellowLimit(float limitValue) throws DataIntegrityViolationException, DataConcurrencyException, Exception {
 
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
 
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
 
-        
-        configureLimit(limit, (float) limitValue);
+        AlertLimit limit=new AlertLimit(0);
+        limit.configureLimitValue(limitValue);
     }
      public void configureRedLimit(float limitValue) throws DataIntegrityViolationException, DataConcurrencyException, Exception {
 
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
+        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.ADMINISTER);
 
-       
-        configureLimit(limit, (float) limitValue);
+       AlertLimit limit=new AlertLimit(0);
+        limit.configureLimitValue(limitValue);
 
         
     }
      
-      public AlertLimit configureLimit(AlertLimit limit,float limitValue) throws DataIntegrityViolationException, DataConcurrencyException, Exception {
+   }
 
-        AuthorizationService.ensurePermissionOfLoggedInUser(ActionRight.MANAGE_KITCHEN);
-
-        limit.configureLimitValue(limitValue);
-
-        return this.alertRepositoryLimits.save(limit);
-    }
-      
-     public double getYellowLimit(){
-        return getLimit(limit);
-    }
-    
-    
-    public double getRedLimit(){
-        return getLimit(limit);
-    }
-    
-    private double getLimit(AlertLimit limit){
-         return limit.getLimitValue();
-    }
-}
