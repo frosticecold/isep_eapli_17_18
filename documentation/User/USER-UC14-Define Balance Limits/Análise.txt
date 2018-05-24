@@ -1,0 +1,7 @@
+Perante o problema foram consideras três hipoteses de resolução.
+Em todas se valorizou a classe BalanceLimits, tanto como value object ou classe promovida.
+1. Colocar um value Object BalanceLimits no Cafeteria User
+2. Colocar um value Object BalanceLimits em Balance de Cafeteria User
+3. Colocar uma instancia de BalanceLimits em Cafeteria User e colocar anotações One to One.
+
+Depois de uma melhor análise e tentativa das primeiras duas soluções serem um completo fracasso, optou-se por realizar a terceira resolução.

@@ -1,0 +1,33 @@
+title  User app - Define Balance Limits
+participant ":User" as user
+participant ":MainMenu" as menu
+participant ":BalanceLimitsUI" as ui
+participant ":BalanceLimitsController" as controller
+participant ":CafeteriaUserService" as service
+participant ":PersistenceContext" as pc
+participant ":RepositoryFactory" as rf
+participant ":CafeteriaUserRepository" as repo
+participant ":AuthorizationService" as auth
+participant ":UserSession: as session
+participant ":SystemUser" as su
+participant ":CafeteriaUser" as cuser
+
+menu-->ui:create()
+ui-->controller:create()
+controller-->service:create()
+service->pc: repositories()
+pc->rf: cafeteriaUsers()
+rf-->*repo:create()
+menu->+ui:BalaceLimitsUI()
+ui-->user: Insert a new balance limit
+user->ui: Inserts a value
+ui->controller:defineNewBalanceLimits(balanceLimits)
+controller->auth:session()
+auth->session:authenticatedUser()
+session->su:username()
+controller->service:findCafeteriaUserByUsername(username)
+service-->controller: Returns a cafeteria user
+controller->cuser: defineBalanceLimits(limits)
+controller->repo:save(cafeteriaUser)
+controller-->ui: Returns true
+ui-->user: Success
