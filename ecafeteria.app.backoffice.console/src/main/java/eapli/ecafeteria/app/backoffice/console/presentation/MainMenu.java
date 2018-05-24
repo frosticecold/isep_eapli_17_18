@@ -242,7 +242,7 @@ public class MainMenu extends AlertUI {
     private Menu buildAdminSettingsMenu() {
         final Menu menu = new Menu("Settings >");
 
-        menu.add(new MenuItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Set kitchen alert limit",
+        menu.add(new MenuItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Kitchen alert limit",
                 new ShowMessageAction("Not implemented yet")));
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
