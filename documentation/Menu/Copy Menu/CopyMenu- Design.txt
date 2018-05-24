@@ -5,6 +5,76 @@
 
 - Sequence Diagram - code (websequencediagrams.com)
 
-
 title SD Copy Menu
+
+#CreateUI
+User->CopyMenuUI: Initiates the processof copying a menu
+CopyMenuUI-->CopyMenuController:create()
+
+#Create MenuRepo
+CopyMenuController->PersistanceContext:repositories().menu():menuRepo
+PersistanceContext->RepositoryFactory:create()
+RepositoryFactory-->MenuRepository:create()
+
+#Create MealRepo
+CopyMenuController->PersistanceContext:repositories().meal():mealRepo
+PersistanceContext-->RepositoryFactory:create()
+RepositoryFactory-->MealRepository:create()
+
+#Create DishRepo
+CopyMenuController->PersistanceContext:repositories().dishes():dishRepo
+PersistanceContext-->RepositoryFactory:create()
+RepositoryFactory-->DishRepository:create()
+
+#Create DishTypeRepo
+CopyMenuController->PersistanceContext:repositories().dishtype():dishTypeRepo
+PersistanceContext-->RepositoryFactory:create()
+RepositoryFactory-->DishTypeRepository:create()
+
+#Create TransactionalContext
+CopyMenuController->PersistanceContext:repositories().buildTransactionalContext():tx
+PersistanceContext-->RepositoryFactory:create()#RepositoryFactory-->TransactionalContext:create()
+
+#Create MealRepoTx
+CopyMenuController->PersistanceContext:repositories().mealRepositoryAutoTx(tx):mealTx
+PersistanceContext-->RepositoryFactory:create()
+RepositoryFactory-->MealRepository:create()
+
+#Copy Menu
+CopyMenuUI->CopyMenuController:getAvailableMenus():Iterable<Menu>
+CopyMenuController->DataRepository:findAll():menuRepo
+CopyMenuUI-->User:Displays a list of menus and\nrequests the user to select an item
+User->CopyMenuUI:Selects desired item
+CopyMenuUI->CopyMenuController:findAllMeals(Menu:oldmenu)\n:Iterable<Meal>:meals
+CopyMenuController->MealRepository:findMealsbyMenu(Menu:menu)
+CopyMenuUI-->User:Requests working period
+User->CopyMenuUI:Inputs desired working period
+CopyMenuUI-->Menu:new Menu(startingDay, endingDay):Menu newMenu
+CopyMenuUI->CopyMenuController:saveMenu(Menu newMenu):Menu newMenu
+CopyMenuController->DataRepository:save(Menu menu):Menu savedMenu
+
+#Copy Meals to New Menu
+CopyMenuUI->CopyMenuController:changeMealsToNewMenu(Iterable<Meal> meals, Menu newMenu, Menu oldMenu)\n:Iterable<Meal> mealList
+CopyMenuController->Menu:newMenu.getWorkWeekDaysIterable():Iterable<Calendar> dayList
+loop for each in meals
+    #Arrange Meal days
+    CopyMenuController->Menu:list.getMealDate():Calendar mealDate
+    CopyMenuController->CopyMenuController:Map<Integer, List<Meal>> mapOfMeals.add(Meal meal)
+end
+loop for each in meals
+    #Arrange Meal days
+    CopyMenuController-->Menu:new Meal(Meal meal, Calendar dayOfWeel,newMenu):Meal newMeal
+    CopyMenuController->CopyMenuController:Iterable<Meal> newList.add(Meal newMeal)
+end
+#Save Meals
+CopyMenuUI->CopyMenuController:saveAllMeals(Iterable<Meal> mealList)
+CopyMenuController->TransactionalContext:tx.beginTransaction()
+loop for each in mealList
+    #Save each Meal
+    CopyMenuController->DataRepository:mealTx.save(meal)
+end
+CopyMenuController->TransactionalContext:tx.commit()
+
+#Loop
+CopyMenuUI-->User: Edit new menu? Y/N
 

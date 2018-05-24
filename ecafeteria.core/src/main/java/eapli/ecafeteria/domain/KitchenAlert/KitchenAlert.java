@@ -7,7 +7,7 @@ package eapli.ecafeteria.domain.KitchenAlert;
 public interface KitchenAlert {
     
     String alertType();
-    
-    
-    
+
+    @Override
+    public boolean equals(Object o);
 }
