@@ -85,6 +85,15 @@ class MainMenu extends CafeteriaUserBaseUI {
         return renderer.show();
     }
 
+    /**
+     * Returns the amount of ratings waiting for reply
+     *
+     * @return
+     */
+    protected String ratingToReply() {
+        return String.format("Rating waiting for reply: %d", controller().ratingWaitingReply());
+    }
+
     private Menu buildMainMenu() {
         final Menu mainMenu = new Menu();
 
@@ -113,7 +122,7 @@ class MainMenu extends CafeteriaUserBaseUI {
 
         mainMenu.add(VerticalSeparator.separator());
 
-        mainMenu.add(new MenuItem(EXIT_OPTION, "Exit", new ExitWithMessageAction()));
+        mainMenu.add(new MenuItem(EXIT_OPTION, "Exit\n------------------\n" + ratingToReply(), new ExitWithMessageAction()));
 
         return mainMenu;
     }
@@ -169,8 +178,8 @@ class MainMenu extends CafeteriaUserBaseUI {
 
             menu.add(new MenuItem(CREATE_ALERGEN_PROFILE_OPTION, "create new alergen profile", new CreateAlergenProfileAction()));
             menu.add(VerticalSeparator.separator());
-           
-        }else{
+
+        } else {
             menu.add(VerticalSeparator.separator());
             menu.add(new MenuItem(ADD_ALERGEN_TO_PROFILE_OPTION, "add alergen to the profile", new AddAlergenProfileAction()));
             menu.add(VerticalSeparator.separator());
