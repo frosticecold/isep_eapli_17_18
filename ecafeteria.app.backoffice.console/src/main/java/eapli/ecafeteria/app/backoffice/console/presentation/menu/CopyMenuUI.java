@@ -40,12 +40,12 @@ public class CopyMenuUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        SelectWidget<Menu> widget = new SelectWidget<>("Select a menu:\n", controller.getAvailableMenus());
 
         try {
             boolean editing = true;
             boolean copy = true;
             do {
+                SelectWidget<Menu> widget = new SelectWidget<>("Select a menu:\n", controller.getAvailableMenus());
                 widget.show();
                 if (widget.selectedElement() != null) {
                     Menu oldMenu = widget.selectedElement();
