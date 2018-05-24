@@ -1,0 +1,7 @@
+Análise
+
+- Necessário implementar o padrão Observer
+
+Regras de Negócio
+
+- O utilizador só é notificado caso tenha saldo inferior ao limite definido após ter reservado uma refeição.

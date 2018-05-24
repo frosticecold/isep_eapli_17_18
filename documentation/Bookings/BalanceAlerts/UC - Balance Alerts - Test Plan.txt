@@ -1,0 +1,11 @@
+Test Plan
+	
+	1. Fazer o login como user 900330 e Password: Password1
+	2. Escolher a opção 2 Bookings
+	3. Escolher a opção 1 - Book a meal
+	4. Introduzir dia 10-08-2018 
+	5. Escolher 1 - Lunch
+	6. Escolher 1 - Tofu Grelhado 
+	7. Apresenta o alergenio soja, e o aviso de que o user nao possui esse alergenio
+	8. Escolher 1 - proceed with the booking - yes
+	9. Caso a reserva seja realizada com sucesso e o utilizador tenha baixado o saldo abaixo 	do limite integrado no seu perfil, a UI apresenta uma mensagem de alerta. 
