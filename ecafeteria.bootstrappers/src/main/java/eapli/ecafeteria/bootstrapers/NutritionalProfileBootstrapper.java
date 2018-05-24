@@ -45,16 +45,16 @@ public class NutritionalProfileBootstrapper implements Action {
             Profiles
              */
             NutritionalProfile profile1 = new NutritionalProfile(user1.get());
-            profile1.changeMaxCalDish(1000);
-            profile1.changeMaxCalWeek(10000);
-            profile1.changeMaxSaltDish(50);
-            profile1.changeMaxSaltWeek(5000);
+            profile1.changeMaxCalDish("1000");
+            profile1.changeMaxCalWeek("10000");
+            profile1.changeMaxSaltDish("50");
+            profile1.changeMaxSaltWeek("5000");
 
             NutritionalProfile profile2 = new NutritionalProfile(user2.get());
-            profile2.changeMaxCalDish(500);
-            profile2.changeMaxCalWeek(9000);
-            profile2.changeMaxSaltDish(85);
-            profile2.changeMaxSaltWeek(7000);
+            profile2.changeMaxCalDish("500");
+            profile2.changeMaxCalWeek("9000");
+            profile2.changeMaxSaltDish("85");
+            profile2.changeMaxSaltWeek("7000");
             /*
             Register
              */

@@ -25,35 +25,35 @@ public class CreateNutritionalProfileController {
         ap = new NutritionalProfile(getCurrentUser());
     }
 
-    public int getmaxCalW() {
+    public String getmaxCalW() {
         return ap.maxCalWeek();
     }
 
-    public int getmaxCalD() {
+    public String getmaxCalD() {
         return ap.maxCalDish();
     }
 
-    public int getmaxSaltW() {
+    public String getmaxSaltW() {
         return ap.maxSaltWeek();
     }
 
-    public int getmaxSaltD() {
+    public String getmaxSaltD() {
         return ap.maxSaltDish();
     }
 
-    public int maxCalDish(int maxcal) {
+    public String maxCalDish(String maxcal) {
         return ap.changeMaxCalDish(maxcal);
     }
 
-    public int maxCalWeek(int maxcalw) {
+    public String maxCalWeek(String maxcalw) {
         return ap.changeMaxCalWeek(maxcalw);
     }
 
-    public int maxSaltDish(int maxsalt) {
+    public String maxSaltDish(String maxsalt) {
         return ap.changeMaxSaltDish(maxsalt);
     }
 
-    public int maxSaltWeek(int maxsaltw) {
+    public String maxSaltWeek(String maxsaltw) {
         return ap.changeMaxSaltWeek(maxsaltw);
     }
 

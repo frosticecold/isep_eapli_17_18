@@ -39,29 +39,29 @@ public class EditNutritionalProfileUI extends CafeteriaUserBaseUI {
             
             
             System.out.println("Whats the new maximum calories per Dish ?");
-            int max = ler.nextInt();
+            String max = ler.nextLine();
             controller.maxCalDish(max);
             System.out.println(" ");
             System.out.println("Changes Saved!");
             
        
             System.out.println("Whats the new maximum calories per Week ?");
-            int maxW = ler.nextInt();
+            String maxW = ler.nextLine();
             controller.maxCalWeek(maxW);
             System.out.println(" ");
             System.out.println("Changes Saved!");
             
             
             System.out.println("Whats the new maximum salt per Dish ?");
-            int maxS = ler.nextInt();
+            String maxS = ler.nextLine();
             controller.maxSaltDish(maxS);
             System.out.println(" ");
             System.out.println("Changes Saved!");
             
             
             System.out.println("Whats the new maximum Salt per Week ?");
-            int maxSW = ler.nextInt();
-            controller.maxCalDish(maxSW);
+            String maxSW = ler.nextLine();
+            controller.maxSaltWeek(maxSW);
             System.out.println(" ");
             System.out.println("Changes Saved!");
             
