@@ -21,7 +21,6 @@ import eapli.ecafeteria.app.user.console.presentation.bookings.RemoveAlergenProf
 import eapli.ecafeteria.app.user.console.presentation.bookings.ShowTransactionsUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ViewCaloricConsumptionUI;
 import eapli.ecafeteria.app.user.console.presentation.bookings.ViewRatingsUI;
-import eapli.ecafeteria.application.cafeteriauser.AddAllergenProfileController;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
 import eapli.framework.actions.ReturnAction;
 import eapli.framework.presentation.console.ExitWithMessageAction;
@@ -173,10 +172,9 @@ class MainMenu extends CafeteriaUserBaseUI {
         menu.add(new SubMenu(ALERGEN_PROFILE_OPTION, AlergenProfileMenu, new ShowVerticalSubMenuAction(AlergenProfileMenu)));
 
         final Menu NutritionalProfileMenu = buildNutritionalProfileMenu();
-        
+
         menu.add(new SubMenu(NUTRITIONAL_PROFILE_OPTION, NutritionalProfileMenu, new ShowVerticalSubMenuAction(NutritionalProfileMenu)));
 
-        
         menu.add(new MenuItem(EXIT_OPTION, "Return ", new ReturnAction()));
 
         return menu;
@@ -187,7 +185,6 @@ class MainMenu extends CafeteriaUserBaseUI {
 
         menu.add(new MenuItem(CREATE_ALERGEN_PROFILE_OPTION, "create new alergen profile", new CreateAlergenProfileAction()));
 
-
         menu.add(VerticalSeparator.separator());
         menu.add(new MenuItem(ADD_ALERGEN_TO_PROFILE_OPTION, "add alergen to the profile", new AddAlergenProfileAction()));
         menu.add(VerticalSeparator.separator());
@@ -195,9 +192,8 @@ class MainMenu extends CafeteriaUserBaseUI {
 
         return menu;
     }
-    
-    
-private Menu buildNutritionalProfileMenu() {
+
+    private Menu buildNutritionalProfileMenu() {
         final Menu menu = new Menu("Nutritional Profile");
 
         menu.add(new MenuItem(CREATE_NUTRITIONAL_PROFILE_OPTION, "create new Nutritional profile", new CreateNutritionalProfileAction()));

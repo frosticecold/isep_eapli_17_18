@@ -17,6 +17,7 @@ import javax.persistence.NoResultException;
  * @author luisdematos
  */
 public class EditNutritionalProfileController {
+
     private NutritionalProfile ap;
     private final NutritionalProfileRepository nutritionalPlanRepo = PersistenceContext.repositories().nutritionalProfiles();
 
@@ -75,6 +76,3 @@ public class EditNutritionalProfileController {
         nutritionalPlanRepo.saveNutritionalProfile(ap);
     }
 }
-
-
-
