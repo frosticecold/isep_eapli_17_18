@@ -73,7 +73,7 @@ public class RegisterComplaintUI extends AbstractUI{
                         System.out.println(dish.name().toString());
                         it++;
                     }
-                    while(sel < 1 || sel > it){
+                    while(sel < 1 || sel > it-1){
                         System.out.println("Select a Dish:\n");
                         sel = Console.readInteger("");
                     }
