@@ -5,7 +5,6 @@
  */
 package eapli.ecafeteria.domain.KitchenAlert;
 
-import com.sun.org.apache.xalan.internal.utils.XMLSecurityManager.Limit;
 import eapli.framework.domain.ddd.AggregateRoot;
 import java.io.Serializable;
 import javax.persistence.AttributeOverride;
