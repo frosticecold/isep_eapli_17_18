@@ -1,0 +1,10 @@
+Reunião com o cliente:
+
+*O alerta que aparece tem de ser específico da meal em questão.
+
+_______________________________________________________
+
+Regras de Negócio:
+
+*O processo de alertas está sempre visível para o gestor de menus e de cozinha.
+*Sempre que os limites forem ultrapassados, os gestores são alertados.
