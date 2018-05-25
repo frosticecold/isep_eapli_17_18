@@ -6,9 +6,14 @@
 
 * Utilizar a estrutura base standard da aplicação baseada em camadas
 
+UserInterface : MainMenuDeliveredMealsReportingUI, DeliveredMealsByDateUI, BookedMealsUI, DeliveredMealsByDishUI, DeliveredMealsByMealUI, DeliveryMealsByMenuUI, DeliveryMealsByTypeUI, MealsByMenuPlanUI, showDishAcceptanceRateUI
 
+Controller : DeliveredMealsByDateController , BookedMealsController, DeliveredMealsByDishController, DeliveredMealsByMealController, DeliveryMealsByMenuController, DeliveryMealsByTypeController, MealsByMenuPlanController, showDishAcceptanceRateController
 
+Controller & Singleton : PrevisionsService
 
-- Sequence Diagram
+PersistenceContext : BookingRepository, RatingRepository, MealRepository, MenuRepository, DishRepository, MenuPlanRepository, DeliveryRegistryRepository
 
-title SD Previsions Reporting
+Diagrama de sequencia principal : MainSD
+
+Tem referencias aos outros diagramas(SD)

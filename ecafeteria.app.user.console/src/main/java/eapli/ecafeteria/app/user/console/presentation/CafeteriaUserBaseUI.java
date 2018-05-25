@@ -26,7 +26,6 @@ public abstract class CafeteriaUserBaseUI extends AbstractUI {
     Username username = AuthorizationService.session().authenticatedUser().id();
     Optional<CafeteriaUser> user = userService.findCafeteriaUserByUsername(username);
 
-
     public String showBalance() {
         return "CURRENT BALANCE OF YOUR USERCARD: " + controller().getBalanceOfUser(user.get().mecanographicNumber());
     }
@@ -44,14 +43,9 @@ public abstract class CafeteriaUserBaseUI extends AbstractUI {
         return "NEXT BOOKING: " + book.toString();
     }
 
-    public String ratingToReply() {
-        return String.format("Rating waiting for reply: %d", controller().ratingWaitingReply());
-    }
-
     @Override
     public String headline() {
-        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   " + showBalance() + "\n" + showNextBooking() + "\n"
-                + ratingToReply();
+        return "eCAFETERIA [@" + AuthorizationService.session().authenticatedUser().id() + "]   " + showBalance() + "\n" + showNextBooking() + "\n";
     }
 
     @Override

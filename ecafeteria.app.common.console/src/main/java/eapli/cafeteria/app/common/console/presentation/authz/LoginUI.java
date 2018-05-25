@@ -2,7 +2,7 @@ package eapli.cafeteria.app.common.console.presentation.authz;
 
 import eapli.ecafeteria.application.authz.LoginController;
 import eapli.ecafeteria.domain.authz.ActionRight;
-import eapli.ecafeteria.domain.reasons.LoginException;
+import eapli.ecafeteria.domain.deactivationreasons.LoginException;
 import eapli.framework.application.Controller;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.util.Console;
@@ -63,6 +63,7 @@ public class LoginUI extends AbstractUI {
              * message
              */
         } catch (LoginException ex) {
+            System.out.println("Warning! You were deactivated");
             System.out.println(ex.getMessage());
         }
         return false;

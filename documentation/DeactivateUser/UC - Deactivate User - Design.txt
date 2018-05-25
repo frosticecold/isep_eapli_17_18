@@ -1,10 +1,15 @@
 
 	DESIGN
 	_________
+	
+	# Padrões utilizados
+	
+	* Factory (Para criar e esconder a complexidade da criação do Repositorio de ReasonTypes)
+	* Null Object (NoDeactivationReason, para não existirem referência de Reasons nulas em SystemUser)
 
 	* Utilizar a estrutura base standard da aplicação baseada em camadas
 
-   	Classes do domínio:  SystemUser,Reason,ReasonType,LoginException
+   	Classes do domínio:  SystemUser,DeactivationReasonType,DeactivationReason,NoDeactivationReason,LoginException
 	UI: LoginUI
    	Controlador: LoginController
-   	Repository: UserRepository, ReasonRepository, TransactionalContext
+   	Repository: UserRepository, DeactivationReasonRepository, TransactionalContext

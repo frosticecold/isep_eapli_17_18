@@ -53,15 +53,15 @@ public class AllergenProfileBootstrapper implements Action {
             profile1.addAlergen(new Alergen(Designation.valueOf(TestDataConstants.ALLERGEN_AMENDOINS)));
             profile1.addAlergen(new Alergen(Designation.valueOf(TestDataConstants.ALLERGEN_AIPO)));
 
-            AllergenProfile profile2 = new AllergenProfile(user2.get());
-            profile2.addAlergen(new Alergen(Designation.valueOf(TestDataConstants.ALLERGEN_FRUTOS_SECOS)));
-            profile2.addAlergen(new Alergen(Designation.valueOf(TestDataConstants.ALLERGEN_MOLUSCO)));
-            profile2.addAlergen(new Alergen(Designation.valueOf(TestDataConstants.ALLERGEN_GLUTEN)));
+//            AllergenProfile profile2 = new AllergenProfile(user2.get());
+//            profile2.addAlergen(new Alergen(Designation.valueOf(TestDataConstants.ALLERGEN_FRUTOS_SECOS)));
+//            profile2.addAlergen(new Alergen(Designation.valueOf(TestDataConstants.ALLERGEN_MOLUSCO)));
+//            profile2.addAlergen(new Alergen(Designation.valueOf(TestDataConstants.ALLERGEN_GLUTEN)));
             /*
             Register
              */
             register(profile1);
-            register(profile2);
+//            register(profile2);
             
         } catch (DataConcurrencyException | DataIntegrityViolationException ex) {
             Logger.getLogger(AllergenProfileBootstrapper.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,7 +76,7 @@ public class AllergenProfileBootstrapper implements Action {
      * @throws DataConcurrencyException
      * @throws DataIntegrityViolationException
      *
-     * @author Rui Almeida <1160818> && Ricardo Sousa <>
+     * @author Rui Almeida <1160818> && Ricardo Sousa <1160900>
      */
     private void register(AllergenProfile profile) throws DataConcurrencyException, DataIntegrityViolationException {
         allergenProfileRepo.save(profile);

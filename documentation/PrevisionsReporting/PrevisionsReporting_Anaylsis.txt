@@ -6,6 +6,8 @@
 
 	Reunião com o cliente  em 2018.05.21
 
+	- Iniciada na aplicação de backoffice e só possivel ser realizado por um adminstrador 
+
 	- Mostrar relação entre refeições reservadas;
 
 	- Mostrar refeições previstas no plano;

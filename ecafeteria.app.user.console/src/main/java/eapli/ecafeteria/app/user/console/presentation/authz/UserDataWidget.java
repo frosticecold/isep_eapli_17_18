@@ -9,6 +9,7 @@ import eapli.framework.util.Console;
  */
 class UserDataWidget {
 
+    private String userType;
     private String username;
     private String password;
     private String firstName;
@@ -16,11 +17,16 @@ class UserDataWidget {
     private String email;
 
     public void show() {
+        this.userType = Console.readLine("User Type (Student or Employee)");
         this.username = Console.readLine("Username");
         this.password = Console.readLine("Password");
         this.firstName = Console.readLine("First Name");
         this.lastName = Console.readLine("Last Name");
         this.email = Console.readLine("E-Mail");
+    }
+    
+    public String userType() {
+        return this.userType;
     }
 
     public String username() {

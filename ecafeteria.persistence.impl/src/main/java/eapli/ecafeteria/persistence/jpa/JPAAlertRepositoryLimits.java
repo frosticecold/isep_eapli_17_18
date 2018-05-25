@@ -19,9 +19,14 @@ public class JPAAlertRepositoryLimits extends CafeteriaJpaRepositoryBase<AlertLi
 //
 //        return q.getResultList();
         
-    float[] omanoaindanaofez = {0.7F , 0.9F};
-
-        return omanoaindanaofez;
+        float yellowLimit = entityManager().createQuery("SELECT limitValue "
+                + "FROM YellowAlert")
+                .getFirstResult();
+        float redLimit = entityManager().createQuery("SELECT limitValue "
+                + "FROM RedAlert")
+                .getFirstResult();
+        float limits[]={yellowLimit,redLimit};
+        return limits;
     }
     
 }

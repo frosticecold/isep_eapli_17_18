@@ -28,6 +28,8 @@ public class AppSettings {
 
     private static final String LUNCH_TIME_BEGIN = "LunchTimeBegin";
     private static final String DINNER_TIME_BEGIN = "DinnerTimeBegin";
+    
+    private static final String POS_IDENTIFICATION = "POSIdentification";
 
     private final Properties applicationProperties = new Properties();
 
@@ -67,6 +69,7 @@ public class AppSettings {
                 "12:00:00");
         this.applicationProperties.setProperty(DINNER_TIME_BEGIN,
                 "19:00:00");
+        this.applicationProperties.setProperty(POS_IDENTIFICATION, "1");
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -100,6 +103,10 @@ public class AppSettings {
 
     public String getDiNNER_TIME_BEGIN() {
         return this.applicationProperties.getProperty(DINNER_TIME_BEGIN);
+    }
+    
+    public String getPOS_IDENTIFICATION(){
+        return this.applicationProperties.getProperty(POS_IDENTIFICATION);
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

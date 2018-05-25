@@ -21,22 +21,22 @@ public class CafeteriaUserBootstrapper implements Action {
 
     @Override
     public boolean execute() {
-        signupAndApprove("900330", "Password1", "John", "Smith", "john@smith.com", "900330");
-        signupAndApprove("900331", "Password1", "Mary", "Smith", "mary@smith.com", "900331");
-        
+        signupAndApprove("Student", "900330", "Password1", "John", "Smith", "john@smith.com", "900330");
+        signupAndApprove("Student", "900331", "Password1", "Mary", "Smith", "mary@smith.com", "900331");
+
         return true;
     }
 
     /**
      *
      */
-    private SignupRequest signupAndApprove(final String username, final String password, final String firstName,
+    private SignupRequest signupAndApprove(final String userType, final String username, final String password, final String firstName,
             final String lastName, final String email, String mecanographicNumber) {
         final SignupController signupController = new SignupController();
         final AcceptRefuseSignupRequestController acceptController = new AcceptRefuseSignupRequestController();
         SignupRequest request = null;
         try {
-            request = signupController.signup(username, password, firstName, lastName, email,
+            request = signupController.signup(userType, username, password, firstName, lastName, email,
                     mecanographicNumber);
             acceptController.acceptSignupRequest(request);
         } catch (final DataConcurrencyException | DataIntegrityViolationException e) {

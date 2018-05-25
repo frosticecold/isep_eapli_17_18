@@ -1,5 +1,6 @@
 package eapli.ecafeteria.persistence.inmemory;
 
+import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUser;
 import java.util.Optional;
 
 import eapli.ecafeteria.domain.dishes.Dish;
@@ -31,7 +32,7 @@ public class InMemoryDishRepository extends InMemoryRepository<Dish, Designation
     }
 
     @Override
-    public Iterable<Dish> findServedDishesBetween(Calendar initialDate, Calendar finalDate) {
+    public Iterable<Dish> findServedDishesBetween(CafeteriaUser user,Calendar initialDate, Calendar finalDate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

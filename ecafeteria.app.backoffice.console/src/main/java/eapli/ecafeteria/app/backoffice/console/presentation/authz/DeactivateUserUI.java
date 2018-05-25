@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 import eapli.ecafeteria.application.authz.DeactivateUserController;
 import eapli.ecafeteria.domain.authz.SystemUser;
-import eapli.ecafeteria.domain.reasons.ReasonType;
+import eapli.ecafeteria.domain.deactivationreasons.DeactivationReasonType;
 import eapli.framework.application.Controller;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
@@ -54,8 +54,8 @@ import eapli.framework.util.Console;
             if (option == 0) {
                 System.out.println("No user selected");
             } else {
-                final Iterable<ReasonType> reason_iterable = theController.getAllReasons();
-                SelectWidget<ReasonType> select_reason = new SelectWidget<>("Select Reason", reason_iterable);
+                final Iterable<DeactivationReasonType> reason_iterable = theController.getAllReasonsTypes();
+                SelectWidget<DeactivationReasonType> select_reason = new SelectWidget<>("Select Reason", reason_iterable);
                 select_reason.show();
                 int reason_option = select_reason.selectedOption();
                 if (reason_option > 0) {

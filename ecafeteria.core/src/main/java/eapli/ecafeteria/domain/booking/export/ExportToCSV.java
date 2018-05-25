@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -91,15 +92,15 @@ public class ExportToCSV implements ExportStrategy {
          * Create the file writer, using fileoutputstream and bufferedwriter on this case.
          */
         FileOutputStream outputStream = new FileOutputStream(exportFile);
-        BufferedWriter write = new BufferedWriter(new OutputStreamWriter(outputStream));
+        BufferedWriter write = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
         
         String userDTO  = "";
         String dateDTO  = "";
         String moneyDTO = "";
         String typeDTO  = "";
         
-        String newLine       = "\r\n";
-        String comma         = ",";
+        String newLine  = "\r\n";
+        String comma    = ";";
         
         /**
          * Start writing of CSV file
