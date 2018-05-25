@@ -6,6 +6,7 @@
 package eapli.ecafeteria.domain.cafeteriauser;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,17 +24,17 @@ public class NutritionalProfile implements Serializable {
     @GeneratedValue
     private long id;
 
-    @JoinTable
-    @OneToOne
-    private int maxCalDish;
-    @OneToOne
-    private int maxSaltDish;
+    @JoinTable(name = "NUTRITIONAL_PROFILE")
+    @Column
+    private String maxCalDish;
+    @Column
+    private String maxSaltDish;
+    @Column
+    private String maxSaltWeek;
+    @Column
+    private String maxCalWeek;
     @OneToOne
     private CafeteriaUser user;
-    @OneToOne
-    private int maxSaltWeek;
-    @OneToOne
-    private int maxCalWeek;
 
     public NutritionalProfile(CafeteriaUser user) {
         this.user = user;
@@ -46,40 +47,40 @@ public class NutritionalProfile implements Serializable {
         //FOR ORM
     }
 
-    public int maxCalWeek() {
+    public String maxCalWeek() {
         return maxCalWeek;
     }
 
-    public int maxCalDish() {
+    public String maxCalDish() {
         return maxCalDish;
     }
 
-    public int maxSaltDish() {
+    public String maxSaltDish() {
         return maxSaltDish;
     }
 
-    public int maxSaltWeek() {
+    public String maxSaltWeek() {
         return maxSaltWeek;
     }
 
-    public int changeMaxCalDish(int newMaxCal) {
+    public String changeMaxCalDish(String newMaxCal) {
 
         return this.maxCalDish = newMaxCal;
     }
 
-    public int changeMaxCalWeek(int newMaxCalWeek) {
+    public String changeMaxCalWeek(String newMaxCalWeek) {
 
         return this.maxCalWeek = newMaxCalWeek;
     }
 
-    public int changeMaxSaltWeek(int newMaxSaltWeek) {
+    public String changeMaxSaltWeek(String newMaxSaltWeek) {
 
         return this.maxSaltWeek = newMaxSaltWeek;
     }
 
-    public int changeMaxSaltDish(int newMaxSalt) {
+    public String changeMaxSaltDish(String newMaxSalt) {
 
-        return this.maxSaltWeek = newMaxSalt;
+        return this.maxSaltDish = newMaxSalt;
     }
 
     public CafeteriaUser user() {

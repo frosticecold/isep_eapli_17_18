@@ -14,15 +14,15 @@ import javax.persistence.NoResultException;
 
 /**
  *
- * @author Rafael Teixeira
+ * @author luisdematos
  */
-public class CreateNutritionalProfileController {
+public class EditNutritionalProfileController {
 
     private NutritionalProfile ap;
     private final NutritionalProfileRepository nutritionalPlanRepo = PersistenceContext.repositories().nutritionalProfiles();
 
-    public CreateNutritionalProfileController() {
-        ap = new NutritionalProfile(getCurrentUser());
+    public EditNutritionalProfileController() {
+        ap = nutritionalPlanRepo.findUserNutritionalProfile(getCurrentUser());
     }
 
     public String getmaxCalW() {

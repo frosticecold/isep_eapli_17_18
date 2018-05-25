@@ -106,8 +106,8 @@ public class ExportToXML implements ExportStrategy {
         String xmlTagOpen    = "<userTransactionBetweenPeriod>";
         String xmlTagClose   = "</userTransactionBetweenPeriod>";
         
-        String txsTagOpen     = "<transactions>";
-        String txsTagClose    = "</transactions>";
+        String txsTagOpen    = "<transactions>";
+        String txsTagClose   = "</transactions>";
         
         String txTagOpen     = "<transaction>";
         String txTagClose    = "</transaction>";

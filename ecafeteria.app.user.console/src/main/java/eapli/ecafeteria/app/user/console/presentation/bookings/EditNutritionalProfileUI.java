@@ -7,16 +7,16 @@ package eapli.ecafeteria.app.user.console.presentation.bookings;
 
 import eapli.ecafeteria.app.user.console.presentation.CafeteriaUserBaseUI;
 import eapli.ecafeteria.application.cafeteriauser.CafeteriaUserBaseController;
-import eapli.ecafeteria.application.cafeteriauser.CreateNutritionalProfileController;
+import eapli.ecafeteria.application.cafeteriauser.EditNutritionalProfileController;
 import java.util.Scanner;
 
 /**
  *
- * @author Rafael Teixeira
+ * @author luisdematos
  */
-public class CreateNutritionalProfileUI extends CafeteriaUserBaseUI {
+public class EditNutritionalProfileUI extends CafeteriaUserBaseUI {
 
-    private CreateNutritionalProfileController controller = new CreateNutritionalProfileController();
+    private EditNutritionalProfileController controller = new EditNutritionalProfileController();
     Scanner ler = new Scanner(System.in);
 
     @Override
@@ -30,33 +30,41 @@ public class CreateNutritionalProfileUI extends CafeteriaUserBaseUI {
         String op;
         do {
             
-            System.out.println("Whats the maximum calories per Dish ?");
+            System.out.println("THIS IS YOUR CURRENT NUTRITIONAL PROFILE ");
+            System.out.println(" ");
+            System.out.println("Max Calories Per Dish : " + controller.getmaxCalD());
+            System.out.println("Max Calories Per Week : " + controller.getmaxCalW());
+            System.out.println("Max Salt Per Dish : " + controller.getmaxSaltD());
+            System.out.println("Max Salt Per Week : " + controller.getmaxSaltW());
+            
+            
+            System.out.println("Whats the new maximum calories per Dish ?");
             String max = ler.nextLine();
             controller.maxCalDish(max);
             System.out.println(" ");
             System.out.println("Changes Saved!");
-            System.out.println("This is your current maximum of calories per Dish : " + controller.getmaxCalD());
+            
        
-            System.out.println("Whats the maximum calories per Week ?");
+            System.out.println("Whats the new maximum calories per Week ?");
             String maxW = ler.nextLine();
             controller.maxCalWeek(maxW);
             System.out.println(" ");
             System.out.println("Changes Saved!");
-            System.out.println("This is your current maximum of calories per Week : " + controller.getmaxCalW());
             
-            System.out.println("Whats the maximum salt per Dish ?");
+            
+            System.out.println("Whats the new maximum salt per Dish ?");
             String maxS = ler.nextLine();
             controller.maxSaltDish(maxS);
             System.out.println(" ");
             System.out.println("Changes Saved!");
-            System.out.println("This is your current maximum of salt per Dish : " + controller.getmaxSaltD());
             
-            System.out.println("Whats the maximum Salt per Week ?");
+            
+            System.out.println("Whats the new maximum Salt per Week ?");
             String maxSW = ler.nextLine();
             controller.maxSaltWeek(maxSW);
             System.out.println(" ");
             System.out.println("Changes Saved!");
-            System.out.println("This is your current maximum of salt per Week : " + controller.getmaxSaltW());
+            
            
 
             System.out.println(" ");
