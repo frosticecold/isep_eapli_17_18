@@ -99,8 +99,8 @@ public class ExportToCSV implements ExportStrategy {
         String moneyDTO = "";
         String typeDTO  = "";
         
-        String newLine       = "\r\n";
-        String comma         = ";";
+        String newLine  = "\r\n";
+        String comma    = ";";
         
         /**
          * Start writing of CSV file
