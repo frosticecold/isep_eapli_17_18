@@ -28,34 +28,37 @@ public class SignupRequestUI extends AbstractUI {
         final UserDataWidget userData = new UserDataWidget();
 
         userData.show();
+        boolean stat = false;
+        do {
+            final String mecanographicNumber = Console.readLine("Mecanographic Number:");
+            MecanographicNumberValidationContext validationContext = null;
 
-        final String mecanographicNumber = Console.readLine("Mecanographic Number:");
-        MecanographicNumberValidationContext validationContext = null;
-
-        if ("employee".equalsIgnoreCase(userData.userType())) {
-            validationContext = new MecanographicNumberValidationContext(new EmployeeStrategy(), mecanographicNumber);
-        }
-
-        if ("student".equalsIgnoreCase(userData.userType())) {
-            validationContext = new MecanographicNumberValidationContext(new StudentStrategy(), mecanographicNumber);
-        }
-
-        if (validationContext != null) {
-            if (validationContext.validateUser()) {
-                try {
-                    this.theController.signup(userData.userType(), userData.username(), userData.password(),
-                            userData.firstName(), userData.lastName(), userData.email(),
-                            mecanographicNumber);
-                } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
-                    Logger.getLogger(SignupRequestUI.class.getName()).log(Level.SEVERE, null, e);
-                }
-                return false;
-            } else {
-                throw new IllegalArgumentException("Mecanographic number is invalid!");
+            if ("employee".equalsIgnoreCase(userData.userType())) {
+                validationContext = new MecanographicNumberValidationContext(new EmployeeStrategy(), mecanographicNumber);
             }
-        } else {
-            throw new IllegalArgumentException("No strategy has been defined!");
-        }
+
+            if ("student".equalsIgnoreCase(userData.userType())) {
+                validationContext = new MecanographicNumberValidationContext(new StudentStrategy(), mecanographicNumber);
+            }
+
+            if (validationContext != null) {
+                if (validationContext.validateUser()) {
+                    try {
+                        this.theController.signup(userData.userType(), userData.username(), userData.password(),
+                                userData.firstName(), userData.lastName(), userData.email(),
+                                mecanographicNumber);
+                    } catch (final DataIntegrityViolationException | DataConcurrencyException e) {
+                        Logger.getLogger(SignupRequestUI.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                    stat = true;
+                } else {
+                    Logger.getLogger(SignupRequestUI.class.getName()).log(Level.WARNING, "Mecanografic number is invalid!");
+                }
+            } else {
+                Logger.getLogger(SignupRequestUI.class.getName()).log(Level.WARNING, "No strategy has been defined!");
+            }
+        } while (!stat);
+        return false;
     }
 
     @Override

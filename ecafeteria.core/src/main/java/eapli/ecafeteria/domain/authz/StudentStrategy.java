@@ -21,7 +21,7 @@ public class StudentStrategy implements MecanographicNumberValidationStrategy {
         }
 
         //If length less than 3 mec number is incomplete
-        if (mec.length() < 3) {
+        if (mec.length() < 3 || mec.length() > 6) {
             return false;
         }
 

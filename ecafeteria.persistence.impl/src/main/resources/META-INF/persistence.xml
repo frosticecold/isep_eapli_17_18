@@ -30,6 +30,7 @@
     <class>eapli.ecafeteria.domain.cafeteriauser.BalanceLimits</class>
     <class>eapli.ecafeteria.domain.pos.Complaint</class>
     <class>eapli.ecafeteria.domain.cafeteriauser.AllergenProfile</class>
+    <class>eapli.ecafeteria.domain.cafeteriauser.NutritionalProfile</class>
     <class>eapli.ecafeteria.domain.reasons.Reason</class>
     <class>eapli.ecafeteria.domain.deactivationreasons.DeactivationReasonType</class>
     <properties>

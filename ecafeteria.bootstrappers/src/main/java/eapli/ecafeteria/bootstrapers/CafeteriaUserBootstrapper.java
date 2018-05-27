@@ -23,7 +23,7 @@ public class CafeteriaUserBootstrapper implements Action {
     public boolean execute() {
         signupAndApprove("Student", "900330", "Password1", "John", "Smith", "john@smith.com", "900330");
         signupAndApprove("Student", "900331", "Password1", "Mary", "Smith", "mary@smith.com", "900331");
-        
+
         return true;
     }
 
