@@ -31,7 +31,7 @@ public class MechanographicValidatorFactory {
             return new MechanographicEmployeeStrategy();
         }
         if (userType.equalsIgnoreCase("Student")) {
-            return new MechanographicEmployeeStrategy();
+            return new MechanographicStudentStrategy();
         } else {
             return null;
         }

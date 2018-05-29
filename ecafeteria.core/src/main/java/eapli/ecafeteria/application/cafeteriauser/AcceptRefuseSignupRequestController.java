@@ -11,6 +11,7 @@ import eapli.ecafeteria.domain.authz.SystemUser;
 import eapli.ecafeteria.domain.authz.SystemUserBuilder;
 import eapli.ecafeteria.domain.cafeteriauser.CafeteriaUserBuilder;
 import eapli.ecafeteria.domain.cafeteriauser.SignupRequest;
+import eapli.ecafeteria.domain.cafeteriauser.strategy.MechanographicValidator;
 import eapli.ecafeteria.persistence.CafeteriaUserRepository;
 import eapli.ecafeteria.persistence.PersistenceContext;
 import eapli.ecafeteria.persistence.SignupRequestRepository;
@@ -42,6 +43,8 @@ public class AcceptRefuseSignupRequestController implements Controller {
             .cafeteriaUsers(TxCtx);
     private final SignupRequestRepository signupRequestsRepository = PersistenceContext.repositories()
             .signupRequests(TxCtx);
+    
+    private final MechanographicValidator validator = new MechanographicValidator();
 
     public SignupRequest acceptSignupRequest(SignupRequest theSignupRequest)
             throws DataIntegrityViolationException, DataConcurrencyException {
@@ -49,6 +52,10 @@ public class AcceptRefuseSignupRequestController implements Controller {
 
         if (theSignupRequest == null) {
             throw new IllegalArgumentException();
+        }
+        
+        if(!validator.isValid(theSignupRequest.userType(), theSignupRequest.mecanographicNumber().toString())) {
+            throw new IllegalArgumentException("Invalid mecanographic number.");
         }
 
         // explicitly begin a transaction
@@ -97,6 +104,10 @@ public class AcceptRefuseSignupRequestController implements Controller {
 
         if (theSignupRequest == null) {
             throw new IllegalArgumentException();
+        }
+        
+        if(!validator.isValid(theSignupRequest.userType(), theSignupRequest.mecanographicNumber().toString())) {
+            throw new IllegalArgumentException("Invalid mecanographic number.");
         }
 
         // explicitly begin a transaction

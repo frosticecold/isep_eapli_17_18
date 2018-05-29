@@ -42,8 +42,6 @@ public class SignupRequest implements AggregateRoot<Username>, Serializable {
     @Version
     private Long version;
     
-    @Transient
-    private String userType;
     @EmbeddedId
     private Username username;
     private Password password;
@@ -56,8 +54,7 @@ public class SignupRequest implements AggregateRoot<Username>, Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
     
-    @Transient
-    MechanographicValidator validator = new MechanographicValidator();
+    private String userType;
 
     public SignupRequest(final String userType, final String username, final String password, final String firstName, final String lastName,
             final String email, String mecanographicNumber) {
@@ -68,7 +65,7 @@ public class SignupRequest implements AggregateRoot<Username>, Serializable {
             final String email, String mecanographicNumber, final Calendar createdOn) {
         if (Strings.isNullOrEmpty(username) || Strings.isNullOrEmpty(password) || Strings.isNullOrEmpty(firstName)
                 || Strings.isNullOrEmpty(lastName) || Strings.isNullOrEmpty(email)
-                || Strings.isNullOrEmpty(mecanographicNumber) || validator.isValid(userType, mecanographicNumber)) {
+                || Strings.isNullOrEmpty(mecanographicNumber) || Strings.isNullOrEmpty(userType)) {
             throw new IllegalArgumentException();
         }
         this.userType = userType;
@@ -123,7 +120,10 @@ public class SignupRequest implements AggregateRoot<Username>, Serializable {
         if (this == that) {
             return true;
         }
-
+        
+        if(!this.userType.equals(that.userType)) {
+            return false;
+        }
         if (!this.username.equals(that.username)) {
             return false;
         }

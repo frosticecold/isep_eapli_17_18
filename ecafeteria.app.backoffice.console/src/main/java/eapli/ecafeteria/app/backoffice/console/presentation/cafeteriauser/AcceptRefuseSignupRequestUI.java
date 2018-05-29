@@ -53,7 +53,7 @@ public class AcceptRefuseSignupRequestUI extends AbstractUI {
 					System.out.println("No valid option selected");
 					break;
 				}
-			} catch (DataIntegrityViolationException | DataConcurrencyException ex) {
+			} catch (DataIntegrityViolationException | DataConcurrencyException | IllegalArgumentException ex) {
 				Logger.getLogger(AcceptRefuseSignupRequestUI.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
